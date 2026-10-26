@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+.DS_Store
+.env
+*.db
+models/
+data/
+
+node_modules/
+.venv/
+venv/
+*.log
+*.pem
+*.key
+credentials*
