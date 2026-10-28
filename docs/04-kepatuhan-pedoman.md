@@ -151,3 +151,49 @@ Kandidat K1 memetakan langsung ke bentuk pertama tanpa penyesuaian.
 | `docs/02-rencana-mingguan.md` | Tidak masuk naskah; jadwal kerja |
 
 **Bagian yang belum ada dan harus ditulis:** 1.4 Manfaat Penelitian (pedoman mewajibkan; dokumen repo belum memuatnya).
+
+## J. Judul dan afiliasi naskah
+
+> Acuan tambahan: materi *Bagian Judul dan Afiliasi Naskah*, Matakuliah Penulisan Ilmiah, Ir. Alam Rahmatulloh, S.T., M.T., MCE., IPM.
+
+### J.1 Ketentuan judul
+
+| # | Ketentuan |
+|---|---|
+| 1 | Panjang 8–12 kata untuk judul berbahasa Indonesia; sasaran ± 90 ketukan termasuk spasi |
+| 2 | **Wajib memuat tiga komponen: metode yang diusulkan, tujuan penelitian, dan objek penelitian** |
+| 3 | Tanpa singkatan atau akronim, kecuali yang sudah dikenal umum |
+| 4 | Tanpa kata redundant: "studi tentang", "penelitian tentang", "studi kasus" bila bukan kasus |
+| 5 | Hindari klise: "Observasi terhadap…", "Pengamatan awal…", "Penelitian pendahuluan…", "Studi perbandingan…", "Analisis efek…", "Pengaruh pemberian…" |
+| 6 | Jangan mencantumkan lokasi penelitian bila lokasi itu hanya kebetulan |
+| 7 | Cukup spesifik dan menggambarkan ciri khas penelitian; hindari frasa terlalu umum |
+| 8 | Bukan rangkaian kata benda; harus langsung dipahami pembaca bidangnya |
+| 9 | Menarik tetapi tidak bombastik, artistik, atau provokatif |
+| 10 | Sintaksis, kosakata, ejaan, dan kapitalisasi benar |
+| 11 | Sebaiknya dirumuskan setelah naskah selesai disusun |
+
+### J.2 Ketentuan afiliasi
+
+| # | Ketentuan |
+|---|---|
+| 1 | Nama penulis tanpa gelar akademik, jabatan, atau pangkat |
+| 2 | Nama belakang tidak disingkat agar pengacuan oleh peneliti lain tidak sulit |
+| 3 | Kontak berupa nama afiliasi dan surel, bukan alamat pos |
+| 4 | Penulis korespondensi ditandai (umumnya tanda bintang) dan dicantumkan surelnya |
+| 5 | Urutan penulis disepakati; penulis utama adalah yang kontribusi ilmiahnya paling tinggi |
+| 6 | Untuk mahasiswa, tuliskan dua alamat: perguruan tinggi tempat riset dan alamat permanen |
+
+### J.3 Pemeriksaan judul skripsi ini
+
+Judul yang diusulkan sebelumnya: *Verifikasi Kontekstual Hasil Pembacaan Display Tujuh Segmen untuk Sistem Pencatatan Timbangan Digital*.
+
+| Butir | Hasil |
+|---|---|
+| Jumlah kata | 12 kata — memenuhi |
+| Komponen metode | Ada ("verifikasi kontekstual") |
+| Komponen tujuan | **Tidak terlihat** — frasa "untuk Sistem Pencatatan…" terbaca sebagai objek |
+| Komponen objek | Ada ("display tujuh segmen… timbangan digital") |
+| Rangkaian kata benda | Terlalu panjang — diperingatkan pada butir 8 |
+| Padanan bahasa Indonesia | "Display" memiliki padanan "tampilan" |
+
+Judul pengganti yang memenuhi ketiga komponen: **Verifikasi Berlapis untuk Menekan Kesalahan Senyap pada Tampilan Tujuh Segmen Timbangan Digital** (12 kata, 95 karakter). Rincian opsi lain ada di `docs/laporan/draft-laporan-01.md` §1.

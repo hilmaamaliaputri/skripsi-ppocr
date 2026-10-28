@@ -11,18 +11,41 @@
 
 ## 1. Judul
 
-**Rekomendasi utama:**
+**Acuan:** materi *Bagian Judul dan Afiliasi Naskah* (Matakuliah Penulisan Ilmiah, Ir. Alam Rahmatulloh). Aturan pokoknya: judul 8–12 kata (Indonesia), ±90 ketukan, tanpa singkatan, tanpa kata redundant, tanpa klise, dan **wajib memuat tiga komponen: metode yang diusulkan, tujuan penelitian, dan objek penelitian**.
 
-> **Verifikasi Kontekstual Hasil Pembacaan Display Tujuh Segmen untuk Sistem Pencatatan Timbangan Digital**
+**Penilaian judul yang diusulkan sebelumnya:**
 
-Nama model (PP-OCRv6) tidak dimasukkan ke judul. Pertimbangannya: model sejenis berganti generasi dalam hitungan bulan, sedangkan judul harus bertahan sampai sidang dan sesudahnya. Nama model tetap dicantumkan pada Bab I dan Bab III, bukan pada judul.
+> Verifikasi Kontekstual Hasil Pembacaan Display Tujuh Segmen untuk Sistem Pencatatan Timbangan Digital
+
+Hasil pemeriksaan: 12 kata (memenuhi batas), tetapi **komponen tujuan tidak terlihat**. Frasa "untuk Sistem Pencatatan Timbangan Digital" terbaca sebagai objek, bukan tujuan. Judul juga berupa rangkaian kata benda panjang, yang justru diperingatkan dalam materi acuan. Kata "Display" juga memiliki padanan Indonesia.
+
+**Rekomendasi utama (memenuhi ketiga komponen):**
+
+> **Verifikasi Berlapis untuk Menekan Kesalahan Senyap pada Tampilan Tujuh Segmen Timbangan Digital**
+
+Pemeriksaan: 12 kata, 95 karakter. Metode = verifikasi berlapis; tujuan = menekan kesalahan senyap; objek = tampilan tujuh segmen timbangan digital. Frasa "kesalahan senyap" juga berfungsi sebagai penanda khas yang mudah dicari.
 
 **Opsi alternatif:**
 
-| # | Judul | Catatan |
-|---|---|---|
-| a | Sistem Pencatatan Timbangan dengan Verifikasi Berlapis Pembacaan Display Tujuh Segmen | Menonjolkan kata "sistem", sesuai bentuk pembangunan sistem |
-| b | Verifikasi Berlapis untuk Menekan Kesalahan Senyap pada Pembacaan Display Tujuh Segmen | Paling menonjolkan kontribusi, tetapi istilah "kesalahan senyap" perlu didefinisikan lebih awal |
+| # | Judul | Kata | Catatan |
+|---|---|---|---|
+| a | Verifikasi Kontekstual Berlapis untuk Meningkatkan Keandalan Pembacaan Tampilan Tujuh Segmen Timbangan Digital | 12 | Paling formal; tujuan dinyatakan positif ("meningkatkan keandalan") |
+| b | Verifikasi Berlapis untuk Menekan Kesalahan Senyap pada Tampilan Tujuh Segmen Timbangan Digital | 12 | Rekomendasi utama; paling khas |
+| c | Sistem Pencatatan Timbangan dengan Verifikasi Berlapis Pembacaan Tampilan Tujuh Segmen | 10 | Menonjolkan kata "sistem"; tujuan paling lemah |
+
+**Dua catatan teknis.** Pertama, nama model (PP-OCRv6) tidak dimasukkan ke judul karena model sejenis berganti generasi dalam hitungan bulan; nama model tetap muncul di Bab I dan Bab III. Kedua, kata "display" sebaiknya diganti "tampilan" sesuai ketentuan penggunaan padanan bahasa Indonesia (pasal 2.2.1 angka 11), kecuali istilah itu dipertahankan dengan cetak miring.
+
+**Identitas penulis dan afiliasi (untuk naskah artikel):**
+
+```
+Hilma Amalia Putri 1, [Pembimbing 1] 2, [Pembimbing 2] 3
+1 Informatika, Fakultas Teknik, Universitas Siliwangi, Tasikmalaya, Indonesia
+2 ...
+3 ...
+1 hilmaamaliaputri05@gmail.com
+```
+
+Ketentuan yang berlaku: tanpa gelar akademik, jabatan, atau pangkat; nama belakang tidak disingkat; alamat berupa lembaga dan surel, bukan alamat pos; penulis korespondensi ditandai dengan tanda bintang.
 
 ---
 
