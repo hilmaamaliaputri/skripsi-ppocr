@@ -4,7 +4,7 @@
 - Peneliti: Hilma Amalia Putri
 - NPM: (diisi)
 - Program Studi: S1 Teknik Informatika, Fakultas Teknik, Universitas Siliwangi
-- Kelompok Bidang Keahlian: Informatika dan Sistem Inteligen (konfirmasi ke prodi)
+- Kelompok Bidang Keahlian: Informatika dan Sistem Inteligen (ISI) — sesuai Pedoman Pelaksanaan TA `FT.IF-AKD-F.A.05` pasal 1.1.2
 - Pembimbing: (diisi)
 
 ## Topik

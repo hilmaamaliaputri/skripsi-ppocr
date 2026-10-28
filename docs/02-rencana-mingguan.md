@@ -1,9 +1,10 @@
 # 02 — Rencana Mingguan sampai Desember 2026
 
 > Status: RENCANA KERJA AKTIF.
-> Basis keputusan bimbingan 27 Oktober 2026: kandidat **K1** (verifikasi kontekstual), bentuk TA **sistem (Varian B)**.
+> Basis keputusan bimbingan 27 Oktober 2026: kandidat **K1** (verifikasi kontekstual), bentuk TA **pembangunan sistem** (bentuk 1 menurut Pedoman TA `FT.IF-AKD-F.A.05` pasal 1.1.2).
 > Kebijakan data: **data latih sintetis**, **test set tetap memuat foto nyata**.
-> Target: seluruh pengujian selesai dan hasil keluar pada **Desember 2026**.
+> Target kerja teknis: seluruh pengujian selesai dan hasil keluar pada **Desember 2026**.
+> Target administratif dipisah — lihat bagian F dan G. Kepatuhan pedoman: `docs/04-kepatuhan-pedoman.md`.
 
 ## A. Asumsi dan batas rencana
 
@@ -13,7 +14,9 @@
 | Total minggu | 10 minggu (W1–W10) |
 | Hasil eksperimen inti keluar | akhir W7 (13 Desember) |
 | Seluruh eksperimen selesai | akhir W8 (20 Desember) |
-| Naskah utuh | 31 Desember |
+| Draf Bab I–V lengkap | 31 Desember |
+| Sidang Usulan Penelitian | di luar 10 minggu ini — lihat bagian F |
+| Seminar Hasil dan Sidang TA | Februari–Maret 2027 (durasi minimum 3 bulan sejak SK TA) |
 | Buffer | **nol** |
 
 Rencana ini tidak memiliki kelonggaran. Konsekuensinya ada di bagian E.
@@ -165,3 +168,30 @@ Rencana ini tanpa buffer, jadi geseran harus dibayar dengan pemangkasan lingkup,
 | W8 lambat | Pakai antarmuka minimal, bukan PWA lengkap | Uji offline dan waktu per transaksi |
 
 Aturan terakhir: bila W7 tidak selesai pada 13 Desember, **target Desember tidak tercapai** — dan itu harus dilaporkan ke pembimbing segera, bukan ditutupi.
+
+## F. Jalur administrasi yang berjalan paralel
+
+Jalur ini berjalan bersamaan dengan W1–W10 dan tidak boleh ditunda sampai eksperimen selesai. Rujukan pasal: `docs/04-kepatuhan-pedoman.md`.
+
+| Kapan | Pekerjaan | Dasar pedoman |
+|---|---|---|
+| Mulai sekarang | Kumpulkan bukti 5× hadir Sidang Usulan Penelitian sebagai audiens | 1.5.1b |
+| Mulai sekarang | Periksa syarat: 138 SKS, KP, TELP ≥ 400, tidak ada D/E, sertifikat LSP | 1.2.1 |
+| W1–W3 | Tulis proposal Bab I–III dari bahan `draft-laporan-01.md` dan `sintesis-gap.md` | 2.1.1 |
+| W2–W4 | Minta kesediaan dua calon pembimbing dan ajukan di SALAM (`salam.if.unsil.ac.id`) | 1.5.2a |
+| Setelah Bab I–III selesai | Ajukan Sidang Usulan Penelitian, unggah berkas ke SALAM | 1.5.2 |
+| Setelah Sidang UP lulus | Terima SK TA, mulai catat bimbingan (minimal 8× per pembimbing) | 1.6.1 |
+
+**Catatan penting:** durasi penelitian resmi dihitung sejak SK TA terbit, minimal 3 bulan. Pekerjaan teknis W1–W10 yang dilakukan sebelum SK terbit tetap sah sebagai persiapan, tetapi tidak memotong durasi minimum tersebut.
+
+## G. Tahap setelah Desember
+
+| Perkiraan waktu | Pekerjaan | Luaran |
+|---|---|---|
+| Januari | Konversi draf ke format pedoman: sitasi (Nama, Tahun), hapus bullets, hilangkan kata ganti orang, TNR 12 spasi 2, margin 4-4-3-3 | Bab I–V sesuai format |
+| Januari | Tulis Bab II lengkap (landasan teori dan penelitian terkait) | Bab II final |
+| Januari–Februari | Tulis artikel ilmiah sesuai template INNOVATICS, minimal 10 halaman, submit ke INNOVATICS | Bukti submit |
+| Februari | Cek plagiarisme ≤ 30% melalui pembimbing; cetak 4 rangkap laporan + 10 rangkap artikel | Berkas Seminar Hasil |
+| Februari–Maret | Seminar Hasil, lalu Sidang TA (presentasi 15–20 menit, tanya jawab ± 90 menit) | Berita acara, nilai |
+
+Perkiraan ini bergeser bila SK TA terbit lebih lambat. Pengajuan Seminar Hasil hanya dibuka pada 10 hari pertama tiap bulan, penjadwalan tanggal 11–15, pelaksanaan tanggal 16–31 (pasal 1.6.2m).
