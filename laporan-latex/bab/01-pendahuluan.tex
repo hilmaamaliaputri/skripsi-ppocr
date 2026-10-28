@@ -1,0 +1,158 @@
+% =====================================================================
+%  BAB I PENDAHULUAN
+% =====================================================================
+
+\chapter{PENDAHULUAN}
+
+\section{Latar Belakang}
+
+Pencatatan berat barang di gudang dan pabrik masih banyak dilakukan secara
+manual. Operator membaca angka pada tampilan timbangan digital, kemudian
+menuliskannya ke buku catatan atau lembar kerja. Cara tersebut memiliki dua
+kelemahan yang melekat. Pertama, tidak tersedia pembanding otomatis, sehingga
+kesalahan catat tidak dapat dideteksi pada saat kejadian. Kedua, tidak
+tertinggal jejak audit, sehingga sengketa jumlah barang sulit ditelusuri.
+Kebutuhan akan perekaman otomatis telah dijawab di literatur, antara lain
+melalui sistem pencatat data waktu nyata berbasis \textit{Convolutional
+Recurrent Neural Network} dan \textit{Connectionist Temporal Classification}
+(CRNN-CTC) untuk tampilan tujuh segmen \parencite{effendi2025unjuk}. Karena
+tampilan timbangan sudah menyajikan angka secara digital, pembacaan sebenarnya
+dapat diotomasi menggunakan kamera dan pengenalan karakter optis tanpa perlu
+mengganti perangkat timbangan yang telah terpasang.
+
+Persoalannya, mesin pengenalan karakter yang dirancang untuk teks dokumen tidak
+bekerja dengan baik pada tampilan tujuh segmen. \textcite{low2024detecting}
+melaporkan bahwa pengenalan pada kumpulan citra tujuh segmen tetap bermasalah,
+terutama pada kondisi pantulan cahaya. Penyebabnya bersifat struktural:
+karakter pada tampilan tujuh segmen bukan huruf, melainkan kombinasi segmen yang
+menyala. Angka ``1'' hanya berupa dua garis tegak, sedangkan angka ``8''
+menyalakan ketujuh segmen. Jarak antardigit sangat rapat, dan titik desimal
+berukuran hanya beberapa piksel sehingga sering tidak terbaca sebagai karakter
+tersendiri. Persoalan desimal inilah yang menyebabkan
+\textcite{gushima2023automatic} memisahkan model digit dari model titik desimal.
+
+Sejumlah pendekatan khusus kemudian dikembangkan. \textcite{laroca2019convolutional}
+membangun metode berbasis jaringan konvolusional dan merilis kumpulan data
+UFPR-AMR berisi 2.000 citra meter energi beserta 10.000 anotasi tingkat digit.
+\textcite{bonilla2023adapting} mengadaptasi YOLO untuk mengenali angka riil
+termasuk titik desimal. \textcite{yenneti2023lightweight} mengusulkan kepala
+inferensi digit yang mencapai 97,8 persen pada kerangka tunggal dengan kecepatan
+30 bingkai per detik, disertai penyaringan antarbingkai.
+\textcite{wei2023novel} melengkapinya dengan model sekuens bermemori pendek
+untuk panjang bacaan yang bervariasi. Di sisi lain,
+\textcite{jiang2026method} justru menunjukkan bahwa pendekatan klasik berbasis
+binarisasi adaptif, proyeksi, dan pencocokan Hamming mencapai 99,7 persen dalam
+20 milidetik pada timbangan elektronik. Temuan tersebut menandakan bahwa
+pembelajaran mendalam tidak serta-merta mengungguli metode klasik pada domain
+yang geometrinya sangat teratur.
+
+Pada periode berikutnya perhatian bergeser ke model yang lebih besar dan lebih
+umum. \textcite{ega2026leveraging} membandingkan model bahasa-visi dengan lima
+mesin pengenalan karakter pada perangkat ukur digital dan melaporkan bahwa
+Gemini mencapai \textit{full-string recognition} sebesar 93,85 persen.
+Angka tersebut tampak bertentangan dengan temuan \textcite{lin2026measurebench}
+yang melaporkan model bahasa-visi terbaik hanya mencapai 30,2 persen pada data
+nyata. Keduanya tidak bertentangan: pengujian pertama menilai transkripsi digit
+yang telah tertulis, sedangkan pengujian kedua menuntut inferensi skala dan
+penalaran spasial. Perbedaan itu menempatkan model bahasa-visi bukan sebagai
+pesaing akurasi pada domain transkripsi digit, melainkan sebagai pesaing biaya.
+
+Pada Juni 2026 dirilis PP-OCRv6, keluarga model pengenalan karakter ringan
+berukuran 1,5 hingga 34,5 juta parameter \parencite{zhang2026ppocrv6}. Model
+tersebut memakai tulang punggung PPLCNetV4, leher pengenalan
+\textit{EncoderWithLightSVTR}, serta dekoder gabungan CTC dan NRTR. Pada tolok
+ukur internal pengembangnya, tingkat \textit{medium} mencapai 83,2 persen
+akurasi pengenalan rata-rata dari 15 kategori dan secara eksplisit menyebut
+tampilan digital sebagai salah satu sasaran khusus
+\parencite{zhang2026ppocrv6}. Kehadirannya melanjutkan kecenderungan yang telah
+terlihat pada PP-OCRv5, yaitu model berukuran 5 juta parameter yang mampu
+menyaingi model bahasa-visi berukuran miliaran parameter pada tugas serupa
+\parencite{zhang2026ppocrv5}.
+
+Seluruh pekerjaan di atas berhenti pada titik yang sama: melaporkan akurasi pada
+kumpulan data yang disusun sendiri. Angka yang beredar tidak dapat dibandingkan
+satu sama lain karena dihasilkan dari data, pembagian latih-uji, dan definisi
+``benar'' yang berbeda. Persoalan yang lebih mendasar terletak pada apa yang
+dilaporkan. Semua sumber tersebut mengukur akurasi, tetapi tidak mengukur
+kesalahan yang paling mahal dalam pencatatan, yaitu bacaan yang salah namun
+lolos tanpa peringatan. Pada konteks penimbangan, satu bacaan salah lebih mahal
+dampaknya daripada sepuluh bacaan yang ditolak, karena bacaan salah masuk ke
+catatan dan baru diketahui setelah transaksi selesai. Sistem nyata memang telah
+memakai ambang keyakinan, tetapi ambang tersebut dipilih tanpa divalidasi
+terhadap data, padahal nilai keyakinan model bukan bukti kebenaran.
+Sepanjang penelusuran penulis terhadap 24 sumber terbitan 2019--2026, tidak
+ditemukan penelitian yang memakai konteks di luar citra untuk memverifikasi
+hasil pembacaan tampilan tujuh segmen.
+
+Berdasarkan uraian tersebut, penelitian ini mengambil tiga hal yang belum
+dikerjakan sumber sebelumnya. Pertama, menguji kemampuan PP-OCRv6 dalam membaca
+tampilan tujuh segmen tanpa adaptasi dan menentukan adaptasi minimum yang
+diperlukan \parencite{zhang2026ppocrv6}. Kedua, merancang lapisan verifikasi
+kontekstual berlapis yang memanfaatkan konteks di luar citra untuk memutuskan
+apakah suatu bacaan layak dipercaya. Ketiga, mengukur keandalan sistem tidak
+hanya melalui akurasi, tetapi juga melalui laju kesalahan senyap,
+\textit{coverage}, \textit{selective accuracy}, dan luas daerah di bawah kurva
+\textit{risk--coverage}.
+
+\section{Rumusan Masalah}
+
+Berdasarkan latar belakang tersebut, rumusan masalah penelitian ini adalah
+sebagai berikut.
+\begin{poin}
+  \item Sejauh mana PP-OCRv6 mampu membaca tampilan tujuh segmen tanpa
+        adaptasi, dan adaptasi minimum apa yang diperlukan agar kemampuannya
+        memadai?
+  \item Bagaimana merancang lapisan verifikasi kontekstual yang dapat menekan
+        laju kesalahan senyap pada pembacaan tampilan tujuh segmen?
+  \item Berapa \textit{trade-off} antara \textit{coverage} dan akurasi pada
+        bacaan yang diterima, serta bagaimana dampaknya terhadap beban koreksi
+        operator?
+\end{poin}
+
+\section{Tujuan Penelitian}
+
+Tujuan yang ingin dicapai penelitian ini adalah sebagai berikut.
+\begin{poin}
+  \item Mengukur kemampuan PP-OCRv6 pada tampilan tujuh segmen dalam kondisi
+        tanpa adaptasi dan menentukan tingkat adaptasi minimum yang diperlukan.
+  \item Merancang dan mengimplementasikan empat lapis verifikasi kontekstual,
+        yaitu verifikasi struktural, fisik, temporal, dan statistik.
+  \item Menghasilkan bukti kuantitatif keandalan sistem berupa laju kesalahan
+        senyap, \textit{coverage}, \textit{selective accuracy}, dan luas daerah
+        di bawah kurva \textit{risk--coverage}, beserta dampaknya terhadap
+        tingkat koreksi operator.
+\end{poin}
+
+\section{Manfaat Penelitian}
+
+Penelitian ini diharapkan memberikan manfaat sebagai berikut.
+\begin{poin}
+  \item Bagi pemilik usaha dan operator, tersedia catatan berat yang dapat
+        diaudit, dan bacaan yang meragukan tidak lagi masuk ke catatan secara
+        diam-diam.
+  \item Bagi pengembangan ilmu, tersedia kerangka evaluasi keandalan untuk
+        domain tampilan tujuh segmen, yang selama ini hanya diukur dengan
+        akurasi \parencite{effendi2025unjuk,gushima2023automatic,yenneti2023lightweight}.
+  \item Bagi praktik rekayasa, tersedia bukti kuantitatif mengenai biaya
+        penolakan, yaitu berapa banyak bacaan yang harus dikorbankan untuk
+        mencapai tingkat kepercayaan tertentu, sehingga pemilihan ambang dapat
+        dilakukan berdasarkan data dan bukan perkiraan.
+\end{poin}
+
+\section{Batasan Masalah}
+
+Agar pembahasan terarah, penelitian ini dibatasi pada hal-hal berikut.
+\begin{poin}
+  \item Karakter yang dikenali terbatas pada angka 0--9 dan titik desimal,
+        dengan panjang 1--8 karakter.
+  \item Objek penelitian adalah tampilan tujuh segmen jenis \textit{light
+        emitting diode} dan \textit{liquid crystal display} pasif pada timbangan
+        digital.
+  \item Data uji berupa citra nyata yang tidak dipakai untuk pelatihan maupun
+        penyetelan, dan dikunci sebelum eksperimen dijalankan.
+  \item Data latih dihasilkan secara sintetis dengan kondisi terkontrol.
+  \item Sistem dirancang berjalan mandiri di perangkat tanpa koneksi jaringan,
+        dengan sinkronisasi data dilakukan saat jaringan tersedia.
+  \item Lingkup sistem terbatas pada satu lini produk tanpa integrasi dengan
+        sistem perencanaan sumber daya perusahaan.
+\end{poin}

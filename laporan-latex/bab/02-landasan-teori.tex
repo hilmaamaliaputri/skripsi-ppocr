@@ -1,0 +1,138 @@
+% =====================================================================
+%  BAB II LANDASAN TEORI
+% =====================================================================
+
+\chapter{LANDASAN TEORI}
+
+\section{Tampilan Tujuh Segmen}
+
+Tampilan tujuh segmen menyajikan angka menggunakan tujuh batang segmen yang
+disusun seperti angka delapan, ditambah satu titik desimal. Setiap digit
+dibentuk oleh kombinasi segmen yang menyala, bukan oleh bentuk huruf. Karena
+itu pendekatan pengenalan berbasis huruf tidak dapat langsung diterapkan.
+Kekhasan tersebut terlihat pada angka ``1'' yang hanya menyalakan dua segmen
+tegak dan angka ``8'' yang menyalakan seluruh segmen, sehingga jarak kesamaan
+antarkelas tidak seragam. Titik desimal berukuran sangat kecil, umumnya tiga
+hingga lima piksel pada citra beresolusi sedang, sehingga rawan hilang pada
+proses pengenalan \parencite{gushima2023automatic}.
+
+Tampilan dibedakan menjadi dua jenis berdasarkan sumber cahayanya. Tampilan
+\textit{light emitting diode} memancarkan cahaya sendiri, umumnya berwarna
+merah, hijau, atau biru, dengan latar gelap. Tampilan \textit{liquid crystal
+display} pasif tidak memancarkan cahaya dan bergantung pada cahaya sekitar,
+sehingga kontrasnya rendah dan sudut pandangnya terbatas. Kedua jenis tersebut
+memerlukan penanganan praproses yang berbeda. Koreksi pencahayaan pada kondisi
+minim cahaya yang tidak seragam telah diteliti oleh \textcite{fu2026twolevel}.
+
+\section{Pengenalan Karakter Optis untuk Deret Angka}
+
+Pengenalan deret angka tanpa segmentasi karakter umumnya memakai arsitektur
+CRNN yang diperkenalkan \textcite{shi2017crnn}. Arsitektur tersebut menggabungkan
+lapisan konvolusional untuk mengekstraksi ciri, lapisan \textit{bidirectional
+long short-term memory} untuk memodelkan urutan, dan fungsi kerugian CTC untuk
+menyelaraskan urutan keluaran dengan label tanpa segmentasi eksplisit
+\parencite{graves2006ctc}.
+
+CTC memiliki keterbatasan struktural yang relevan bagi penelitian ini. Karena
+segmentasi karakter dianggap tidak diketahui, dua karakter identik yang
+berurutan hanya dapat dihasilkan apabila terdapat simbol kosong di antaranya.
+Akibatnya deret seperti ``1006.5'' berpotensi terbaca ``106.5''. Pola kegagalan
+tersebut terdokumentasi pada implementasi CRNN untuk tampilan tujuh segmen
+\parencite{oicws2026lcd}. Alternatif dekoder tanpa rekurensi dikembangkan
+melalui NRTR \parencite{sheng2019nrtr} dan PARSeq
+\parencite{bautista2022parseq}.
+
+\section{PP-OCRv6}
+
+PP-OCRv6 adalah keluarga model pengenalan karakter yang dirilis pada Juni 2026
+\parencite{zhang2026ppocrv6}. Model ini tersedia dalam tiga tingkat, yaitu
+\textit{tiny} berukuran 1,5 juta parameter, \textit{small} berukuran 7,7 juta
+parameter, dan \textit{medium} berukuran 34,5 juta parameter. Pada tingkat
+\textit{small}, kepala pengenalannya berukuran sekitar 5,2 juta parameter,
+sehingga angka tersebut tidak sama dengan ukuran keseluruhan model.
+
+Secara arsitektural, PP-OCRv6 memakai tulang punggung PPLCNetV4 yang bergaya
+\textit{MetaFormer} dengan reparameterisasi struktural, leher deteksi RepLKFPN,
+serta leher pengenalan \textit{EncoderWithLightSVTR} yang memakai atensi
+lokal-global. Pengenalan dilakukan oleh dekoder gabungan CTC dan NRTR, dengan
+hanya cabang CTC yang dievaluasi saat inferensi; cabang NRTR berperan pada saat
+pelatihan sebagai pengatur tambahan bagi representasi enkoder
+\parencite{zhang2026ppocrv6}. Model ini tersedia melalui Paddle, Transformers,
+dan ONNX Runtime, sehingga dapat dijalankan tanpa koneksi jaringan apabila
+bobotnya dibundel bersama aplikasi. Model generasi sebelumnya, PP-OCRv5,
+menunjukkan bahwa model berukuran 5 juta parameter dapat menyaingi model
+bahasa-visi berukuran miliaran parameter pada tugas pengenalan karakter
+\parencite{zhang2026ppocrv5}.
+
+\section{Model Bahasa-Visi}
+
+Model bahasa-visi menerima citra dan pertanyaan dalam bentuk teks, lalu
+menghasilkan jawaban. Pada domain alat ukur, kemampuan model ini terbelah.
+\textcite{ega2026leveraging} melaporkan \textit{full-string recognition} sebesar
+93,85 persen dan akurasi per digit 98,10 persen untuk Gemini pada perangkat ukur
+digital. Sebaliknya, \textcite{lin2026measurebench} melaporkan bahwa model
+terbaik hanya mencapai 30,2 persen pada data nyata dari 26 jenis alat ukur.
+Perbedaan tersebut dijelaskan oleh jenis tugasnya: transkripsi digit yang telah
+tertulis versus inferensi nilai dari posisi jarum dan skala. Pada domain
+penelitian ini, yaitu transkripsi digit, model bahasa-visi bukan pesaing
+akurasi, melainkan pesaing dari sisi biaya komputasi dan kebutuhan jaringan.
+
+\section{Keandalan dan \textit{Selective Prediction}}
+
+Akurasi dan keandalan merupakan dua besaran yang berbeda. Akurasi mengukur
+seberapa sering model benar, sedangkan keandalan menyangkut kemampuan sistem
+menyatakan bahwa dirinya tidak layak dipercaya pada suatu kasus.
+\textit{Selective prediction} memberi sistem kewenangan menolak memprediksi
+apabila keyakinannya rendah \parencite{lin2026measurebench}. Pada kerangka ini,
+kinerja tidak dinyatakan sebagai satu angka, melainkan sebagai hubungan antara
+\textit{coverage}, yaitu proporsi kasus yang diterima otomatis, dan akurasi pada
+kasus yang diterima. Hubungan tersebut digambarkan sebagai kurva
+\textit{risk--coverage} dan diringkas sebagai luas daerah di bawah kurva atau
+\textit{area under the risk--coverage curve} (AURC).
+
+Nilai keyakinan mentah dari model tidak dapat langsung dipakai sebagai peluang
+kebenaran. Diperlukan kalibrasi pada data yang terpisah dari data penilaian,
+agar ambang keputusan tidak ditentukan dari data yang sama dengan data uji.
+
+\section{Penelitian Terdahulu}
+
+Ringkasan penelitian terdahulu yang menjadi acuan disajikan pada
+Tabel~\ref{tab:terdahulu}.
+
+\begin{table}[H]
+\caption{Ringkasan penelitian terdahulu}
+\label{tab:terdahulu}
+\begin{tabularx}{\textwidth}{@{}p{0.6cm} p{3.3cm} p{4.6cm} X@{}}
+\toprule
+\textbf{No} & \textbf{Sumber} & \textbf{Hasil yang dilaporkan} & \textbf{Keterbatasan untuk penelitian ini} \\
+\midrule
+1 & \textcite{jiang2026method} & 99,7 persen pada 1.146 karakter dalam 20 milidetik, diuji pada timbangan elektronik & Bergantung pada kondisi citra; perilaku saat gagal tidak dilaporkan \\
+2 & \textcite{effendi2025unjuk} & \textit{Exact match} 90,37 persen dengan CER 3,6 persen pada data logger waktu nyata & Berhenti pada akurasi; perilaku saat bacaan salah tidak dilaporkan \\
+3 & \textcite{gushima2023automatic} & Generator citra sintetis dan model desimal terpisah, 96,8 persen & Terbatas pada perangkat berspesifikasi rendah; keandalan tidak diukur \\
+4 & \textcite{yenneti2023lightweight} & 97,8 persen per bingkai pada 30 bingkai per detik, dengan penyaringan antarbingkai & Penyaringan dipakai untuk stabilisasi keluaran, bukan keputusan terima atau tolak \\
+5 & \textcite{oicws2026lcd} & 98 persen pada data nyata, bobot terbuka & Angka terikat pada kumpulan data sendiri \\
+6 & \textcite{low2024detecting} & DBNet terbaik untuk deteksi, PARSeq terbaik untuk pengenalan & Gagal pada kondisi pantulan cahaya \\
+7 & \textcite{ega2026leveraging} & Gemini dengan \textit{full-string recognition} 93,85 persen & Membutuhkan jaringan dan biaya; keandalan tidak diukur \\
+8 & \textcite{lin2026measurebench} & Model bahasa-visi terbaik hanya 30,2 persen pada data nyata & Menguji inferensi skala, bukan transkripsi digit \\
+9 & \textcite{zhang2026ppocrv6} & PP-OCRv6, 1,5--34,5 juta parameter, 83,2 persen rata-rata 15 kategori & Belum diuji pada tampilan tujuh segmen \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Posisi Penelitian}
+
+Berdasarkan kajian pada bagian sebelumnya, terdapat tiga celah yang belum
+terjawab. Pertama, keandalan pembacaan tampilan tujuh segmen belum pernah
+dilaporkan dalam bentuk laju kesalahan senyap, kurva \textit{risk--coverage},
+maupun \textit{selective accuracy}. Kedua, belum ada penelitian yang memakai
+konteks di luar citra, seperti jumlah slot digit, rentang berat yang sah untuk
+suatu produk, toleransi penimbangan, dan konsistensi antarbingkai, sebagai dasar
+keputusan kelayakan bacaan. Ketiga, PP-OCRv6 yang secara eksplisit menyebut
+tampilan digital sebagai sasaran khusus belum diuji pada tampilan tujuh segmen
+\parencite{zhang2026ppocrv6}.
+
+Penelitian ini menempati celah tersebut dengan menggeser pertanyaan dari sekadar
+``apakah bacaan dapat diperoleh'' menjadi ``kapan bacaan tidak layak dipercaya
+dan bagaimana sistem mengetahuinya''. Pergeseran tersebut tidak bergantung pada
+penggantian model, sehingga kontribusinya tidak dapat direduksi menjadi
+pemakaian model yang lebih baru.

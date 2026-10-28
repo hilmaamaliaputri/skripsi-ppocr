@@ -1,0 +1,205 @@
+% =====================================================================
+%  DRAFT USULAN PENELITIAN TUGAS AKHIR
+%  Hilma Amalia Putri — Informatika, Fakultas Teknik, Universitas Siliwangi
+%
+%  Format mengikuti Pedoman Pelaksanaan TA (FT.IF-AKD-F.A.05):
+%    - Times New Roman 12 pt, spasi 2
+%    - margin kiri 4 cm, atas 4 cm, kanan 3 cm, bawah 3 cm
+%    - rata kiri-kanan, penomoran bab angka Romawi
+%    - nomor halaman isi berpola I-1, II-1, ...
+%
+%  Kompilasi: bash build.sh   (lihat README.md)
+% =====================================================================
+
+\documentclass[12pt,a4paper,oneside]{report}
+
+% ---------- Mesin & font ---------------------------------------------
+% Prioritas: Times New Roman asli bila fonts/times.ttf tersedia.
+% Bila tidak, dipakai mathptmx (klon Times) supaya tetap bisa dikompilasi.
+\ifdefined\XeTeXversion
+  \usepackage{fontspec}
+  \IfFileExists{fonts/times.ttf}{
+    \setmainfont{times.ttf}[
+      Path           = fonts/,
+      BoldFont       = timesbd.ttf,
+      ItalicFont     = timesi.ttf,
+      BoldItalicFont = timesbi.ttf
+    ]
+  }{
+    \usepackage{mathptmx}
+  }
+\else
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{mathptmx}
+\fi
+
+% ---------- Bahasa ----------------------------------------------------
+\usepackage[english,indonesian]{babel}
+
+% ---------- Tata letak halaman (pedoman 2.2.1) ------------------------
+\usepackage[a4paper,top=4cm,left=4cm,bottom=3cm,right=3cm]{geometry}
+\usepackage{setspace}
+\doublespacing                 % spasi 2 sesuai pedoman
+\usepackage{indentfirst}       % paragraf pertama ikut menjorok
+\setlength{\parindent}{1.27cm} % 7 ketukan / 1 Tab
+
+% ---------- Nomor halaman: I-1, II-1, ... -----------------------------
+% Gaya halaman buatan sendiri agar nomor halaman hanya muncul di kanan atas
+% pada halaman isi. Halaman pertama setiap bab memakai gaya plain bawaan
+% (nomor di bawah tengah) sesuai pedoman 2.2.2d.
+\makeatletter
+\def\ps@isita{%
+  \let\@mkboth\@gobbletwo
+  \def\@oddhead{\hfil\normalfont\normalsize\thepage}%
+  \def\@evenhead{\normalfont\normalsize\thepage\hfil}%
+  \def\@oddfoot{}\def\@evenfoot{}}
+\makeatother
+\pagestyle{isita}
+\renewcommand{\thepage}{\Roman{chapter}-\arabic{page}}
+
+% Setiap bab dimulai lagi dari halaman 1. Reset dilakukan dengan etoolbox
+% agar tidak merusak \chapter* (misalnya ABSTRAK dan KATA PENGANTAR).
+\usepackage{etoolbox}
+\pretocmd{\chapter}{\setcounter{page}{1}}{}{}
+
+% Lebar kolom nomor halaman pada daftar isi (agar "III-4" tidak melewati batas)
+\makeatletter
+\renewcommand{\@pnumwidth}{2.4em}
+\renewcommand{\@tocrmarg}{3.2em}
+\makeatother
+
+% ---------- Judul bab, subbab, subsubbab (pedoman 2.2.3) --------------
+\usepackage{titlesec}
+\titleformat{\chapter}[display]
+  {\centering\bfseries\normalsize}
+  {BAB \Roman{chapter}}{0pt}{\MakeUppercase}
+\titlespacing*{\chapter}{0pt}{0pt}{1.5\baselineskip}
+\titleformat{\section}{\bfseries\normalsize}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\bfseries\normalsize}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\bfseries\normalsize}{\thesubsubsection}{0.6em}{}
+
+% ---------- Tabel, gambar, kode ---------------------------------------
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{caption}
+\captionsetup{
+  font            = small,
+  labelfont       = bf,
+  labelsep        = period,
+  justification   = centering,
+  singlelinecheck = false
+}
+\captionsetup[table]{position=top, skip=0.5\baselineskip}
+\captionsetup[figure]{position=bottom, skip=0.5\baselineskip}
+\usepackage{etoolbox}
+\AtBeginEnvironment{longtable}{\singlespacing\small}
+\AtBeginEnvironment{tabularx}{\singlespacing\small}
+
+% Penomoran tabel dan gambar mengikuti bab
+\counterwithin{table}{chapter}
+\counterwithin{figure}{chapter}
+\renewcommand{\thetable}{\Roman{chapter}.\arabic{table}}
+\renewcommand{\thefigure}{\Roman{chapter}.\arabic{figure}}
+
+% ---------- Daftar poin: huruf/angka, bukan bullets (pedoman 2.2.1) ----
+\usepackage{enumitem}
+\newlist{poin}{enumerate}{2}
+\setlist[poin]{label=\alph*., ref=\alph*., leftmargin=*, align=left,
+  itemsep=0pt, topsep=0.25\baselineskip}
+\newlist{urut}{enumerate}{2}
+\setlist[urut]{label=\arabic*., ref=\arabic*., leftmargin=*, align=left,
+  itemsep=0pt, topsep=0.25\baselineskip}
+
+% ---------- Matematika & diagram --------------------------------------
+\usepackage{amsmath}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric,arrows.meta,positioning,calc}
+
+% ---------- Sitasi: natbib + BibTeX, gaya (Nama, Tahun) ---------------
+\usepackage[round,authoryear]{natbib}
+\bibliographystyle{plainnat}
+\newcommand{\parencite}[1]{\citep{#1}}
+\newcommand{\textcite}[1]{\citet{#1}}
+
+% ---------- Tautan (dimatikan agar tidak berwarna saat dicetak) -------
+\usepackage[hidelinks]{hyperref}
+
+% ---------- Data dokumen ----------------------------------------------
+\newcommand{\JudulTA}{VERIFIKASI BERLAPIS UNTUK MENEKAN KESALAHAN SENYAP
+  PADA TAMPILAN TUJUH SEGMEN TIMBANGAN DIGITAL}
+\newcommand{\NamaPenulis}{Hilma Amalia Putri}
+\newcommand{\NPMPenulis}{[NPM]}
+\newcommand{\NamaPembimbingSatu}{[Nama Pembimbing I]}
+\newcommand{\NamaPembimbingDua}{[Nama Pembimbing II]}
+\newcommand{\BulanTahun}{[Bulan] 2026}
+
+% Perintah penanda bagian yang belum diisi
+\newcommand{\isian}[1]{{\itshape[belum diisi: #1]}}
+
+% =====================================================================
+\begin{document}
+
+% ---------------- Halaman sampul (Lampiran 1 pedoman) ----------------
+\begin{titlepage}
+  \centering
+  \vspace*{1cm}
+  {\bfseries\normalsize \JudulTA \par}
+  \vspace{2cm}
+  {\bfseries\normalsize USULAN PENELITIAN\\TUGAS AKHIR\par}
+  \vspace{2cm}
+  {\normalsize Oleh:\par}
+  \vspace{0.5cm}
+  {\normalsize Nama: \NamaPenulis\par}
+  {\normalsize NPM: \NPMPenulis\par}
+  \vspace{1.5cm}
+  {\bfseries\normalsize JURUSAN INFORMATIKA\\[0.2cm]
+   FAKULTAS TEKNIK UNIVERSITAS SILIWANGI\\[0.2cm]
+   TASIKMALAYA\par}
+  \vspace{1cm}
+  {\normalsize \BulanTahun\par}
+\end{titlepage}
+
+% ---------------- Bagian awal: angka Romawi kecil --------------------
+\pagenumbering{roman}
+\pagestyle{plain}
+
+\chapter*{ABSTRAK}
+\addcontentsline{toc}{chapter}{ABSTRAK}
+\singlespacing
+\input{bab/abstrak}
+\doublespacing
+
+\chapter*{KATA PENGANTAR}
+\addcontentsline{toc}{chapter}{KATA PENGANTAR}
+\input{bab/kata-pengantar}
+
+\clearpage
+\tableofcontents
+\clearpage
+\listoftables
+\clearpage
+\listoffigures
+
+% ---------------- Bagian isi: I-1, II-1, ... -------------------------
+\clearpage
+\pagenumbering{arabic}
+\renewcommand{\thepage}{\Roman{chapter}-\arabic{page}}
+\pagestyle{isita}
+
+\input{bab/01-pendahuluan}
+\input{bab/02-landasan-teori}
+\input{bab/03-metodologi}
+
+% ---------------- Daftar pustaka -------------------------------------
+\clearpage
+\renewcommand{\thepage}{\arabic{page}}
+\setcounter{page}{1}
+\bibliography{references}
+\addcontentsline{toc}{chapter}{DAFTAR PUSTAKA}
+
+\end{document}

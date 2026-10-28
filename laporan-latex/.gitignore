@@ -1,0 +1,25 @@
+# Berkas bantu kompilasi LaTeX
+*.aux
+*.bbl
+*.blg
+*.log
+*.toc
+*.lot
+*.lof
+*.out
+*.xdv
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.bcf
+*.run.xml
+*.blg
+
+# Hasil kompilasi
+*.pdf
+
+# Font Times New Roman TIDAK di-commit (lisensi Microsoft).
+# Salin sendiri dari C:\Windows\Fonts ke folder fonts/ di komputer Anda.
+fonts/
+gambar/*.jpg
+gambar/*.png
