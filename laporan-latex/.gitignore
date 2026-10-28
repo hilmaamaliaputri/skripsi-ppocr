@@ -21,5 +21,7 @@
 # Font Times New Roman TIDAK di-commit (lisensi Microsoft).
 # Salin sendiri dari C:\Windows\Fonts ke folder fonts/ di komputer Anda.
 fonts/
-gambar/*.jpg
-gambar/*.png
+
+# Gambar hasil kompilasi diagram tetap di-commit agar dokumen Word bisa
+# dibangun tanpa langkah tambahan.
+!gambar/alur.png
