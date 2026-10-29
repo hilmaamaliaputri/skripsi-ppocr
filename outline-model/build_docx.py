@@ -22,13 +22,13 @@ from docx.oxml.ns import qn
 from docx.shared import Cm, Pt, RGBColor
 
 HERE = Path(__file__).resolve().parent
-BAB = HERE.parent / "laporan-latex" / "bab"
-GAMBAR = HERE.parent / "laporan-latex" / "gambar"
-BIB = HERE.parent / "laporan-latex" / "references.bib"
-KELUAR = HERE / "draft-usulan-penelitian.docx"
+BAB = HERE  # tex tunggal ada di folder ini
+GAMBAR = HERE / "gambar"
+BIB = HERE / "references.bib"
+KELUAR = HERE / "Outline-Penelitian-Model.docx"
 
-JUDUL = ("VERIFIKASI BERLAPIS UNTUK MENEKAN KESALAHAN SENYAP "
-         "PADA TAMPILAN TUJUH SEGMEN TIMBANGAN DIGITAL")
+JUDUL = ("VERIFIKASI BERLAPIS PADA KOMPARASI MODEL PEMBACAAN "
+         "TAMPILAN TUJUH SEGMEN TIMBANGAN DIGITAL")
 NAMA = "Hilma Amalia Putri"
 NPM = "[NPM]"
 PEMBIMBING_1 = "[Nama Pembimbing I]"
@@ -36,7 +36,7 @@ PEMBIMBING_2 = "[Nama Pembimbing II]"
 BULAN_TAHUN = "[Bulan] 2026"
 FONT = "Times New Roman"
 
-ROMAN = ["", "I", "II", "III", "IV", "V", "VI"]
+ROMAN = ["", "I", "II", "III", "IV", "V", "VI", "VII", "VIII"]
 
 
 # --------------------------------------------------------------- pustaka
@@ -187,11 +187,11 @@ def baca_tex(path: Path, entri) -> list[tuple]:
             i += 1
             continue
 
-        if s.startswith("\\begin{table}"):
+        if s.startswith("\\begin{table}") or s.startswith("\\begin{longtable}"):
             tutup_par()
             caption, rows, spec, label = "", [], "", ""
             i += 1
-            while i < len(baris) and not baris[i].strip().startswith("\\end{table}"):
+            while i < len(baris) and not baris[i].strip().startswith("\\end{table}") and not baris[i].strip().startswith("\\end{longtable}"):
                 b = baris[i].strip()
                 mc = re.match(r"\\caption\{(.*)\}", b)
                 if mc:
@@ -199,10 +199,10 @@ def baca_tex(path: Path, entri) -> list[tuple]:
                 ml = re.match(r"\\label\{(.*)\}", b)
                 if ml:
                     label = ml.group(1)
-                if b.startswith("\\begin{tabularx}"):
+                if b.startswith("\\begin{tabularx}") or b.startswith("\\begin{longtable}"):
                     spec = b
                     i += 1
-                    while i < len(baris) and not baris[i].strip().startswith("\\end{tabularx}"):
+                    while i < len(baris) and not baris[i].strip().startswith("\\end{tabularx}") and not baris[i].strip().startswith("\\end{longtable}"):
                         r = baris[i].strip()
                         if r.endswith("\\\\"):
                             r = r[:-2].strip()
@@ -227,6 +227,9 @@ def baca_tex(path: Path, entri) -> list[tuple]:
                 ml = re.match(r"\\label\{(.*)\}", b)
                 if ml:
                     label = ml.group(1)
+                mg = re.search(r"includegraphics\[[^]]*\]\{([^}]*)\}", b)
+                if mg:
+                    berkas = mg.group(1).split("/")[-1]
                 i += 1
             blok.append(("figure", caption, berkas, label))
             i += 1
@@ -408,7 +411,7 @@ def bangun():
     p = doc.add_paragraph(); atur_paragraf(p, align=WD_ALIGN_PARAGRAPH.CENTER, indent=False)
     p.paragraph_format.space_before = Pt(60)
     tulis(p, JUDUL, bold=True)
-    for teks, jarak in (("USULAN PENELITIAN", 36), ("TUGAS AKHIR", 0), ("Oleh:", 36)):
+    for teks, jarak in (("OUTLINE PENELITIAN", 36), ("TUGAS AKHIR", 0), ("Oleh:", 36)):
         p = doc.add_paragraph(); atur_paragraf(p, align=WD_ALIGN_PARAGRAPH.CENTER, indent=False)
         p.paragraph_format.space_before = Pt(jarak)
         tulis(p, teks, bold=(jarak > 0))
@@ -474,22 +477,26 @@ def bangun():
     r4._r.append(fc3)
 
     # ---------------- bagian isi: satu bagian per bab
-    bab_berkas = ["01-pendahuluan.tex", "02-landasan-teori.tex", "03-metodologi.tex"]
+    bab_berkas = ["main.tex"]
     isi_bab = {idx: baca_tex(BAB / b, entri) for idx, b in enumerate(bab_berkas, start=1)}
 
     # Peta label -> nomor, supaya \ref di teks menjadi "Tabel II.1" dsb.
     peta: dict[str, str] = {}
     for idx, blok in isi_bab.items():
         nt = nf = 0
+        bab_ke = 0
         for b in blok:
-            if b[0] == "table":
+            if b[0] == "chapter":
+                bab_ke += 1
+                nt = nf = 0
+            elif b[0] == "table":
                 nt += 1
                 if b[4]:
-                    peta[b[4]] = f"{ROMAN[idx]}.{nt}"
+                    peta[b[4]] = f"{ROMAN[bab_ke]}.{nt}"
             elif b[0] == "figure":
                 nf += 1
                 if b[3]:
-                    peta[b[3]] = f"{ROMAN[idx]}.{nf}"
+                    peta[b[3]] = f"{ROMAN[bab_ke]}.{nf}"
 
     for idx, berkas in enumerate(bab_berkas, start=1):
         sec = doc.add_section(WD_SECTION.NEW_PAGE)
@@ -499,7 +506,7 @@ def bangun():
         sec.header.is_linked_to_previous = False
         hp = sec.header.paragraphs[0]
         atur_paragraf(hp, align=WD_ALIGN_PARAGRAPH.RIGHT, indent=False, line=1.0)
-        bidang_halaman(hp, f"{ROMAN[idx]}-")
+        bidang_halaman(hp, "")
 
         sec.footer.is_linked_to_previous = False
         fp = sec.footer.paragraphs[0]
@@ -513,16 +520,22 @@ def bangun():
         for r in list(ffp.runs):
             r._r.getparent().remove(r._r)
         atur_paragraf(ffp, align=WD_ALIGN_PARAGRAPH.CENTER, indent=False, line=1.0)
-        bidang_halaman(ffp, f"{ROMAN[idx]}-")
+        bidang_halaman(ffp, "")
 
         nomor_sec, nomor_sub = 0, 0
         nomor_tabel = 0
+        nomor_gambar = 0
+        bab_ke = 0
         for b in isi_bab[idx]:
             jenis = b[0]
             if jenis == "chapter":
+                bab_ke += 1
+                nomor_sec = nomor_sub = 0
+                nomor_tabel = 0
+                nomor_gambar = 0
                 h = doc.add_paragraph()
                 h.style = doc.styles["Heading 1"]
-                tulis(h, f"BAB {ROMAN[idx]} ")
+                tulis(h, f"BAB {ROMAN[bab_ke]} ")
                 h.add_run().add_break()
                 tulis(h, b[1].upper(), bold=True)
             elif jenis == "section":
@@ -530,12 +543,12 @@ def bangun():
                 nomor_sub = 0
                 h = doc.add_paragraph()
                 h.style = doc.styles["Heading 2"]
-                tulis(h, f"{idx}.{nomor_sec} {b[1]}", bold=True)
+                tulis(h, f"{bab_ke}.{nomor_sec} {b[1]}", bold=True)
             elif jenis == "subsection":
                 nomor_sub += 1
                 h = doc.add_paragraph()
                 h.style = doc.styles["Heading 3"]
-                tulis(h, f"{idx}.{nomor_sec}.{nomor_sub} {b[1]}", bold=True)
+                tulis(h, f"{bab_ke}.{nomor_sec}.{nomor_sub} {b[1]}", bold=True)
             elif jenis == "para":
                 par = doc.add_paragraph()
                 atur_paragraf(par)
@@ -550,14 +563,15 @@ def bangun():
             elif jenis == "table":
                 nomor_tabel += 1
                 tambah_tabel(doc, b[1], b[2], b[3],
-                             f"Tabel {ROMAN[idx]}.{nomor_tabel}")
+                             f"Tabel {ROMAN[bab_ke]}.{nomor_tabel}")
             elif jenis == "figure":
                 par = doc.add_paragraph()
                 atur_paragraf(par, align=WD_ALIGN_PARAGRAPH.CENTER, indent=False, line=1.0)
                 par.add_run().add_picture(str(GAMBAR / b[2]), width=Cm(12.4))
                 cap = doc.add_paragraph()
                 atur_paragraf(cap, align=WD_ALIGN_PARAGRAPH.CENTER, indent=False, line=1.0)
-                tulis(cap, f"{ganti_ref('', peta)}Gambar {ROMAN[idx]}.1  {b[1]}",
+                nomor_gambar += 1
+                tulis(cap, f"Gambar {ROMAN[bab_ke]}.{nomor_gambar}  {b[1]}",
                       bold=True, size=10)
 
     doc.save(KELUAR)

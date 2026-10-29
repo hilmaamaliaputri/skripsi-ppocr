@@ -1,3 +1,7 @@
+> **Catatan 29 Oktober 2026.** Fokus dipersempit ke lapisan model (K1+K3).
+> Jadwal dan lingkup terbaru ada di outline-model/main.tex. Bagian sistem pada
+> dokumen ini dibaca sebagai rencana tahap lanjutan, bukan tahap sekarang.
+
 # 02 — Rencana Mingguan sampai Desember 2026
 
 > Status: RENCANA KERJA AKTIF.

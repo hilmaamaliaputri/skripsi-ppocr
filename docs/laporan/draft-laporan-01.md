@@ -1,3 +1,7 @@
+> **Catatan 29 Oktober 2026.** Dokumen ini digantikan oleh outline-model/main.tex
+> yang berfokus pada model (K1+K3). Bagian sistem di sini dibaca sebagai rencana
+> tahap lanjutan.
+
 # Draft Laporan 01 — Kerangka Proposal
 
 > Status: DRAF untuk dilaporkan ke pembimbing.

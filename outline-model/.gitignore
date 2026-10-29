@@ -1,0 +1,11 @@
+*.aux
+*.log
+*.toc
+*.lot
+*.lof
+*.out
+*.xdv
+*.bbl
+*.blg
+fonts/
+*.pdf

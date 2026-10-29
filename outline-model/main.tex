@@ -1,0 +1,626 @@
+% =====================================================================
+%  OUTLINE PENELITIAN — FOKUS MODEL
+%  Komparasi model (K3) + verifikasi kontekstual (K1)
+%  Hilma Amalia Putri — Informatika, Fakultas Teknik, Universitas Siliwangi
+%
+%  Format: Pedoman Pelaksanaan TA FT.IF-AKD-F.A.05
+%  Kompilasi: bash build.sh
+% =====================================================================
+
+\documentclass[12pt,a4paper,oneside]{report}
+
+\ifdefined\XeTeXversion
+  \usepackage{fontspec}
+  \IfFileExists{fonts/times.ttf}{
+    \setmainfont{times.ttf}[Path=fonts/, BoldFont=timesbd.ttf,
+      ItalicFont=timesi.ttf, BoldItalicFont=timesbi.ttf]
+  }{\usepackage{mathptmx}}
+\else
+  \usepackage[T1]{fontenc}\usepackage[utf8]{inputenc}\usepackage{mathptmx}
+\fi
+
+\usepackage[english,indonesian]{babel}
+\usepackage[a4paper,top=4cm,left=4cm,bottom=3cm,right=3cm]{geometry}
+\usepackage{setspace}
+\doublespacing
+\usepackage{indentfirst}
+\setlength{\parindent}{1.27cm}
+
+\makeatletter
+\def\ps@isita{%
+  \let\@mkboth\@gobbletwo
+  \def\@oddhead{\hfil\normalfont\normalsize\thepage}%
+  \def\@evenhead{\normalfont\normalsize\thepage\hfil}%
+  \def\@oddfoot{}\def\@evenfoot{}}
+\makeatother
+\pagestyle{isita}
+\renewcommand{\thepage}{\Roman{chapter}-\arabic{page}}
+
+\usepackage{etoolbox}
+\makeatletter
+\pretocmd{\@chapter}{\setcounter{page}{1}}{}{}
+\makeatother
+\makeatletter
+\renewcommand{\@pnumwidth}{2.4em}
+\renewcommand{\@tocrmarg}{3.2em}
+\makeatother
+
+\usepackage{titlesec}
+\titleformat{\chapter}[display]{\centering\bfseries\normalsize}
+  {BAB \Roman{chapter}}{0pt}{\MakeUppercase}
+\titlespacing*{\chapter}{0pt}{0pt}{1.5\baselineskip}
+\titleformat{\section}{\bfseries\normalsize}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\bfseries\normalsize}{\thesubsection}{0.6em}{}
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\renewcommand{\tabularxcolumn}[1]{>{\raggedright\arraybackslash}m{#1}}
+\usepackage{longtable}
+\usepackage{caption}
+\captionsetup{font=small,labelfont=bf,labelsep=period,
+  justification=centering,singlelinecheck=false}
+\captionsetup[table]{position=top,skip=0.5\baselineskip}
+\captionsetup[figure]{position=bottom,skip=0.5\baselineskip}
+\AtBeginEnvironment{tabularx}{\singlespacing\small\setlength{\tabcolsep}{4pt}}
+\AtBeginEnvironment{longtable}{\singlespacing\small\setlength{\tabcolsep}{4pt}}
+\counterwithin{table}{chapter}
+\renewcommand{\thetable}{\Roman{chapter}.\arabic{table}}
+\counterwithin{figure}{chapter}
+\renewcommand{\thefigure}{\Roman{chapter}.\arabic{figure}}
+
+\usepackage{enumitem}
+\newlist{poin}{enumerate}{2}
+\setlist[poin]{label=\alph*.,ref=\alph*.,leftmargin=*,align=left,
+  itemsep=0pt,topsep=0.25\baselineskip}
+\newlist{urut}{enumerate}{2}
+\setlist[urut]{label=\arabic*.,ref=\arabic*.,leftmargin=*,align=left,
+  itemsep=0pt,topsep=0.25\baselineskip}
+
+\usepackage{amsmath}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc,fit,backgrounds}
+\usepackage[round,authoryear]{natbib}
+\bibliographystyle{plainnat}
+\newcommand{\parencite}[1]{\citep{#1}}
+\newcommand{\textcite}[1]{\citet{#1}}
+\usepackage[hidelinks]{hyperref}
+
+\newcommand{\JudulTA}{VERIFIKASI BERLAPIS PADA KOMPARASI MODEL PEMBACAAN
+  TAMPILAN TUJUH SEGMEN TIMBANGAN DIGITAL}
+
+% =====================================================================
+\begin{document}
+
+\begin{titlepage}
+  \centering
+  \vspace*{0.5cm}
+  {\bfseries\normalsize OUTLINE PENELITIAN TUGAS AKHIR\par}
+  \vspace{1.5cm}
+  {\bfseries\normalsize \JudulTA \par}
+  \vspace{1.5cm}
+  {\normalsize Fokus: komparasi model dan verifikasi hasil\\[0.3cm]
+   Sistem pencatatan dijadwalkan pada tahap terpisah\par}
+  \vspace{2cm}
+  {\normalsize Hilma Amalia Putri\\[0.2cm]
+   [NPM]\par}
+  \vspace{2cm}
+  {\bfseries\normalsize JURUSAN INFORMATIKA\\[0.2cm]
+   FAKULTAS TEKNIK UNIVERSITAS SILIWANGI\\[0.2cm] TASIKMALAYA\par}
+  \vspace{1cm}
+  {\normalsize [Bulan] 2026\par}
+\end{titlepage}
+
+\pagenumbering{roman}
+\pagestyle{plain}
+\tableofcontents
+\clearpage
+\listoftables
+\clearpage
+\listoffigures
+
+\clearpage
+\pagenumbering{arabic}
+\renewcommand{\thepage}{\Roman{chapter}-\arabic{page}}
+\pagestyle{isita}
+
+% =====================================================================
+\chapter{JUDUL, RUMUSAN MASALAH, DAN BATASAN}
+
+\section{Judul}
+
+Judul yang diajukan:
+
+\begin{quote}
+\textbf{Verifikasi Berlapis pada Komparasi Model Pembacaan Tampilan Tujuh
+Segmen Timbangan Digital}
+\end{quote}
+
+Judul tersebut memuat tiga komponen yang disyaratkan: metode yang diusulkan
+(verifikasi berlapis), tujuan penelitian (menilai dan menekan kesalahan senyap
+pada pembacaan), dan objek penelitian (tampilan tujuh segmen timbangan
+digital). Nama model tidak dimasukkan karena model sejenis berganti generasi
+dalam hitungan bulan, sedangkan judul harus bertahan sampai sidang.
+
+Judul alternatif:
+
+\begin{poin}
+  \item Verifikasi Berlapis untuk Menekan Kesalahan Senyap pada Pembacaan
+        Tampilan Tujuh Segmen Timbangan Digital (12 kata).
+  \item Komparasi Model Pembacaan Tampilan Tujuh Segmen dan Verifikasi Hasilnya
+        (10 kata).
+\end{poin}
+
+\section{Rumusan Masalah}
+
+\begin{urut}
+  \item Sejauh mana model pembacaan tampilan tujuh segmen yang tersedia pada
+        2026 mampu membaca tampilan tujuh segmen pada timbangan digital, dan
+        bagaimana perbandingannya secara adil pada data serta metrik yang sama?
+  \item Adaptasi minimum apa yang diperlukan agar kemampuan model generasi
+        terbaru memadai pada domain ini?
+  \item Lapisan verifikasi apa yang paling efektif menekan kesalahan senyap,
+        dan berapa \textit{trade-off} antara \textit{coverage} dan akurasi pada
+        bacaan yang diterima?
+\end{urut}
+
+\section{Tujuan Penelitian}
+
+\begin{urut}
+  \item Menghasilkan tabel perbandingan yang adil dan dapat direproduksi antara
+        lima pendekatan pembacaan tampilan tujuh segmen pada data yang sama,
+        dengan metrik dan protokol evaluasi yang sama.
+  \item Menentukan tingkat adaptasi minimum yang diperlukan oleh model generasi
+        terbaru agar memadai pada domain ini.
+  \item Merancang dan mengukur empat lapis verifikasi kontekstual di atas model
+        terbaik, serta melaporkan pengaruhnya terhadap kesalahan senyap,
+        \textit{coverage}, dan \textit{selective accuracy}.
+\end{urut}
+
+\section{Batasan Masalah}
+
+Penelitian ini dibatasi pada hal-hal berikut.
+
+\begin{poin}
+  \item Fokus penelitian berada pada lapisan model dan evaluasinya. Antarmuka
+        pengguna, basis data transaksi, sinkronisasi, dan pengujian penerimaan
+        oleh operator tidak termasuk dalam lingkup tahap ini dan dijadwalkan
+        sebagai tahap terpisah.
+  \item Objek penelitian adalah tampilan tujuh segmen jenis \textit{light
+        emitting diode} dan \textit{liquid crystal display} pasif pada timbangan
+        digital.
+  \item Karakter yang dikenali terbatas pada angka 0--9 dan titik desimal,
+        dengan panjang 1--8 karakter.
+  \item Data latih dibangkitkan secara sintetis dengan kondisi terkontrol,
+        sedangkan data uji memuat citra timbangan nyata yang dikunci sebelum
+        eksperimen dijalankan.
+  \item Model yang dibandingkan terbatas pada lima pendekatan yang diuraikan
+        pada Bab IV; model lain yang tidak tersedia bobotnya atau tidak
+        terdokumentasi pada literatur 2019--2026 tidak diikutkan.
+\end{poin}
+
+% =====================================================================
+\chapter{POSISI PENELITIAN DAN STATE OF THE ART}
+
+\section{Lima Kelompok Pendekatan}
+
+Literatur pembacaan tampilan tujuh segmen dapat dipetakan menjadi lima
+kelompok. Ringkasannya disajikan pada Tabel~\ref{tab:kelompok}.
+
+\begin{table}[H]
+\caption{Pemetaan pendekatan pembacaan tampilan tujuh segmen}
+\label{tab:kelompok}
+\begin{tabularx}{\textwidth}{@{}L{3.1cm} L{4.3cm} L{4.4cm} X@{}}
+\toprule
+\textbf{Kelompok} & \textbf{Sumber} & \textbf{Hasil yang dilaporkan} &
+\textbf{Keterbatasan} \\
+\midrule
+Klasik non-pembelajaran mesin & Auerswal (t.t.); \textcite{jiang2026method} &
+99,7\% pada 1.146 karakter dalam 20 milidetik & Bergantung kondisi citra;
+perilaku saat gagal tidak dilaporkan \\
+Deep learning khusus tujuh segmen & \textcite{effendi2025unjuk};
+\textcite{gushima2023automatic}; \textcite{yenneti2023lightweight};
+\textcite{bonilla2023adapting}; \textcite{oicws2026lcd};
+\textcite{low2024detecting} & 90,37\% \textit{exact match} dengan CER 3,6\%;
+96,8\%; 97,8\% per bingkai; 98\% & Seluruhnya berhenti pada akurasi kumpulan
+data sendiri \\
+Kumpulan data dan tolok ukur & \textcite{laroca2019convolutional};
+\textcite{kanagarathinam2019text} & 2.000 citra dan 10.000 anotasi tingkat
+digit & Mayoritas meter energi, bukan timbangan \\
+Pengenalan karakter umum generasi baru & \textcite{zhang2026ppocrv6};
+\textcite{zhang2026ppocrv5} & 83,2\% rata-rata 15 kategori pada 34,5 juta
+parameter & Mengklaim menangani tampilan digital, belum diuji pada tujuh
+segmen \\
+Model bahasa-visi & \textcite{ega2026leveraging}; \textcite{lin2026measurebench}
+& \textit{Full-string recognition} 93,85\%; terbaik hanya 30,2\% pada data nyata
+& Akurat pada transkripsi, lemah pada inferensi skala; butuh jaringan dan biaya
+\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Dua Angka yang Tampak Bertentangan}
+
+\textcite{ega2026leveraging} melaporkan \textit{full-string recognition} 93,85\%
+untuk Gemini pada perangkat ukur digital, sedangkan \textcite{lin2026measurebench}
+melaporkan model bahasa-visi terbaik hanya mencapai 30,2\% pada data nyata.
+Keduanya tidak bertentangan: pengujian pertama menilai transkripsi digit yang
+telah tertulis, sedangkan pengujian kedua menuntut inferensi skala dan penalaran
+spasial. Pada domain penelitian ini, yaitu transkripsi digit, model bahasa-visi
+bukan pesaing akurasi melainkan pesaing biaya.
+
+\section{Mengapa Akurasi Tidak Cukup}
+
+Akurasi merupakan besaran agregat yang hanya dapat dihitung setelah nilai
+sebenarnya diketahui. Pada eksperimen, nilai sebenarnya tersedia karena peneliti
+membandingkan keluaran model dengan label. Pada saat sistem berjalan di lapangan,
+nilai sebenarnya justru belum diketahui, sehingga akurasi tidak tersedia sebagai
+dasar keputusan.
+
+Selain itu, akurasi tidak menentukan bacaan mana yang salah. Dua sistem dengan
+akurasi identik dapat memiliki laju kesalahan senyap yang sangat berbeda,
+sebagaimana disajikan pada Tabel~\ref{tab:dua-sistem}.
+
+\begin{table}[H]
+\caption{Dua sistem dengan akurasi identik dan keandalan berbeda}
+\label{tab:dua-sistem}
+\begin{tabularx}{\textwidth}{@{}L{5.6cm} L{3.2cm} L{3.2cm}@{}}
+\toprule
+\textbf{Ukuran} & \textbf{Sistem A} & \textbf{Sistem B} \\
+\midrule
+Akurasi pada data uji & 90\% & 90\% \\
+Bacaan salah yang ditandai meragukan & 0 dari 10 & 9 dari 10 \\
+Kesalahan senyap & 10\% & 1\% \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Karena itu kesalahan senyap bukan bagian dari akurasi dan tidak dapat
+diturunkan darinya. Yang diusulkan penelitian ini bukan model yang lebih akurat,
+melainkan lapisan keputusan beserta kerangka pengukurannya.
+
+\section{Celah yang Tersisa}
+
+\begin{poin}
+  \item Keandalan pembacaan tampilan tujuh segmen belum pernah dilaporkan dalam
+        bentuk laju kesalahan senyap, kurva \textit{risk--coverage}, maupun
+        \textit{selective accuracy}.
+  \item Belum ada penelitian yang memakai konteks di luar citra sebagai dasar
+        keputusan kelayakan bacaan.
+  \item PP-OCRv6 yang menyebut tampilan digital sebagai sasaran khusus belum
+        diuji pada tampilan tujuh segmen \parencite{zhang2026ppocrv6}.
+  \item Angka yang beredar tidak dapat dibandingkan karena dihasilkan dari data
+        dan definisi kebenaran yang berbeda.
+\end{poin}
+
+% =====================================================================
+\chapter{KANDIDAT TERPILIH: K1 DAN K3}
+
+\section{K3: Komparasi Generasi Model 2026}
+
+K3 memberi kerangka perbandingan: lima pendekatan diuji pada data yang sama
+dengan protokol, metrik, dan pembagian data yang sama. Kontribusi K3 bersifat
+evaluatif, yaitu menghasilkan tabel perbandingan yang dapat direproduksi
+sekaligus tabel biaya berupa jumlah parameter, ukuran model, dan latensi.
+
+Nilai K3 terletak pada tiga hal. Pertama, mengisi celah tidak adanya tolok ukur
+lintas dataset. Kedua, menjadi jaring pengaman: apa pun hasilnya, selalu ada
+tabel yang dapat dilaporkan. Ketiga, menjadi dasar bagi K1 karena model terbaik
+hasil komparasi itulah yang diberi lapisan verifikasi.
+
+\section{K1: Verifikasi Kontekstual}
+
+K1 menambahkan empat lapis verifikasi di atas keluaran model terbaik:
+
+\begin{poin}
+  \item Lapis 1 struktural: jumlah digit terhadap jumlah slot dan kesahihan
+        posisi titik desimal.
+  \item Lapis 2 fisik: rentang berat sah untuk suatu produk, toleransi
+        penimbangan, dan selisih terhadap riwayat.
+  \item Lapis 3 temporal: kesepakatan antar bingkai pada pembacaan yang sama.
+  \item Lapis 4 statistik: nilai keyakinan yang telah dikalibrasi.
+\end{poin}
+
+Keluaran sistem berupa keputusan terima, tolak, atau minta konfirmasi beserta
+alasannya. Metrik utamanya laju kesalahan senyap, ditambah \textit{coverage},
+\textit{selective accuracy}, dan AURC.
+
+\section{Hubungan K1 dan K3 dalam Satu Penelitian}
+
+Keduanya bukan dua penelitian terpisah, melainkan dua tahap berurutan dengan
+objek yang sama.
+
+\begin{urut}
+  \item Tahap A (K3): mengukur kemampuan lima pendekatan pada data yang sama,
+        lalu memilih model terbaik sebagai dasar.
+  \item Tahap B (K1): menambahkan empat lapis verifikasi di atas model terpilih
+        dan mengukur pengaruhnya terhadap kesalahan senyap.
+\end{urut}
+
+Dengan urutan tersebut, K3 menghasilkan Bab IV bagian pertama berupa tabel
+perbandingan, sedangkan K1 menghasilkan Bab IV bagian kedua berupa penurunan
+kesalahan senyap per lapis. Keduanya berbagi satu kumpulan data uji dan satu
+skrip metrik, sehingga tidak ada pekerjaan yang terbuang.
+
+\section{Yang Ditunda pada Tahap Ini}
+
+Bagian berikut tidak dikerjakan pada tahap ini dan dijadwalkan sebagai tahap
+terpisah setelah lapisan model terbukti:
+
+\begin{poin}
+  \item antarmuka aplikasi dan alur kerja operator;
+  \item basis data transaksi, log audit, dan sinkronisasi;
+  \item pengujian penerimaan oleh pengguna dan pengukuran tingkat koreksi
+        operator;
+  \item penerapan pada perangkat berdaya rendah tanpa koneksi jaringan.
+\end{poin}
+
+Penundaan ini disengaja: seluruh bagian tersebut bertumpu pada satu asumsi,
+yaitu lapisan model dan verifikasi sudah terbukti bekerja. Membangunnya lebih
+dahulu berisiko menghasilkan sistem yang rapi namun bertumpu pada asumsi yang
+belum diuji.
+
+% =====================================================================
+\chapter{MATRIKS KOMPARASI MODEL 2026}
+
+\section{Model yang Dibandingkan}
+
+Enam baris pembanding dipilih agar mewakili seluruh kelompok pendekatan yang
+masih dipakai pada 2026, bukan hanya model terbaru. Rinciannya disajikan pada
+Tabel~\ref{tab:matriks}.
+
+\begin{table}[H]
+\caption{Matriks model pembanding}
+\label{tab:matriks}
+\begin{tabularx}{\textwidth}{@{}L{3.0cm} L{1.2cm} L{2.4cm} L{3.2cm} X@{}}
+\toprule
+\textbf{Model} & \textbf{Tahun} & \textbf{Ukuran} & \textbf{Alasan diikutsertakan}
+& \textbf{Peran dalam penelitian} \\
+\midrule
+PP-OCRv6 \textit{tiny/small/medium} & 2026 & 1,5 / 7,7 / 34,5 juta &
+Generasi terbaru; menyebut tampilan digital sebagai sasaran &
+Kandidat utama; tiga tingkat dibandingkan \\
+PP-OCRv5 & 2026 & 5 juta (pengenal) & Generasi sebelumnya dari keluarga yang
+sama & Menguji apakah kenaikan versi memberi manfaat \\
+CRNN-CTC & 2017 & 11,6 juta & Arsitektur acuan pada domain ini dan dipakai
+penelitian terdahulu & Pembanding deep learning khusus \\
+DBNet + PARSeq & 2024 & \textit{[diisi saat implementasi]} & Kombinasi
+detektor-pengenal terbaik pada kumpulan data tujuh segmen &
+Pembanding pipeline dua tahap \\
+ssocr & -- & tanpa model & Metode klasik tanpa pelatihan & Pembanding non-\textit{machine learning}; menguji apakah pembelajaran mendalam memang
+unggul \\
+Model bahasa-visi & 2026 & miliaran & Pendekatan tanpa pelatihan khusus &
+Pembanding biaya \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Model yang Tidak Diikutsertakan}
+
+Pemilihan di atas sengaja membatasi jumlah pembanding. Model berikut tidak
+diikutsertakan beserta alasannya:
+
+\begin{poin}
+  \item Model bahasa-visi berukuran sangat besar selain yang diuji pada literatur
+        2026: biaya API dan waktu inferensi tidak sebanding, serta sulit
+        direproduksi pembaca.
+  \item Model komersial tanpa bobot terbuka: hasil tidak dapat diverifikasi
+        ulang.
+  \item Arsitektur khusus yang hanya dilaporkan pada satu makalah tanpa kode:
+        risiko implementasi ulang yang menyimpang dari laporan aslinya.
+\end{poin}
+
+\section{Kondisi Pengujian}
+
+Setiap model diuji pada empat kondisi yang sama, agar perbandingan tidak
+bergantung pada satu situasi saja:
+
+\begin{poin}
+  \item bersih, frontal, kontras tinggi;
+  \item terdapat pantulan cahaya pada layar;
+  \item sudut pengambilan miring 15--30 derajat;
+  \item tampilan \textit{liquid crystal display} pasif berkontras rendah.
+\end{poin}
+
+\section{Aturan Keadilan Perbandingan}
+
+\begin{poin}
+  \item Seluruh model memakai kumpulan data uji yang sama dan telah dikunci.
+  \item Satuan keluaran disamakan, termasuk penanganan titik desimal.
+  \item Normalisasi keluaran ditulis eksplisit dan diterapkan sama pada semua
+        model.
+  \item Data uji tidak dipakai untuk memilih ambang, prompt, maupun
+        hyperparameter.
+  \item Setiap persentase disertai jumlah sampel dan interval kepercayaan 95
+        persen.
+\end{poin}
+
+% =====================================================================
+\chapter{ARSITEKTUR MODEL DAN ALUR VERIFIKASI}
+
+\section{Bagan Alur}
+
+Alur penelitian dibagi menjadi dua jalur. Jalur atas adalah tahap komparasi
+model (K3), sedangkan jalur bawah adalah tahap verifikasi (K1) yang memakai
+keluaran model terpilih. Keduanya berbagi satu kumpulan data uji dan satu skrip
+metrik.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth,height=12.5cm,keepaspectratio]{gambar/alur-model.png}
+\caption{Arsitektur penelitian: komparasi model dilanjutkan verifikasi berlapis}
+\label{fig:alur-model}
+\end{figure}
+
+\section{Penjelasan Setiap Blok}
+
+\begin{table}[H]
+\caption{Blok arsitektur, masukan, dan keluaran}
+\label{tab:blok}
+\begin{tabularx}{\textwidth}{@{}L{3.3cm} L{3.4cm} L{3.4cm} X@{}}
+\toprule
+\textbf{Blok} & \textbf{Masukan} & \textbf{Keluaran} & \textbf{Alasan} \\
+\midrule
+Akuisisi & Foto atau 3--5 bingkai video & Citra dan metadata kondisi & Lapis
+temporal memerlukan beberapa bingkai; metadata dipakai untuk analisis per
+kondisi \\
+Praproses & Citra penuh & Area tampilan siap model & Menyamakan kontras LED dan
+LCD pasif serta mengurangi gangguan latar \\
+Model pembanding & Citra & String dan nilai keyakinan & Enam model dijalankan pada
+citra yang sama \\
+Skrip metrik tunggal & Keluaran semua model & FSR, CER, akurasi desimal, latensi
+& Menjamin perbandingan memakai definisi yang sama \\
+Pemilihan model & Tabel metrik & Model terpilih & Dasar bagi tahap verifikasi \\
+Lapis 1--4 & Keluaran model terpilih & Lolos, tolak, atau konfirmasi & Menekan
+kesalahan senyap memakai konteks di luar citra \\
+Evaluator & Keputusan dan label & Kesalahan senyap, \textit{coverage},
+\textit{selective accuracy}, AURC & Ukuran keandalan, bukan sekadar akurasi \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Titik Pengukuran}
+
+Setiap metrik diukur pada satu titik yang tetap, agar tidak terjadi pencampuran
+antara kemampuan model dan kemampuan verifikasi.
+
+\begin{poin}
+  \item Kemampuan model diukur pada keluaran model, sebelum verifikasi: FSR,
+        CER, akurasi posisi desimal, latensi.
+  \item Kemampuan verifikasi diukur setelah keputusan: kesalahan senyap,
+        \textit{coverage}, \textit{selective accuracy}, AURC.
+  \item Dampak setiap lapis diukur dengan membandingkan hasil sebelum dan
+        sesudah lapis tersebut ditambahkan.
+\end{poin}
+
+% =====================================================================
+\chapter{RANCANGAN EKSPERIMEN}
+
+\section{Tahap A: Komparasi Model}
+
+\begin{table}[H]
+\caption{Eksperimen tahap A}
+\label{tab:eks-a}
+\begin{tabularx}{\textwidth}{@{}L{1.0cm} L{5.4cm} X@{}}
+\toprule
+\textbf{Kode} & \textbf{Konfigurasi} & \textbf{Pertanyaan yang dijawab} \\
+\midrule
+A1 & PP-OCRv6 \textit{tiny}, \textit{small}, \textit{medium} tanpa adaptasi &
+Sejauh mana kemampuan tanpa adaptasi, dan tingkat mana yang paling efisien? \\
+A2 & PP-OCRv5 tanpa adaptasi & Apakah kenaikan generasi memberi manfaat nyata
+pada domain ini? \\
+A3 & CRNN-CTC dilatih pada data latih yang sama & Seberapa jauh model khusus
+kalah atau menang? \\
+A4 & DBNet + PARSeq & Apakah pipeline dua tahap lebih baik daripada satu model
+terpadu? \\
+A5 & ssocr tanpa pelatihan & Apakah pembelajaran mendalam memang diperlukan? \\
+A6 & Model bahasa-visi dengan prompt terstruktur & Berapa biaya yang harus
+dibayar untuk akurasi setara? \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Tahap B: Verifikasi}
+
+\begin{table}[H]
+\caption{Eksperimen tahap B}
+\label{tab:eks-b}
+\begin{tabularx}{\textwidth}{@{}L{1.0cm} L{5.4cm} X@{}}
+\toprule
+\textbf{Kode} & \textbf{Konfigurasi} & \textbf{Pertanyaan yang dijawab} \\
+\midrule
+B1 & Model terpilih, tanpa verifikasi & Berapa kesalahan senyap pada kondisi
+dasar? \\
+B2 & Ditambah lapis 1 struktural & Berapa kesalahan senyap yang tertangkap oleh
+pemeriksaan bentuk? \\
+B3 & Ditambah lapis 2 fisik & Tambahan manfaat dari konteks produk? \\
+B4 & Ditambah lapis 3 temporal & Tambahan manfaat dari kesepakatan antar
+bingkai? \\
+B5 & Ditambah lapis 4 kalibrasi & Di mana titik seimbang antara
+\textit{coverage} dan akurasi? \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Metrik}
+
+\begin{poin}
+  \item \textit{Full-string recognition} (FSR): persentase bacaan benar secara
+        utuh.
+  \item \textit{Character error rate} (CER): laju kesalahan tingkat karakter.
+  \item Akurasi posisi desimal.
+  \item Laju kesalahan senyap: persentase bacaan salah yang diterima tanpa
+        peringatan (metrik utama tahap B).
+  \item \textit{Coverage}: persentase bacaan yang diterima otomatis.
+  \item \textit{Selective accuracy}: akurasi pada bacaan yang diterima.
+  \item AURC: luas daerah di bawah kurva \textit{risk--coverage}.
+  \item Jumlah parameter, ukuran model, dan latensi p50/p95.
+\end{poin}
+
+\section{Jadwal}
+
+\begin{table}[H]
+\caption{Jadwal penelitian fokus model}
+\label{tab:jadwal}
+\begin{tabularx}{\textwidth}{@{}L{1.8cm} L{6.0cm} X@{}}
+\toprule
+\textbf{Minggu} & \textbf{Pekerjaan} & \textbf{Luaran} \\
+\midrule
+1 & Spesifikasi data, metrik, dan ambang keberhasilan & Dokumen spesifikasi \\
+2 & Pembangkit data sintetis dan penyusunan data uji terkontrol & Data latih dan
+data uji sintetis \\
+3 & Pengambilan citra nyata dan penguncian data uji & Data uji nyata terkunci \\
+4 & Tahap A: A1 dan A2 & Tabel A1--A2 \\
+5 & Tahap A: A3 sampai A6 & Tabel A3--A6 \\
+6 & Analisis tahap A dan pemilihan model terbaik & Sub-bab komparasi \\
+7 & Tahap B: B1 sampai B3 & Tabel B1--B3 \\
+8 & Tahap B: B4, B5, dan kurva \textit{risk--coverage} & Tabel B4--B5 dan kurva \\
+9 & Analisis kesalahan dan penyusunan Bab IV & Draf Bab IV \\
+10 & Penyusunan Bab V dan konsolidasi naskah & Naskah utuh \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+% =====================================================================
+\chapter{REFERENSI}
+
+Daftar lengkap tersimpan pada berkas BibTeX proyek.
+
+\noindent Daftar sumber yang dipakai, dalam bentuk yang dipakai di dalam teks:
+
+\begin{urut}
+  \item S01: Effendi, dkk. (2025). Jurnal Ilmu dan Inovasi Fisika 9(2) 107-115.
+  \item S02: Ega, dkk. (2026). Bulletin of Electrical Engineering and Informatics 15(5) 4239-4252.
+  \item S03: Laroca, dkk. (2019). Journal of Electronic Imaging 28(1) 013023.
+  \item S04: Low, dkk. (2024). ITM Web of Conferences 63 01007.
+  \item S05: Kulkarni, dkk. (2021). Frontiers in Artificial Intelligence 4 543176.
+  \item S06: Xiang, dkk. (2026). Sensors 26(1) 265.
+  \item S07: Gushima dan Kashima (2023). PHM Society Asia-Pacific Conference.
+  \item S08: Yenneti, dkk. (2023). Electronic Imaging 35(7) 282.
+  \item S09: Jiang dan Li (2026). Proc. SPIE.
+  \item S10: Fu, dkk. (2026). Journal of Imaging 12(4) 146.
+  \item S11: Wei, dkk. (2023). Algorithms 16(4) 192.
+  \item S12: Kanagarathinam dan Sekar (2019). Energy Reports 5 842-852.
+  \item S13: Lin, dkk. (2026). CVPR 2026 (arXiv:2510.26865).
+  \item S14: Zhang, dkk. (2026). arXiv:2606.13108.
+  \item S15: Valente, dkk. (2025). arXiv:2508.21732.
+  \item S16: Bonilla-Rivas, dkk. (2023). ICCNS, 19-25.
+  \item S17: OICWS (2026). GitHub: lcd-digit-recognition.
+  \item S18: Auerswal (t.t.). ssocr (perangkat lunak).
+  \item S19: Shi, dkk. (2017). IEEE TPAMI 39(11).
+  \item S20: Graves, dkk. (2006). ICML.
+  \item S21: Sheng, dkk. (2019). ICDAR.
+  \item S22: Zhang, dkk. (2026b). arXiv:2603.24373.
+  \item S23: Charles, dkk. (2021). WACV.
+  \item S24: Bautista dan Atienza (2022). ECCV (arXiv:2207.06966).
+\end{urut}
+
+\clearpage
+\renewcommand{\thepage}{\arabic{page}}
+\setcounter{page}{1}
+\bibliography{references}
+
+\end{document}

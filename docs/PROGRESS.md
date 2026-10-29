@@ -13,6 +13,14 @@
 - Berikutnya: finalisasi kerangka (W1) dan spesifikasi dataset. Lihat `docs/02-rencana-mingguan.md`.
 - Draf laporan untuk pembimbing: `docs/laporan/draft-laporan-01.md`.
 
+## 2026-10-29
+- **Fokus dipersempit ke lapisan model.** Kandidat yang dipakai: **K1 dan K3**.
+- K2 dan K4 tidak dipakai; berkasnya dihapus dari `docs/outline/`.
+- Tahap A (K3): komparasi enam model pada data dan metrik yang sama.
+- Tahap B (K1): verifikasi empat lapis pada model terpilih.
+- Sistem (antarmuka, basis data, uji operator) **ditunda** ke tahap terpisah.
+- Rancangan lengkap: `outline-model/main.tex` — LaTeX 25 halaman dan Word 24 halaman.
+
 ## Template entri
 ```
 ## YYYY-MM-DD

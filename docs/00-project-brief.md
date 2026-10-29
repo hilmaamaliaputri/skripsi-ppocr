@@ -10,6 +10,12 @@
 ## Topik
 Pembacaan angka pada display tujuh segmen (LED/LCD) menggunakan model OCR mutakhir, dengan luaran berupa sistem pencatatan yang dapat menolak bacaan yang tidak layak dipercaya.
 
+## Fokus tahap ini (keputusan 29 Oktober 2026)
+Tahap yang dikerjakan sekarang adalah **lapisan model**: komparasi enam model pembaca
+(K3) dilanjutkan verifikasi kontekstual empat lapis pada model terbaik (K1).
+Antarmuka, basis data, uji operator, dan penerapan pada perangkat berdaya rendah
+**ditunda** ke tahap terpisah. Rancangan lengkap: `outline-model/main.tex`.
+
 ## Bentuk TA
 Tiga varian yang mungkin, dipetakan di `docs/outline/varian-bentuk-ta.md`:
 - Varian A — studi komparasi/eksplorasi
