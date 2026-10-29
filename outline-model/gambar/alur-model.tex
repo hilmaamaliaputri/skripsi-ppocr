@@ -1,53 +1,46 @@
 \documentclass[border=4pt]{standalone}
 \usepackage{fontspec}
-\IfFileExists{../../laporan-latex/fonts/times.ttf}{
-  \setmainfont{times.ttf}[Path=../../laporan-latex/fonts/,
+\IfFileExists{fonts/times.ttf}{
+  \setmainfont{times.ttf}[Path=fonts/,
     BoldFont=timesbd.ttf, ItalicFont=timesi.ttf, BoldItalicFont=timesbi.ttf]
 }{\usepackage{mathptmx}}
 \usepackage{tikz}
 \usetikzlibrary{arrows.meta,positioning,fit,backgrounds}
 \begin{document}
 \begin{tikzpicture}[
-  node distance=0.45cm,
+  node distance=0.5cm,
   blok/.style={rectangle, draw, rounded corners=2pt, align=center,
-               text width=5.0cm, inner sep=3.5pt, font=\footnotesize},
-  model/.style={rectangle, draw, align=center, inner sep=2.5pt,
-                font=\scriptsize, text width=2.5cm},
-  lapis/.style={rectangle, draw, align=center, inner sep=2.5pt,
-                font=\scriptsize, text width=3.0cm},
-  panah/.style={-{Latex[length=1.8mm]}, thick},
-  judul/.style={font=\scriptsize\bfseries, align=center}
+               text width=8.6cm, inner sep=4pt, font=\footnotesize},
+  lapis/.style={rectangle, draw, align=center, inner sep=3pt,
+                font=\footnotesize, text width=7.4cm},
+  panah/.style={-{Latex[length=2mm]}, thick},
+  judul/.style={font=\footnotesize\bfseries, align=center}
 ]
 
-% ---------------- TAHAP A ----------------
-\node[blok] (akuisisi) {Akuisisi citra\\dan praproses};
-\node[model, below=0.55cm of akuisisi, xshift=-3.6cm] (m1) {PP-OCRv6\\tiny/small/medium};
-\node[model, right=0.15cm of m1] (m2) {PP-OCRv5};
-\node[model, right=0.15cm of m2] (m3) {CRNN-CTC};
-\node[model, below=0.35cm of m1] (m4) {DBNet + PARSeq};
-\node[model, right=0.15cm of m4] (m5) {ssocr};
-\node[model, right=0.15cm of m5] (m6) {Model bahasa-visi};
-\node[blok, below=0.55cm of m4, xshift=1.3cm] (metrik)
-  {Skrip metrik tunggal\\FSR, CER, desimal, latensi};
+\node[blok] (akuisisi) {Akuisisi citra dan praproses};
+\node[blok, below=of akuisisi] (model)
+  {Enam model pembanding\\[1pt]
+   PP-OCRv6 \textit{tiny/small/medium} ~$\cdot$~ PP-OCRv5 ~$\cdot$~ CRNN-CTC\\
+   DBNet + PARSeq ~$\cdot$~ ssocr ~$\cdot$~ model bahasa-visi};
+\node[blok, below=of model] (metrik)
+  {Skrip metrik tunggal\\ FSR, CER, akurasi desimal, latensi};
 \node[blok, below=of metrik] (tabel)
-  {Tabel perbandingan\\dan pemilihan model terbaik};
+  {Tabel perbandingan dan pemilihan model terbaik};
 
-\draw[panah] (akuisisi) -- (m1.north -| akuisisi.west);
-\draw[panah] (akuisisi.south) -- ++(0,-0.22) -| (m2.north);
-\draw[panah] (akuisisi.south) -- ++(0,-0.22) -| (m6.north);
-\draw[panah] (m1.south) -- ++(0,-0.16) -| (metrik.north -| m1.south);
+\draw[panah] (akuisisi) -- (model);
+\draw[panah] (model) -- (metrik);
 \draw[panah] (metrik) -- (tabel);
 
-% ---------------- TAHAP B ----------------
-\node[blok, below=1.15cm of tabel] (pilih) {Model terpilih\\sebagai dasar verifikasi};
-\node[lapis, below=0.55cm of pilih, xshift=0cm] (l1) {Lapis 1 --- struktural};
-\node[lapis, below=0.3cm of l1] (l2) {Lapis 2 --- fisik};
-\node[lapis, below=0.3cm of l2] (l3) {Lapis 3 --- temporal};
-\node[lapis, below=0.3cm of l3] (l4) {Lapis 4 --- kalibrasi};
-\node[blok, below=0.55cm of l4] (putus)
-  {Keputusan: terima, tolak,\\atau minta konfirmasi};
+\node[blok, below=1.3cm of tabel] (pilih)
+  {Model terpilih sebagai dasar verifikasi};
+\node[lapis, below=of pilih] (l1) {Lapis 1 --- struktural (jumlah digit, posisi desimal)};
+\node[lapis, below=0.3cm of l1] (l2) {Lapis 2 --- fisik (rentang berat, toleransi)};
+\node[lapis, below=0.3cm of l2] (l3) {Lapis 3 --- temporal (kesepakatan antar bingkai)};
+\node[lapis, below=0.3cm of l3] (l4) {Lapis 4 --- statistik (keyakinan terkalibrasi)};
+\node[blok, below=of l4] (putus)
+  {Keputusan: terima, tolak, atau minta konfirmasi};
 \node[blok, below=of putus] (eval)
-  {Evaluator: kesalahan senyap,\\\textit{coverage}, selective accuracy, AURC};
+  {Evaluator: kesalahan senyap, \textit{coverage},\\ \textit{selective accuracy}, AURC};
 
 \draw[panah] (tabel) -- (pilih);
 \draw[panah] (pilih) -- (l1);
@@ -57,13 +50,12 @@
 \draw[panah] (l4) -- (putus);
 \draw[panah] (putus) -- (eval);
 
-% ---------------- kotak kelompok ----------------
 \begin{scope}[on background layer]
-  \node[draw=black!55, dashed, rounded corners=4pt, inner sep=7pt,
-        fit=(akuisisi)(m1)(m6)(tabel),
+  \node[draw=black!55, dashed, rounded corners=5pt, inner sep=8pt,
+        fit=(akuisisi)(tabel),
         label={[judul]above:TAHAP A --- KOMPARASI MODEL (K3)}] {};
-  \node[draw=black!55, dashed, rounded corners=4pt, inner sep=7pt,
-        fit=(pilih)(l1)(l4)(eval),
+  \node[draw=black!55, dashed, rounded corners=5pt, inner sep=8pt,
+        fit=(pilih)(eval),
         label={[judul]below:TAHAP B --- VERIFIKASI BERLAPIS (K1)}] {};
 \end{scope}
 

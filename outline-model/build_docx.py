@@ -201,14 +201,24 @@ def baca_tex(path: Path, entri) -> list[tuple]:
                     label = ml.group(1)
                 if b.startswith("\\begin{tabularx}") or b.startswith("\\begin{longtable}"):
                     spec = b
+                    kumpul = ""
                     i += 1
                     while i < len(baris) and not baris[i].strip().startswith("\\end{tabularx}") and not baris[i].strip().startswith("\\end{longtable}"):
                         r = baris[i].strip()
-                        if r.endswith("\\\\"):
+                        abaikan = ("\\toprule", "\\midrule", "\\bottomrule", "\\hline", "\\end", "\\caption", "\\label", "\\begin", "\\addlinespace")
+                        if not r or r.startswith(abaikan):
+                            i += 1
+                            continue
+                        akhir = r.endswith("\\\\")
+                        if akhir:
                             r = r[:-2].strip()
-                        if r and "&" in r and not r.startswith("\\"):
-                            sel = [baris_bersih(ganti_sitasi(x, entri)) for x in r.split("&")]
-                            rows.append(sel)
+                        kumpul = (kumpul + " " + r).strip()
+                        if akhir:
+                            if "&" in kumpul:
+                                sel = [baris_bersih(ganti_sitasi(x, entri))
+                                       for x in kumpul.split("&")]
+                                rows.append(sel)
+                            kumpul = ""
                         i += 1
                 i += 1
             blok.append(("table", caption, rows, spec, label))
@@ -313,7 +323,7 @@ def bingkai_tabel(tabel):
 
 
 def lebar_kolom(spec: str, jumlah: int, total_cm: float) -> list[float]:
-    angka = [float(x) for x in re.findall(r"p\{([\d.]+)cm\}", spec)]
+    angka = [float(x) for x in re.findall(r"[LpX]\{([\d.]+)cm\}", spec)]
     if not angka:
         return [total_cm / jumlah] * jumlah
     sisa = total_cm - sum(angka) - 0.6
@@ -414,7 +424,7 @@ def bangun():
     for teks, jarak in (("OUTLINE PENELITIAN", 36), ("TUGAS AKHIR", 0), ("Oleh:", 36)):
         p = doc.add_paragraph(); atur_paragraf(p, align=WD_ALIGN_PARAGRAPH.CENTER, indent=False)
         p.paragraph_format.space_before = Pt(jarak)
-        tulis(p, teks, bold=(jarak > 0))
+        tulis(p, teks, bold=True)
     for teks in (f"Nama: {NAMA}", f"NPM: {NPM}"):
         p = doc.add_paragraph(); atur_paragraf(p, align=WD_ALIGN_PARAGRAPH.CENTER, indent=False, line=1.5)
         tulis(p, teks)
@@ -424,7 +434,7 @@ def bangun():
                         (BULAN_TAHUN, 30)):
         p = doc.add_paragraph(); atur_paragraf(p, align=WD_ALIGN_PARAGRAPH.CENTER, indent=False)
         p.paragraph_format.space_before = Pt(jarak)
-        tulis(p, teks, bold=(jarak > 0))
+        tulis(p, teks, bold=True)
 
     # ---------------- bagian awal (angka romawi kecil)
     sec = doc.add_section(WD_SECTION.NEW_PAGE)
