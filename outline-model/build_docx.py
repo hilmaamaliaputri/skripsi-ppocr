@@ -25,10 +25,10 @@ HERE = Path(__file__).resolve().parent
 BAB = HERE  # tex tunggal ada di folder ini
 GAMBAR = HERE / "gambar"
 BIB = HERE / "references.bib"
-KELUAR = HERE / "Outline-Penelitian-Model.docx"
+KELUAR = HERE / "Outline-Penelitian-TA.docx"
 
-JUDUL = ("VERIFIKASI BERLAPIS PADA KOMPARASI MODEL PEMBACAAN "
-         "TAMPILAN TUJUH SEGMEN TIMBANGAN DIGITAL")
+JUDUL = ("DEKODING TERBIMBING DAN VERIFIKASI BERLAPIS "
+         "PADA TAMPILAN TUJUH SEGMEN TIMBANGAN DIGITAL")
 NAMA = "Hilma Amalia Putri"
 NPM = "[NPM]"
 PEMBIMBING_1 = "[Nama Pembimbing I]"
@@ -329,6 +329,12 @@ def lebar_kolom(spec: str, jumlah: int, total_cm: float) -> list[float]:
     sisa = total_cm - sum(angka) - 0.6
     if len(angka) < jumlah:
         angka = angka + [max(sisa, 2.0)] * (jumlah - len(angka))
+    # kolom sempit membuat kata terpotong: naikkan ke minimum 1,6 cm
+    for i, w in enumerate(angka):
+        if w < 1.6:
+            terbesar = angka.index(max(angka))
+            angka[terbesar] = angka[terbesar] - (1.6 - w)
+            angka[i] = 1.6
     return angka
 
 
@@ -502,11 +508,11 @@ def bangun():
             elif b[0] == "table":
                 nt += 1
                 if b[4]:
-                    peta[b[4]] = f"{ROMAN[bab_ke]}.{nt}"
+                    peta[b[4]] = f"{bab_ke}.{nt}"
             elif b[0] == "figure":
                 nf += 1
                 if b[3]:
-                    peta[b[3]] = f"{ROMAN[bab_ke]}.{nf}"
+                    peta[b[3]] = f"{bab_ke}.{nf}"
 
     for idx, berkas in enumerate(bab_berkas, start=1):
         sec = doc.add_section(WD_SECTION.NEW_PAGE)
@@ -545,8 +551,6 @@ def bangun():
                 nomor_gambar = 0
                 h = doc.add_paragraph()
                 h.style = doc.styles["Heading 1"]
-                tulis(h, f"BAB {ROMAN[bab_ke]} ")
-                h.add_run().add_break()
                 tulis(h, b[1].upper(), bold=True)
             elif jenis == "section":
                 nomor_sec += 1
@@ -573,7 +577,7 @@ def bangun():
             elif jenis == "table":
                 nomor_tabel += 1
                 tambah_tabel(doc, b[1], b[2], b[3],
-                             f"Tabel {ROMAN[bab_ke]}.{nomor_tabel}")
+                             f"Tabel {bab_ke}.{nomor_tabel}")
             elif jenis == "figure":
                 par = doc.add_paragraph()
                 atur_paragraf(par, align=WD_ALIGN_PARAGRAPH.CENTER, indent=False, line=1.0)
@@ -581,7 +585,7 @@ def bangun():
                 cap = doc.add_paragraph()
                 atur_paragraf(cap, align=WD_ALIGN_PARAGRAPH.CENTER, indent=False, line=1.0)
                 nomor_gambar += 1
-                tulis(cap, f"Gambar {ROMAN[bab_ke]}.{nomor_gambar}  {b[1]}",
+                tulis(cap, f"Gambar {bab_ke}.{nomor_gambar}  {b[1]}",
                       bold=True, size=10)
 
     doc.save(KELUAR)
