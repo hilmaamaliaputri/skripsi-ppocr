@@ -9,6 +9,7 @@ Hasil   :  draft-usulan-penelitian.docx
 """
 from __future__ import annotations
 
+import pathlib
 import re
 import sys
 from pathlib import Path
@@ -25,7 +26,7 @@ HERE = Path(__file__).resolve().parent
 BAB = HERE  # tex tunggal ada di folder ini
 GAMBAR = HERE / "gambar"
 BIB = HERE / "references.bib"
-KELUAR = HERE / "Outline-Penelitian-K1K3.docx"
+KELUAR = pathlib.Path(r"C:/Users/hilma/AppData/Local/hermes/cache/scratch/outline-build.docx")
 
 JUDUL = ("VERIFIKASI BERLAPIS DAN KOMPARASI MODEL "
          "PADA TAMPILAN TUJUH SEGMEN TIMBANGAN DIGITAL")

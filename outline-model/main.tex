@@ -380,7 +380,7 @@ PP-OCRv5 & 2026 & 5 juta (pengenal) & Generasi sebelumnya dari keluarga yang sam
 CRNN-CTC & 2017 & 11,6 juta & Arsitektur acuan domain ini dan dipakai penelitian terdahulu & Pembanding deep learning khusus \\
 DBNet + PARSeq & 2024 & \textit{[diisi saat implementasi]} & Detektor dan pengenal terbaik pada data tujuh segmen & Pembanding pipeline dua tahap \\
 ssocr & -- & tanpa model & Metode klasik tanpa pelatihan & Pembanding non-\textit{machine learning} \\
-Model bahasa-visi & 2026 & miliaran & Pendekatan tanpa pelatihan khusus & Pembanding biaya \\
+Model bahasa-visi & 2026 & miliaran & Pendekatan tanpa pelatihan khusus & Pembanding biaya layanan \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -421,6 +421,104 @@ kondisi, dan satu keputusan berupa model dasar yang dipakai kandidat 1. Bila
 PP-OCRv6 ternyata sudah memadai tanpa pelatihan tambahan, isi laporan bergeser dari
 pelatihan ke pemilihan tingkat model dan biaya; bila tidak memadai, selisihnya
 terhadap CRNN-CTC dan PARSeq menjadi bahan analisis.
+
+\subsection{Arti Pembanding Biaya}
+
+Biaya yang dimaksud bukan harga lisensi, karena lima dari enam model tersedia
+terbuka. Yang dimaksud adalah biaya menjalankan, dan ada empat angka yang
+dilaporkan untuk setiap model: jumlah parameter, ukuran berkas bobot, latensi p50
+dan p95 pada perangkat yang sama, serta kebutuhan memori. Untuk model yang
+memerlukan layanan jaringan, ditambahkan harga per seribu citra dan waktu tunggu
+jaringan.
+
+Keempat angka itu yang menentukan apakah sebuah model dapat dipakai pada arah
+akhir penelitian. Model dengan akurasi tertinggi tidak berguna bila latensinya
+tiga detik pada ponsel gudang, atau bila setiap pembacaan memerlukan kuota
+internet. Karena itu model bahasa-visi tetap diikutsertakan meskipun diperkirakan
+kalah pada biaya: ia menjadi batas atas akurasi dan batas bawah efisiensi, dan
+tanpa keduanya tabel perbandingan hanya memuat satu sisi.
+
+\subsection{Cara Memperoleh Setiap Model}
+
+Lima model tersedia sebagai perangkat lunak terbuka dengan bobot siap pakai, satu
+model harus dilatih sendiri karena tidak ada bobot publik untuk domain ini
+(Tabel~\ref{tab:peroleh}).
+
+\begin{table}[H]
+\caption{Sumber dan cara memperoleh setiap model}
+\label{tab:peroleh}
+\begin{tabularx}{\textwidth}{@{}L{2.9cm} L{3.3cm} L{4.6cm} X@{}}
+\toprule
+\textbf{Model} & \textbf{Sumber} & \textbf{Cara memperoleh} & \textbf{Lisensi dan biaya} \\
+\midrule
+PP-OCRv6 (tiga tingkat) & PaddleOCR & Pasang pustaka, pilih nama model, bobot terunduh saat pertama dipakai & Apache-2.0; gratis, berjalan luring \\
+PP-OCRv5 & PaddleOCR & Sama, dengan nama model versi 5 & Apache-2.0; gratis, berjalan luring \\
+CRNN-CTC & Arsitektur \textcite{shi2017crnn} & Dilatih sendiri pada data sintetis; tidak ada bobot publik untuk tujuh segmen & Gratis; biaya waktu latih \\
+DBNet + PARSeq & PaddleOCR dan \textcite{bautista2022parseq} & DBNet dari PaddleOCR, PARSeq dari bobot publik penulisnya & Apache-2.0; \textit{[cek lisensi bobot PARSeq]} \\
+ssocr & \textcite{auerswal_ssocr} & Pasang dari pengelola paket sistem, atau bangun dari sumber & GPL; gratis, tanpa pelatihan \\
+Model bahasa-visi & Layanan API & Kunci akses, satu model dikunci sebelum eksperimen dijalankan & Berbayar per token; butuh jaringan \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Dua hal dikunci sebelum eksperimen pertama supaya perbandingan tidak berubah di
+tengah jalan: versi pustaka dan versi bobot. Alasannya, PP-OCRv6 dan PP-OCRv5
+dirilis pada tahun yang sama \parencite{zhang2026ppocrv6, zhang2026ppocrv5}, dan
+pembaruan bobot di repositori dapat mengubah hasil tanpa perubahan kode.
+
+Model bahasa-visi yang dipakai adalah satu model layanan daring dengan prompt
+terstruktur: citra panel masuk, keluar hanya digit dan titik desimal tanpa
+penjelasan. Prompt yang sama dipakai untuk seluruh citra uji dan disimpan sebagai
+berkas. Pemilihan penyedia dilakukan sebelum pengukuran, bukan setelah melihat
+hasil.
+
+\subsection{Data Latih: Pembangkit Sintetis}
+
+Data nyata untuk melatih sulit diperoleh dalam jumlah cukup: satu timbangan
+menghasilkan satu panel, dan memotret ribuan kali di gudang tidak praktis. Karena
+itu data latih dibangkitkan, sedangkan data uji tetap nyata. Praktik ini lazim
+pada domain ini: pembangkit citra tujuh segmen dipakai \textcite{gushima2023automatic},
+dan pembangkit serupa untuk perangkat ukur digital dipakai untuk menyiapkan data
+latih model bahasa-visi \parencite{valente2025cad2dmd}.
+
+Pembangkit harus menutup seluruh variasi yang akan ditemui saat pengujian, bukan
+hanya menghasilkan angka yang mudah dibaca (Tabel~\ref{tab:sintetis}).
+
+\begin{table}[H]
+\caption{Dimensi variasi pembangkit data sintetis}
+\label{tab:sintetis}
+\begin{tabularx}{\textwidth}{@{}L{2.7cm} L{6.6cm} X@{}}
+\toprule
+\textbf{Dimensi} & \textbf{Nilai yang divariasikan} & \textbf{Alasan} \\
+\midrule
+Isi bacaan & 1--8 digit, posisi titik desimal 0--2, nol di depan & Menutup panjang bacaan pada timbangan 25 kg sampai 5 ton \\
+Jenis tampilan & LED merah, LED hijau, LCD pasif & Kontras dan warna berbeda; LCD paling sulit dibaca kamera ponsel \\
+Geometri & Lebar dan tinggi digit, jarak antar slot, ketebalan segmen, kemiringan 0--30 derajat & Slot yang tidak seragam memutus asumsi lapis struktural \\
+Fotometri & Pencahayaan 0,2--1,0, pantulan lokal, suhu warna, bayangan tangan & Pantulan adalah penyebab kegagalan yang paling sering dilaporkan \parencite{low2024detecting} \\
+Optik & Buram 0--4 piksel, derau sensor, kompresi JPEG, resolusi 320--2000 piksel & Kamera ponsel murah menghasilkan derau dan kompresi \\
+Latar & Badan timbangan, stiker, kabel, meja, lantai gudang & Potongan latar diambil dari foto asli, bukan digambar \\
+Cacat tampilan & Segmen mati, segmen samar, bayangan ganda & Timbangan tua di lapangan sering memiliki segmen lemah \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Pembangkit bekerja dengan menggambar tujuh segmen per digit sebagai poligon pada
+kanvas kosong, menyusunnya sesuai tata letak panel, lalu menempelkan hasilnya ke
+potongan latar foto asli dan menerapkan variasi fotometri serta optik. Karena
+setiap parameter diketahui saat pembangkitan, label dihasilkan tanpa anotasi
+manual.
+
+Yang menentukan mutu pembangkit bukan jumlah citra, melainkan kesesuaiannya dengan
+data uji. Sebelum dipakai, 200 citra sintetis dan 100 citra nyata diukur pada enam
+fitur: lebar digit relatif, rasio kontras, ketajaman, kemiringan, tingkat derau,
+dan jumlah slot. Pembangkit dianggap memadai bila sebaran kedua kumpulan tidak
+berbeda secara berarti pada keenam fitur itu. Bila berbeda, variasi yang kurang
+ditambahkan lebih dahulu, bukan jumlah citra dinaikkan.
+
+Satu aturan tidak dilanggar: citra sintetis tidak pernah masuk ke data uji. Data
+uji sintetis hanya akan mengukur ketidaksempurnaan pembangkitnya sendiri, sehingga
+angka akurasi menjadi tinggi tanpa hubungan dengan lapangan
+\parencite{gushima2023automatic}.
 
 \section{Kandidat 1: Verifikasi Kontekstual}
 
@@ -515,6 +613,21 @@ B5 & Ditambah lapis 4 kalibrasi & \textit{Coverage}, \textit{selective accuracy}
 \end{tabularx}
 \end{table}
 
+Satu baris pada Tabel~\ref{tab:ukur} perlu penjelasan: A3, CRNN-CTC dilatih
+lebih dahulu, sedangkan lima model lain dipakai apa adanya. Alasannya bukan
+preferensi. CRNN-CTC tidak memiliki bobot publik untuk tampilan tujuh segmen;
+bobot yang tersedia dilatih pada teks alam \parencite{shi2017crnn}, dan domainnya
+berbeda. Membiarkannya tanpa latihan berarti menguji model yang dilatih untuk
+tulisan tangan dan papan nama jalan, lalu menyimpulkan bahwa arsitektur itu lemah.
+Kesimpulan seperti itu salah secara metode.
+
+CRNN-CTC dilatih pada data latih yang sama dengan yang dipakai model lain, dengan
+jumlah epoch dan augmentasi yang sama, lalu dievaluasi pada data uji yang sama.
+Dengan begitu ia menjadi batas bawah yang jujur: bila CRNN yang sederhana kalah,
+selisihnya menunjukkan sumbangan model pracetak, bukan sumbangan data. Bila CRNN
+ternyata mendekati PP-OCRv6, berarti tugas ini mudah bagi keduanya dan nilai
+penelitian bergeser sepenuhnya ke lapis verifikasi.
+
 Seluruh eksperimen memakai satu kumpulan data uji yang dikunci sebelum A1 berjalan.
 Data latih dibangkitkan secara sintetis dengan kondisi terkontrol, sedangkan data
 uji memuat citra timbangan nyata, karena data uji sintetis hanya akan mengukur
@@ -567,17 +680,46 @@ S24 & Bautista dan Atienza & 2022 & ECCV (arXiv:2207.06966) \\
 
 \section{Bagan Alur}
 
-Alur penelitian berjalan satu arah dari citra sampai keputusan. Kandidat 3 adalah
-tiga kotak pertama sesudah praproses, tempat keenam model dijalankan dan dipilih.
-Kandidat 1 adalah kotak verifikasi sesudahnya. Kotak bergaris putus-putus di bawah
-menandai bagian yang menjadi tujuan akhir dan belum dikerjakan pada tahap ini.
+Bagan disusun dalam tiga jalur, bukan satu urutan. Jalur atas adalah penyiapan
+model, yang berjalan di luar perangkat pada CPU atau layanan komputasi kampus.
+Jalur tengah adalah runtime pada perangkat, tempat pembacaan dilakukan dan tidak
+tersedia jaringan. Jalur bawah adalah evaluasi, yang memakai hasil dua jalur di
+atasnya.
+
+Panah pada bagan menunjukkan ketergantungan, bukan urutan tahap. Panah putus-putus
+antar jalur menunjukkan hal yang harus ada sebelum jalur di bawahnya dapat
+berjalan: bobot dan ambang dari penyiapan model, serta keluaran tercatat dari
+runtime.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.95\textwidth,height=14.2cm,keepaspectratio]{gambar/alur-model.png}
-\caption{Arsitektur penelitian: komparasi model dilanjutkan verifikasi berlapis}
+\includegraphics[width=\textwidth]{gambar/alur-jalur.png}
+\caption{Arsitektur penelitian: jalur penyiapan model, jalur runtime pada perangkat, dan jalur evaluasi}
 \label{fig:alur-model}
 \end{figure}
+
+\section{Penjelasan Jalur}
+
+\begin{table}[H]
+\caption{Isi setiap jalur, masukan, dan keluarannya}
+\label{tab:blok}
+\begin{tabularx}{\textwidth}{@{}L{2.9cm} L{3.4cm} L{3.4cm} X@{}}
+\toprule
+\textbf{Jalur} & \textbf{Masukan} & \textbf{Keluaran} & \textbf{Alasan dipisahkan} \\
+\midrule
+Penyiapan model & Data sintetis, kode model, citra nyata untuk validasi & Bobot terkalibrasi dan ambang dalam \textit{registry} & Berjalan sekali, butuh waktu lama, tidak dilakukan di perangkat gudang \\
+Runtime perangkat & Foto panel dan konteks produk & Keputusan dan catatan transaksi & Harus selesai dalam hitungan detik dan tanpa jaringan \\
+Evaluasi & Keluaran runtime dan \textit{ground truth} terkunci & Tabel metrik, kurva \textit{risk--coverage} & Dijalankan berulang setelah eksperimen, memakai label yang tidak boleh dilihat runtime \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Pemisahan jalur itu bukan pengaturan gambar. Ia mencegah tiga kesalahan yang biasa
+terjadi pada penelitian sejenis. Pertama, melatih model di dalam alur pengukuran,
+sehingga data uji ikut terpakai. Kedua, mengukur latensi pada mesin yang sama
+dengan mesin pelatihan, sehingga angka latensi tidak mewakili perangkat sasaran.
+Ketiga, memakai label saat menjalankan pembacaan, yang membuat hasil terlihat lebih
+baik daripada kemampuannya.
 
 \section{Penjelasan Blok}
 
