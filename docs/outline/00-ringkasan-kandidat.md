@@ -1,50 +1,33 @@
-# Ringkasan Kandidat — Keputusan Akhir
+# Ringkasan Kandidat
 
-> Diperbarui: 29 Oktober 2026.
-> Keputusan: **K1 dan K3 diambil**; K2 dan K4 tidak dipakai dan berkasnya dihapus.
-> Fokus tahap ini: **lapisan model**. Sistem ditunda ke tahap terpisah.
-> Rancangan lengkap: `outline-model/main.tex`.
+> Diperbarui: 30 Oktober 2026.
+> Kandidat yang dipakai pada outline terbaru: **K1 dan K2**.
+> Struktur outline: judul, ringkasan, state of the art, tema utama, referensi,
+> arsitektur. Berkas: `outline-model/main.tex`.
 
 ## Kandidat yang dipakai
 
-| Kandidat | Isi | Peran dalam penelitian |
+| Kandidat | Isi | Posisi dalam alur |
 |---|---|---|
-| **K3** | Komparasi generasi model 2026 pada data dan metrik yang sama | Tahap A — menghasilkan tabel perbandingan dan memilih model terbaik |
-| **K1** | Verifikasi kontekstual empat lapis | Tahap B — diterapkan pada model terpilih untuk menekan kesalahan senyap |
+| **K2** — dekoding CTC terbimbing geometri | Membatasi penguraian keluaran CTC memakai jumlah slot, batas slot, dan posisi titik desimal hasil profil proyeksi | Di dalam model, sebelum string terbentuk |
+| **K1** — verifikasi kontekstual | Empat lapis pemeriksaan di luar piksel: struktural, fisik, temporal, kalibrasi | Sesudah model, pada tahap memutuskan |
 
-Keduanya bukan dua penelitian terpisah, melainkan dua tahap berurutan dengan satu
-kumpulan data uji dan satu skrip metrik.
+K2 memperbaiki bentuk keluaran. K1 menentukan apakah keluaran itu layak dipakai.
+Urutannya tidak dapat dibalik: verifikasi membandingkan jumlah digit dengan jumlah
+slot, dan perbandingan itu baru berguna bila penguraian tidak lagi menghapus digit
+kembar.
 
-## Kandidat yang tidak dipakai
+## Status kandidat lain
 
-| Kandidat | Alasan tidak diambil |
+| Kandidat | Status |
 |---|---|
-| K2 — dekoding CTC terbimbing geometri | Risiko nol hasil paling tinggi; bentuknya juga tidak diakui sebagai bentuk tersendiri dalam Pedoman TA |
-| K4 — distilasi VLM ke model ringan | Butuh API berbayar dan GPU; hasil negatif cukup mungkin dalam waktu tersedia |
-
-Berkas `kandidat-K2-*.md` dan `kandidat-K4-*.md` dihapus dari repo. Riwayatnya tetap
-tersimpan di Git bila suatu saat diperlukan.
+| K3 — komparasi generasi model | Bukan kandidat utama lagi. Isinya dipakai sebagai protokol pengukuran (model pembanding CRNN-CTC, DBNet+PARSeq, ssocr) dan tetap tersimpan sebagai berkas |
+| K4 — distilasi VLM ke model ringan | Dihapus dari repo. Butuh API berbayar dan GPU |
 
 ## Batas tahap ini
 
-Dikerjakan: data, model, komparasi, verifikasi, metrik, dan analisis.
+Dikerjakan: data, model, dekoding, verifikasi, metrik, analisis.
 
-Ditunda: antarmuka, basis data, log audit, sinkronisasi, uji penerimaan operator, dan
-penerapan pada perangkat berdaya rendah.
-
-Alasan penundaan: seluruh bagian itu bertumpu pada satu asumsi, yaitu lapisan model
-sudah terbukti bekerja. Membangunnya lebih dahulu berisiko menghasilkan sistem rapi
-yang bertumpu pada asumsi yang belum diuji.
-
-## Enam model pembanding
-
-| # | Model | Tahun | Peran |
-|---|---|---|---|
-| 1 | PP-OCRv6 *tiny/small/medium* | 2026 | Kandidat utama; tiga tingkat dibandingkan |
-| 2 | PP-OCRv5 | 2026 | Pembanding generasi |
-| 3 | CRNN-CTC | 2017 | Pembanding deep learning khusus |
-| 4 | DBNet + PARSeq | 2024 | Pembanding pipeline dua tahap |
-| 5 | ssocr | t.t. | Pembanding klasik non-*machine learning* |
-| 6 | Model bahasa-visi | 2026 | Pembanding biaya |
-
-Rincian alasan dan peran setiap model ada pada Bab IV `outline-model/main.tex`.
+Ditunda ke tahap akhir: antarmuka operator, basis data, jejak audit, sinkronisasi,
+pengujian penerimaan. Bagian itu bertumpu pada asumsi bahwa lapisan model dan
+verifikasi sudah terbukti menurunkan kesalahan senyap.
