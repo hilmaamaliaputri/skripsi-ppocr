@@ -582,7 +582,7 @@ def bangun():
             elif jenis == "figure":
                 par = doc.add_paragraph()
                 atur_paragraf(par, align=WD_ALIGN_PARAGRAPH.CENTER, indent=False, line=1.0)
-                par.add_run().add_picture(str(GAMBAR / b[2]), width=Cm(12.4))
+                par.add_run().add_picture(str(GAMBAR / b[2]), width=Cm(14.0))
                 cap = doc.add_paragraph()
                 atur_paragraf(cap, align=WD_ALIGN_PARAGRAPH.CENTER, indent=False, line=1.0)
                 nomor_gambar += 1

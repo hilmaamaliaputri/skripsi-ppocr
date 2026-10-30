@@ -702,7 +702,7 @@ runtime.
 
 \begin{table}[H]
 \caption{Isi setiap jalur, masukan, dan keluarannya}
-\label{tab:blok}
+\label{tab:jalur}
 \begin{tabularx}{\textwidth}{@{}L{2.9cm} L{3.4cm} L{3.4cm} X@{}}
 \toprule
 \textbf{Jalur} & \textbf{Masukan} & \textbf{Keluaran} & \textbf{Alasan dipisahkan} \\
@@ -720,27 +720,6 @@ sehingga data uji ikut terpakai. Kedua, mengukur latensi pada mesin yang sama
 dengan mesin pelatihan, sehingga angka latensi tidak mewakili perangkat sasaran.
 Ketiga, memakai label saat menjalankan pembacaan, yang membuat hasil terlihat lebih
 baik daripada kemampuannya.
-
-\section{Penjelasan Blok}
-
-\begin{table}[H]
-\caption{Blok arsitektur, masukan, dan keluaran}
-\label{tab:blok}
-\begin{tabularx}{\textwidth}{@{}L{3.1cm} L{3.3cm} L{3.5cm} X@{}}
-\toprule
-\textbf{Blok} & \textbf{Masukan} & \textbf{Keluaran} & \textbf{Alasan} \\
-\midrule
-Akuisisi & Foto atau 3--5 bingkai & Citra dan metadata kondisi & Lapis temporal dan analisis per kondisi memerlukan metadata \\
-Praproses & Citra penuh & Area panel ternormalisasi, profil proyeksi & Menyamakan kontras LED dan LCD pasif \\
-Model pembanding & Area panel & String dan skor tiap model & Enam model dijalankan pada citra yang sama \\
-Skrip metrik tunggal & Keluaran semua model & FSR, CER, akurasi desimal, latensi & Menjamin definisi yang sama untuk semua model \\
-Tabel dan pemilihan & Tabel metrik dan biaya & Model dasar & Dasar bagi kandidat 1 \\
-Verifikasi berlapis & String dan konteks & Keputusan beralasan & Menekan kesalahan senyap \\
-Evaluator & Keputusan dan label & Kesalahan senyap, coverage, AURC & Ukuran keandalan, bukan akurasi \\
-Sistem pencatatan & Keputusan & Catatan, citra, jejak audit & Tujuan akhir, dikerjakan setelah lapisan model \\
-\bottomrule
-\end{tabularx}
-\end{table}
 
 \section{Urutan Kerja}
 
