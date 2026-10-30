@@ -25,9 +25,9 @@ HERE = Path(__file__).resolve().parent
 BAB = HERE  # tex tunggal ada di folder ini
 GAMBAR = HERE / "gambar"
 BIB = HERE / "references.bib"
-KELUAR = HERE / "Outline-Penelitian-TA.docx"
+KELUAR = HERE / "Outline-Penelitian-K1K3.docx"
 
-JUDUL = ("DEKODING TERBIMBING DAN VERIFIKASI BERLAPIS "
+JUDUL = ("VERIFIKASI BERLAPIS DAN KOMPARASI MODEL "
          "PADA TAMPILAN TUJUH SEGMEN TIMBANGAN DIGITAL")
 NAMA = "Hilma Amalia Putri"
 NPM = "[NPM]"

@@ -2,6 +2,7 @@
 %  OUTLINE PENELITIAN
 %  Struktur: judul, ringkasan, state of the art, tema utama,
 %            referensi, arsitektur (bagan alur)
+%  Kandidat: K3 (komparasi model 2026) + K1 (verifikasi berlapis)
 %  Hilma Amalia Putri — Informatika, Fakultas Teknik, Universitas Siliwangi
 %  Kompilasi: bash build.sh
 % =====================================================================
@@ -71,7 +72,7 @@
   itemsep=0pt,topsep=0.25\baselineskip}
 
 \usepackage{tikz}
-\usetikzlibrary{arrows.meta,positioning,fit,backgrounds}
+\usetikzlibrary{arrows.meta,positioning,fit,backgrounds,calc}
 \usepackage[round,authoryear]{natbib}
 \bibliographystyle{plainnat}
 \newcommand{\parencite}[1]{\citep{#1}}
@@ -86,7 +87,7 @@
   \vspace*{0.5cm}
   {\bfseries\normalsize OUTLINE PENELITIAN TUGAS AKHIR\par}
   \vspace{1.2cm}
-  {\bfseries\normalsize DEKODING TERBIMBING DAN VERIFIKASI BERLAPIS\\[0.2cm]
+  {\bfseries\normalsize VERIFIKASI BERLAPIS DAN KOMPARASI MODEL\\[0.2cm]
    PADA TAMPILAN TUJUH SEGMEN\\[0.2cm] TIMBANGAN DIGITAL\par}
   \vspace{1.2cm}
   {\normalsize Tahap model, menuju sistem pencatatan yang dapat dipakai\par}
@@ -117,27 +118,27 @@
 \section{Judul yang Diajukan}
 
 \begin{quote}
-\textbf{Dekoding Terbimbing dan Verifikasi Berlapis pada Tampilan Tujuh
-Segmen Timbangan Digital}
+\textbf{Verifikasi Berlapis dan Komparasi Model pada Tampilan Tujuh Segmen
+Timbangan Digital}
 \end{quote}
 
-Judul itu memuat metode (dekoding terbimbing dan verifikasi berlapis) dan objek
-(tampilan tujuh segmen timbangan digital), dengan panjang sebelas kata. Nama model
-tidak dimasukkan karena judul bertahan sampai sidang, sedangkan model berganti
-generasi dalam hitungan bulan: PP-OCRv5 terbit 2026 \parencite{zhang2026ppocrv5}
-dan PP-OCRv6 menyusul pada tahun yang sama \parencite{zhang2026ppocrv6}.
+Judul itu memuat metode (verifikasi berlapis dan komparasi model) dan objek
+(tampilan tujuh segmen timbangan digital), dengan panjang dua belas kata. Nama
+model tidak dimasukkan karena judul bertahan sampai sidang, sedangkan model
+berganti generasi dalam hitungan bulan: PP-OCRv5 terbit 2026
+\parencite{zhang2026ppocrv5} dan PP-OCRv6 menyusul pada tahun yang sama
+\parencite{zhang2026ppocrv6}.
 
-Tujuan tidak dicantumkan di judul. Kalimat "untuk menekan kesalahan senyap" akan
-membawa judul menjadi lima belas kata, melewati batas dua belas kata pada acuan
-penulisan judul. Tujuan itu dipindahkan ke bagian ringkasan dan tema utama.
+Kata "menekan kesalahan senyap" tidak masuk judul karena akan membawanya menjadi
+lima belas kata. Tujuan itu dinyatakan di ringkasan dan di tema utama.
 
 \section{Judul Alternatif}
 
 \begin{poin}
-  \item Verifikasi Berlapis dan Dekoding Terbimbing untuk Menekan Kesalahan Senyap
-        (sebelas kata, tanpa objek yang spesifik).
-  \item Pembacaan Tampilan Tujuh Segmen Timbangan Digital dengan Dekoding
-        Terbimbing (sebelas kata, tanpa kata verifikasi).
+  \item Komparasi Model dan Verifikasi Berlapis untuk Pembacaan Tampilan Tujuh
+        Segmen Timbangan Digital (tiga belas kata).
+  \item Verifikasi Berlapis untuk Menekan Kesalahan Senyap pada Tampilan Tujuh
+        Segmen (dua belas kata, tanpa kata komparasi).
 \end{poin}
 
 % =====================================================================
@@ -153,8 +154,9 @@ berbeda satu digit nol; keduanya terbaca wajar di kertas.
 
 Kamera ponsel dapat memotret panel itu dan sebuah model pengenalan karakter dapat
 membacanya. Persoalannya bukan apakah model bisa menghasilkan angka. Persoalannya
-adalah menentukan apakah angka yang dihasilkan layak dipercaya, pada saat angka itu
-dihasilkan, ketika berat sebenarnya belum diketahui siapa pun.
+ada dua: model mana yang layak dipakai pada kondisi lapangan, dan bagaimana
+menentukan apakah angka yang dihasilkan layak dipercaya ketika berat sebenarnya
+belum diketahui siapa pun.
 
 \section{Apa yang Sudah Dicapai Penelitian}
 
@@ -164,32 +166,32 @@ karakter dengan waktu 20 milidetik pada timbangan elektronik
 \parencite{jiang2026method}. CRNN-CTC dengan pra-pemrosesan YOLO melaporkan
 \textit{exact match} 90,37\% (197 dari 218 citra) dan CER 3,6\% pada data logger
 tujuh segmen \parencite{effendi2025unjuk}. YOLO dengan kepala inferensi digit
-mencapai 97,8\% per bingkai pada 30 bingkai per detik \parencite{yenneti2023lightweight},
-sedangkan generator citra sintetis dengan model digit dan model titik desimal
-terpisah mencapai 96,8\% untuk perangkat berspesifikasi rendah
-\parencite{gushima2023automatic}.
+mencapai 97,8\% per bingkai pada 30 bingkai per detik
+\parencite{yenneti2023lightweight}, sedangkan generator citra sintetis dengan model
+digit dan model titik desimal terpisah mencapai 96,8\% untuk perangkat
+berspesifikasi rendah \parencite{gushima2023automatic}.
 
 Laporan itu menunjukkan dua hal sekaligus. Model sudah cukup baik untuk membaca
 panel yang terlihat jelas, dan setiap laporan berhenti pada satu bilangan, yaitu
-akurasi pada kumpulan data penulisnya sendiri.
+akurasi pada kumpulan data penulisnya sendiri. Tidak ada dua angka di antaranya
+yang dapat dibandingkan langsung.
 
 \section{Apa yang Ditawarkan Penelitian Ini}
 
-Penelitian ini bekerja pada dua tempat di dalam alur yang sama.
+Penelitian ini bekerja pada dua tempat di dalam satu alur, dan keduanya memakai
+data uji yang sama.
 
-Yang pertama berada di dalam model, pada tahap penguraian keluaran menjadi teks.
-Dekoder CTC mengasumsikan batas antar karakter tidak diketahui, sehingga dua digit
-kembar hanya dapat dihasilkan bila ada satu langkah kosong di antaranya
-\parencite{graves2006ctc}. Pada panel tujuh segmen, batas itu justru terlihat:
-jumlah slot, lebar tiap slot, dan posisi titik desimal dapat dihitung dari profil
-proyeksi citra. Penelitian ini memakai informasi tersebut untuk membatasi
-penguraian, lalu mengukur akibatnya pada digit kembar dan titik desimal.
+Bagian pertama membandingkan. Enam pendekatan yang masih dipakai pada 2026
+dijalankan pada kumpulan citra yang sama, dengan protokol keluaran yang sama,
+metrik yang sama, dan pembagian data yang sama. Hasilnya bukan hanya akurasi,
+tetapi juga biaya: jumlah parameter, ukuran berkas model, latensi, dan biaya
+per seribu citra untuk model yang memerlukan layanan jaringan.
 
-Yang kedua berada di luar model, pada tahap memutuskan. Keluaran model diperiksa
-oleh empat lapis aturan yang tidak bergantung pada piksel: jumlah digit terhadap
-jumlah slot, kewajaran berat untuk suatu produk, kesepakatan antar bingkai, dan
-nilai keyakinan yang telah dikalibrasi. Hasil akhirnya bukan string, melainkan
-keputusan terima, tolak, atau minta konfirmasi, beserta alasan yang menyertainya.
+Bagian kedua memutuskan. Model terbaik dari perbandingan itu diberi empat lapis
+pemeriksaan yang tidak bergantung pada piksel: jumlah digit terhadap jumlah slot,
+kewajaran berat untuk suatu produk, kesepakatan antar bingkai, dan nilai keyakinan
+yang telah dikalibrasi. Keluaran akhirnya bukan string, melainkan keputusan
+terima, tolak, atau minta konfirmasi, beserta alasan yang menyertainya.
 
 \section{Arah Akhir}
 
@@ -199,8 +201,8 @@ ponsel, menampilkan angka yang diterima, menolak angka yang meragukan dan memint
 timbang ulang, lalu menyimpan citra beserta keputusan dan alasannya sebagai jejak
 audit. Karena gudang sering berada di lokasi dengan jaringan lemah, model berjalan
 di perangkat tanpa koneksi. Penelitian ini mengerjakan bagian yang menentukannya,
-yaitu model dan lapisan keputusan; antarmuka, basis data, dan pengujian oleh
-operator dikerjakan setelah bagian itu terbukti.
+yaitu perbandingan model dan lapisan keputusan; antarmuka, basis data, dan
+pengujian oleh operator dikerjakan setelah bagian itu terbukti.
 
 % =====================================================================
 \chapter{State of the Art}
@@ -277,13 +279,13 @@ penelitian ini yang menutupnya.
 \begin{table}[H]
 \caption{Celah penelitian dan bagian yang menutupnya}
 \label{tab:celah}
-\begin{tabularx}{\textwidth}{@{}L{0.9cm} L{5.4cm} L{4.2cm} X@{}}
+\begin{tabularx}{\textwidth}{@{}L{1.0cm} L{5.2cm} L{4.2cm} X@{}}
 \toprule
 \textbf{Kode} & \textbf{Celah} & \textbf{Bukti celah} & \textbf{Ditutup oleh} \\
 \midrule
-G1 & Tidak ada laporan terukur tentang bacaan mana yang gagal, hanya rata-rata akurasi & Semua laporan pada Tabel~\ref{tab:kelompok} berhenti pada satu bilangan & Kandidat 1, lewat laju kesalahan senyap per kategori \\
-G2 & Geometri slot diketahui tetapi tidak dipakai membatasi penguraian CTC & \textcite{oicws2026lcd} mencatat kegagalan CTC pada digit kembar tanpa menyelesaikannya & Kandidat 2, lewat dekoding terbimbing \\
-G3 & Titik desimal diperlakukan sebagai masalah terpisah, bukan bagian dari penguraian & \textcite{gushima2023automatic} memakai model desimal tersendiri & Kandidat 2, lewat batasan posisi pada tiap slot \\
+G1 & Angka akurasi yang beredar tidak dapat dibandingkan karena data dan definisi kebenarannya berbeda & 90,37\% \parencite{effendi2025unjuk}; 97,8\% \parencite{yenneti2023lightweight}; 99,7\% \parencite{jiang2026method}; 98\% \parencite{oicws2026lcd} & Kandidat 3, lewat satu data uji dan satu protokol \\
+G2 & Perbandingan tidak pernah menyertakan biaya, padahal pemilihan metode ditentukan biaya & Tidak ada laporan parameter, latensi, dan biaya layanan pada satu tabel & Kandidat 3, lewat tabel biaya \\
+G3 & Belum ada laporan kondisi apa yang membuat tiap metode gagal & \textcite{low2024detecting} menyebut kegagalan akibat pantulan tanpa mengukurnya per kondisi & Kandidat 3, lewat analisis galat per kondisi \\
 G4 & Belum ada luaran berupa keputusan layak atau tidak layak & Seluruh sistem mengembalikan string & Kandidat 1, lewat keputusan tiga nilai \\
 G5 & Belum ada pengukuran \textit{risk--coverage} pada domain ini & Metrik yang dipakai selalu FSR dan CER & Kandidat 1, lewat AURC dan \textit{selective accuracy} \\
 \bottomrule
@@ -293,19 +295,23 @@ G5 & Belum ada pengukuran \textit{risk--coverage} pada domain ini & Metrik yang 
 \section{Pernyataan Celah Penelitian}
 
 Dari Tabel~\ref{tab:celah}, celah yang dapat dituntaskan penelitian ini adalah
-ketiadaan hubungan terukur antara keluaran model dan kelayakan keluaran itu.
-Literatur membaca panel tujuh segmen sebagai tugas pengenalan karakter: masuk citra,
-keluar string, dinilai dengan akurasi. Akibatnya dua pertanyaan yang menentukan
-pemakaian di lapangan tidak pernah dijawab. Pertama, kesalahan seperti apa yang
-tersisa dan berapa banyak yang lolos tanpa peringatan. Kedua, apakah informasi
-geometri panel yang sudah terlihat di citra dapat dipakai untuk menekan kesalahan
-itu sebelum sampai ke operator.
+ketiadaan dasar untuk memilih model dan ketiadaan ukuran kelayakan keluarannya.
 
-Penelitian ini menjawab keduanya dengan mengukur, bukan dengan menambah model
-baru: kesalahan digit kembar dan titik desimal diukur sebelum dan sesudah dekoding
-terbimbing, dan kesalahan senyap diukur sebelum dan sesudah verifikasi berlapis.
-Kedua pengukuran memakai data uji yang sama sehingga hasilnya dapat dibandingkan
-satu sama lain dan dengan angka pada Tabel~\ref{tab:kelompok}.
+Literatur membaca panel tujuh segmen sebagai tugas pengenalan karakter: masuk citra,
+keluar string, dinilai dengan akurasi. Cara itu menghasilkan angka yang tidak dapat
+dibandingkan, karena setiap peneliti memakai citra, definisi kebenaran, dan
+pembersihan data sendiri. Akibat lanjutannya, tidak ada dasar untuk menjawab
+pertanyaan praktis pertama: metode mana yang dipakai pada timbangan di gudang, pada
+biaya berapa. Pertanyaan praktis kedua juga tidak terjawab: berapa banyak bacaan
+salah yang lolos tanpa peringatan, dan apakah konteks di luar citra dapat dipakai
+menekan angka itu.
+
+Penelitian ini menjawab keduanya dengan mengukur pada satu data uji yang dikunci,
+bukan dengan mengusulkan arsitektur baru. Perbandingan enam pendekatan menghasilkan
+tabel kemampuan dan biaya sekaligus memilih model dasar. Verifikasi berlapis
+menghasilkan penurunan kesalahan senyap yang diukur per lapis. Kedua hasil memakai
+data uji dan skrip metrik yang sama, sehingga dapat dibandingkan satu sama lain dan
+dengan angka pada Tabel~\ref{tab:kelompok}.
 
 % =====================================================================
 \chapter{Tema Utama}
@@ -316,23 +322,105 @@ PP-OCRv6 dirilis 2026 dalam tiga tingkat berukuran 1,5 juta, 7,7 juta, dan 34,5
 juta parameter \parencite{zhang2026ppocrv6}. Laporan itu menyebut tampilan digital
 sebagai salah satu sasaran, dan pada 15 kategori pengujian, tingkat menengah
 mencapai 83,2\% rata-rata berbobot, naik 5,1 poin dari PP-OCRv5 \textit{server}.
-Angka itu dilaporkan penulisnya \parencite{zhang2026ppocrv6} dan belum diuji
-pada tampilan tujuh segmen oleh pihak lain, sehingga penelitian ini tidak boleh
-menganggapnya berlaku.
+Angka itu dilaporkan penulisnya sendiri dan belum diuji pihak lain pada tampilan
+tujuh segmen, sehingga penelitian ini tidak menganggapnya berlaku dan
+menjadikannya salah satu hal yang diuji.
 
 Susunan modelnya berlapis. Tulang punggung pengenal memakai PPLCNetV4, dilanjutkan
 pengode \textit{EncoderWithLightSVTR} yang mengubah peta ciri menjadi urutan
-vektor. Kepala keluarannya dua: CTC dan NRTR. Pada saat inferensi hanya kepala CTC
-yang dipakai \parencite{zhang2026ppocrv6}. Jumlah parameter kepala pengenal tingkat
-\textit{small} sekitar 5,2 juta dan tingkat \textit{medium} sekitar 19 juta
+vektor. Kepala keluarannya dua, CTC dan NRTR, dan pada saat inferensi hanya kepala
+CTC yang dipakai \parencite{zhang2026ppocrv6}. Jumlah parameter kepala pengenal
+tingkat \textit{small} sekitar 5,2 juta dan tingkat \textit{medium} sekitar 19 juta
 \parencite{zhang2026ppocrv6}, sedangkan PP-OCRv5 sebesar 5 juta
 \parencite{zhang2026ppocrv5}.
 
-Pilihan model ini punya dua akibat yang harus dinyatakan di depan. Pertama, karena
-kepala yang dipakai adalah CTC, perilaku keluaran mengikuti sifat CTC, termasuk
-masalah digit kembar yang dijelaskan pada Bagian~4.3. Kedua, karena ukurannya kecil,
-model dapat berjalan di perangkat tanpa koneksi, yang menjadi syarat arah akhir
-penelitian.
+Tiga akibat mengikuti pilihan ini. Ukuran model memungkinkan inferensi luring di
+perangkat, yang menjadi syarat arah akhir. Karena kepalanya CTC, sifat keluarannya
+mengikuti aturan penggabungan CTC, termasuk kecenderungan menghapus salah satu dari
+dua digit kembar \parencite{graves2006ctc}. Karena model dilatih pada 15 kategori
+umum, kemampuan pada tampilan tujuh segmen belum diketahui dan harus diukur, bukan
+diasumsikan.
+
+\section{Kandidat 3: Komparasi Generasi Model 2026}
+
+\subsection{Mengapa Perbandingan Menjadi Persoalan}
+
+Empat angka untuk tugas yang sama beredar pada 2024 sampai 2026: 90,37\%
+\parencite{effendi2025unjuk}, 97,8\% \parencite{yenneti2023lightweight}, 99,7\%
+\parencite{jiang2026method}, dan 98\% \parencite{oicws2026lcd}. Keempatnya wajar
+dalam laporannya masing-masing, dan keempatnya tidak dapat dibandingkan. Citra uji,
+definisi bacaan benar, dan cara menangani titik desimal berbeda di setiap laporan.
+Pada 99,7\% milik pendekatan klasik, kumpulan ujinya 1.146 karakter dari timbangan
+elektronik dengan pencahayaan terkontrol, sedangkan pada 98\% milik pendekatan
+YOLO, kumpulannya 800 foto lapangan. Selisih 1,7 poin di antara keduanya tidak
+boleh dibaca sebagai keunggulan salah satu metode.
+
+Bagi pemakaian di lapangan, selisih akurasi bukan satu-satunya pertimbangan.
+Pendekatan klasik berjalan 20 milidetik pada CPU tanpa pelatihan
+\parencite{jiang2026method}, sedangkan model bahasa-visi menuntut layanan jaringan
+dan biaya per panggilan. Tanpa tabel yang memuat keduanya, pemilihan metode
+berhenti pada kesan.
+
+\subsection{Enam Baris Pembanding}
+
+Enam baris dipilih agar mewakili seluruh kelompok pada Tabel~\ref{tab:kelompok},
+bukan hanya yang terbaru (Tabel~\ref{tab:matriks}). Tiga tingkat PP-OCRv6
+dibandingkan karena ukuran terkecil yang memadai menentukan apakah sistem dapat
+berjalan luring pada perangkat murah.
+
+\begin{table}[H]
+\caption{Matriks model pembanding}
+\label{tab:matriks}
+\begin{tabularx}{\textwidth}{@{}L{3.3cm} L{1.4cm} L{2.2cm} L{3.0cm} X@{}}
+\toprule
+\textbf{Model} & \textbf{Tahun} & \textbf{Ukuran} & \textbf{Alasan diikutsertakan} & \textbf{Peran} \\
+\midrule
+PP-OCRv6 \textit{tiny/small/medium} & 2026 & 1,5 / 7,7 / 34,5 juta & Generasi terbaru; menyebut tampilan digital sebagai sasaran & Kandidat utama; tiga tingkat dibandingkan \\
+PP-OCRv5 & 2026 & 5 juta (pengenal) & Generasi sebelumnya dari keluarga yang sama & Menguji apakah kenaikan versi memberi manfaat \\
+CRNN-CTC & 2017 & 11,6 juta & Arsitektur acuan domain ini dan dipakai penelitian terdahulu & Pembanding deep learning khusus \\
+DBNet + PARSeq & 2024 & \textit{[diisi saat implementasi]} & Detektor dan pengenal terbaik pada data tujuh segmen & Pembanding pipeline dua tahap \\
+ssocr & -- & tanpa model & Metode klasik tanpa pelatihan & Pembanding non-\textit{machine learning} \\
+Model bahasa-visi & 2026 & miliaran & Pendekatan tanpa pelatihan khusus & Pembanding biaya \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Model yang tidak diikutsertakan: model bahasa-visi berukuran sangat besar selain
+yang diuji literatur 2026, karena biaya dan waktu inferensinya tidak sebanding;
+model komersial tanpa bobot terbuka, karena hasilnya tidak dapat diverifikasi
+ulang; dan arsitektur yang hanya dilaporkan tanpa kode, karena implementasi ulang
+berisiko menyimpang dari laporan aslinya.
+
+\subsection{Kondisi dan Aturan Keadilan}
+
+Setiap model diuji pada empat kondisi yang sama: bersih dan frontal; ada pantulan
+cahaya pada layar; sudut pengambilan miring 15 sampai 30 derajat; serta layar LCD
+pasif berkontras rendah. Analisis galat dilaporkan per kondisi, bukan hanya rata-rata
+keseluruhan, karena kegagalan pada pantulan adalah keluhan berulang di lapangan
+\parencite{low2024detecting}.
+
+Lima aturan menjaga perbandingan tetap sah.
+
+\begin{poin}
+  \item Seluruh model memakai kumpulan data uji yang sama dan telah dikunci sebelum
+        eksperimen pertama dijalankan.
+  \item Satuan keluaran disamakan, termasuk penanganan pemisah desimal dan nol di
+        depan.
+  \item Normalisasi keluaran ditulis sebagai berkas aturan yang sama untuk semua
+        model, sehingga pembaca dapat mengulanginya.
+  \item Data uji tidak dipakai untuk memilih ambang, prompt, hyperparameter, atau
+        tingkat model.
+  \item Setiap persentase disertai jumlah sampel dan interval kepercayaan 95\%.
+\end{poin}
+
+\subsection{Hasil yang Diharapkan}
+
+Keluaran kandidat 3 ada empat: tabel akurasi lintas model pada satu data uji, tabel
+biaya berisi jumlah parameter, ukuran, dan latensi p50 serta p95, tabel galat per
+kondisi, dan satu keputusan berupa model dasar yang dipakai kandidat 1. Bila
+PP-OCRv6 ternyata sudah memadai tanpa pelatihan tambahan, isi laporan bergeser dari
+pelatihan ke pemilihan tingkat model dan biaya; bila tidak memadai, selisihnya
+terhadap CRNN-CTC dan PARSeq menjadi bahan analisis.
 
 \section{Kandidat 1: Verifikasi Kontekstual}
 
@@ -340,132 +428,67 @@ penelitian.
 
 Model mengembalikan string. Verifikasi mengubah string itu menjadi keputusan
 dengan menambahkan pemeriksaan yang tidak berasal dari piksel. Pemeriksaan itu
-memakai pengetahuan tentang alat, produk, dan waktu penimbangan, bukan tentang
-tampilan.
+memakai pengetahuan tentang alat, produk, dan waktu penimbangan.
 
 \subsection{Empat Lapis}
 
 \begin{poin}
   \item Lapis struktural. Jumlah karakter pada keluaran dibandingkan dengan jumlah
         slot hasil profil proyeksi. Bacaan lima digit dari panel enam slot ditolak.
-        Posisi titik desimal juga diperiksa: titik hanya boleh berada di antara
-        slot, dan hanya satu.
+        Posisi titik desimal juga diperiksa: hanya boleh di antara slot, dan hanya
+        satu.
   \item Lapis fisik. Berat dibandingkan dengan rentang sah produk yang dipilih
         operator. Karung 25 kilogram yang terbaca ``2,5'' ditolak, begitu pula
         bacaan di luar toleransi timbangan.
   \item Lapis temporal. Tiga sampai lima bingkai diambil berurutan. Bacaan yang
         seluruhnya sama diterima; bacaan yang berubah pada satu digit ditandai
-        untuk konfirmasi. Jarak antar bacaan dipakai sebagai ukuran kesepakatan.
+        untuk konfirmasi.
   \item Lapis statistik. Nilai keyakinan model dikalibrasi pada kumpulan data
         kalibrasi yang terpisah dari data uji, lalu dipakai sebagai ambang.
-        Kalibrasi penting karena nilai keyakinan mentah CTC cenderung terlalu
+        Kalibrasi diperlukan karena nilai keyakinan mentah CTC cenderung terlalu
         tinggi pada bacaan salah.
 \end{poin}
 
 \subsection{Keluaran dan Ukurannya}
 
 Keluaran setiap bacaan berupa salah satu dari tiga nilai: terima, tolak, atau
-konfirmasi, dengan alasan berupa lapis mana yang memutuskan. Tiga ukuran yang
-dilaporkan mengikuti cara kerja itu. \textit{Coverage} adalah persentase bacaan
-yang diterima otomatis. \textit{Selective accuracy} adalah akurasi pada bacaan yang
-diterima. Laju kesalahan senyap adalah persentase bacaan salah yang diterima tanpa
-peringatan, dan angka inilah yang menjadi ukuran utama karena ia yang paling mahal
-akibatnya.
-
-\section{Kandidat 2: Dekoding Terbimbing Geometri}
-
-\subsection{Mengapa Penguraian Menjadi Persoalan}
-
-CTC memberi keluaran berupa distribusi peluang pada setiap langkah waktu, dengan
-satu kelas tambahan berupa \textit{blank}, lalu menggabungkan langkah yang sama dan
-membuang \textit{blank} \parencite{graves2006ctc}. Karena batas antar karakter
-tidak diketahui model, dua karakter yang sama berurutan hanya dapat muncul bila ada
-\textit{blank} di antaranya. Ketika dua digit kembar berdempetan dan tampak serupa,
-langkah kosong itu tidak terbentuk, dan model menghasilkan satu digit alih-alih
-dua. Pada panel tujuh segmen, pola inilah yang mengubah ``1006,5'' menjadi
-``106,5''; kegagalan sejenis tercatat pada implementasi YOLO dan CRNN untuk layar
-tujuh segmen \parencite{oicws2026lcd}.
-
-Titik desimal punya masalah sendiri. Tingginya tiga sampai lima piksel, jauh lebih
-kecil dari digit, dan pada ukuran tertentu ia tidak memperoleh langkah waktu
-tersendiri. Salah satu penelitian menyiasatinya dengan melatih model titik desimal
-terpisah dari model digit \parencite{gushima2023automatic}, yang berarti strukturnya
-ditambahkan di luar penguraian, bukan di dalamnya.
-
-\subsection{Geometri yang Sudah Terlihat}
-
-Pada tampilan tujuh segmen, tata letak tidak acak. Digit berdiri pada garis dasar
-yang sama dengan lebar yang hampir seragam, dipisahkan jarak tetap, dan titik
-desimal berada tepat di garis dasar. Profil proyeksi vertikal citra menunjukkan
-keenam hal itu sebagai lembah dan puncak: setiap slot menjadi satu kelompok kolom
-berisi, dan setiap pemisah menjadi lembah mendekati nol.
-
-Dari situ diperoleh tiga hal yang dapat dipakai pengurai: jumlah slot N, batas kiri
-dan kanan setiap slot, serta posisi calon titik desimal. Informasi itu diketahui
-sebelum model bekerja dan tidak bergantung pada bobot model.
-
-\subsection{Usulan}
-
-Dekoding terbimbing menambahkan batasan ke dalam pencarian berkas, bukan mengubah
-bobot model terlebih dahulu.
-
-\begin{poin}
-  \item Berkas mencatat slot yang sudah terisi. Satu slot hanya boleh
-        menghasilkan satu emisi karakter; emisi kedua pada slot yang sama diberi
-        penalti, bukan langsung dibuang, agar keputusan tetap dapat ditelusuri.
-  \item \textit{Blank} wajib disisipkan di antara dua slot bertetangga yang
-        karakternya sama, karena tanpa itu penggabungan CTC akan menghapus salah
-        satunya.
-  \item Titik desimal hanya boleh muncul pada posisi calon yang ditemukan profil
-        proyeksi, dan paling banyak satu kali.
-  \item Skor setiap hipotesis ditambah suku penalti pelanggaran geometri, dengan
-        bobot yang ditentukan pada data kalibrasi, bukan pada data uji.
-\end{poin}
-
-Pembandingnya tiga dekoder pada model yang sama: \textit{greedy}, berkas tanpa
-batasan, dan berkas dengan batasan. Selisih ketiganya menunjukkan sumbangan
-batasan geometri secara terpisah dari sumbangan pencarian berkas.
-
-\subsection{Varian Pelatihan}
-
-Batasan di atas bekerja saat inferensi tanpa melatih ulang. Varian kedua
-menambahkan penalti saat pelatihan: label yang membuat satu slot menghasilkan lebih
-dari satu karakter diberi penalti pada fungsi kerugian, sehingga model belajar
-menghasilkan \textit{blank} di tempat yang benar. Kedua varian dibandingkan karena
-yang pertama murah dan yang kedua berpotensi lebih baik tetapi menuntut pelatihan
-ulang.
+konfirmasi, dengan alasan berupa lapis mana yang memutuskan. Tiga ukuran
+mengikutinya. \textit{Coverage} adalah persentase bacaan yang diterima otomatis.
+\textit{Selective accuracy} adalah akurasi pada bacaan yang diterima. Laju
+kesalahan senyap adalah persentase bacaan salah yang diterima tanpa peringatan, dan
+angka inilah ukuran utama karena ia yang paling mahal akibatnya.
 
 \section{Kedua Kandidat dalam Satu Alur}
 
-Kandidat 2 bekerja sebelum keluaran ada, kandidat 1 bekerja sesudahnya. Urutannya
-tidak dapat dibalik: verifikasi memeriksa jumlah digit terhadap jumlah slot, dan
-pemeriksaan itu baru bermakna bila penguraian tidak lagi menghapus digit kembar.
-Sebaliknya, dekoding terbimbing tidak dapat memutuskan apakah bacaan layak dipakai,
-karena ia tidak mengetahui berat produk maupun riwayat penimbangan.
+Kandidat 3 berjalan lebih dahulu dan menghasilkan model dasar. Kandidat 1 berjalan
+sesudahnya dan memeriksa keluaran model itu. Urutannya tidak dapat dibalik:
+verifikasi membandingkan jumlah digit dengan jumlah slot dan memakai ambang
+keyakinan terkalibrasi, dan kedua pemeriksaan itu harus dilakukan pada model yang
+sama sepanjang pengukuran. Mengganti model di tengah pengukuran akan mengubah arti
+ambang dan membuat hasil tidak dapat dibandingkan.
 
-Karena itu keduanya diukur berurutan pada satu kumpulan data uji: model dasar,
-model dasar dengan dekoding terbimbing, lalu dekoding terbimbing dengan verifikasi
-berlapis. Setiap tahap dilaporkan dengan metrik yang sama.
+Karena itu keduanya diukur berurutan pada satu kumpulan data uji: keenam model,
+model terpilih, lalu model terpilih dengan verifikasi berlapis.
 
 \section{Tujuan Akhir: Sistem yang Dipakai}
 
-Bagian ini menjelaskan bentuk akhir yang dituju, agar arah pekerjaan tahap model
-tidak kehilangan sasarannya.
+Bagian ini menjelaskan bentuk akhir yang dituju, agar pekerjaan tahap model tidak
+kehilangan sasarannya.
 
 \begin{poin}
   \item Alur kerja. Operator memilih produk, memotret panel, dan menerima satu dari
         tiga keadaan: angka diterima dan tercatat, angka ditolak dengan alasan, atau
         angka diminta dikonfirmasi. Pada keadaan ketiga, operator menimbang ulang
         atau memasukkan angka secara manual.
-  \item Berjalan luring. Model 34,5 juta parameter dijalankan di perangkat.
-        Koneksi hanya dipakai untuk menyinkronkan catatan yang sudah tersimpan,
-        bukan untuk membaca panel \parencite{zhang2026ppocrv6}.
-  \item Jejak audit. Setiap transaksi menyimpan citra, string mentah, keputusan,
-        dan lapis yang memutuskan. Tanpa itu, kesalahan tidak dapat ditelusuri
-        setelah terjadi.
-  \item Ukuran penerimaan. Selain metrik model, sistem dinilai dari tingkat
-        koreksi operator, waktu per transaksi, dan jumlah timbang ulang yang
-        dipicu. Ketiganya diukur pada pengujian terbatas di satu lokasi.
+  \item Berjalan luring. Model dijalankan di perangkat, dan koneksi hanya dipakai
+        untuk menyinkronkan catatan yang sudah tersimpan. Tabel biaya pada kandidat
+        3 yang menentukan apakah hal ini mungkin pada perangkat yang tersedia.
+  \item Jejak audit. Setiap transaksi menyimpan citra, string mentah, keputusan, dan
+        lapis yang memutuskan. Tanpa itu, kesalahan tidak dapat ditelusuri setelah
+        terjadi.
+  \item Ukuran penerimaan. Selain metrik model, sistem dinilai dari tingkat koreksi
+        operator, waktu per transaksi, dan jumlah timbang ulang yang dipicu.
+        Ketiganya diukur pada pengujian terbatas di satu lokasi.
 \end{poin}
 
 \section{Cara Mengukur}
@@ -473,34 +496,36 @@ tidak kehilangan sasarannya.
 \begin{table}[H]
 \caption{Rancangan pengukuran}
 \label{tab:ukur}
-\begin{tabularx}{\textwidth}{@{}L{1.0cm} L{5.2cm} L{4.4cm} X@{}}
+\begin{tabularx}{\textwidth}{@{}L{1.1cm} L{5.0cm} L{4.3cm} X@{}}
 \toprule
 \textbf{Kode} & \textbf{Konfigurasi} & \textbf{Ukuran} & \textbf{Pertanyaan} \\
 \midrule
-E1 & Model dasar, dekoder \textit{greedy} & FSR, CER, akurasi desimal & Sejauh mana kemampuan dasar? \\
-E2 & Model dasar, dekoder berkas & FSR, latensi & Apakah pencarian berkas cukup? \\
-E3 & Berkas dengan batasan geometri & FSR, error digit kembar, akurasi desimal & Berapa sumbangan geometri? \\
-E4 & Batasan ditambah penalti latihan & FSR, latensi, biaya latih & Apakah pelatihan ulang sepadan? \\
-E5 & Tanpa verifikasi & Laju kesalahan senyap & Berapa kesalahan yang lolos? \\
-E6 & Verifikasi lapis 1 sampai 3 & Laju kesalahan senyap, \textit{coverage} & Lapis mana yang menangkap paling banyak? \\
-E7 & Ditambah lapis 4 terkalibrasi & \textit{Coverage}, \textit{selective accuracy}, AURC & Di mana titik seimbangnya? \\
+A1 & PP-OCRv6 \textit{tiny}, \textit{small}, \textit{medium} tanpa adaptasi & FSR, CER, desimal, latensi & Sejauh mana kemampuan dasar dan tingkat mana yang paling efisien? \\
+A2 & PP-OCRv5 tanpa adaptasi & FSR, CER & Apakah kenaikan generasi memberi manfaat nyata? \\
+A3 & CRNN-CTC dilatih pada data latih yang sama & FSR, CER, parameter & Seberapa jauh model khusus tertinggal atau unggul? \\
+A4 & DBNet + PARSeq & FSR, CER, latensi & Apakah pipeline dua tahap lebih baik? \\
+A5 & ssocr tanpa pelatihan & FSR, CER, latensi & Apakah pembelajaran mendalam memang diperlukan? \\
+A6 & Model bahasa-visi dengan prompt terstruktur & FSR, biaya per seribu citra & Berapa biaya untuk akurasi setara? \\
+B1 & Model terpilih tanpa verifikasi & Kesalahan senyap & Berapa kesalahan yang lolos? \\
+B2 & Ditambah lapis 1 struktural & Kesalahan senyap & Berapa yang tertangkap pemeriksaan bentuk? \\
+B3 & Ditambah lapis 2 fisik & Kesalahan senyap & Tambahan manfaat dari konteks produk? \\
+B4 & Ditambah lapis 3 temporal & Kesalahan senyap & Tambahan manfaat dari antar bingkai? \\
+B5 & Ditambah lapis 4 kalibrasi & \textit{Coverage}, \textit{selective accuracy}, AURC & Di mana titik seimbangnya? \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
-Seluruh eksperimen memakai satu kumpulan data uji yang dikunci sebelum E1 berjalan.
+Seluruh eksperimen memakai satu kumpulan data uji yang dikunci sebelum A1 berjalan.
 Data latih dibangkitkan secara sintetis dengan kondisi terkontrol, sedangkan data
 uji memuat citra timbangan nyata, karena data uji sintetis hanya akan mengukur
-ketidaksempurnaan pembangkitnya sendiri \parencite{gushima2023automatic}. Model
-pembanding di luar PP-OCRv6, yaitu CRNN-CTC \parencite{shi2017crnn}, DBNet dengan
-PARSeq \parencite{low2024detecting, bautista2022parseq}, dan ssocr
-\parencite{auerswal_ssocr}, dijalankan pada data uji yang sama sebagai batas bawah
-dan batas atas.
+ketidaksempurnaan pembangkitnya sendiri \parencite{gushima2023automatic}.
 
 % =====================================================================
 \chapter{Referensi}
 
-Dua puluh empat sumber dipakai pada outline ini. Tabel~\ref{tab:sumber} memetakan kode sumber ke sitasi singkatnya, dan daftar lengkap beserta DOI ada pada Bibliografi di bagian akhir.
+Dua puluh empat sumber dipakai pada outline ini. Tabel~\ref{tab:sumber} memetakan
+kode sumber ke sitasi singkatnya, dan daftar lengkap beserta DOI ada pada
+Bibliografi di bagian akhir.
 
 \begin{table}[H]
 \caption{Sumber yang dipakai dan kodenya}
@@ -537,19 +562,20 @@ S24 & Bautista dan Atienza & 2022 & ECCV (arXiv:2207.06966) \\
 \end{tabularx}
 \end{table}
 
+% =====================================================================
 \chapter{Arsitektur dan Bagan Alur}
 
 \section{Bagan Alur}
 
-Alur penelitian berjalan satu arah dari citra sampai keputusan. Kandidat 2 berada
-di dalam kotak model, pada tahap penguraian; kandidat 1 berada sesudahnya, pada
-tahap keputusan. Kotak bergaris putus-putus di bawah menandai bagian yang menjadi
-tujuan akhir dan belum dikerjakan pada tahap ini.
+Alur penelitian berjalan satu arah dari citra sampai keputusan. Kandidat 3 adalah
+tiga kotak pertama sesudah praproses, tempat keenam model dijalankan dan dipilih.
+Kandidat 1 adalah kotak verifikasi sesudahnya. Kotak bergaris putus-putus di bawah
+menandai bagian yang menjadi tujuan akhir dan belum dikerjakan pada tahap ini.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.95\textwidth,height=13.6cm,keepaspectratio]{gambar/alur-model.png}
-\caption{Arsitektur penelitian: dekoding terbimbing di dalam model, verifikasi berlapis sesudahnya}
+\includegraphics[width=0.95\textwidth,height=14.2cm,keepaspectratio]{gambar/alur-model.png}
+\caption{Arsitektur penelitian: komparasi model dilanjutkan verifikasi berlapis}
 \label{fig:alur-model}
 \end{figure}
 
@@ -558,15 +584,16 @@ tujuan akhir dan belum dikerjakan pada tahap ini.
 \begin{table}[H]
 \caption{Blok arsitektur, masukan, dan keluaran}
 \label{tab:blok}
-\begin{tabularx}{\textwidth}{@{}L{3.1cm} L{3.4cm} L{3.4cm} X@{}}
+\begin{tabularx}{\textwidth}{@{}L{3.1cm} L{3.3cm} L{3.5cm} X@{}}
 \toprule
 \textbf{Blok} & \textbf{Masukan} & \textbf{Keluaran} & \textbf{Alasan} \\
 \midrule
-Akuisisi & Foto atau 3--5 bingkai & Citra dan metadata & Lapis temporal memerlukan beberapa bingkai \\
-Praproses & Citra penuh & Area panel, profil proyeksi & Profil dipakai dua kali: memotong panel dan menghitung slot \\
-Model PP-OCRv6 & Area panel & Peta ciri dan distribusi tiap langkah waktu & Tulang punggung PPLCNetV4 dengan pengode LightSVTR \\
-Pengurai & Distribusi langkah waktu & String dan skor & Titik kerja kandidat 2 \\
-Verifikasi berlapis & String dan konteks & Keputusan beralasan & Titik kerja kandidat 1 \\
+Akuisisi & Foto atau 3--5 bingkai & Citra dan metadata kondisi & Lapis temporal dan analisis per kondisi memerlukan metadata \\
+Praproses & Citra penuh & Area panel ternormalisasi, profil proyeksi & Menyamakan kontras LED dan LCD pasif \\
+Model pembanding & Area panel & String dan skor tiap model & Enam model dijalankan pada citra yang sama \\
+Skrip metrik tunggal & Keluaran semua model & FSR, CER, akurasi desimal, latensi & Menjamin definisi yang sama untuk semua model \\
+Tabel dan pemilihan & Tabel metrik dan biaya & Model dasar & Dasar bagi kandidat 1 \\
+Verifikasi berlapis & String dan konteks & Keputusan beralasan & Menekan kesalahan senyap \\
 Evaluator & Keputusan dan label & Kesalahan senyap, coverage, AURC & Ukuran keandalan, bukan akurasi \\
 Sistem pencatatan & Keputusan & Catatan, citra, jejak audit & Tujuan akhir, dikerjakan setelah lapisan model \\
 \bottomrule
@@ -578,25 +605,24 @@ Sistem pencatatan & Keputusan & Catatan, citra, jejak audit & Tujuan akhir, dike
 \begin{urut}
   \item Menyiapkan data: pembangkit sintetis untuk latih, pengambilan citra nyata
         untuk uji, lalu mengunci data uji.
-  \item Menjalankan model dasar tanpa perubahan dan mencatat angka E1 sebagai
-        titik awal.
-  \item Membangun ekstraksi slot dari profil proyeksi dan mengujinya pada 50 citra
-        sebelum dipakai.
-  \item Menerapkan dekoding terbimbing, menjalankan E3, lalu E4 bila hasil E3
-        menunjukkan perbaikan yang berarti.
-  \item Menambahkan lapis verifikasi satu per satu dan mengukur penurunan
-        kesalahan senyap pada setiap penambahan.
-  \item Menyusun kurva \textit{risk--coverage} dari E7 sebagai hasil utama.
-  \item Mengulang seluruh pengukuran dengan CRNN-CTC, DBNet-PARSeq, dan ssocr
-        sebagai pembanding.
+  \item Menjalankan keenam model pada data uji yang sama dan menyimpan keluaran
+        mentahnya sebelum diolah.
+  \item Menghitung seluruh metrik dengan satu skrip, lalu menyusun tabel akurasi dan
+        tabel biaya.
+  \item Memilih model dasar, dengan tingkat ukuran dipilih dari tabel latensi sesuai
+        perangkat sasaran.
+  \item Menambahkan lapis verifikasi satu per satu dan mengukur penurunan kesalahan
+        senyap pada setiap penambahan.
+  \item Menyusun kurva \textit{risk--coverage} dari B5 sebagai hasil utama.
 \end{urut}
 
 \section{Batas Tahap Ini}
 
 Antarmuka, basis data, sinkronisasi, dan pengujian oleh operator tidak dikerjakan
-pada tahap ini. Ketiganya bertumpu pada satu asumsi, yaitu lapisan model dan
-verifikasi sudah terbukti menurunkan kesalahan senyap. Membangun antarmuka lebih
-dahulu akan menghasilkan aplikasi yang rapi dengan mesin yang belum terukur.
+pada tahap ini. Ketiganya bertumpu pada satu asumsi, yaitu model dasar sudah dipilih
+dan lapisan verifikasi sudah terbukti menurunkan kesalahan senyap. Membangun
+antarmuka lebih dahulu akan menghasilkan aplikasi yang rapi dengan mesin yang belum
+terukur.
 
 \clearpage
 \bibliography{references}

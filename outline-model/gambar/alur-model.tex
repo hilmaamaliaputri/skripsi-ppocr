@@ -8,24 +8,25 @@
 \usetikzlibrary{arrows.meta,positioning,fit,backgrounds,calc}
 \begin{document}
 \begin{tikzpicture}[
-  node distance=0.42cm,
+  node distance=0.4cm,
   blok/.style={rectangle, draw, rounded corners=2pt, align=center,
-               text width=8.4cm, inner sep=3.5pt, font=\footnotesize},
+               text width=8.6cm, inner sep=3.5pt, font=\footnotesize},
   kecil/.style={rectangle, draw, rounded corners=2pt, align=center,
-                text width=5.6cm, inner sep=3pt, font=\scriptsize},
+                text width=5.8cm, inner sep=3pt, font=\scriptsize},
   panah/.style={-{Latex[length=2mm]}, thick},
   judul/.style={font=\scriptsize\bfseries, align=center}
 ]
 
 \node[blok] (akuisisi) {Akuisisi citra panel\\ (foto atau 3--5 bingkai)};
-\node[blok, below=of akuisisi] (pra) {Praproses dan profil proyeksi\\
-  jumlah slot, batas slot, calon titik desimal};
-\node[blok, below=of pra] (model) {Model PP-OCRv6\\
-  PPLCNetV4 $\rightarrow$ LightSVTR $\rightarrow$ kepala CTC\\
-  distribusi peluang tiap langkah waktu};
-\node[blok, below=of model] (urai) {Pengurai keluaran CTC \textbf{(kandidat 2)}\\
-  \textit{greedy} $\cdot$ berkas $\cdot$ berkas dengan batasan geometri};
-\node[blok, below=of urai] (verif) {Verifikasi berlapis \textbf{(kandidat 1)}\\
+\node[blok, below=of akuisisi] (pra) {Praproses\\ area panel ternormalisasi, profil proyeksi};
+\node[blok, below=of pra] (model) {Enam model dijalankan pada citra yang sama \textbf{(kandidat 3)}\\
+  PP-OCRv6 \textit{tiny/small/medium} ~$\cdot$~ PP-OCRv5 ~$\cdot$~ CRNN-CTC\\
+  DBNet + PARSeq ~$\cdot$~ ssocr ~$\cdot$~ model bahasa-visi};
+\node[blok, below=of model] (metrik) {Skrip metrik tunggal\\
+  FSR $\cdot$ CER $\cdot$ akurasi desimal $\cdot$ latensi};
+\node[blok, below=of metrik] (tabel) {Tabel akurasi dan tabel biaya\\
+  pemilihan model dasar};
+\node[blok, below=of tabel] (verif) {Verifikasi berlapis \textbf{(kandidat 1)}\\
   struktural $\cdot$ fisik $\cdot$ temporal $\cdot$ kalibrasi};
 \node[blok, below=of verif] (putus) {Keputusan: terima, tolak, atau minta konfirmasi\\
   beserta lapis yang memutuskan};
@@ -37,16 +38,12 @@
 
 \draw[panah] (akuisisi) -- (pra);
 \draw[panah] (pra) -- (model);
-\draw[panah] (model) -- (urai);
-\draw[panah] (urai) -- (verif);
+\draw[panah] (model) -- (metrik);
+\draw[panah] (metrik) -- (tabel);
+\draw[panah] (tabel) -- (verif);
 \draw[panah] (verif) -- (putus);
 \draw[panah] (putus) -- (eval);
 \draw[panah, dashed] (eval) -- node[right, font=\scriptsize] {tahap berikutnya} (sistem);
-
-% geometri slot dipakai pengurai
-\coordinate (kiri) at ([xshift=-0.55cm]pra.west);
-\draw[panah, dotted] (pra.west) -- (kiri) |- ([yshift=-0.02cm]urai.west);
-\node[font=\scriptsize, align=center, rotate=90, anchor=south] at ($(kiri)+(0,0.62)$) {geometri slot};
 
 \begin{scope}[on background layer]
   \node[draw=black!45, dashed, rounded corners=5pt, inner sep=5pt,

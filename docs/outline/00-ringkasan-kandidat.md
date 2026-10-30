@@ -1,7 +1,7 @@
 # Ringkasan Kandidat
 
 > Diperbarui: 30 Oktober 2026.
-> Kandidat yang dipakai pada outline terbaru: **K1 dan K2**.
+> Kandidat yang dipakai: **K1 dan K3**, sesuai arahan.
 > Struktur outline: judul, ringkasan, state of the art, tema utama, referensi,
 > arsitektur. Berkas: `outline-model/main.tex`.
 
@@ -9,25 +9,23 @@
 
 | Kandidat | Isi | Posisi dalam alur |
 |---|---|---|
-| **K2** — dekoding CTC terbimbing geometri | Membatasi penguraian keluaran CTC memakai jumlah slot, batas slot, dan posisi titik desimal hasil profil proyeksi | Di dalam model, sebelum string terbentuk |
+| **K3** — komparasi generasi model 2026 | Enam pendekatan dijalankan pada satu data uji dengan protokol dan metrik yang sama, disertai tabel biaya | Sebelum verifikasi; menghasilkan model dasar |
 | **K1** — verifikasi kontekstual | Empat lapis pemeriksaan di luar piksel: struktural, fisik, temporal, kalibrasi | Sesudah model, pada tahap memutuskan |
 
-K2 memperbaiki bentuk keluaran. K1 menentukan apakah keluaran itu layak dipakai.
-Urutannya tidak dapat dibalik: verifikasi membandingkan jumlah digit dengan jumlah
-slot, dan perbandingan itu baru berguna bila penguraian tidak lagi menghapus digit
-kembar.
+K3 memilih model dan mengukur biayanya. K1 menentukan apakah keluaran model itu
+layak dipakai. Keduanya memakai satu kumpulan data uji dan satu skrip metrik.
 
-## Status kandidat lain
+## Kandidat yang tidak dipakai
 
 | Kandidat | Status |
 |---|---|
-| K3 — komparasi generasi model | Bukan kandidat utama lagi. Isinya dipakai sebagai protokol pengukuran (model pembanding CRNN-CTC, DBNet+PARSeq, ssocr) dan tetap tersimpan sebagai berkas |
-| K4 — distilasi VLM ke model ringan | Dihapus dari repo. Butuh API berbayar dan GPU |
+| K2 — dekoding CTC terbimbing geometri | Tidak dipakai. Berkasnya dihapus dari repo; riwayatnya masih ada di Git |
+| K4 — distilasi VLM ke model ringan | Tidak dipakai. Butuh API berbayar dan GPU |
 
 ## Batas tahap ini
 
-Dikerjakan: data, model, dekoding, verifikasi, metrik, analisis.
+Dikerjakan: data, perbandingan model, verifikasi, metrik, analisis.
 
 Ditunda ke tahap akhir: antarmuka operator, basis data, jejak audit, sinkronisasi,
-pengujian penerimaan. Bagian itu bertumpu pada asumsi bahwa lapisan model dan
-verifikasi sudah terbukti menurunkan kesalahan senyap.
+pengujian penerimaan. Bagian itu bertumpu pada asumsi bahwa model dasar sudah
+dipilih dan lapisan verifikasi sudah terbukti menurunkan kesalahan senyap.
