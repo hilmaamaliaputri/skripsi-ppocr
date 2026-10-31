@@ -305,14 +305,10 @@ basis data menyusul setelah keduanya terbukti.
 
 \section{Lima Kelompok Pendekatan}
 
-Literatur pembacaan tampilan tujuh segmen tidak tersusun sebagai daftar
-metode, melainkan sebagai pergeseran cara kerja selama tujuh tahun terakhir.
-Tabel~\ref{tab:kelompok} memetakannya menjadi lima kelompok.
-
 \begin{table}[H]
-\caption{Pemetaan pendekatan pembacaan tampilan tujuh segmen}
+\caption{Pendekatan yang digunakan}
 \label{tab:kelompok}
-\begin{tabularx}{\textwidth}{@{}L{2.9cm} L{4.2cm} L{3.9cm} X@{}}
+\begin{tabularx}{\textwidth}{@{}L{2.5cm} L{3.7cm} L{3.5cm} X@{}}
 \toprule
 \textbf{Kelompok} & \textbf{Sumber} & \textbf{Hasil dilaporkan} & \textbf{Keterbatasan} \\
 \midrule
@@ -325,42 +321,19 @@ Model bahasa-visi & \textcite{ega2026leveraging}; \textcite{lin2026measurebench}
 \end{tabularx}
 \end{table}
 
-Kelompok pertama bekerja tanpa pembelajaran mesin. Citra dibinerisasi, digit dipisahkan
-lewat profil proyeksi, lalu tiap segmen dicocokkan dengan pola baku. Cara ini cepat
-dan tepat pada citra terkontrol: 99,7 persen pada 1.146 karakter dengan waktu 20
-milidetik pada timbangan elektronik \parencite{jiang2026method}. Kelemahannya bukan
-akurasi, melainkan ketergantungan pada kondisi citra, dan laporan semacam ini tidak
-menyebut apa yang terjadi ketika pencahayaan berubah.
-
-Kelompok kedua menambahkan pembelajaran mesin khusus untuk panel tujuh segmen,
-umumnya CRNN dengan kepala CTC atau YOLO dengan kepala digit
-\parencite{effendi2025unjuk, yenneti2023lightweight}. Hasilnya lebih tahan terhadap
-variasi, tetapi menuntut data latih, dan setiap penelitian melaporkan akurasi pada
-kumpulan datanya sendiri.
-
-Kelompok ketiga menyediakan data dan tolok ukur. UFPR-AMR memuat 2.000 citra dengan
-10.000 anotasi tingkat digit \parencite{laroca2019convolutional}, dan kumpulan citra
-mentah meter energi tersedia untuk penelitian sejenis
-\parencite{kanagarathinam2019text}. Keduanya membantu, tetapi objeknya meter energi,
-bukan timbangan.
-
-Kelompok keempat adalah pengenal karakter umum generasi baru. PP-OCRv6 menyebut
-tampilan digital sebagai salah satu sasarannya dan tersedia dalam tiga tingkat ukuran
-\parencite{zhang2026ppocrv6}, sedangkan PP-OCRv5 menunjukkan model 5 juta parameter
-dapat menyaingi model berukuran miliaran \parencite{zhang2026ppocrv5}. Keduanya
-menjanjikan, tetapi belum diuji pihak lain pada panel tujuh segmen.
-
-Kelompok kelima memakai model bahasa-visi. Pada transkripsi digit, model ini unggul,
-dengan 93,85 persen \textit{full-string recognition} \parencite{ega2026leveraging}.
-Pada tugas yang menuntut pembacaan skala, angkanya jatuh: yang terbaik hanya 30,2
-persen pada 2.442 citra nyata \parencite{lin2026measurebench}. Model ini juga
-memerlukan jaringan dan biaya per panggilan.
-
-Peta itu menjelaskan satu hal yang menentukan arah penelitian. Setiap kelompok
-melaporkan angka pada kumpulan datanya sendiri, sehingga angka 90,37 persen, 97,8
-persen, dan 99,7 persen tidak dapat diurutkan menjadi peringkat. Yang belum ada
-bukan metode baru, melainkan pengukuran yang memakai satu data uji, satu protokol,
-dan satu skrip metrik untuk semuanya.
+Lima kelompok pada Tabel~\ref{tab:kelompok} bukan daftar metode, melainkan
+pergeseran cara kerja. Pendekatan klasik cepat dan tepat pada citra terkontrol,
+99,7 persen pada 1.146 karakter dalam 20 milidetik, tetapi perilakunya saat gagal
+tidak dilaporkan \parencite{jiang2026method}; pembelajaran mesin khusus tujuh
+segmen lebih tahan terhadap variasi dengan harga data latih
+\parencite{effendi2025unjuk}; kumpulan data yang tersedia membantu, tetapi objeknya
+meter energi \parencite{laroca2019convolutional}; pengenal umum generasi baru
+menjanjikan kemampuan tanpa pelatihan tambahan, tetapi belum diuji pihak lain pada
+panel tujuh segmen \parencite{zhang2026ppocrv6}; dan model bahasa-visi unggul pada
+transkripsi, 93,85 persen, tetapi jatuh pada tugas yang menuntut pembacaan skala dan
+memerlukan jaringan \parencite{ega2026leveraging, lin2026measurebench}. Karena
+setiap kelompok mengukur pada kumpulan datanya sendiri, angka 90,37, 97,8, dan 99,7
+persen tidak dapat diurutkan menjadi peringkat.
 
 \section{Celah Penelitian}
 
