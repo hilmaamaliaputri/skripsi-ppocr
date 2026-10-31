@@ -1,0 +1,581 @@
+% =====================================================================
+%  SPESIFIKASI ARSITEKTUR
+%  Bahan penyusunan arsitektur penelitian
+%  Hilma Amalia Putri — Informatika, Fakultas Teknik, Universitas Siliwangi
+% =====================================================================
+
+\documentclass[12pt,a4paper,oneside]{report}
+
+\ifdefined\XeTeXversion
+  \usepackage{fontspec}
+  \IfFileExists{fonts/times.ttf}{
+    \setmainfont{times.ttf}[Path=fonts/, BoldFont=timesbd.ttf,
+      ItalicFont=timesi.ttf, BoldItalicFont=timesbi.ttf]
+  }{\usepackage{mathptmx}}
+\else
+  \usepackage[T1]{fontenc}\usepackage[utf8]{inputenc}\usepackage{mathptmx}
+\fi
+
+\usepackage[english,indonesian]{babel}
+\usepackage[a4paper,top=4cm,left=4cm,bottom=3cm,right=3cm]{geometry}
+\usepackage{setspace}
+\doublespacing
+\usepackage{indentfirst}
+\setlength{\parindent}{1.27cm}
+
+\usepackage{etoolbox}
+\makeatletter
+\def\ps@isita{%
+  \let\@mkboth\@gobbletwo
+  \def\@oddhead{\hfil\normalfont\normalsize\thepage}%
+  \def\@evenhead{\normalfont\normalsize\thepage\hfil}%
+  \def\@oddfoot{}\def\@evenfoot{}}
+\makeatother
+\pagestyle{isita}
+
+\usepackage{titlesec}
+\renewcommand{\thechapter}{\arabic{chapter}}
+\titleformat{\chapter}[display]{\centering\bfseries\normalsize}
+  {\thechapter}{0pt}{\MakeUppercase}
+\titlespacing*{\chapter}{0pt}{0pt}{1.5\baselineskip}
+\titleformat{\section}{\bfseries\normalsize}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\bfseries\normalsize}{\thesubsection}{0.6em}{}
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\renewcommand{\tabularxcolumn}[1]{>{\raggedright\arraybackslash}m{#1}}
+\usepackage{caption}
+\captionsetup{font=small,labelfont=bf,labelsep=period,
+  justification=centering,singlelinecheck=false}
+\captionsetup[table]{position=top,skip=0.5\baselineskip}
+\AtBeginEnvironment{tabularx}{\singlespacing\footnotesize\setlength{\tabcolsep}{3.5pt}}
+\counterwithin{table}{chapter}
+\renewcommand{\thetable}{\thechapter.\arabic{table}}
+
+\usepackage{enumitem}
+\newlist{poin}{enumerate}{2}
+\setlist[poin]{label=\alph*.,leftmargin=*,align=left,itemsep=0pt,topsep=0.25\baselineskip}
+\newlist{urut}{enumerate}{2}
+\setlist[urut]{label=\arabic*.,leftmargin=*,align=left,itemsep=0pt,topsep=0.25\baselineskip}
+
+\usepackage[round,authoryear]{natbib}
+\bibliographystyle{plainnat}
+\newcommand{\parencite}[1]{\citep{#1}}
+\newcommand{\textcite}[1]{\citet{#1}}
+\usepackage[hidelinks]{hyperref}
+
+\begin{document}
+
+\begin{titlepage}
+  \centering
+  \vspace*{0.5cm}
+  {\bfseries\normalsize SPESIFIKASI ARSITEKTUR\par}
+  \vspace{0.4cm}
+  {\normalsize Bahan penyusunan arsitektur penelitian\par}
+  \vspace{1.2cm}
+  {\bfseries\normalsize VERIFIKASI BERLAPIS DAN KOMPARASI MODEL\\[0.2cm]
+   PADA TAMPILAN TUJUH SEGMEN\\[0.2cm] TIMBANGAN DIGITAL\par}
+  \vspace{2cm}
+  {\normalsize Hilma Amalia Putri\\[0.2cm] [NPM]\par}
+  \vspace{2cm}
+  {\bfseries\normalsize JURUSAN INFORMATIKA\\[0.2cm]
+   FAKULTAS TEKNIK UNIVERSITAS SILIWANGI\\[0.2cm] TASIKMALAYA\par}
+  \vspace{1cm}
+  {\normalsize 2026\par}
+\end{titlepage}
+
+\pagenumbering{roman}
+\pagestyle{plain}
+\tableofcontents
+\clearpage
+
+\pagenumbering{arabic}
+\pagestyle{isita}
+
+% =====================================================================
+\chapter{Ruang Lingkup, Aktor, dan Konteks}
+
+\section{Apa yang Dimodelkan}
+
+Sistem yang diarsiteki membaca panel tujuh segmen pada timbangan digital dari
+kamera ponsel, lalu mengembalikan tiga hal sekaligus: bacaan angka, keputusan
+layak atau tidak, dan alasan keputusan itu. Objek bacaan adalah tampilan LED dan
+LCD pasif dengan 1--8 digit dan 0--2 titik desimal, sebagaimana tampilan yang
+dipakai pada timbangan gudang.
+
+Arsitektur ini mencakup lapisan model dan lapisan keputusan. Antarmuka pengguna,
+basis data produksi, dan sinkronisasi belum termasuk, dan disebut sebagai tahap
+lanjutan pada bagian batas.
+
+\section{Aktor}
+
+\begin{table}[H]
+\caption{Aktor dan kebutuhannya}
+\label{tab:aktor}
+\begin{tabularx}{\textwidth}{@{}L{2.6cm} L{5.0cm} X@{}}
+\toprule
+\textbf{Aktor} & \textbf{Kebutuhan} & \textbf{Hak akses} \\
+\midrule
+Operator timbang & Membaca panel, mencatat hasil, menimbang ulang bila ditolak & Menjalankan pembacaan, melihat alasan penolakan \\
+Administrator produk & Menetapkan rentang berat sah dan toleransi per produk & Mengubah konfigurasi produk \\
+Peneliti & Menjalankan eksperimen, mengukur metrik, menyusun laporan & Akses penuh ke data uji, registry, dan harness \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Konteks Operasional}
+
+\begin{poin}
+  \item Satu transaksi adalah satu penimbangan: satu produk, satu panel, tiga
+        sampai lima bingkai. Target waktu satu pembacaan di bawah dua detik pada
+        ponsel kelas menengah.
+  \item Lokasi gudang sering tanpa jaringan. Jalur runtime berjalan luring
+        sepenuhnya; hanya mode pembanding model bahasa-visi yang memerlukan
+        koneksi.
+  \item Timbangan di lapangan tidak selalu baru. Segmen mati, layar buram, dan
+        pantulan lampu gudang harus dianggap keadaan normal, bukan pengecualian.
+        Pantulan dilaporkan sebagai penyebab kegagalan utama pada pendekatan
+        detektor-pengenal \parencite{low2024detecting}.
+\end{poin}
+
+% =====================================================================
+\chapter{Kebutuhan}
+
+\section{Kebutuhan Fungsional}
+
+\begin{table}[H]
+\caption{Kebutuhan fungsional}
+\label{tab:fungsional}
+\begin{tabularx}{\textwidth}{@{}L{1.1cm} L{5.3cm} X@{}}
+\toprule
+\textbf{Kode} & \textbf{Kebutuhan} & \textbf{Kriteria terima} \\
+\midrule
+F1 & Mengambil 3--5 bingkai beserta metadata kondisi & Bingkai tersimpan dengan nomor urut dan cap waktu \\
+F2 & Menemukan area panel dan menghitung jumlah slot & Slot terdeteksi pada 50 citra uji manual sebelum dipakai \\
+F3 & Menjalankan enam pengenal pada citra yang sama & Setiap pengenal menghasilkan satu string dan satu skor \\
+F4 & Menyeragamkan keluaran semua pengenal & Pemisah desimal, nol depan, dan spasi mengikuti satu berkas aturan \\
+F5 & Memeriksa bacaan lewat empat lapis verifikasi & Setiap bacaan menghasilkan keputusan dan nama lapis yang memutuskan \\
+F6 & Menyimpan jejak audit per transaksi & Citra, string mentah, keputusan, dan alasan tersimpan bersama \\
+F7 & Mengelola konfigurasi produk & Rentang berat dan toleransi dapat diubah tanpa mengubah kode \\
+F8 & Mengelola bobot dan ambang & Versi bobot, ambang, dan tanggal berlaku tercatat \\
+F9 & Menghitung metrik dan menyusun laporan & Satu perintah menghasilkan tabel metrik dan kurva \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Kebutuhan Nonfungsional}
+
+\begin{table}[H]
+\caption{Kebutuhan nonfungsional}
+\label{tab:nonfungsional}
+\begin{tabularx}{\textwidth}{@{}L{1.1cm} L{4.6cm} X@{}}
+\toprule
+\textbf{Kode} & \textbf{Aspek} & \textbf{Batasan} \\
+\midrule
+N1 & Luring & Seluruh jalur runtime tanpa koneksi, kecuali mode pembanding \\
+N2 & Latensi & p95 di bawah dua detik per transaksi pada perangkat sasaran \\
+N3 & Ketertelusuran & Setiap keputusan dapat dipertanggungjawabkan sampai lapis dan ambangnya \\
+N4 & Determinisme & Versi pustaka, bobot, dan benih acak dikunci sebelum eksperimen \\
+N5 & Lisensi data & Kumpulan data akademik seperti UFPR-AMR tidak diredistribusi \parencite{laroca2019convolutional} \\
+N6 & Privasi & Citra tidak keluar perangkat kecuali pada mode pembanding yang disetujui \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+% =====================================================================
+\chapter{Komponen}
+
+\section{Daftar Komponen}
+
+Dua belas komponen berikut membentuk arsitektur. Kolom terakhir menyebut dasar
+pemilihannya, bukan sekadar nama pustaka.
+
+\begin{table}[H]
+\caption{Komponen inti: akuisisi sampai pengenal}
+\label{tab:komponen}
+\begin{tabularx}{\textwidth}{@{}L{0.9cm} L{2.9cm} L{3.4cm} L{2.6cm} X@{}}
+\toprule
+\textbf{Kode} & \textbf{Komponen} & \textbf{Masukan, keluaran} & \textbf{Teknologi} & \textbf{Dasar} \\
+\midrule
+C1 & Akuisisi & Bingkai kamera, metadata kondisi & Kamera ponsel & Pembacaan dari kamera ponsel lazim pada alat ukur \parencite{kulkarni2021cnn} \\
+C2 & Praproses dan slot & Citra, area panel, jumlah slot, batas slot & OpenCV, profil proyeksi & Proyeksi dipakai untuk memisah digit \parencite{jiang2026method} \\
+C3a & Pengenal PP-OCRv6 & Area panel, string, skor & PaddleOCR, tiga tingkat & 1,5--34,5 juta parameter \parencite{zhang2026ppocrv6} \\
+C3b & Pengenal PP-OCRv5 & Area panel, string, skor & PaddleOCR & 5 juta parameter \parencite{zhang2026ppocrv5} \\
+C3c & Pengenal CRNN-CTC & Area panel, string, skor & PyTorch, dilatih sendiri & Arsitektur acuan domain \parencite{shi2017crnn} \\
+C3d & Pengenal DBNet + PARSeq & Area panel, string, skor & PaddleOCR, bobot PARSeq & Terbaik pada data tujuh segmen \parencite{low2024detecting, bautista2022parseq} \\
+C3e & Pengenal ssocr & Area panel, string & Perangkat lunak klasik & Pembanding tanpa pelatihan \parencite{auerswal_ssocr} \\
+C3f & Pengenal bahasa-visi & Citra terenkode, string & Layanan daring & Unggul transkripsi, lemah skala \parencite{ega2026leveraging, lin2026measurebench} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+\caption{Komponen keputusan dan pendukung}
+\label{tab:komponen2}
+\begin{tabularx}{\textwidth}{@{}L{0.9cm} L{2.9cm} L{3.4cm} L{2.6cm} X@{}}
+\toprule
+\textbf{Kode} & \textbf{Komponen} & \textbf{Masukan, keluaran} & \textbf{Teknologi} & \textbf{Dasar} \\
+\midrule
+C4 & Normalisasi keluaran & String mentah, string baku & Aturan eksplisit & Tanpa aturan bersama, perbandingan tidak sah \\
+C5 & Harness metrik & Keluaran semua model, label & Python & Semua angka dari satu skrip \\
+C6 & Pemilih model & Tabel akurasi dan biaya, model dasar & Aturan keputusan & Akurasi dan biaya diputuskan bersama \\
+C7 & Verifikasi & String model dasar, konteks, keputusan & Aturan dan kalibrasi & Empat lapis pada Bab V \\
+C8 & Mesin keputusan & Hasil verifikasi, keputusan beralasan & Aturan & Keluaran harus keputusan \\
+C9 & Pencatat audit & Keputusan, catatan transaksi & Berkas JSON & Tanpa jejak, kesalahan tak tertelusur \\
+C10 & Evaluator & Keputusan, label, metrik keandalan & Python & Keandalan diukur dari keputusan \\
+C11 & Registry & Bobot, ambang, versi & Berkas dan manifes & Versi dikunci untuk reproduksi \\
+C12 & Konfigurasi produk & Rentang berat, toleransi & Berkas konfigurasi & Lapis fisik butuh pengetahuan produk \\
+\bottomrule
+\end{tabularx}
+\end{table}\section{Pemisahan yang Wajib Dijaga}
+
+\begin{poin}
+  \item C3a--C3f tidak boleh berbagi praproses yang berbeda. Semua menerima
+        citra hasil C2 yang sama, karena perbedaan masukan akan mengubah arti
+        perbandingan.
+  \item C5 tidak boleh dipanggil oleh runtime. Ia berjalan setelah eksperimen,
+        memakai data uji yang sudah dikunci.
+  \item C10 tidak boleh membaca apa pun dari C7 selain keputusan akhir. Membaca
+        skor internal akan membuat evaluasi mengukur niat, bukan hasil.
+\end{poin}
+
+% =====================================================================
+\chapter{Kontrak Data}
+
+\section{Keluaran Pengenal}
+
+Setiap pengenal mengembalikan satu catatan dengan bentuk yang sama, agar C5
+memperlakukan semuanya setara.
+
+\begin{table}[H]
+\caption{Kontrak keluaran setiap pengenal}
+\label{tab:kontrak-pengenal}
+\begin{tabularx}{\textwidth}{@{}L{2.4cm} L{1.8cm} L{3.2cm} X@{}}
+\toprule
+\textbf{Medan} & \textbf{Tipe} & \textbf{Contoh} & \textbf{Aturan} \\
+\midrule
+model & teks & ppocrv6\_small & Nama baku, tanpa spasi \\
+teks & teks & 1006.5 & Titik sebagai pemisah desimal, tanpa spasi \\
+skor & desimal & 0.9100 & Rata-rata peluang karakter, 4 angka di belakang koma \\
+latensi\_ms & bilangan & 82 & Diukur pada perangkat sasaran, bukan mesin latih \\
+parameter & bilangan & 7700000 & Jumlah parameter, untuk tabel biaya \\
+versi & teks & 6.1.0 & Versi pustaka dan bobot \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Kontrak Keputusan}
+
+\begin{table}[H]
+\caption{Kontrak keputusan verifikasi}
+\label{tab:kontrak-keputusan}
+\begin{tabularx}{\textwidth}{@{}L{2.4cm} L{1.8cm} L{3.0cm} X@{}}
+\toprule
+\textbf{Medan} & \textbf{Tipe} & \textbf{Contoh} & \textbf{Aturan} \\
+\midrule
+bacaan & teks & 1006.5 & String setelah normalisasi \\
+keputusan & pilihan & terima & Hanya terima, tolak, atau konfirmasi \\
+lapis & teks & L1 & Lapis pertama yang memutuskan \\
+alasan & teks & slot 6 dari 6 & Kalimat pendek yang dapat dibaca operator \\
+skor\_terkalibrasi & desimal & 0.9300 & Hasil kalibrasi, bukan skor mentah \\
+ambang & desimal & 0.9000 & Nilai ambang yang berlaku saat itu \\
+waktu & teks & 2026-11-02T09:14:03 & Cap waktu ISO 8601 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Berkas Label Data Uji}
+
+\begin{table}[H]
+\caption{Kolom berkas label}
+\label{tab:label}
+\begin{tabularx}{\textwidth}{@{}L{2.6cm} L{4.6cm} X@{}}
+\toprule
+\textbf{Kolom} & \textbf{Isi} & \textbf{Aturan} \\
+\midrule
+berkas & nama citra & Tanpa folder, unik \\
+label & bacaan sebenarnya & Format sama dengan kontrak, titik desimal \\
+jenis\_tampilan & led\_merah, led\_hijau, lcd\_pasif & Tiga nilai, tanpa variasi lain \\
+kondisi & bersih, pantulan, miring, gelap & Satu nilai per citra \\
+split & latih, validasi, kalibrasi, uji & Terkunci sebelum eksperimen \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Aturan Normalisasi}
+
+\begin{poin}
+  \item Koma dan titik sama-sama dibaca sebagai pemisah desimal, lalu ditulis
+        ulang sebagai titik.
+  \item Nol di depan dipertahankan bila ada di panel, karena nol itu bagian dari
+        bacaan, bukan hiasan.
+  \item Spasi, tanda kutip, dan satuan seperti "kg" dibuang sebelum dinilai.
+  \item String kosong dan string lebih dari delapan karakter dihitung sebagai
+        kegagalan, bukan dibuang dari penyebut.
+\end{poin}
+
+% =====================================================================
+\chapter{Lapisan Verifikasi}
+
+\section{Definisi Operasional}
+
+\begin{table}[H]
+\caption{Empat lapis verifikasi, aturannya, dan asal ambangnya}
+\label{tab:lapis}
+\begin{tabularx}{\textwidth}{@{}L{1.0cm} L{3.0cm} L{4.4cm} L{2.4cm} X@{}}
+\toprule
+\textbf{Lapis} & \textbf{Pertanyaan} & \textbf{Aturan operasional} & \textbf{Ambang} & \textbf{Asal} \\
+\midrule
+L1 & Apakah bentuknya masuk akal & Jumlah karakter tanpa titik sama dengan jumlah slot; titik desimal paling banyak satu dan berada di kandidat slot & N slot dari C2 & Profil proyeksi \parencite{jiang2026method} \\
+L2 & Apakah nilainya masuk akal & Berat berada di antara batas produk; selisih terhadap median riwayat tidak melebihi toleransi & Batas produk dari C12 & Konfigurasi operator \\
+L3 & Apakah bacaannya stabil & Tiga sampai lima bingkai; minimal empat dari lima identik & 4 dari 5 & Penyaringan antar bingkai \parencite{yenneti2023lightweight} \\
+L4 & Seberapa yakin model & Skor setelah kalibrasi tidak kurang dari ambang & Dipilih dari data kalibrasi & Peluang CTC \parencite{graves2006ctc} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Cara Menetapkan Ambang}
+
+Ambang tidak boleh ditentukan dari data uji. Prosedur yang dipakai:
+
+\begin{urut}
+  \item Memisahkan data kalibrasi dari data uji sejak awal, dengan pembagian
+        yang sama seperti data latih dan validasi.
+  \item Mengkalibrasi skor pada data kalibrasi, lalu memeriksa kesesuaian antara
+        skor dan frekuensi benar.
+  \item Memilih ambang pada kurva \textit{risk--coverage} dari data kalibrasi,
+        sesuai \textit{coverage} yang ditargetkan, misalnya 80 persen bacaan
+        diterima otomatis.
+  \item Mengunci ambang, mencatatnya di registry, lalu menjalankan data uji satu
+        kali.
+\end{urut}
+
+\section{Urutan Pemeriksaan}
+
+Pemeriksaan berjalan berurutan, dan lapis pertama yang menolak menghentikan
+pemeriksaan berikutnya. Urutan ini disengaja: L1 paling murah dan paling sering
+menangkap kesalahan bentuk, sedangkan L4 paling mahal karena memerlukan
+kalibrasi dan tidak dapat menjelaskan alasan selain angka.
+
+% =====================================================================
+\chapter{Alur Keputusan}
+
+\section{Keadaan}
+
+\begin{table}[H]
+\caption{Keadaan keputusan, pemicu, dan tindakan}
+\label{tab:keadaan}
+\begin{tabularx}{\textwidth}{@{}L{2.6cm} L{4.6cm} L{3.4cm} X@{}}
+\toprule
+\textbf{Keadaan} & \textbf{Pemicu} & \textbf{Tindakan sistem} & \textbf{Yang dilakukan operator} \\
+\midrule
+Diterima & Lolos L1--L4 & Catat bacaan, simpan jejak & Melanjutkan ke karung berikutnya \\
+Ditolak & Gagal L1 atau L2 & Tampilkan alasan, jangan catat & Menimbang ulang atau memasukkan manual \\
+Konfirmasi & Lolos L1 dan L2, gagal L3 atau L4 & Minta satu pengambilan tambahan & Mengarahkan kamera, memotret ulang \\
+Batal & Tidak ada bingkai terbaca & Kembali ke keadaan awal & Memeriksa posisi kamera \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Penanganan Kegagalan Tiap Lapis}
+
+\begin{poin}
+  \item L1 gagal karena slot tidak terdeteksi: sistem memakai jumlah slot dari
+        konfigurasi produk, dan menandai bahwa slot berasal dari konfigurasi,
+        bukan dari citra.
+  \item L2 gagal karena produk belum dipilih: sistem menolak menilai dan meminta
+        operator memilih produk lebih dahulu.
+  \item L3 gagal karena bacaan berubah-ubah: sistem menyimpan semua bingkai
+        sebagai bukti, bukan hanya yang terakhir.
+  \item L4 gagal karena skor rendah: sistem tetap menyimpan string mentah, agar
+        kesalahan dapat dianalisis setelah kejadian.
+\end{poin}
+
+% =====================================================================
+\chapter{Metrik dan Cara Menghitung}
+
+\begin{table}[H]
+\caption{Metrik, definisi, dan tempat pemakaiannya}
+\label{tab:metrik}
+\begin{tabularx}{\textwidth}{@{}L{2.6cm} L{6.2cm} L{3.0cm} X@{}}
+\toprule
+\textbf{Metrik} & \textbf{Definisi} & \textbf{Dipakai di} & \textbf{Satuan} \\
+\midrule
+FSR & Jumlah bacaan yang benar seluruhnya dibagi jumlah bacaan & Tahap model & persen \\
+CER & Jumlah karakter salah dibagi jumlah karakter label & Tahap model & persen \\
+Akurasi desimal & Bacaan benar pada posisi titik desimal & Tahap model & persen \\
+Latensi p50 dan p95 & Waktu satu bacaan, diukur pada perangkat sasaran & Tahap biaya & milidetik \\
+Kesalahan senyap & Bacaan salah yang diterima otomatis dibagi seluruh bacaan & Verifikasi & persen \\
+Coverage & Bacaan yang diterima otomatis dibagi seluruh bacaan & Verifikasi & persen \\
+Selective accuracy & Bacaan benar di antara yang diterima, dibagi yang diterima & Verifikasi & persen \\
+AURC & Luas daerah di bawah kurva risiko terhadap coverage & Verifikasi & tanpa satuan \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Angka tunggal tanpa rentang tidak dilaporkan. Setiap persentase disertai jumlah
+sampel dan interval kepercayaan 95 persen dari 1.000 kali \textit{bootstrap}.
+
+% =====================================================================
+\chapter{Rancangan Eksperimen}
+
+\begin{table}[H]
+\caption{Eksperimen tahap model}
+\label{tab:eks-a}
+\begin{tabularx}{\textwidth}{@{}L{1.0cm} L{5.6cm} X@{}}
+\toprule
+\textbf{Kode} & \textbf{Konfigurasi} & \textbf{Pertanyaan yang dijawab} \\
+\midrule
+A1 & PP-OCRv6 tiny, small, medium tanpa adaptasi & Tingkat mana yang paling efisien pada perangkat sasaran? \\
+A2 & PP-OCRv5 tanpa adaptasi & Apakah kenaikan generasi memberi manfaat pada domain ini? \\
+A3 & CRNN-CTC dilatih pada data latih yang sama & Seberapa jauh model khusus tertinggal atau unggul? \\
+A4 & DBNet + PARSeq & Apakah pipeline dua tahap lebih baik daripada satu model terpadu? \\
+A5 & ssocr tanpa pelatihan & Apakah pembelajaran mendalam memang diperlukan? \\
+A6 & Model bahasa-visi dengan prompt tetap & Berapa biaya untuk akurasi setara? \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+\caption{Eksperimen tahap verifikasi}
+\label{tab:eks-b}
+\begin{tabularx}{\textwidth}{@{}L{1.0cm} L{5.6cm} X@{}}
+\toprule
+\textbf{Kode} & \textbf{Konfigurasi} & \textbf{Pertanyaan yang dijawab} \\
+\midrule
+B1 & Model dasar tanpa verifikasi & Berapa kesalahan senyap pada keadaan dasar? \\
+B2 & Ditambah L1 struktural & Berapa kesalahan bentuk tertangkap? \\
+B3 & Ditambah L2 fisik & Tambahan manfaat dari konteks produk? \\
+B4 & Ditambah L3 temporal & Tambahan manfaat dari antar bingkai? \\
+B5 & Ditambah L4 kalibrasi & Di mana titik seimbang coverage dan akurasi? \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Uji Statistik}
+
+\begin{poin}
+  \item Dua model pada data uji yang sama diuji dengan McNemar, karena yang
+        dibandingkan adalah benar atau salah pada citra yang sama.
+  \item Selisih persentase dilaporkan dengan interval kepercayaan dari
+        \textit{bootstrap}, bukan dari asumsi sebaran normal.
+  \item Kesesuaian sebaran citra sintetis dan nyata diuji dengan Kolmogorov--
+        Smirnov pada enam fitur: lebar digit relatif, rasio kontras, ketajaman,
+        kemiringan, tingkat derau, dan jumlah slot.
+\end{poin}
+
+% =====================================================================
+\chapter{Lingkungan Teknis}
+
+\begin{table}[H]
+\caption{Perangkat lunak dan perangkat keras}
+\label{tab:lingkungan}
+\begin{tabularx}{\textwidth}{@{}L{2.8cm} L{5.2cm} X@{}}
+\toprule
+\textbf{Bagian} & \textbf{Spesifikasi} & \textbf{Catatan} \\
+\midrule
+Bahasa & Python 3.13 & Satu versi untuk seluruh eksperimen \\
+Pustaka pengenal & PaddleOCR untuk PP-OCRv5 dan PP-OCRv6 & Versi dikunci, bobot disimpan di registry \\
+Pustaka lain & PyTorch, OpenCV, Pillow, NumPy & Versi dicatat pada manifes \\
+Latin runtime & ONNX Runtime & Model diekspor ke ONNX agar tidak bergantung Paddle \\
+Pelatihan & CPU kampus, atau GPU sewa bila tersedia & CRNN kecil, latihan dapat selesai dalam jam \\
+Perangkat uji & Ponsel kelas menengah, tanpa koneksi & Tempat latensi diukur; bukan mesin latih \\
+Penyimpanan & Berkas JSON per transaksi & Satu berkas per transaksi, nama mengandung cap waktu \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+% =====================================================================
+\chapter{Risiko dan Mitigasi}
+
+\begin{table}[H]
+\caption{Risiko teknis dan mitigasinya}
+\label{tab:risiko}
+\begin{tabularx}{\textwidth}{@{}L{3.4cm} L{3.6cm} L{4.6cm} X@{}}
+\toprule
+\textbf{Risiko} & \textbf{Dampak} & \textbf{Mitigasi} & \textbf{Tanda peringatan} \\
+\midrule
+PP-OCRv6 sudah tinggi tanpa adaptasi & Kontribusi model melemah & Kontribusi digeser ke verifikasi dan biaya & FSR di atas 95 persen pada A1 \\
+Model klasik mengungguli model besar & Klaim model terbaru goyah & Laporkan per kondisi, bukan rata-rata & Selisih besar pada kondisi bersih \\
+Layanan bahasa-visi berubah & Hasil tidak dapat diulang & Kunci versi, simpan keluaran mentah & Format jawaban berubah saat diuji ulang \\
+Gap sintetis dan nyata & Latihan tidak berbuah & Uji sebaran enam fitur sebelum latih & Uji KS menolak kesamaan \\
+Slot gagal terdeteksi & L1 salah menolak & Fallback ke jumlah slot konfigurasi & Tingkat penolakan L1 di atas 30 persen \\
+Label uji keliru & Semua metrik salah & Anotasi ganda 10 persen citra & Kesepakatan antar anotator di bawah 95 persen \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+% =====================================================================
+\chapter{Peta Klaim ke Sumber}
+
+Setiap angka pada dokumen ini berasal dari sumber berikut, bukan dari perkiraan.
+
+\begin{table}[H]
+\caption{Klaim yang dipakai dan sumbernya}
+\label{tab:peta}
+\begin{tabularx}{\textwidth}{@{}L{1.0cm} L{6.2cm} L{2.0cm} X@{}}
+\toprule
+\textbf{ID} & \textbf{Klaim} & \textbf{Angka} & \textbf{Keterangan} \\
+\midrule
+S01 & CRNN-CTC dengan pra-pemrosesan YOLO pada data logger tujuh segmen & 90,37 persen & 197 dari 218 citra, CER 3,6 persen \\
+S02 & Model bahasa-visi pada perangkat ukur digital & 93,85 persen & Transkripsi digit, bukan pembacaan skala \\
+S03 & Kumpulan data meter angka & 2.000 citra & Pembagian 800/400/800, 10.000 anotasi digit \\
+S04 & Detektor dan pengenal terbaik pada data tujuh segmen & -- & DBNet dan PARSeq, gagal saat pantulan \\
+S07 & Pembangkit citra sintetis tujuh segmen & 96,8 persen & Model digit dan desimal terpisah \\
+S08 & Kepala inferensi digit pada video & 97,8 persen & Per bingkai, 30 bingkai per detik \\
+S09 & Pendekatan klasik pada timbangan elektronik & 99,7 persen & 1.146 karakter, 20 milidetik \\
+S13 & Tolok ukur alat ukur untuk model bahasa-visi & 30,2 persen & 2.442 citra, 26 jenis alat \\
+S14 & PP-OCRv6 & 1,5 / 7,7 / 34,5 juta & 83,2 persen pada 15 kategori \\
+S17 & YOLO dan CRNN pada layar tujuh segmen & 98 persen & Sekitar 800 foto lapangan \\
+S22 & PP-OCRv5 & 5 juta parameter & Menyaingi model miliaran parameter \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+% =====================================================================
+\chapter{Bahan Gambar Arsitektur}
+
+Bagian ini menyebut gambar apa saja yang perlu dibuat, dan apa yang wajib ada di
+dalamnya. Urutannya mengikuti tingkat rinci: dari konteks sampai keadaan.
+
+\begin{table}[H]
+\caption{Daftar gambar yang perlu dibuat}
+\label{tab:gambar}
+\begin{tabularx}{\textwidth}{@{}L{1.0cm} L{3.4cm} L{5.6cm} X@{}}
+\toprule
+\textbf{Kode} & \textbf{Gambar} & \textbf{Elemen wajib} & \textbf{Relasi wajib} \\
+\midrule
+D1 & Konteks & Operator, kamera, timbangan, sistem, registry & Siapa memberi masukan, siapa menerima keluaran \\
+D2 & Komponen & C1 sampai C12 dengan kontrak singkat & Setiap panah diberi nama data yang berpindah \\
+D3 & Alur runtime & Bingkai, praproses, enam model, verifikasi, keputusan & Urutan satu transaksi, termasuk cabang gagal \\
+D4 & Sekuens & Satu transaksi berhasil dan satu ditolak & Waktu vertikal, pemanggilan antar komponen \\
+D5 & Keadaan & Empat keadaan keputusan & Pemicu perpindahan dan tindakan operator \\
+D6 & Penyiapan & Pembangkit, latihan, kalibrasi, ekspor, registry & Kapan tiap artefak dihasilkan \\
+D7 & Evaluasi & Data uji terkunci, harness, metrik, laporan & Bahwa label tidak pernah masuk ke runtime \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Aturan Menggambar}
+
+\begin{poin}
+  \item Setiap panah diberi nama data, bukan kata kerja. "string dan skor" lebih
+        baik daripada "memproses".
+  \item Kotak komponen memuat nama dan satu keterangan dalam tanda kurung,
+        misalnya "Enam model (kandidat 3)".
+  \item Penyimpanan digambar sebagai silinder: registry, catatan transaksi,
+        arsip hasil.
+  \item Jalur yang berjalan di luar perangkat dipisahkan dari jalur di perangkat,
+        karena latensi hanya bermakna pada perangkat sasaran.
+  \item Warna hanya dipakai untuk membedakan tiga hal: data, proses, dan
+        penyimpanan. Lebih dari itu mengalihkan perhatian dari isi.
+\end{poin}
+
+\clearpage
+\bibliography{references}
+
+\end{document}
