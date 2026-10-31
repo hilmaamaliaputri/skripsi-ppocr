@@ -4,65 +4,53 @@
   \setmainfont{times.ttf}[Path=fonts/,
     BoldFont=timesbd.ttf, ItalicFont=timesi.ttf, BoldItalicFont=timesbi.ttf]
 }{\usepackage{mathptmx}}
+\hyphenpenalty=10000
+\exhyphenpenalty=10000
 \usepackage{tikz}
 \usetikzlibrary{arrows.meta,positioning,calc}
 \begin{document}
 \begin{tikzpicture}[
   x=1cm, y=1cm,
-  kotak/.style={rectangle, draw=black!70, fill=white, align=center,
-                text width=2.34cm, inner sep=3pt, font=\scriptsize},
-  tahap/.style={font=\scriptsize\bfseries, anchor=south},
-  lbl/.style={font=\tiny, align=center, inner sep=1pt, fill=white},
-  panah/.style={-{Latex[length=1.5mm]}, draw=black!80, semithick}
+  kotak/.style={rectangle, draw=black!75, fill=white, align=center,
+                text width=3.70cm, inner sep=4.5pt, font=\normalsize},
+  panah/.style={-{Latex[length=1.8mm]}, draw=black!80, semithick}
 ]
 
-% ---------------- kepala tahap ----------------
-\foreach \x/\nm in {1.55/I. DATA, 4.85/II. MODEL, 8.15/III. PENGUKURAN,
-                    11.45/IV. VERIFIKASI, 14.75/V. EVALUASI}{
-  \node[tahap] at (\x,1.22) {\nm};
-  \draw[black!45] (\x-1.36,1.18) -- (\x+1.36,1.18);
-}
+\node[kotak] (d) at (2.05,1.00)
+  {\textbf{I. DATA}\\[3pt]
+   Pembangkit sintetis\\ 25.000 citra (latih)\\[3pt]
+   200 foto nyata timbangan\\ (uji, dikunci)};
 
-% ---------------- I. DATA ----------------
-\node[kotak, minimum height=1.20cm] (latih) at (1.55,0.30)
-  {Pembangkit sintetis\\ 25.000 citra};
-\node[kotak, minimum height=1.20cm] (uji) at (1.55,-1.30)
-  {200 foto nyata\\ (uji, dikunci)};
-
-% ---------------- II. MODEL ----------------
-\node[kotak, minimum height=2.50cm] (model) at (4.85,-0.50)
-  {PP-OCRv6\\ \textit{tiny, small, medium}\\[3pt]
+\node[kotak] (m) at (6.95,1.00)
+  {\textbf{II. MODEL}\\[3pt]
+   PP-OCRv6 \textit{tiny/small/medium}\\
    PP-OCRv5\\ CRNN-CTC\\ DBNet + PARSeq\\ ssocr\\ model bahasa-visi};
 
-% ---------------- III. PENGUKURAN ----------------
-\node[kotak, minimum height=1.20cm] (metrik) at (8.15,0.30)
-  {Skrip metrik tunggal\\ FSR, CER, desimal,\\ latensi, parameter};
-\node[kotak, minimum height=1.20cm] (tabel) at (8.15,-1.30)
-  {Tabel akurasi\\ dan tabel biaya};
+\node[kotak] (p) at (11.85,1.00)
+  {\textbf{III. PENGUKURAN}\\[3pt]
+   Skrip metrik tunggal\\
+   FSR, CER, akurasi desimal,\\ latensi, parameter\\[3pt]
+   tabel akurasi dan biaya};
 
-% ---------------- IV. VERIFIKASI ----------------
-\node[kotak, minimum height=1.20cm] (verif) at (11.45,0.30)
-  {Verifikasi empat lapis\\ struktural, fisik,\\ temporal, kalibrasi};
-\node[kotak, minimum height=1.20cm] (putus) at (11.45,-1.30)
-  {Keputusan: terima,\\ tolak, minta konfirmasi};
+\path let \p1=(d.south), \p2=(m.south), \p3=(p.south) in
+  coordinate (bwh) at (2.05,{min(\y1,\y2,\y3)-58});
 
-% ---------------- V. EVALUASI ----------------
-\node[kotak, minimum height=1.20cm] (nilai) at (14.75,0.30)
-  {Kesalahan senyap,\\ \textit{coverage},\\ \textit{selective accuracy}};
-\node[kotak, minimum height=1.20cm] (lapor) at (14.75,-1.30)
-  {Kurva \textit{risk--coverage}\\ dan laporan};
+\node[kotak, anchor=north] (v) at (bwh)
+  {\textbf{IV. VERIFIKASI}\\[3pt]
+   Model dasar diberi empat lapis:\\
+   struktural, fisik, temporal,\\ kalibrasi keyakinan\\[3pt]
+   keputusan: terima, tolak,\\ minta konfirmasi};
 
-% ---------------- panah ----------------
-\draw[panah] (latih.east) -- node[lbl, above] {latih} (model.west |- latih.east);
-\draw[panah] (uji.east) -- node[lbl, below] {uji} (model.west |- uji.east);
-\draw[panah] (model.east |- metrik.east) -- (metrik.west);
-\draw[panah] (metrik) -- (tabel);
-\draw[panah] (tabel.east) -- node[lbl, above] {model dasar} (putus.west);
-\draw[panah] (putus) -- (verif);
-\draw[panah] (verif.east) -- (nilai.west);
-\draw[panah] (nilai) -- (lapor);
-\draw[panah, dashed, draw=black!55] (uji.south) -- ++(0,-0.70) -|
-  node[lbl, below, pos=0.55] {label sebenarnya} (lapor.south);
+\node[kotak, anchor=north] (e) at (6.95,0 |- bwh)
+  {\textbf{V. EVALUASI}\\[3pt]
+   Keputusan dibandingkan\\ dengan label sebenarnya\\[3pt]
+   kesalahan senyap, \textit{coverage},\\
+   \textit{selective accuracy}, AURC};
+
+\draw[panah] (d.east) -- (m.west);
+\draw[panah] (m.east) -- (p.west);
+\draw[panah] (p.south) -- ++(0,-0.95) -| (v.north);
+\draw[panah] (v.east) -- (e.west);
 
 \end{tikzpicture}
 \end{document}
