@@ -187,35 +187,38 @@ karena kegagalan akibat pantulan adalah keluhan berulang di lapangan
 
 \section{Verifikasi Kontekstual}
 
-Empat uji pada Gambar~\ref{fig:arsitektur} berjalan berurutan. Lapis pertama yang
-menolak menghentikan pemeriksaan berikutnya, sehingga alasan penolakan selalu
-tunggal dan dapat ditelusuri.
+Model mengembalikan angka. Empat uji berikut memeriksa apakah angka itu layak
+dipakai. Pemeriksaannya berurutan: begitu satu uji menolak, pemeriksaan berhenti
+dan alasannya dicatat. Akibatnya satu bacaan hanya punya satu alasan penolakan,
+sehingga mudah ditelusuri saat ditanyakan.
 
 \begin{table}[H]
-\caption{Empat uji verifikasi dan masukan yang dipakainya}
+\caption{Empat uji verifikasi dan bahan pemeriksaannya}
 \label{tab:uji}
-\begin{tabularx}{\textwidth}{@{}L{2.3cm} L{4.4cm} L{3.2cm} X@{}}
+\begin{tabularx}{\textwidth}{@{}L{2.3cm} L{4.0cm} L{3.6cm} X@{}}
 \toprule
-\textbf{Uji} & \textbf{Pertanyaan} & \textbf{Masukan} & \textbf{Contoh penolakan} \\
+\textbf{Uji} & \textbf{Yang ditanyakan} & \textbf{Bahan pemeriksaan} & \textbf{Contoh bacaan yang ditolak} \\
 \midrule
-Struktur & Apakah bentuknya masuk akal & String dan jumlah slot dari ROI & Lima digit pada panel enam slot \\
-Fisik & Apakah nilainya masuk akal & Konfigurasi produk: rentang dan toleransi & Karung 25 kg terbaca 2,5 \\
-Temporal & Apakah bacaannya stabil & Tiga sampai lima bingkai & Berubah pada dua dari lima bingkai \\
-Kalibrasi & Seberapa yakin model & Skor setelah kalibrasi dan ambangnya & Skor 0,62 di bawah ambang 0,90 \\
+Struktur & Apakah bentuk angkanya wajar & String bacaan dan jumlah slot dari citra & Lima digit pada panel enam slot \\
+Fisik & Apakah beratnya masuk akal & Rentang dan toleransi produk yang dipilih & Karung 25 kg terbaca 2,5 \\
+Temporal & Apakah bacaannya stabil & Tiga sampai lima bingkai berurutan & Dua dari lima bingkai berbeda \\
+Kalibrasi & Seberapa yakin model & Skor setelah kalibrasi dan ambangnya & Skor 0,62 sementara ambang 0,90 \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
-Dua masukan berasal dari luar sistem: konfigurasi produk diisi administrator, dan
-parameter kalibrasi berasal dari pengembangan model. Pemisahan ini disengaja agar
-mengubah ambang tidak menuntut perubahan kode, dan agar ambang tidak ditetapkan
-dari data uji. Kalibrasi dilakukan pada kumpulan data terpisah, lalu ambang dipilih
-dari kurva \textit{risk--coverage} sesuai \textit{coverage} yang ditargetkan.
+Dua bahan datang dari luar sistem. Rentang berat diisi administrator lewat
+konfigurasi produk, sedangkan parameter kalibrasi berasal dari pengembangan model.
+Karena keduanya berada di luar kode, mengubah batas tidak menuntut perubahan
+program, dan ambang tidak pernah ditetapkan dari data uji. Kalibrasi dikerjakan
+pada kumpulan data tersendiri, lalu ambang diambil dari kurva
+\textit{risk--coverage} sesuai porsi bacaan yang ingin diterima otomatis.
 
-Keluarannya empat keadaan: terima, tolak, konfirmasi, atau batal. Keadaan
-konfirmasi diperlukan karena sebagian bacaan tidak cukup bukti untuk diterima
-maupun ditolak; memaksanya menjadi terima atau tolak akan menyembunyikan keraguan
-yang sebenarnya dapat diselesaikan dengan satu pengambilan ulang.
+Hasil akhirnya satu dari empat keadaan: terima, tolak, konfirmasi, atau batal.
+Keadaan konfirmasi disediakan karena sebagian bacaan tidak cukup kuat untuk
+diterima, tetapi juga tidak layak dibuang. Memaksanya menjadi terima atau tolak
+hanya menyembunyikan keraguan yang sebenarnya bisa diselesaikan dengan sekali
+memotret ulang.
 
 \section{Kedua Kandidat dalam Satu Alur}
 
