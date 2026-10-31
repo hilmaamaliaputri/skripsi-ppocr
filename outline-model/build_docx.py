@@ -15,7 +15,7 @@ import sys
 from pathlib import Path
 
 from docx import Document
-from docx.enum.section import WD_SECTION
+from docx.enum.section import WD_SECTION, WD_ORIENT
 from docx.enum.table import WD_TABLE_ALIGNMENT
 from docx.enum.text import WD_ALIGN_PARAGRAPH, WD_TAB_ALIGNMENT
 from docx.oxml import OxmlElement
@@ -580,14 +580,30 @@ def bangun():
                 tambah_tabel(doc, b[1], b[2], b[3],
                              f"Tabel {bab_ke}.{nomor_tabel}")
             elif jenis == "figure":
+                lebar_penuh = "-lebar" in b[2]
+                if lebar_penuh:
+                    sec = doc.add_section(WD_SECTION.NEW_PAGE)
+                    sec.orientation = WD_ORIENT.LANDSCAPE
+                    sec.page_width, sec.page_height = Cm(29.7), Cm(21.0)
+                    sec.top_margin = sec.bottom_margin = Cm(1.6)
+                    sec.left_margin = sec.right_margin = Cm(1.6)
                 par = doc.add_paragraph()
                 atur_paragraf(par, align=WD_ALIGN_PARAGRAPH.CENTER, indent=False, line=1.0)
-                par.add_run().add_picture(str(GAMBAR / b[2]), width=Cm(14.0))
+                lebar_gambar = Cm(25.8) if lebar_penuh else Cm(14.0)
+                par.add_run().add_picture(str(GAMBAR / b[2]), width=lebar_gambar)
                 cap = doc.add_paragraph()
                 atur_paragraf(cap, align=WD_ALIGN_PARAGRAPH.CENTER, indent=False, line=1.0)
                 nomor_gambar += 1
                 tulis(cap, f"Gambar {bab_ke}.{nomor_gambar}  {b[1]}",
                       bold=True, size=10)
+                if lebar_penuh:
+                    sec2 = doc.add_section(WD_SECTION.NEW_PAGE)
+                    sec2.orientation = WD_ORIENT.PORTRAIT
+                    sec2.page_width, sec2.page_height = Cm(21.0), Cm(29.7)
+                    sec2.top_margin = Cm(4.0)
+                    sec2.bottom_margin = Cm(3.0)
+                    sec2.left_margin = Cm(4.0)
+                    sec2.right_margin = Cm(3.0)
 
     doc.save(KELUAR)
     print(f"tersimpan: {KELUAR}")

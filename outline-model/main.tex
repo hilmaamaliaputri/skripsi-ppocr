@@ -21,6 +21,7 @@
 
 \usepackage[english,indonesian]{babel}
 \usepackage[a4paper,top=4cm,left=4cm,bottom=3cm,right=3cm]{geometry}
+\usepackage{pdflscape}
 \usepackage{setspace}
 \doublespacing
 \usepackage{indentfirst}
@@ -676,70 +677,194 @@ S24 & Bautista dan Atienza & 2022 & ECCV (arXiv:2207.06966) \\
 \end{table}
 
 % =====================================================================
-\chapter{Arsitektur dan Bagan Alur}
+\chapter{Arsitektur Sistem}
 
-\section{Bagan Alur}
+\section{Tiga Zona}
 
-Gambar~\ref{fig:alur-model} disusun dalam tiga jalur. Jalur pertama adalah
-penyiapan model, yang berjalan sekali di luar perangkat. Jalur kedua adalah runtime
-pada perangkat, tempat pembacaan dilakukan tanpa jaringan. Jalur ketiga adalah
-evaluasi, yang memakai hasil dua jalur di atasnya.
+Arsitektur pada Gambar~\ref{fig:arsitektur} dibagi menjadi tiga zona yang
+terpisah secara fisik maupun waktu kerja. Zona pertama adalah ponsel runtime,
+tempat pembacaan dilakukan dan tidak tersedia jaringan. Zona kedua adalah pabrik
+model, tempat bobot dilatih dan dikalibrasi, berjalan di luar perangkat dan hanya
+sekali. Zona ketiga adalah laboratorium evaluasi, tempat keputusan yang sudah
+tercatat diukur terhadap label yang selama ini disembunyikan.
 
-Panah pada bagan menunjukkan data yang berpindah, bukan urutan pekerjaan. Panah
-putus-putus antarjalur menunjukkan hal yang harus tersedia sebelum jalur di bawahnya
-dapat berjalan: bobot dan ambang dari penyiapan model, serta keluaran yang sudah
-tercatat dari runtime. Pemisahan itu mencegah tiga kekeliruan yang lazim pada
-penelitian sejenis: melatih model di dalam alur pengukuran sehingga data uji ikut
-terpakai, mengukur latensi pada mesin yang sama dengan mesin pelatihan, dan memakai
-label sebenarnya saat pembacaan dijalankan.
+Panah pada bagan diberi nama data yang berpindah, bukan kata kerja. Panah penuh
+menyatakan aliran data di dalam satu zona, sedangkan panah putus-putus menyatakan
+ketergantungan antar zona: bobot model, parameter kalibrasi, dan data prediksi
+yang dipakai untuk menilai. Ketiganya mengalir satu arah; tidak ada panah balik
+dari runtime ke pabrik model.
 
+\newgeometry{top=1.5cm,bottom=1.5cm,left=1.5cm,right=1.5cm}
+\begin{landscape}
 \begin{figure}[H]
 \centering
-\includegraphics[width=\textwidth]{gambar/alur-jalur-baru.png}
-\caption{Arsitektur penelitian: penyiapan model, runtime pada perangkat, dan evaluasi}
-\label{fig:alur-model}
+\includegraphics[width=0.98\linewidth]{gambar/arsitektur-ponsel-lebar.png}
+\caption{Arsitektur penelitian: zona ponsel runtime, pabrik model, dan laboratorium evaluasi}
+\label{fig:arsitektur}
 \end{figure}
+\end{landscape}
+\clearpage
+\restoregeometry
 
-\section{Tiga Jalur dan Alasannya}
+\section{Jalur Runtime pada Ponsel}
+
+Rantai pembacaan berjalan dari atas ke bawah pada zona pertama.
+
+\begin{poin}
+  \item Panel timbangan tujuh segmen dipotret kamera ponsel. Hasilnya adalah
+        citra display, yaitu masukan paling awal.
+  \item Modul akuisisi menyimpan tiga sampai lima bingkai. Lebih dari satu
+        bingkai diperlukan karena lapis temporal membandingkan bacaan antar
+        bingkai, dan praktik penyaringan antar bingkai sudah dipakai pada
+        pembacaan tampilan serupa \parencite{yenneti2023lightweight}.
+  \item Modul ROI dan profil slot memotong area panel dan menghitung jumlah slot
+        dari profil proyeksi. Keluarannya dipakai dua kali: sebagai masukan bank
+        pengenal, dan sebagai pembanding bentuk pada lapis pertama. Pendekatan
+        klasik memakai cara yang sama untuk memisahkan digit
+        \parencite{jiang2026method}.
+  \item Bank enam pengenal menghasilkan string dan skor untuk setiap citra yang
+        sama. Rinciannya pada Bagian~6.3.
+  \item Normalisasi menyamakan pemisah desimal, nol di depan, dan membuang
+        satuan. Tanpa langkah ini, dua model dapat dinilai berbeda hanya karena
+        menulis angka dengan cara berbeda.
+  \item Empat lapis verifikasi berjalan berurutan: struktur, fisik, temporal,
+        dan kalibrasi. Setiap lapis menerima satu bentuk masukan yang berbeda,
+        dan lapis yang menolak menghentikan pemeriksaan berikutnya.
+  \item Mesin keputusan mengubah hasil verifikasi menjadi satu dari empat
+        keadaan: terima, tolak, konfirmasi, atau batal.
+  \item Jejak audit menyimpan citra, string mentah, keputusan, dan alasan yang
+        menyertainya.
+\end{poin}
+
+\section{Bank Enam Pengenal}
+
+Bank pengenal menjalankan lima model di dalam perangkat dan satu model di luar
+perangkat.
+
+\begin{poin}
+  \item PP-OCRv6 dalam tiga tingkat ukuran, 1,5 juta sampai 34,5 juta parameter
+        \parencite{zhang2026ppocrv6}. Ketiga tingkat dipertahankan karena yang
+        dicari bukan model terakurat, melainkan tingkat terkecil yang masih
+        memadai untuk perangkat sasaran.
+  \item PP-OCRv5 sebagai pembanding generasi, 5 juta parameter
+        \parencite{zhang2026ppocrv5}.
+  \item CRNN-CTC sebagai pembanding arsitektur khusus, dilatih pada data sintetis
+        \parencite{shi2017crnn}.
+  \item DBNet dengan PARSeq sebagai pembanding pipeline dua tahap, kombinasi yang
+        dilaporkan terbaik pada kumpulan data tujuh segmen
+        \parencite{low2024detecting, bautista2022parseq}.
+  \item ssocr sebagai pembanding tanpa pembelajaran mesin
+        \parencite{auerswal_ssocr}.
+  \item Model bahasa-visi yang dipanggil lewat layanan eksternal. Panahnya
+        putus-putus dan diberi keterangan hanya pembanding, karena model ini
+        memerlukan jaringan dan mengirim citra keluar perangkat. Kedua hal itu
+        bertentangan dengan kebutuhan N1 dan N6 pada Bab~II.
+\end{poin}
+
+Kelima model lokal menerima ROI yang sama persis. Perbedaan praproses akan
+mengubah arti perbandingan, karena selisih hasil tidak lagi dapat diatribusikan
+pada model.
+
+\section{Verifikasi Berlapis sebagai Penyaring Berurutan}
+
+Empat lapis pada bagan bukan empat penilaian yang dijumlahkan, melainkan empat
+saringan yang dilewati berurutan.
 
 \begin{table}[H]
-\caption{Jalur penelitian, masukan, dan keluarannya}
-\label{tab:tahap}
-\begin{tabularx}{\textwidth}{@{}L{2.6cm} L{3.4cm} L{3.3cm} X@{}}
+\caption{Lapis verifikasi, masukan, dan sumber ambangnya}
+\label{tab:lapis}
+\begin{tabularx}{\textwidth}{@{}L{0.9cm} L{2.7cm} L{4.0cm} L{3.4cm} X@{}}
 \toprule
-\textbf{Jalur} & \textbf{Masukan} & \textbf{Keluaran} & \textbf{Alasan dipisahkan} \\
+\textbf{Lapis} & \textbf{Nama} & \textbf{Masukan} & \textbf{Sumber ambang} & \textbf{Contoh penolakan} \\
 \midrule
-Penyiapan model (di luar perangkat) & Data latih sintetis, bobot terbuka, citra untuk kalibrasi & Bobot terkalibrasi dan ambang di \textit{registry} & Berjalan sekali, lama, dan tidak mungkin dilakukan pada perangkat gudang \\
-Runtime (perangkat, tanpa jaringan) & Foto panel dan konteks produk & Keputusan dan catatan transaksi & Harus selesai dalam hitungan detik dan tanpa koneksi \\
-Evaluasi (setelah eksperimen) & Keputusan tercatat dan label sebenarnya & Tabel metrik, kurva \textit{risk--coverage}, laporan & Label tidak boleh terlihat oleh jalur mana pun sebelumnya \parencite{gushima2023automatic} \\
+L1 & Struktur & String normal dan jumlah slot dari ROI & Profil proyeksi citra & Lima digit pada panel enam slot \\
+L2 & Fisik & Bacaan dan konfigurasi produk & Konfigurasi produk, dari luar sistem & Karung 25 kg terbaca 2,5 \\
+L3 & Temporal & Tiga sampai lima bacaan berurutan & Kesepakatan antar bingkai & Bacaan berubah pada dua dari lima bingkai \\
+L4 & Kalibrasi & Skor model setelah kalibrasi & Parameter kalibrasi dari pabrik model & Skor 0,62 di bawah ambang 0,90 \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
-\section{Urutan Kerja}
+Dua ambang berasal dari luar zona runtime. Ambang lapis fisik datang dari
+konfigurasi produk yang diisi administrator, sedangkan ambang lapis kalibrasi
+datang dari pabrik model. Pemisahan itu disengaja: mengubah ambang tidak boleh
+menuntut perubahan kode, dan menetapkan ambang tidak boleh memakai data uji.
 
-\begin{urut}
-  \item Menyiapkan pembangkit sesuai tujuh dimensi variasi, membangkitkan data
-        latih, lalu mengambil citra nyata untuk data uji dan menguncinya.
-  \item Menjalankan keenam model pada data uji yang sama dan menyimpan keluaran
-        mentahnya sebelum diolah.
-  \item Menghitung seluruh metrik dengan satu skrip, lalu menyusun tabel akurasi
-        dan tabel biaya.
-  \item Memilih model dasar dari tabel itu, dengan tingkat ukuran ditentukan oleh
-        tabel latensi pada perangkat sasaran.
-  \item Menambahkan lapis verifikasi satu per satu, dan mengukur penurunan
-        kesalahan senyap pada setiap penambahan.
-  \item Menyusun kurva \textit{risk--coverage} sebagai hasil utama, lalu
-        membandingkannya dengan angka literatur pada Tabel~\ref{tab:kelompok}.
-\end{urut}
+\section{Mesin Keputusan dan Jejak Audit}
+
+Mesin keputusan menghasilkan empat keadaan, bukan dua. Keadaan konfirmasi
+diperlukan karena sebagian bacaan tidak cukup bukti untuk diterima maupun
+ditolak, misalnya ketika bentuknya masuk akal tetapi antar bingkai tidak
+sepakat. Memaksa keadaan ini menjadi terima atau tolak akan menyembunyikan
+keraguan yang sebenarnya dapat diselesaikan dengan satu kali pengambilan ulang.
+
+Setiap keputusan menulis satu catatan ke jejak audit yang memuat citra, string
+mentah, keputusan, dan alasannya. Catatan ini yang nanti dipakai laboratorium
+evaluasi, sehingga sistem tidak perlu menyimpan apa pun tambahan untuk
+kepentingan pengukuran.
+
+\section{Pabrik Model}
+
+Zona kedua berjalan di luar perangkat dan hanya sekali per eksperimen. Alurnya:
+data sintetis, latih CRNN, kalibrasi, ekspor ONNX, lalu registry model.
+
+CRNN dilatih karena tidak ada bobot publik untuk tampilan tujuh segmen; bobot
+CRNN yang tersedia dilatih pada teks alam \parencite{shi2017crnn}. Model lain
+diunduh apa adanya, sehingga hanya CRNN yang memerlukan data latih.
+
+Kalibrasi menghasilkan dua artefak yang berbeda tujuan. Model terkalibrasi dipakai
+bank pengenal, sedangkan parameter kalibrasi diturunkan ke lapis keempat pada
+zona runtime. Ekspor ONNX dilakukan agar model dapat berjalan tanpa bergantung
+pada pustaka pelatihannya, yang penting untuk perangkat tanpa jaringan.
+
+Registry menyimpan bobot, ambang, dan versinya. Panah putus-putus dari registry
+ke bank pengenal menandakan bahwa isi registry harus tersedia sebelum runtime
+dapat berjalan.
+
+\section{Laboratorium Evaluasi}
+
+Zona ketiga memuat tiga hal: data uji terkunci, harness metrik, dan laporan
+metrik. Harness menerima dua masukan, yaitu data uji beserta labelnya, dan data
+prediksi serta audit dari runtime.
+
+Pemisahan ini menegaskan satu aturan yang ditulis pada bagan: label dari data uji
+tidak pernah masuk ke runtime. Bila aturan itu dilanggar, seluruh angka pada
+laporan menjadi tidak bermakna, karena model seolah diberi tahu jawabannya.
+
+Metrik yang dihitung harness ada empat kelompok: FSR dan CER untuk kemampuan
+membaca, kesalahan senyap untuk keandalan keputusan, coverage dan selective
+accuracy untuk keseimbangan antara menerima dan menolak, serta AURC untuk
+meringkas seluruh kurva dalam satu angka.
+
+\section{Tiga Ketergantungan Antarzona}
+
+\begin{table}[H]
+\caption{Ketergantungan antarzona dan akibat bila tidak dipenuhi}
+\label{tab:ketergantungan}
+\begin{tabularx}{\textwidth}{@{}L{2.9cm} L{2.3cm} L{2.3cm} L{2.8cm} X@{}}
+\toprule
+\textbf{Panah} & \textbf{Dari} & \textbf{Ke} & \textbf{Isi} & \textbf{Akibat bila tidak ada} \\
+\midrule
+Bobot model & Registry & Bank pengenal & Bobot terkalibrasi dan versinya & Pembacaan tidak dapat diulang pada versi lain \\
+Parameter kalibrasi & Kalibrasi & L4 & Fungsi kalibrasi dan ambang & Lapis keempat memakai skor mentah yang terlalu yakin \\
+Data prediksi dan audit & Jejak audit & Harness metrik & Keputusan, alasan, citra & Keandalan tidak dapat diukur tanpa menjalankan ulang \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Mengapa Zona Dipisah}
+
+Pemisahan itu mencegah tiga kekeliruan yang lazim pada penelitian sejenis.
+Pertama, melatih model di dalam alur pengukuran sehingga data uji ikut terpakai.
+Kedua, mengukur latensi pada mesin pelatihan, padahal latensi hanya bermakna pada
+perangkat sasaran. Ketiga, memakai label sebenarnya saat pembacaan berjalan,
+sehingga hasil terlihat lebih baik daripada kemampuannya.
 
 \section{Batas Tahap Ini}
 
-Antarmuka, basis data, sinkronisasi, dan pengujian oleh operator tidak dikerjakan
-pada tahap ini. Ketiganya bertumpu pada satu asumsi, yaitu model dasar sudah
-dipilih dan lapisan verifikasi sudah terbukti menurunkan kesalahan senyap.
-Membangun antarmuka lebih dahulu akan menghasilkan aplikasi yang rapi dengan mesin
-yang belum terukur.
+Antarmuka pengguna, basis data transaksi, sinkronisasi, dan pengujian oleh
+operator belum termasuk pada arsitektur ini. Ketiganya bertumpu pada asumsi bahwa
+zona runtime dan zona pabrik model sudah terbukti bekerja.
 
 \clearpage
 \bibliography{references}
