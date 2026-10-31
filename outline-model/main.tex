@@ -364,10 +364,6 @@ dan satu skrip metrik untuk semuanya.
 
 \section{Celah Penelitian}
 
-Lima celah pada Tabel~\ref{tab:celah} tidak berdiri sendiri. Celah
-pertama sampai ketiga muncul ketika seseorang hendak memilih model, sedangkan
-celah keempat dan kelima muncul ketika ia hendak memakai keluaran model itu.
-
 \begin{table}[H]
 \caption{Celah penelitian dan bagian yang menutupnya}
 \label{tab:celah}
@@ -384,27 +380,22 @@ G5 & Belum ada pengukuran \textit{risk--coverage} pada domain ini & Metrik yang 
 \end{tabularx}
 \end{table}
 
-Tiga celah pertama berkaitan dengan pemilihan. Angka yang beredar tidak dapat
-dibandingkan karena citra uji dan definisi bacaan benar berbeda di setiap laporan
-(G1); tidak ada laporan yang menyertakan biaya menjalankan, padahal keputusan
-pemakaian ditentukan biaya (G2); dan tidak ada yang mengukur kondisi mana yang
-membuat tiap metode gagal, meskipun pantulan sudah disebut sebagai penyebabnya
-\parencite{low2024detecting} (G3).
+Lima celah itu bertemu pada satu titik: literatur membaca panel tujuh segmen
+sebagai tugas pengenalan karakter, yaitu masuk citra, keluar string, lalu dinilai
+akurasi, sehingga tidak ada dasar untuk memilih model maupun untuk menilai layak
+tidaknya keluaran. Angka yang beredar, 90,37, 97,8, dan 99,7 persen, diukur pada
+citra dan definisi bacaan benar yang berbeda sehingga tidak dapat diurutkan (G1);
+tidak satu pun menyertakan biaya menjalankan, padahal pemilihan metode ditentukan
+biaya (G2); tidak ada yang mengukur kondisi mana yang membuat tiap metode gagal,
+meskipun pantulan sudah disebut sebagai penyebabnya \parencite{low2024detecting}
+(G3); seluruh sistem berhenti pada string tanpa memberi tahu apakah string itu
+layak dipercaya (G4); dan metrik yang dilaporkan selalu FSR serta CER, belum pernah
+kurva \textit{risk--coverage} yang menunjukkan harga dari tiap tambahan ketelitian
+(G5). Penelitian ini menutup kelimanya pada satu kumpulan data uji yang dikunci:
+komparasi enam pendekatan dengan protokol dan metrik yang sama menjawab G1 sampai
+G3, sedangkan verifikasi empat lapis beserta laju kesalahan senyap,
+\textit{coverage}, dan AURC menjawab G4 dan G5.
 
-Dua celah berikutnya berkaitan dengan pemakaian. Seluruh sistem yang dipetakan pada
-Bagian~4.1 mengembalikan string dan berhenti di situ, tanpa memberi tahu apakah
-string itu layak dipercaya (G4); dan metrik yang dilaporkan selalu FSR dan CER,
-belum pernah kurva \textit{risk--coverage} yang menunjukkan harga dari tiap
-tambahan ketelitian (G5).
-
-Celah yang dapat dituntaskan penelitian ini adalah ketiadaan dasar untuk memilih
-model dan ketiadaan ukuran kelayakan keluarannya. Literatur membaca panel sebagai
-tugas pengenalan karakter: masuk citra, keluar string, dinilai akurasi. Cara itu
-menghasilkan angka yang tidak sebanding, dan tidak pernah menjawab berapa banyak
-bacaan salah yang lolos tanpa peringatan. Penelitian ini menjawab keduanya dengan
-mengukur pada satu data uji yang dikunci, bukan dengan mengusulkan arsitektur baru.
-
-% =====================================================================
 \chapter{Arsitektur}
 
 \section{Bagan Alur}
