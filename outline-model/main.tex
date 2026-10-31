@@ -305,6 +305,10 @@ basis data menyusul setelah keduanya terbukti.
 
 \section{Lima Kelompok Pendekatan}
 
+Literatur pembacaan tampilan tujuh segmen tidak tersusun sebagai daftar
+metode, melainkan sebagai pergeseran cara kerja selama tujuh tahun terakhir.
+Tabel~\ref{tab:kelompok} memetakannya menjadi lima kelompok.
+
 \begin{table}[H]
 \caption{Pemetaan pendekatan pembacaan tampilan tujuh segmen}
 \label{tab:kelompok}
@@ -321,7 +325,48 @@ Model bahasa-visi & \textcite{ega2026leveraging}; \textcite{lin2026measurebench}
 \end{tabularx}
 \end{table}
 
+Kelompok pertama bekerja tanpa pembelajaran mesin. Citra dibinerisasi, digit dipisahkan
+lewat profil proyeksi, lalu tiap segmen dicocokkan dengan pola baku. Cara ini cepat
+dan tepat pada citra terkontrol: 99,7 persen pada 1.146 karakter dengan waktu 20
+milidetik pada timbangan elektronik \parencite{jiang2026method}. Kelemahannya bukan
+akurasi, melainkan ketergantungan pada kondisi citra, dan laporan semacam ini tidak
+menyebut apa yang terjadi ketika pencahayaan berubah.
+
+Kelompok kedua menambahkan pembelajaran mesin khusus untuk panel tujuh segmen,
+umumnya CRNN dengan kepala CTC atau YOLO dengan kepala digit
+\parencite{effendi2025unjuk, yenneti2023lightweight}. Hasilnya lebih tahan terhadap
+variasi, tetapi menuntut data latih, dan setiap penelitian melaporkan akurasi pada
+kumpulan datanya sendiri.
+
+Kelompok ketiga menyediakan data dan tolok ukur. UFPR-AMR memuat 2.000 citra dengan
+10.000 anotasi tingkat digit \parencite{laroca2019convolutional}, dan kumpulan citra
+mentah meter energi tersedia untuk penelitian sejenis
+\parencite{kanagarathinam2019text}. Keduanya membantu, tetapi objeknya meter energi,
+bukan timbangan.
+
+Kelompok keempat adalah pengenal karakter umum generasi baru. PP-OCRv6 menyebut
+tampilan digital sebagai salah satu sasarannya dan tersedia dalam tiga tingkat ukuran
+\parencite{zhang2026ppocrv6}, sedangkan PP-OCRv5 menunjukkan model 5 juta parameter
+dapat menyaingi model berukuran miliaran \parencite{zhang2026ppocrv5}. Keduanya
+menjanjikan, tetapi belum diuji pihak lain pada panel tujuh segmen.
+
+Kelompok kelima memakai model bahasa-visi. Pada transkripsi digit, model ini unggul,
+dengan 93,85 persen \textit{full-string recognition} \parencite{ega2026leveraging}.
+Pada tugas yang menuntut pembacaan skala, angkanya jatuh: yang terbaik hanya 30,2
+persen pada 2.442 citra nyata \parencite{lin2026measurebench}. Model ini juga
+memerlukan jaringan dan biaya per panggilan.
+
+Peta itu menjelaskan satu hal yang menentukan arah penelitian. Setiap kelompok
+melaporkan angka pada kumpulan datanya sendiri, sehingga angka 90,37 persen, 97,8
+persen, dan 99,7 persen tidak dapat diurutkan menjadi peringkat. Yang belum ada
+bukan metode baru, melainkan pengukuran yang memakai satu data uji, satu protokol,
+dan satu skrip metrik untuk semuanya.
+
 \section{Celah Penelitian}
+
+Lima celah pada Tabel~\ref{tab:celah} tidak berdiri sendiri. Celah
+pertama sampai ketiga muncul ketika seseorang hendak memilih model, sedangkan
+celah keempat dan kelima muncul ketika ia hendak memakai keluaran model itu.
 
 \begin{table}[H]
 \caption{Celah penelitian dan bagian yang menutupnya}
@@ -338,6 +383,19 @@ G5 & Belum ada pengukuran \textit{risk--coverage} pada domain ini & Metrik yang 
 \bottomrule
 \end{tabularx}
 \end{table}
+
+Tiga celah pertama berkaitan dengan pemilihan. Angka yang beredar tidak dapat
+dibandingkan karena citra uji dan definisi bacaan benar berbeda di setiap laporan
+(G1); tidak ada laporan yang menyertakan biaya menjalankan, padahal keputusan
+pemakaian ditentukan biaya (G2); dan tidak ada yang mengukur kondisi mana yang
+membuat tiap metode gagal, meskipun pantulan sudah disebut sebagai penyebabnya
+\parencite{low2024detecting} (G3).
+
+Dua celah berikutnya berkaitan dengan pemakaian. Seluruh sistem yang dipetakan pada
+Bagian~4.1 mengembalikan string dan berhenti di situ, tanpa memberi tahu apakah
+string itu layak dipercaya (G4); dan metrik yang dilaporkan selalu FSR dan CER,
+belum pernah kurva \textit{risk--coverage} yang menunjukkan harga dari tiap
+tambahan ketelitian (G5).
 
 Celah yang dapat dituntaskan penelitian ini adalah ketiadaan dasar untuk memilih
 model dan ketiadaan ukuran kelayakan keluarannya. Literatur membaca panel sebagai
