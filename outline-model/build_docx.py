@@ -130,6 +130,8 @@ def baca_tex(path: Path, entri) -> list[tuple]:
     if not path.exists():
         return blok
     baris = path.read_text(encoding="utf-8").splitlines()
+    buang = ("\\newgeometry", "\\restoregeometry", "\\begin{landscape}", "\\end{landscape}")
+    baris = [x for x in baris if not x.strip().startswith(buang)]
     i = 0
     par: list[str] = []
 
