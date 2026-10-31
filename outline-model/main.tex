@@ -187,38 +187,18 @@ karena kegagalan akibat pantulan adalah keluhan berulang di lapangan
 
 \section{Verifikasi Kontekstual}
 
-Model mengembalikan angka. Empat uji berikut memeriksa apakah angka itu layak
-dipakai. Pemeriksaannya berurutan: begitu satu uji menolak, pemeriksaan berhenti
-dan alasannya dicatat. Akibatnya satu bacaan hanya punya satu alasan penolakan,
-sehingga mudah ditelusuri saat ditanyakan.
-
-\begin{table}[H]
-\caption{Empat uji verifikasi dan bahan pemeriksaannya}
-\label{tab:uji}
-\begin{tabularx}{\textwidth}{@{}L{2.3cm} L{4.0cm} L{3.6cm} X@{}}
-\toprule
-\textbf{Uji} & \textbf{Yang ditanyakan} & \textbf{Bahan pemeriksaan} & \textbf{Contoh bacaan yang ditolak} \\
-\midrule
-Struktur & Apakah bentuk angkanya wajar & String bacaan dan jumlah slot dari citra & Lima digit pada panel enam slot \\
-Fisik & Apakah beratnya masuk akal & Rentang dan toleransi produk yang dipilih & Karung 25 kg terbaca 2,5 \\
-Temporal & Apakah bacaannya stabil & Tiga sampai lima bingkai berurutan & Dua dari lima bingkai berbeda \\
-Kalibrasi & Seberapa yakin model & Skor setelah kalibrasi dan ambangnya & Skor 0,62 sementara ambang 0,90 \\
-\bottomrule
-\end{tabularx}
-\end{table}
-
-Dua bahan datang dari luar sistem. Rentang berat diisi administrator lewat
-konfigurasi produk, sedangkan parameter kalibrasi berasal dari pengembangan model.
-Karena keduanya berada di luar kode, mengubah batas tidak menuntut perubahan
-program, dan ambang tidak pernah ditetapkan dari data uji. Kalibrasi dikerjakan
-pada kumpulan data tersendiri, lalu ambang diambil dari kurva
-\textit{risk--coverage} sesuai porsi bacaan yang ingin diterima otomatis.
-
-Hasil akhirnya satu dari empat keadaan: terima, tolak, konfirmasi, atau batal.
-Keadaan konfirmasi disediakan karena sebagian bacaan tidak cukup kuat untuk
-diterima, tetapi juga tidak layak dibuang. Memaksanya menjadi terima atau tolak
-hanya menyembunyikan keraguan yang sebenarnya bisa diselesaikan dengan sekali
-memotret ulang.
+Model mengembalikan angka, dan empat uji memeriksa apakah angka itu layak dipakai.
+Uji struktur membandingkan jumlah digit dengan jumlah slot dari citra; uji fisik
+membandingkan berat dengan rentang dan toleransi produk yang dipilih operator; uji
+temporal memeriksa kesepakatan tiga sampai lima bingkai; uji kalibrasi
+membandingkan skor yang sudah dikalibrasi dengan ambangnya. Pemeriksaannya
+berurutan, dan uji pertama yang menolak menghentikan sisanya, sehingga satu bacaan
+hanya punya satu alasan penolakan. Dua bahan datang dari luar sistem: rentang berat
+diisi administrator dan parameter kalibrasi berasal dari pengembangan model. Karena
+keduanya berada di luar kode, mengubah batas tidak menuntut perubahan program, dan
+ambang tidak pernah diambil dari data uji. Hasilnya satu dari empat keadaan:
+terima, tolak, konfirmasi, atau batal, dengan konfirmasi disediakan bagi bacaan
+yang tidak cukup kuat diterima tetapi juga tidak layak dibuang.
 
 \section{Kedua Kandidat dalam Satu Alur}
 
