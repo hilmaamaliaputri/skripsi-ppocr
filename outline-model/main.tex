@@ -680,40 +680,38 @@ S24 & Bautista dan Atienza & 2022 & ECCV (arXiv:2207.06966) \\
 
 \section{Bagan Alur}
 
-Gambar~\ref{fig:alur-model} memuat alur penelitian dalam lima tahap berurutan:
-data, model, pengukuran, verifikasi, dan evaluasi. Panah pada bagan menunjukkan
-ketergantungan data, bukan urutan pekerjaan. Seluruh eksperimen pada tahap III
-dijalankan pada data uji yang sama, dan data itu dikunci pada tahap I sebelum
-eksperimen pertama berjalan.
+Gambar~\ref{fig:alur-model} disusun dalam tiga jalur. Jalur pertama adalah
+penyiapan model, yang berjalan sekali di luar perangkat. Jalur kedua adalah runtime
+pada perangkat, tempat pembacaan dilakukan tanpa jaringan. Jalur ketiga adalah
+evaluasi, yang memakai hasil dua jalur di atasnya.
 
-Dua hal perlu diperhatikan. Pertama, data latih dan data uji dipisahkan sejak
-awal: pembangkit sintetis hanya memasok data latih, dan CRNN-CTC adalah
-satu-satunya model yang dilatih di dalam penelitian ini. Kedua, tahap evaluasi
-menerima dua masukan, yaitu keputusan sistem dan label sebenarnya. Label itu tidak
-pernah terlihat oleh tahap mana pun sebelumnya, sehingga angka yang dihasilkan
-bukan hasil pengukuran terhadap dirinya sendiri.
+Panah pada bagan menunjukkan data yang berpindah, bukan urutan pekerjaan. Panah
+putus-putus antarjalur menunjukkan hal yang harus tersedia sebelum jalur di bawahnya
+dapat berjalan: bobot dan ambang dari penyiapan model, serta keluaran yang sudah
+tercatat dari runtime. Pemisahan itu mencegah tiga kekeliruan yang lazim pada
+penelitian sejenis: melatih model di dalam alur pengukuran sehingga data uji ikut
+terpakai, mengukur latensi pada mesin yang sama dengan mesin pelatihan, dan memakai
+label sebenarnya saat pembacaan dijalankan.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=\textwidth]{gambar/alur-penelitian.png}
-\caption{Alur penelitian dalam lima tahap: data, model, pengukuran, verifikasi, dan evaluasi}
+\includegraphics[width=\textwidth]{gambar/alur-jalur-baru.png}
+\caption{Arsitektur penelitian: penyiapan model, runtime pada perangkat, dan evaluasi}
 \label{fig:alur-model}
 \end{figure}
 
 \section{Lima Tahap dan Alasannya}
 
 \begin{table}[H]
-\caption{Lima tahap penelitian, masukan, dan keluarannya}
+\caption{Jalur penelitian, masukan, dan keluarannya}
 \label{tab:tahap}
-\begin{tabularx}{\textwidth}{@{}L{2.3cm} L{3.4cm} L{3.4cm} X@{}}
+\begin{tabularx}{\textwidth}{@{}L{2.6cm} L{3.4cm} L{3.3cm} X@{}}
 \toprule
-\textbf{Tahap} & \textbf{Masukan} & \textbf{Keluaran} & \textbf{Alasan dipisahkan} \\
+\textbf{Jalur} & \textbf{Masukan} & \textbf{Keluaran} & \textbf{Alasan dipisahkan} \\
 \midrule
-I. Data & Parameter pembangkit, foto timbangan & Data latih sintetis, data uji nyata terkunci & Data uji harus bebas dari pengaruh pembangkit; bila dicampur, akurasi mengukur pembangkitnya sendiri \parencite{gushima2023automatic} \\
-II. Model & Data latih, bobot terbuka, kunci API & Keluaran enam model pada citra yang sama & Enam model harus menerima masukan identik agar selisihnya bermakna \\
-III. Pengukuran & Keluaran semua model, label & Tabel akurasi dan tabel biaya & Definisi metrik harus satu untuk semua model, termasuk penanganan desimal \\
-IV. Verifikasi & String model dasar, konteks produk & Keputusan terima, tolak, atau konfirmasi & Keputusan memakai informasi di luar piksel, yang tidak tersedia bagi model \\
-V. Evaluasi & Keputusan, label sebenarnya & Laju kesalahan senyap, \textit{coverage}, AURC & Keandalan diukur dari keputusan akhir, bukan dari keluaran model \\
+Penyiapan model \newline (di luar perangkat) & Data latih sintetis, bobot terbuka, citra untuk kalibrasi & Bobot terkalibrasi dan ambang di \textit{registry} & Berjalan sekali, lama, dan tidak mungkin dilakukan pada perangkat gudang \\
+Runtime \newline (perangkat, tanpa jaringan) & Foto panel dan konteks produk & Keputusan dan catatan transaksi & Harus selesai dalam hitungan detik dan tanpa koneksi \\
+Evaluasi \newline (setelah eksperimen) & Keputusan tercatat dan label sebenarnya & Tabel metrik, kurva \textit{risk--coverage}, laporan & Label tidak boleh terlihat oleh jalur mana pun sebelumnya \parencite{gushima2023automatic} \\
 \bottomrule
 \end{tabularx}
 \end{table}
