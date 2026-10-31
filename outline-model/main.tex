@@ -680,70 +680,68 @@ S24 & Bautista dan Atienza & 2022 & ECCV (arXiv:2207.06966) \\
 
 \section{Bagan Alur}
 
-Bagan disusun dalam tiga jalur, bukan satu urutan. Jalur atas adalah penyiapan
-model, yang berjalan di luar perangkat pada CPU atau layanan komputasi kampus.
-Jalur tengah adalah runtime pada perangkat, tempat pembacaan dilakukan dan tidak
-tersedia jaringan. Jalur bawah adalah evaluasi, yang memakai hasil dua jalur di
-atasnya.
+Gambar~\ref{fig:alur-model} memuat alur penelitian dalam lima tahap berurutan:
+data, model, pengukuran, verifikasi, dan evaluasi. Panah pada bagan menunjukkan
+ketergantungan data, bukan urutan pekerjaan. Seluruh eksperimen pada tahap III
+dijalankan pada data uji yang sama, dan data itu dikunci pada tahap I sebelum
+eksperimen pertama berjalan.
 
-Panah pada bagan menunjukkan ketergantungan, bukan urutan tahap. Panah putus-putus
-antar jalur menunjukkan hal yang harus ada sebelum jalur di bawahnya dapat
-berjalan: bobot dan ambang dari penyiapan model, serta keluaran tercatat dari
-runtime.
+Dua hal perlu diperhatikan. Pertama, data latih dan data uji dipisahkan sejak
+awal: pembangkit sintetis hanya memasok data latih, dan CRNN-CTC adalah
+satu-satunya model yang dilatih di dalam penelitian ini. Kedua, tahap evaluasi
+menerima dua masukan, yaitu keputusan sistem dan label sebenarnya. Label itu tidak
+pernah terlihat oleh tahap mana pun sebelumnya, sehingga angka yang dihasilkan
+bukan hasil pengukuran terhadap dirinya sendiri.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=\textwidth]{gambar/bagan-penelitian.png}
-\caption{Arsitektur penelitian: jalur penyiapan model, jalur runtime pada perangkat, dan jalur evaluasi}
+\includegraphics[width=\textwidth]{gambar/alur-penelitian.png}
+\caption{Alur penelitian dalam lima tahap: data, model, pengukuran, verifikasi, dan evaluasi}
 \label{fig:alur-model}
 \end{figure}
 
-\section{Penjelasan Jalur}
+\section{Lima Tahap dan Alasannya}
 
 \begin{table}[H]
-\caption{Isi setiap jalur, masukan, dan keluarannya}
-\label{tab:jalur}
-\begin{tabularx}{\textwidth}{@{}L{2.9cm} L{3.4cm} L{3.4cm} X@{}}
+\caption{Lima tahap penelitian, masukan, dan keluarannya}
+\label{tab:tahap}
+\begin{tabularx}{\textwidth}{@{}L{2.3cm} L{3.4cm} L{3.4cm} X@{}}
 \toprule
-\textbf{Jalur} & \textbf{Masukan} & \textbf{Keluaran} & \textbf{Alasan dipisahkan} \\
+\textbf{Tahap} & \textbf{Masukan} & \textbf{Keluaran} & \textbf{Alasan dipisahkan} \\
 \midrule
-Penyiapan model & Data sintetis, kode model, citra nyata untuk validasi & Bobot terkalibrasi dan ambang dalam \textit{registry} & Berjalan sekali, butuh waktu lama, tidak dilakukan di perangkat gudang \\
-Runtime perangkat & Foto panel dan konteks produk & Keputusan dan catatan transaksi & Harus selesai dalam hitungan detik dan tanpa jaringan \\
-Evaluasi & Keluaran runtime dan \textit{ground truth} terkunci & Tabel metrik, kurva \textit{risk--coverage} & Dijalankan berulang setelah eksperimen, memakai label yang tidak boleh dilihat runtime \\
+I. Data & Parameter pembangkit, foto timbangan & Data latih sintetis, data uji nyata terkunci & Data uji harus bebas dari pengaruh pembangkit; bila dicampur, akurasi mengukur pembangkitnya sendiri \parencite{gushima2023automatic} \\
+II. Model & Data latih, bobot terbuka, kunci API & Keluaran enam model pada citra yang sama & Enam model harus menerima masukan identik agar selisihnya bermakna \\
+III. Pengukuran & Keluaran semua model, label & Tabel akurasi dan tabel biaya & Definisi metrik harus satu untuk semua model, termasuk penanganan desimal \\
+IV. Verifikasi & String model dasar, konteks produk & Keputusan terima, tolak, atau konfirmasi & Keputusan memakai informasi di luar piksel, yang tidak tersedia bagi model \\
+V. Evaluasi & Keputusan, label sebenarnya & Laju kesalahan senyap, \textit{coverage}, AURC & Keandalan diukur dari keputusan akhir, bukan dari keluaran model \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
-Pemisahan jalur itu bukan pengaturan gambar. Ia mencegah tiga kesalahan yang biasa
-terjadi pada penelitian sejenis. Pertama, melatih model di dalam alur pengukuran,
-sehingga data uji ikut terpakai. Kedua, mengukur latensi pada mesin yang sama
-dengan mesin pelatihan, sehingga angka latensi tidak mewakili perangkat sasaran.
-Ketiga, memakai label saat menjalankan pembacaan, yang membuat hasil terlihat lebih
-baik daripada kemampuannya.
-
 \section{Urutan Kerja}
 
 \begin{urut}
-  \item Menyiapkan data: pembangkit sintetis untuk latih, pengambilan citra nyata
-        untuk uji, lalu mengunci data uji.
+  \item Menyiapkan pembangkit sesuai tujuh dimensi variasi, membangkitkan data
+        latih, lalu mengambil citra nyata untuk data uji dan menguncinya.
   \item Menjalankan keenam model pada data uji yang sama dan menyimpan keluaran
         mentahnya sebelum diolah.
-  \item Menghitung seluruh metrik dengan satu skrip, lalu menyusun tabel akurasi dan
-        tabel biaya.
-  \item Memilih model dasar, dengan tingkat ukuran dipilih dari tabel latensi sesuai
-        perangkat sasaran.
-  \item Menambahkan lapis verifikasi satu per satu dan mengukur penurunan kesalahan
-        senyap pada setiap penambahan.
-  \item Menyusun kurva \textit{risk--coverage} dari B5 sebagai hasil utama.
+  \item Menghitung seluruh metrik dengan satu skrip, lalu menyusun tabel akurasi
+        dan tabel biaya.
+  \item Memilih model dasar dari tabel itu, dengan tingkat ukuran ditentukan oleh
+        tabel latensi pada perangkat sasaran.
+  \item Menambahkan lapis verifikasi satu per satu, dan mengukur penurunan
+        kesalahan senyap pada setiap penambahan.
+  \item Menyusun kurva \textit{risk--coverage} sebagai hasil utama, lalu
+        membandingkannya dengan angka literatur pada Tabel~\ref{tab:kelompok}.
 \end{urut}
 
 \section{Batas Tahap Ini}
 
 Antarmuka, basis data, sinkronisasi, dan pengujian oleh operator tidak dikerjakan
-pada tahap ini. Ketiganya bertumpu pada satu asumsi, yaitu model dasar sudah dipilih
-dan lapisan verifikasi sudah terbukti menurunkan kesalahan senyap. Membangun
-antarmuka lebih dahulu akan menghasilkan aplikasi yang rapi dengan mesin yang belum
-terukur.
+pada tahap ini. Ketiganya bertumpu pada satu asumsi, yaitu model dasar sudah
+dipilih dan lapisan verifikasi sudah terbukti menurunkan kesalahan senyap.
+Membangun antarmuka lebih dahulu akan menghasilkan aplikasi yang rapi dengan mesin
+yang belum terukur.
 
 \clearpage
 \bibliography{references}
