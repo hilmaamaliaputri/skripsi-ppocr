@@ -700,7 +700,7 @@ label sebenarnya saat pembacaan dijalankan.
 \label{fig:alur-model}
 \end{figure}
 
-\section{Lima Tahap dan Alasannya}
+\section{Tiga Jalur dan Alasannya}
 
 \begin{table}[H]
 \caption{Jalur penelitian, masukan, dan keluarannya}
@@ -709,9 +709,9 @@ label sebenarnya saat pembacaan dijalankan.
 \toprule
 \textbf{Jalur} & \textbf{Masukan} & \textbf{Keluaran} & \textbf{Alasan dipisahkan} \\
 \midrule
-Penyiapan model \newline (di luar perangkat) & Data latih sintetis, bobot terbuka, citra untuk kalibrasi & Bobot terkalibrasi dan ambang di \textit{registry} & Berjalan sekali, lama, dan tidak mungkin dilakukan pada perangkat gudang \\
-Runtime \newline (perangkat, tanpa jaringan) & Foto panel dan konteks produk & Keputusan dan catatan transaksi & Harus selesai dalam hitungan detik dan tanpa koneksi \\
-Evaluasi \newline (setelah eksperimen) & Keputusan tercatat dan label sebenarnya & Tabel metrik, kurva \textit{risk--coverage}, laporan & Label tidak boleh terlihat oleh jalur mana pun sebelumnya \parencite{gushima2023automatic} \\
+Penyiapan model (di luar perangkat) & Data latih sintetis, bobot terbuka, citra untuk kalibrasi & Bobot terkalibrasi dan ambang di \textit{registry} & Berjalan sekali, lama, dan tidak mungkin dilakukan pada perangkat gudang \\
+Runtime (perangkat, tanpa jaringan) & Foto panel dan konteks produk & Keputusan dan catatan transaksi & Harus selesai dalam hitungan detik dan tanpa koneksi \\
+Evaluasi (setelah eksperimen) & Keputusan tercatat dan label sebenarnya & Tabel metrik, kurva \textit{risk--coverage}, laporan & Label tidak boleh terlihat oleh jalur mana pun sebelumnya \parencite{gushima2023automatic} \\
 \bottomrule
 \end{tabularx}
 \end{table}

@@ -23,21 +23,21 @@
 ]
 
 % ===================== JALUR 1 =====================
-\node[kotak, anchor=north] (gen)  at (2.05,0.72) {Pembangkit sintetis\\ 25.000 citra};
-\node[kotak, anchor=north] (latih)at (5.75,0.72) {Latih CRNN-CTC\\ (hanya model ini)};
-\node[kotak, anchor=north] (eksp) at (9.45,0.72) {Kalibrasi dan\\ ekspor ONNX};
-\node[simpan, anchor=north] (reg) at (13.30,0.72) {Model\\ registry};
+\node[kotak, anchor=north] (gen)  at (1.95,0.72) {Pembangkit sintetis\\ 25.000 citra};
+\node[kotak, anchor=north] (latih)at (5.35,0.72) {Latih CRNN-CTC\\ (hanya model ini)};
+\node[kotak, anchor=north] (eksp) at (8.75,0.72) {Kalibrasi dan\\ ekspor ONNX};
+\node[simpan, anchor=north] (reg) at (12.15,0.72) {Model\\ registry};
 
 \draw[panah] (gen.east)   -- node[lbl, above] {citra}  (latih.west |- gen.east);
 \draw[panah] (latih.east) -- node[lbl, above] {bobot}  (eksp.west |- latih.east);
 \draw[panah] (eksp.east)  -- node[lbl, above] {berkas} (reg.west |- eksp.east);
 
 % ===================== JALUR 2 =====================
-\node[kotak, anchor=north] (foto)  at (2.05,-2.15) {Foto panel\\ 3--5 bingkai};
-\node[kotak, anchor=north] (pra)   at (5.75,-2.15) {Praproses dan\\ profil slot};
-\node[kotak, anchor=north] (model) at (9.45,-2.15) {Enam model\\ pada citra sama};
-\node[kotak, anchor=north] (verif) at (13.30,-2.15) {Verifikasi\\ 4 lapis};
-\node[simpan, anchor=north] (catat) at (16.10,-2.15) {Catatan\\ transaksi};
+\node[kotak, anchor=north] (foto)  at (1.95,-2.15) {Foto panel\\ 3--5 bingkai};
+\node[kotak, anchor=north] (pra)   at (5.35,-2.15) {Praproses dan\\ profil slot};
+\node[kotak, anchor=north] (model) at (8.75,-2.15) {Enam model\\ pada citra sama};
+\node[kotak, anchor=north] (verif) at (12.15,-2.15) {Verifikasi\\ 4 lapis};
+\node[simpan, anchor=north] (catat) at (14.85,-2.15) {Catatan\\ transaksi};
 
 \draw[panah] (foto.east)  -- node[lbl, above] {frame} (pra.west |- foto.east);
 \draw[panah] (pra.east)   -- node[lbl, above] {area}  (model.west |- pra.east);
@@ -45,10 +45,10 @@
 \draw[panah] (verif.east) -- node[lbl, above] {hasil} (catat.west |- verif.east);
 
 % ===================== JALUR 3 =====================
-\node[kotak, anchor=north] (gt)   at (2.05,-5.00) {Ground truth\\ (terkunci)};
-\node[kotak, anchor=north] (harn) at (5.75,-5.00) {Harness metrik\\ FSR, CER, desimal};
-\node[kotak, anchor=north] (metr) at (9.45,-5.00) {Metrik keandalan\\ \textit{silent error}, AURC};
-\node[simpan, anchor=north] (arsip) at (13.30,-5.00) {Arsip\\ hasil};
+\node[kotak, anchor=north] (gt)   at (1.95,-5.00) {Ground truth\\ (terkunci)};
+\node[kotak, anchor=north] (harn) at (5.35,-5.00) {Harness metrik\\ FSR, CER, desimal};
+\node[kotak, anchor=north] (metr) at (8.75,-5.00) {Metrik keandalan\\ \textit{silent error}, AURC};
+\node[simpan, anchor=north] (arsip) at (12.15,-5.00) {Arsip\\ hasil};
 
 \draw[panah] (gt.east)   -- node[lbl, above] {label}  (harn.west |- gt.east);
 \draw[panah] (harn.east) -- node[lbl, above] {metrik} (metr.west |- harn.east);
@@ -62,9 +62,9 @@
 
 % ===================== KOTAK JALUR =====================
 \begin{scope}
-  \draw[dashed, draw=black!40] (0.15,1.32) rectangle (17.62,-1.05);
-  \draw[dashed, draw=black!40] (0.15,-1.55) rectangle (17.62,-3.92);
-  \draw[dashed, draw=black!40] (0.15,-4.40) rectangle (17.62,-6.77);
+  \draw[dashed, draw=black!40] (0.15,1.32) rectangle (16.35,-1.05);
+  \draw[dashed, draw=black!40] (0.15,-1.55) rectangle (16.35,-3.92);
+  \draw[dashed, draw=black!40] (0.15,-4.40) rectangle (16.35,-6.77);
 \end{scope}
 
 \node[judul] at (0.32,1.24) {PENYIAPAN MODEL $\cdot$ OFFLINE};
