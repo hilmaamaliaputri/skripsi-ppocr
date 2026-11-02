@@ -146,13 +146,13 @@ kategori umum membuat kemampuan pada panel tujuh segmen belum diketahui.
 
 \section{Komparasi Generasi Model 2026}
 
-Empat angka untuk tugas yang sama beredar pada 2024--2026: 90,37 persen
+Tiga angka untuk tugas yang sama beredar pada 2024--2026: 90,37 persen
 \parencite{effendi2025unjuk}, 97,8 persen \parencite{yenneti2023lightweight},
-99,7 persen \parencite{jiang2026method}, dan 98 persen \parencite{oicws2026lcd}.
-Keempatnya wajar dalam laporannya masing-masing dan tidak dapat dibandingkan,
-karena citra uji, definisi bacaan benar, dan penanganan titik desimal berbeda.
-Angka 99,7 persen diukur pada 1.146 karakter timbangan dengan cahaya terkontrol,
-sedangkan 98 persen pada sekitar 800 foto lapangan.
+dan 98 persen \parencite{oicws2026lcd}. Ketiganya wajar dalam laporannya
+masing-masing dan tidak dapat dibandingkan, karena citra uji, definisi bacaan
+benar, dan penanganan titik desimal berbeda. Angka 90,37 persen diukur pada 218
+citra dengan pra-pemrosesan terkontrol, sedangkan 98 persen pada sekitar 800
+foto lapangan.
 
 Enam pendekatan dipilih agar mewakili seluruh kelompok, bukan hanya yang terbaru
 (Tabel~\ref{tab:matriks}). Tiga tingkat PP-OCRv6 dipertahankan karena yang dicari
@@ -274,9 +274,9 @@ dihasilkan layak dipercaya ketika berat sebenarnya belum diketahui siapa pun.
 
 \section{Apa yang Sudah Dicapai Penelitian}
 
-Pendekatan klasik melaporkan 99,7 persen pada 1.146 karakter dengan waktu 20
-milidetik \parencite{jiang2026method}. CRNN-CTC dengan pra-pemrosesan YOLO
-melaporkan \textit{exact match} 90,37 persen (197 dari 218 citra) dan CER 3,6
+Pendekatan klasik tersedia sebagai perangkat lunak bebas yang tidak menuntut
+pelatihan, tetapi belum ada laporan terukur pada timbangan
+\parencite{auerswal_ssocr}. CRNN-CTC dengan pra-pemrosesan YOLO melaporkan \textit{exact match} 90,37 persen (197 dari 218 citra) dan CER 3,6
 persen \parencite{effendi2025unjuk}. Kepala inferensi digit pada video mencapai
 97,8 persen per bingkai pada 30 bingkai per detik
 \parencite{yenneti2023lightweight}. Implementasi YOLO dan CRNN pada sekitar 800
@@ -312,7 +312,7 @@ basis data menyusul setelah keduanya terbukti.
 \toprule
 \textbf{Kelompok} & \textbf{Sumber} & \textbf{Hasil dilaporkan} & \textbf{Keterbatasan} \\
 \midrule
-Klasik tanpa pembelajaran mesin & \textcite{jiang2026method}; \textcite{auerswal_ssocr} & 99,7 persen pada 1.146 karakter, 20 milidetik & Bergantung kondisi citra; perilaku gagal tidak dilaporkan \\
+Klasik tanpa pembelajaran mesin & \textcite{auerswal_ssocr} & Belum ada angka terukur pada timbangan & Bergantung pada kondisi citra dan ambang biner \\
 Deep learning khusus & \textcite{effendi2025unjuk}; \textcite{gushima2023automatic}; \textcite{low2024detecting} & 90,37 persen; 96,8 persen; gagal saat pantulan & Berhenti pada akurasi data sendiri \\
 Kumpulan data dan tolok ukur & \textcite{laroca2019convolutional}; \textcite{kanagarathinam2019text} & 2.000 citra, 10.000 anotasi digit & Objeknya meter energi, bukan timbangan \\
 Pengenal umum generasi baru & \textcite{zhang2026ppocrv6}; \textcite{zhang2026ppocrv5} & 83,2 persen pada 15 kategori & Belum diuji pada tujuh segmen \\
@@ -322,9 +322,10 @@ Model bahasa-visi & \textcite{ega2026leveraging}; \textcite{lin2026measurebench}
 \end{table}
 
 Lima kelompok pada Tabel~\ref{tab:kelompok} bukan daftar metode, melainkan
-pergeseran cara kerja. Pendekatan klasik cepat dan tepat pada citra terkontrol,
-99,7 persen pada 1.146 karakter dalam 20 milidetik, tetapi perilakunya saat gagal
-tidak dilaporkan \parencite{jiang2026method}; pembelajaran mesin khusus tujuh
+pergeseran cara kerja. Pendekatan klasik tidak menuntut pelatihan dan berjalan
+ringan, tetapi belum ada laporan terukur pada timbangan, sehingga angkanya
+dihasilkan sendiri dalam penelitian ini \parencite{auerswal_ssocr};
+pembelajaran mesin khusus tujuh
 segmen lebih tahan terhadap variasi dengan harga data latih
 \parencite{effendi2025unjuk}; kumpulan data yang tersedia membantu, tetapi objeknya
 meter energi \parencite{laroca2019convolutional}; pengenal umum generasi baru
@@ -332,7 +333,7 @@ menjanjikan kemampuan tanpa pelatihan tambahan, tetapi belum diuji pihak lain pa
 panel tujuh segmen \parencite{zhang2026ppocrv6}; dan model bahasa-visi unggul pada
 transkripsi, 93,85 persen, tetapi jatuh pada tugas yang menuntut pembacaan skala dan
 memerlukan jaringan \parencite{ega2026leveraging, lin2026measurebench}. Karena
-setiap kelompok mengukur pada kumpulan datanya sendiri, angka 90,37, 97,8, dan 99,7
+setiap kelompok mengukur pada kumpulan datanya sendiri, angka 90,37, 97,8, dan 98
 persen tidak dapat diurutkan menjadi peringkat.
 
 \section{Celah Penelitian}
@@ -344,7 +345,7 @@ persen tidak dapat diurutkan menjadi peringkat.
 \toprule
 \textbf{Kode} & \textbf{Celah} & \textbf{Bukti} & \textbf{Ditutup oleh} \\
 \midrule
-G1 & Angka akurasi tidak dapat dibandingkan karena data dan definisi berbeda & 90,37; 97,8; 99,7; 98 persen dari empat kumpulan berbeda & Komparasi, satu data uji dan satu protokol \\
+G1 & Angka akurasi tidak dapat dibandingkan karena data dan definisi berbeda & 90,37; 97,8; 98 persen dari tiga kumpulan berbeda & Komparasi, satu data uji dan satu protokol \\
 G2 & Perbandingan tidak menyertakan biaya & Tidak ada tabel parameter, latensi, dan biaya layanan & Komparasi, tabel biaya \\
 G3 & Belum ada laporan kondisi apa yang membuat tiap metode gagal & Pantulan disebut tanpa diukur per kondisi \parencite{low2024detecting} & Komparasi, analisis galat per kondisi \\
 G4 & Belum ada luaran berupa keputusan layak atau tidak & Seluruh sistem mengembalikan string & Verifikasi, keputusan empat keadaan \\
@@ -356,7 +357,7 @@ G5 & Belum ada pengukuran \textit{risk--coverage} pada domain ini & Metrik yang 
 Lima celah itu bertemu pada satu titik: literatur membaca panel tujuh segmen
 sebagai tugas pengenalan karakter, yaitu masuk citra, keluar string, lalu dinilai
 akurasi, sehingga tidak ada dasar untuk memilih model maupun untuk menilai layak
-tidaknya keluaran. Angka yang beredar, 90,37, 97,8, dan 99,7 persen, diukur pada
+tidaknya keluaran. Angka yang beredar, 90,37, 97,8, dan 98 persen, diukur pada
 citra dan definisi bacaan benar yang berbeda sehingga tidak dapat diurutkan (G1);
 tidak satu pun menyertakan biaya menjalankan, padahal pemilihan metode ditentukan
 biaya (G2); tidak ada yang mengukur kondisi mana yang membuat tiap metode gagal,
