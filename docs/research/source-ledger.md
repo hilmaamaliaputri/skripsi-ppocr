@@ -1,14 +1,14 @@
 # Source Ledger
 
-25 sumber. Kolom **Baca**: `penuh` = dibaca isinya; `abstrak` = abstrak + metode ringkas; `kode` = README/kode repo.
+28 sumber. Kolom **Baca**: `penuh` = dibaca isinya; `abstrak` = abstrak + metode ringkas; `kode` = README/kode repo.
 
 | ID | Sitasi | Tahun | Venue | DOI / URL | Tipe | Relevansi | Baca |
 |---|---|---|---|---|---|---|---|
 | S01 | Effendi, B. P. G.; Adiperdana, B.; Faizal, F. | 2025 | JIIF 9(2) 107–115 | 10.24198/jiif.v9i2.64116 | Jurnal | CRNN-CTC + YOLOv8 untuk data logger 7-seg; exact 90,37% (197/218), CER 3,6%; input 200×100 | penuh |
-| S02 | Ega, A. V.; Gunawan, D.; Halim, A.; Samodro, R. A. | 2026 | BEEI 15(5) 4239–4252 | 10.11591/eei.v15i5.11769 | Jurnal | VLM vs Tesseract/EasyOCR/PaddleOCR/KerasOCR/YOLO11; Gemini PDR 98,10%, FSR 93,85% | abstrak |
+| S02 | Ega, A. V.; Gunawan, D.; Halim, A.; Samodro, R. A. | 2026 | BEEI 15(5) 4239–4252 | 10.11591/eei.v15i5.11769 | Jurnal | VLM vs Tesseract/EasyOCR/PaddleOCR/KerasOCR/YOLO11; Gemini PDR 98,10%, FSR 93,85%; Tesseract default PDR 13,36% FSR 0%, custom 56,94%/28,85% | penuh |
 | S03 | Laroca, R.; Barroso, V.; Diniz, M. A.; Gonçalves, G. R.; Schwartz, W. R.; Menotti, D. | 2019 | J. Electron. Imaging 28(1) 013023 | 10.1117/1.JEI.28.1.013023 | Jurnal | UFPR-AMR: 2.000 citra, split 800/400/800, 5 digit, 10.000 anotasi digit; detektor + CNN | abstrak |
 | S04 | Low, L. M.; Mohd Salleh, F. H.; Law, Y. F.; Zakaria, N. Z. | 2024 | ITM Web Conf. 63 01007 | 10.1051/itmconf/20246301007 | Konferensi | DBNet terbaik untuk deteksi, PARSeq terbaik untuk recognisi di dataset 7Seg; gagal saat glare | penuh |
-| S05 | Kulkarni, S. S.; Katebi, N. dkk. | 2021 | Front. Artif. Intell. 4 543176 | 10.3389/frai.2021.543176 | Jurnal | CNN membaca LCD tensimeter dari kamera ponsel | abstrak |
+| S05 | Kulkarni, S. S.; Katebi, N. dkk. | 2021 | Front. Artif. Intell. 4 543176 | 10.3389/frai.2021.543176 | Jurnal | CNN membaca LCD tensimeter dari kamera ponsel (91%); Tesseract pada citra mentah menghasilkan false positive/negatif besar (Gambar 8) | abstrak |
 | S06 | Xiang, X.; Zhu, C.; Ou, Z. dkk. | 2026 | Sensors 26(1) 265 | 10.3390/s26010265 | Jurnal | Semi-supervised 7-seg LED + framework akuisisi data | abstrak |
 | S07 | Gushima, K.; Kashima, T. | 2023 | PHM Asia-Pacific | 10.36001/phmap.2023.v4i1.3612 | Konferensi | Generator citra sintetis; model digit dan model titik desimal terpisah; 96,8%; target perangkat low-spec | penuh |
 | S08 | Yenneti, S.; Chiou, Y.-M.; Price, B. | 2023 | Electronic Imaging 35(7) 282 | 10.2352/EI.2023.35.7.IMAGE-282 | Konferensi | VGG + digit inference head; sintetis + augmentasi; 97,8% single-frame, 30 fps; mode filtering | penuh |
@@ -30,7 +30,11 @@
 | S24 | Bautista, D.; Atienza, R. | 2022 | ECCV | arXiv:2207.06966 | Konferensi | PARSeq: decoder permuted autoregressive untuk scene text | abstrak |
 
 | S25 | Repo bahan awal: skripsi-analisa-timbang | 2026 | GitHub | https://github.com/hilmaamaliaputri/skripsi-analisa-timbang | Bahan awal | Pengujian Tesseract 0/12 exact match pada 2 citra timbangan; dataset sintetis 1.000 label; CRNN test 50,0% | kode |
+| S26 | Timofeev, I.; Paramonov, I.; Mamedov, E. | 2014 | Proc. FRUCT'15, hlm. 213 | https://fruct.org/files/publications/volume-15/acm15/Tim.pdf | Konferensi | Tesseract dan ssocr pada 374 foto 7-seg tonometer (7 alat, 9 ponsel): berhasil <5% citra; algoritma segmentasi penulis 90% | penuh |
+| S27 | Shenoy, V. N.; Aalami, O. O. | 2017 | AMIA Annu Symp Proc 2017, 1564–1570 | https://pmc.ncbi.nlm.nih.gov/articles/PMC5977613/ | Konferensi | Tesseract kuat pada teks biasa tetapi sulit membaca 7-seg; CNN pengganti 98,2% | abstrak |
+| S28 | Jeon, S.; Ko, B. S.; Son, S. H. | 2023 | Sensors 23(2) 638 | 10.3390/s23020638 | Jurnal | ROMI: Tesseract (traineddata `seven-segment`) mAP 0,518 vs CNN 0,991–0,993 pada digit monitor ICU | penuh |
 
 ## Catatan
 - S16, S18, S23 belum dibaca penuh; angka di dokumen outline tidak boleh mengutip detail yang belum diverifikasi.
 - S13 dan S14 adalah sumber paling baru dan paling menentukan arah; keduanya dibaca penuh.
+- S26–S28 khusus untuk klaim keterbatasan Tesseract pada display tujuh segmen; S02 dan S05 memberi angka pembanding tambahan. S04 hanya menyebut Tesseract sebagai toolbox, tidak mengujinya, sehingga tidak boleh dikutip memberi angka.
