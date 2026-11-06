@@ -5,21 +5,25 @@ dan benchmark harness.
 """
 
 import os
+import sys
 import numpy as np
 
-from ..src.pipeline.normalizer import StringNormalizer
-from ..src.pipeline.schema import DecisionState, ReadingContract, SlotProfile
-from ..src.vision.preprocessor import ImagePreprocessor
-from ..src.vision.slot_profiler import SlotProfiler
-from ..src.verification.v_temporal import TemporalVerifier
-from ..src.verification.v_structural import StructuralVerifier
-from ..src.verification.v_physical import PhysicalVerifier
-from ..src.verification.v_calibration import CalibrationVerifier
-from ..src.engine.decision_engine import DecisionEngine
-from ..src.engine.audit_logger import AuditLogger
-from ..src.evaluation.calibration_optimizer import CalibrationOptimizer
-from ..src.evaluation.risk_coverage import RiskCoverageAnalyzer
-from ..src.evaluation.metrics import EvaluationMetrics
+# Ensure parent directory (sistem/backend) is in sys.path
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
+from src.pipeline.normalizer import StringNormalizer
+from src.pipeline.schema import DecisionState, ReadingContract, SlotProfile
+from src.vision.preprocessor import ImagePreprocessor
+from src.vision.slot_profiler import SlotProfiler
+from src.verification.v_temporal import TemporalVerifier
+from src.verification.v_structural import StructuralVerifier
+from src.verification.v_physical import PhysicalVerifier
+from src.verification.v_calibration import CalibrationVerifier
+from src.engine.decision_engine import DecisionEngine
+from src.engine.audit_logger import AuditLogger
+from src.evaluation.calibration_optimizer import CalibrationOptimizer
+from src.evaluation.risk_coverage import RiskCoverageAnalyzer
+from src.evaluation.metrics import EvaluationMetrics
 
 
 # 1. Test Normalizer
@@ -182,3 +186,37 @@ def test_evaluation_metrics():
     )
     assert model_m["exact_matches"] == 2
     assert model_m["fsr"] == 66.67
+
+
+if __name__ == "__main__":
+    tests = [
+        ("test_normalizer", test_normalizer),
+        ("test_preprocessor", test_preprocessor),
+        ("test_slot_profiler", test_slot_profiler),
+        ("test_temporal_verifier", test_temporal_verifier),
+        ("test_structural_verifier", test_structural_verifier),
+        ("test_physical_verifier", test_physical_verifier),
+        ("test_calibration_verifier", test_calibration_verifier),
+        ("test_decision_engine", test_decision_engine),
+        ("test_calibration_and_risk", test_calibration_and_risk),
+        ("test_evaluation_metrics", test_evaluation_metrics),
+    ]
+
+    print("=" * 60)
+    print("MENJALANKAN SUITE PENGUJIAN MODUL SISTEM BACKEND")
+    print("=" * 60)
+    passed = 0
+    for name, fn in tests:
+        try:
+            fn()
+            print(f"PASS: {name}")
+            passed += 1
+        except Exception as e:
+            print(f"FAIL: {name} - {e}")
+
+    print("=" * 60)
+    print(f"HASIL AKHIR: {passed}/{len(tests)} SUITE BERHASIL")
+    print("=" * 60)
+    if passed < len(tests):
+        sys.exit(1)
+
