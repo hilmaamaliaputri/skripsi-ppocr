@@ -1,0 +1,522 @@
+[
+  {
+    "id": "scale_syn_0001",
+    "ground_truth": "25.00",
+    "product_profile": "beras_25kg",
+    "theme_key": "mettler_lcd_white",
+    "theme_name": "Mettler Toledo IND231 (White/Cyan Backlit LCD)",
+    "condition": "clean_frontal",
+    "total_slots": 6,
+    "has_decimal": true,
+    "frames_count": 5,
+    "frame_paths": [
+      "data\\synthetic\\scale_syn_0001\\frame_01.jpg",
+      "data\\synthetic\\scale_syn_0001\\frame_02.jpg",
+      "data\\synthetic\\scale_syn_0001\\frame_03.jpg",
+      "data\\synthetic\\scale_syn_0001\\frame_04.jpg",
+      "data\\synthetic\\scale_syn_0001\\frame_05.jpg"
+    ],
+    "base_path": "data\\synthetic\\scale_syn_0001\\clean_base.png",
+    "roi_bbox": [
+      28,
+      26,
+      528,
+      189
+    ],
+    "inject_glitch": false
+  },
+  {
+    "id": "scale_syn_0002",
+    "ground_truth": "25.05",
+    "product_profile": "beras_25kg",
+    "theme_key": "cas_lcd_olive",
+    "theme_name": "CAS SW Series (Passive Olive/Grey LCD)",
+    "condition": "glare",
+    "total_slots": 6,
+    "has_decimal": true,
+    "frames_count": 5,
+    "frame_paths": [
+      "data\\synthetic\\scale_syn_0002\\frame_01.jpg",
+      "data\\synthetic\\scale_syn_0002\\frame_02.jpg",
+      "data\\synthetic\\scale_syn_0002\\frame_03.jpg",
+      "data\\synthetic\\scale_syn_0002\\frame_04.jpg",
+      "data\\synthetic\\scale_syn_0002\\frame_05.jpg"
+    ],
+    "base_path": "data\\synthetic\\scale_syn_0002\\clean_base.png",
+    "roi_bbox": [
+      28,
+      26,
+      528,
+      189
+    ],
+    "inject_glitch": false
+  },
+  {
+    "id": "scale_syn_0003",
+    "ground_truth": "24.95",
+    "product_profile": "beras_25kg",
+    "theme_key": "and_led_red",
+    "theme_name": "A&D / Industrial Red LED Display",
+    "condition": "tilt_15_30",
+    "total_slots": 6,
+    "has_decimal": true,
+    "frames_count": 5,
+    "frame_paths": [
+      "data\\synthetic\\scale_syn_0003\\frame_01.jpg",
+      "data\\synthetic\\scale_syn_0003\\frame_02.jpg",
+      "data\\synthetic\\scale_syn_0003\\frame_03.jpg",
+      "data\\synthetic\\scale_syn_0003\\frame_04.jpg",
+      "data\\synthetic\\scale_syn_0003\\frame_05.jpg"
+    ],
+    "base_path": "data\\synthetic\\scale_syn_0003\\clean_base.png",
+    "roi_bbox": [
+      28,
+      26,
+      528,
+      189
+    ],
+    "inject_glitch": false
+  },
+  {
+    "id": "scale_syn_0004",
+    "ground_truth": "25.10",
+    "product_profile": "beras_25kg",
+    "theme_key": "led_emerald_green",
+    "theme_name": "Precision Scale Emerald Green LED",
+    "condition": "low_contrast_passive",
+    "total_slots": 6,
+    "has_decimal": true,
+    "frames_count": 5,
+    "frame_paths": [
+      "data\\synthetic\\scale_syn_0004\\frame_01.jpg",
+      "data\\synthetic\\scale_syn_0004\\frame_02.jpg",
+      "data\\synthetic\\scale_syn_0004\\frame_03.jpg",
+      "data\\synthetic\\scale_syn_0004\\frame_04.jpg",
+      "data\\synthetic\\scale_syn_0004\\frame_05.jpg"
+    ],
+    "base_path": "data\\synthetic\\scale_syn_0004\\clean_base.png",
+    "roi_bbox": [
+      28,
+      26,
+      528,
+      189
+    ],
+    "inject_glitch": false
+  },
+  {
+    "id": "scale_syn_0005",
+    "ground_truth": "24.85",
+    "product_profile": "beras_25kg",
+    "theme_key": "led_amber",
+    "theme_name": "Warehouse Heavy Duty Amber/Orange LED",
+    "condition": "wet_foggy",
+    "total_slots": 6,
+    "has_decimal": true,
+    "frames_count": 5,
+    "frame_paths": [
+      "data\\synthetic\\scale_syn_0005\\frame_01.jpg",
+      "data\\synthetic\\scale_syn_0005\\frame_02.jpg",
+      "data\\synthetic\\scale_syn_0005\\frame_03.jpg",
+      "data\\synthetic\\scale_syn_0005\\frame_04.jpg",
+      "data\\synthetic\\scale_syn_0005\\frame_05.jpg"
+    ],
+    "base_path": "data\\synthetic\\scale_syn_0005\\clean_base.png",
+    "roi_bbox": [
+      28,
+      26,
+      528,
+      189
+    ],
+    "inject_glitch": false
+  },
+  {
+    "id": "scale_syn_0006",
+    "ground_truth": "25.20",
+    "product_profile": "beras_25kg",
+    "theme_key": "led_ice_blue",
+    "theme_name": "Modern Laboratory Ice Blue LED",
+    "condition": "dusty_scratched",
+    "total_slots": 6,
+    "has_decimal": true,
+    "frames_count": 5,
+    "frame_paths": [
+      "data\\synthetic\\scale_syn_0006\\frame_01.jpg",
+      "data\\synthetic\\scale_syn_0006\\frame_02.jpg",
+      "data\\synthetic\\scale_syn_0006\\frame_03.jpg",
+      "data\\synthetic\\scale_syn_0006\\frame_04.jpg",
+      "data\\synthetic\\scale_syn_0006\\frame_05.jpg"
+    ],
+    "base_path": "data\\synthetic\\scale_syn_0006\\clean_base.png",
+    "roi_bbox": [
+      28,
+      26,
+      528,
+      189
+    ],
+    "inject_glitch": false
+  },
+  {
+    "id": "scale_syn_0007",
+    "ground_truth": "25.0",
+    "product_profile": "beras_25kg",
+    "theme_key": "lcd_low_contrast",
+    "theme_name": "Generic Low-Contrast Ambient LCD (Faded / Field Wear)",
+    "condition": "clean_frontal",
+    "total_slots": 5,
+    "has_decimal": true,
+    "frames_count": 5,
+    "frame_paths": [
+      "data\\synthetic\\scale_syn_0007\\frame_01.jpg",
+      "data\\synthetic\\scale_syn_0007\\frame_02.jpg",
+      "data\\synthetic\\scale_syn_0007\\frame_03.jpg",
+      "data\\synthetic\\scale_syn_0007\\frame_04.jpg",
+      "data\\synthetic\\scale_syn_0007\\frame_05.jpg"
+    ],
+    "base_path": "data\\synthetic\\scale_syn_0007\\clean_base.png",
+    "roi_bbox": [
+      28,
+      26,
+      458,
+      189
+    ],
+    "inject_glitch": false
+  },
+  {
+    "id": "scale_syn_0008",
+    "ground_truth": "25.5",
+    "product_profile": "beras_25kg",
+    "theme_key": "mettler_lcd_white",
+    "theme_name": "Mettler Toledo IND231 (White/Cyan Backlit LCD)",
+    "condition": "glare",
+    "total_slots": 5,
+    "has_decimal": true,
+    "frames_count": 5,
+    "frame_paths": [
+      "data\\synthetic\\scale_syn_0008\\frame_01.jpg",
+      "data\\synthetic\\scale_syn_0008\\frame_02.jpg",
+      "data\\synthetic\\scale_syn_0008\\frame_03.jpg",
+      "data\\synthetic\\scale_syn_0008\\frame_04.jpg",
+      "data\\synthetic\\scale_syn_0008\\frame_05.jpg"
+    ],
+    "base_path": "data\\synthetic\\scale_syn_0008\\clean_base.png",
+    "roi_bbox": [
+      28,
+      26,
+      458,
+      189
+    ],
+    "inject_glitch": false
+  },
+  {
+    "id": "scale_syn_0009",
+    "ground_truth": "50.00",
+    "product_profile": "beras_50kg",
+    "theme_key": "cas_lcd_olive",
+    "theme_name": "CAS SW Series (Passive Olive/Grey LCD)",
+    "condition": "tilt_15_30",
+    "total_slots": 6,
+    "has_decimal": true,
+    "frames_count": 5,
+    "frame_paths": [
+      "data\\synthetic\\scale_syn_0009\\frame_01.jpg",
+      "data\\synthetic\\scale_syn_0009\\frame_02.jpg",
+      "data\\synthetic\\scale_syn_0009\\frame_03.jpg",
+      "data\\synthetic\\scale_syn_0009\\frame_04.jpg",
+      "data\\synthetic\\scale_syn_0009\\frame_05.jpg"
+    ],
+    "base_path": "data\\synthetic\\scale_syn_0009\\clean_base.png",
+    "roi_bbox": [
+      28,
+      26,
+      528,
+      189
+    ],
+    "inject_glitch": false
+  },
+  {
+    "id": "scale_syn_0010",
+    "ground_truth": "49.95",
+    "product_profile": "beras_50kg",
+    "theme_key": "and_led_red",
+    "theme_name": "A&D / Industrial Red LED Display",
+    "condition": "low_contrast_passive",
+    "total_slots": 6,
+    "has_decimal": true,
+    "frames_count": 5,
+    "frame_paths": [
+      "data\\synthetic\\scale_syn_0010\\frame_01.jpg",
+      "data\\synthetic\\scale_syn_0010\\frame_02.jpg",
+      "data\\synthetic\\scale_syn_0010\\frame_03.jpg",
+      "data\\synthetic\\scale_syn_0010\\frame_04.jpg",
+      "data\\synthetic\\scale_syn_0010\\frame_05.jpg"
+    ],
+    "base_path": "data\\synthetic\\scale_syn_0010\\clean_base.png",
+    "roi_bbox": [
+      28,
+      26,
+      528,
+      189
+    ],
+    "inject_glitch": false
+  },
+  {
+    "id": "scale_syn_0011",
+    "ground_truth": "50.20",
+    "product_profile": "beras_50kg",
+    "theme_key": "led_emerald_green",
+    "theme_name": "Precision Scale Emerald Green LED",
+    "condition": "wet_foggy",
+    "total_slots": 6,
+    "has_decimal": true,
+    "frames_count": 5,
+    "frame_paths": [
+      "data\\synthetic\\scale_syn_0011\\frame_01.jpg",
+      "data\\synthetic\\scale_syn_0011\\frame_02.jpg",
+      "data\\synthetic\\scale_syn_0011\\frame_03.jpg",
+      "data\\synthetic\\scale_syn_0011\\frame_04.jpg",
+      "data\\synthetic\\scale_syn_0011\\frame_05.jpg"
+    ],
+    "base_path": "data\\synthetic\\scale_syn_0011\\clean_base.png",
+    "roi_bbox": [
+      28,
+      26,
+      528,
+      189
+    ],
+    "inject_glitch": false
+  },
+  {
+    "id": "scale_syn_0012",
+    "ground_truth": "50.0",
+    "product_profile": "beras_50kg",
+    "theme_key": "led_amber",
+    "theme_name": "Warehouse Heavy Duty Amber/Orange LED",
+    "condition": "dusty_scratched",
+    "total_slots": 5,
+    "has_decimal": true,
+    "frames_count": 5,
+    "frame_paths": [
+      "data\\synthetic\\scale_syn_0012\\frame_01.jpg",
+      "data\\synthetic\\scale_syn_0012\\frame_02.jpg",
+      "data\\synthetic\\scale_syn_0012\\frame_03.jpg",
+      "data\\synthetic\\scale_syn_0012\\frame_04.jpg",
+      "data\\synthetic\\scale_syn_0012\\frame_05.jpg"
+    ],
+    "base_path": "data\\synthetic\\scale_syn_0012\\clean_base.png",
+    "roi_bbox": [
+      28,
+      26,
+      458,
+      189
+    ],
+    "inject_glitch": true
+  },
+  {
+    "id": "scale_syn_0013",
+    "ground_truth": "10.00",
+    "product_profile": "beras_10kg",
+    "theme_key": "led_ice_blue",
+    "theme_name": "Modern Laboratory Ice Blue LED",
+    "condition": "clean_frontal",
+    "total_slots": 6,
+    "has_decimal": true,
+    "frames_count": 5,
+    "frame_paths": [
+      "data\\synthetic\\scale_syn_0013\\frame_01.jpg",
+      "data\\synthetic\\scale_syn_0013\\frame_02.jpg",
+      "data\\synthetic\\scale_syn_0013\\frame_03.jpg",
+      "data\\synthetic\\scale_syn_0013\\frame_04.jpg",
+      "data\\synthetic\\scale_syn_0013\\frame_05.jpg"
+    ],
+    "base_path": "data\\synthetic\\scale_syn_0013\\clean_base.png",
+    "roi_bbox": [
+      28,
+      26,
+      528,
+      189
+    ],
+    "inject_glitch": false
+  },
+  {
+    "id": "scale_syn_0014",
+    "ground_truth": "9.95",
+    "product_profile": "beras_10kg",
+    "theme_key": "lcd_low_contrast",
+    "theme_name": "Generic Low-Contrast Ambient LCD (Faded / Field Wear)",
+    "condition": "glare",
+    "total_slots": 6,
+    "has_decimal": true,
+    "frames_count": 5,
+    "frame_paths": [
+      "data\\synthetic\\scale_syn_0014\\frame_01.jpg",
+      "data\\synthetic\\scale_syn_0014\\frame_02.jpg",
+      "data\\synthetic\\scale_syn_0014\\frame_03.jpg",
+      "data\\synthetic\\scale_syn_0014\\frame_04.jpg",
+      "data\\synthetic\\scale_syn_0014\\frame_05.jpg"
+    ],
+    "base_path": "data\\synthetic\\scale_syn_0014\\clean_base.png",
+    "roi_bbox": [
+      28,
+      26,
+      528,
+      189
+    ],
+    "inject_glitch": false
+  },
+  {
+    "id": "scale_syn_0015",
+    "ground_truth": "5.00",
+    "product_profile": "beras_5kg",
+    "theme_key": "mettler_lcd_white",
+    "theme_name": "Mettler Toledo IND231 (White/Cyan Backlit LCD)",
+    "condition": "tilt_15_30",
+    "total_slots": 6,
+    "has_decimal": true,
+    "frames_count": 5,
+    "frame_paths": [
+      "data\\synthetic\\scale_syn_0015\\frame_01.jpg",
+      "data\\synthetic\\scale_syn_0015\\frame_02.jpg",
+      "data\\synthetic\\scale_syn_0015\\frame_03.jpg",
+      "data\\synthetic\\scale_syn_0015\\frame_04.jpg",
+      "data\\synthetic\\scale_syn_0015\\frame_05.jpg"
+    ],
+    "base_path": "data\\synthetic\\scale_syn_0015\\clean_base.png",
+    "roi_bbox": [
+      28,
+      26,
+      528,
+      189
+    ],
+    "inject_glitch": false
+  },
+  {
+    "id": "scale_syn_0016",
+    "ground_truth": "5.05",
+    "product_profile": "beras_5kg",
+    "theme_key": "cas_lcd_olive",
+    "theme_name": "CAS SW Series (Passive Olive/Grey LCD)",
+    "condition": "low_contrast_passive",
+    "total_slots": 6,
+    "has_decimal": true,
+    "frames_count": 5,
+    "frame_paths": [
+      "data\\synthetic\\scale_syn_0016\\frame_01.jpg",
+      "data\\synthetic\\scale_syn_0016\\frame_02.jpg",
+      "data\\synthetic\\scale_syn_0016\\frame_03.jpg",
+      "data\\synthetic\\scale_syn_0016\\frame_04.jpg",
+      "data\\synthetic\\scale_syn_0016\\frame_05.jpg"
+    ],
+    "base_path": "data\\synthetic\\scale_syn_0016\\clean_base.png",
+    "roi_bbox": [
+      28,
+      26,
+      528,
+      189
+    ],
+    "inject_glitch": false
+  },
+  {
+    "id": "scale_syn_0017",
+    "ground_truth": "0.00",
+    "product_profile": "general_scale",
+    "theme_key": "and_led_red",
+    "theme_name": "A&D / Industrial Red LED Display",
+    "condition": "wet_foggy",
+    "total_slots": 6,
+    "has_decimal": true,
+    "frames_count": 5,
+    "frame_paths": [
+      "data\\synthetic\\scale_syn_0017\\frame_01.jpg",
+      "data\\synthetic\\scale_syn_0017\\frame_02.jpg",
+      "data\\synthetic\\scale_syn_0017\\frame_03.jpg",
+      "data\\synthetic\\scale_syn_0017\\frame_04.jpg",
+      "data\\synthetic\\scale_syn_0017\\frame_05.jpg"
+    ],
+    "base_path": "data\\synthetic\\scale_syn_0017\\clean_base.png",
+    "roi_bbox": [
+      28,
+      26,
+      528,
+      189
+    ],
+    "inject_glitch": false
+  },
+  {
+    "id": "scale_syn_0018",
+    "ground_truth": "0.0",
+    "product_profile": "general_scale",
+    "theme_key": "led_emerald_green",
+    "theme_name": "Precision Scale Emerald Green LED",
+    "condition": "dusty_scratched",
+    "total_slots": 5,
+    "has_decimal": true,
+    "frames_count": 5,
+    "frame_paths": [
+      "data\\synthetic\\scale_syn_0018\\frame_01.jpg",
+      "data\\synthetic\\scale_syn_0018\\frame_02.jpg",
+      "data\\synthetic\\scale_syn_0018\\frame_03.jpg",
+      "data\\synthetic\\scale_syn_0018\\frame_04.jpg",
+      "data\\synthetic\\scale_syn_0018\\frame_05.jpg"
+    ],
+    "base_path": "data\\synthetic\\scale_syn_0018\\clean_base.png",
+    "roi_bbox": [
+      28,
+      26,
+      458,
+      189
+    ],
+    "inject_glitch": false
+  },
+  {
+    "id": "scale_syn_0019",
+    "ground_truth": "2.50",
+    "product_profile": "beras_25kg",
+    "theme_key": "led_amber",
+    "theme_name": "Warehouse Heavy Duty Amber/Orange LED",
+    "condition": "clean_frontal",
+    "total_slots": 6,
+    "has_decimal": true,
+    "frames_count": 5,
+    "frame_paths": [
+      "data\\synthetic\\scale_syn_0019\\frame_01.jpg",
+      "data\\synthetic\\scale_syn_0019\\frame_02.jpg",
+      "data\\synthetic\\scale_syn_0019\\frame_03.jpg",
+      "data\\synthetic\\scale_syn_0019\\frame_04.jpg",
+      "data\\synthetic\\scale_syn_0019\\frame_05.jpg"
+    ],
+    "base_path": "data\\synthetic\\scale_syn_0019\\clean_base.png",
+    "roi_bbox": [
+      28,
+      26,
+      528,
+      189
+    ],
+    "inject_glitch": false
+  },
+  {
+    "id": "scale_syn_0020",
+    "ground_truth": "250.0",
+    "product_profile": "beras_25kg",
+    "theme_key": "led_ice_blue",
+    "theme_name": "Modern Laboratory Ice Blue LED",
+    "condition": "glare",
+    "total_slots": 6,
+    "has_decimal": true,
+    "frames_count": 5,
+    "frame_paths": [
+      "data\\synthetic\\scale_syn_0020\\frame_01.jpg",
+      "data\\synthetic\\scale_syn_0020\\frame_02.jpg",
+      "data\\synthetic\\scale_syn_0020\\frame_03.jpg",
+      "data\\synthetic\\scale_syn_0020\\frame_04.jpg",
+      "data\\synthetic\\scale_syn_0020\\frame_05.jpg"
+    ],
+    "base_path": "data\\synthetic\\scale_syn_0020\\clean_base.png",
+    "roi_bbox": [
+      28,
+      26,
+      528,
+      189
+    ],
+    "inject_glitch": false
+  }
+]

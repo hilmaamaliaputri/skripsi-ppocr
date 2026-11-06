@@ -1,0 +1,26 @@
+{
+  "id": "scale_syn_0112",
+  "ground_truth": "50.0",
+  "product_profile": "beras_50kg",
+  "theme_key": "lcd_low_contrast",
+  "theme_name": "Generic Low-Contrast Ambient LCD (Faded / Field Wear)",
+  "condition": "low_contrast_passive",
+  "total_slots": 5,
+  "has_decimal": true,
+  "frames_count": 5,
+  "frame_paths": [
+    "data\\synthetic\\scale_syn_0112\\frame_01.jpg",
+    "data\\synthetic\\scale_syn_0112\\frame_02.jpg",
+    "data\\synthetic\\scale_syn_0112\\frame_03.jpg",
+    "data\\synthetic\\scale_syn_0112\\frame_04.jpg",
+    "data\\synthetic\\scale_syn_0112\\frame_05.jpg"
+  ],
+  "base_path": "data\\synthetic\\scale_syn_0112\\clean_base.png",
+  "roi_bbox": [
+    28,
+    26,
+    458,
+    189
+  ],
+  "inject_glitch": false
+}

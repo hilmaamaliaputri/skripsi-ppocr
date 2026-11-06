@@ -1,0 +1,26 @@
+{
+  "id": "scale_syn_0068",
+  "ground_truth": "0.0",
+  "product_profile": "general_scale",
+  "theme_key": "led_amber",
+  "theme_name": "Warehouse Heavy Duty Amber/Orange LED",
+  "condition": "glare",
+  "total_slots": 5,
+  "has_decimal": true,
+  "frames_count": 5,
+  "frame_paths": [
+    "data\\synthetic\\scale_syn_0068\\frame_01.jpg",
+    "data\\synthetic\\scale_syn_0068\\frame_02.jpg",
+    "data\\synthetic\\scale_syn_0068\\frame_03.jpg",
+    "data\\synthetic\\scale_syn_0068\\frame_04.jpg",
+    "data\\synthetic\\scale_syn_0068\\frame_05.jpg"
+  ],
+  "base_path": "data\\synthetic\\scale_syn_0068\\clean_base.png",
+  "roi_bbox": [
+    28,
+    26,
+    458,
+    189
+  ],
+  "inject_glitch": false
+}

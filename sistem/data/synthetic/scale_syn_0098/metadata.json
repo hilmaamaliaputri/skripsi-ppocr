@@ -1,0 +1,26 @@
+{
+  "id": "scale_syn_0098",
+  "ground_truth": "38.12",
+  "product_profile": "general_scale",
+  "theme_key": "lcd_low_contrast",
+  "theme_name": "Generic Low-Contrast Ambient LCD (Faded / Field Wear)",
+  "condition": "glare",
+  "total_slots": 6,
+  "has_decimal": true,
+  "frames_count": 5,
+  "frame_paths": [
+    "data\\synthetic\\scale_syn_0098\\frame_01.jpg",
+    "data\\synthetic\\scale_syn_0098\\frame_02.jpg",
+    "data\\synthetic\\scale_syn_0098\\frame_03.jpg",
+    "data\\synthetic\\scale_syn_0098\\frame_04.jpg",
+    "data\\synthetic\\scale_syn_0098\\frame_05.jpg"
+  ],
+  "base_path": "data\\synthetic\\scale_syn_0098\\clean_base.png",
+  "roi_bbox": [
+    28,
+    26,
+    528,
+    189
+  ],
+  "inject_glitch": false
+}

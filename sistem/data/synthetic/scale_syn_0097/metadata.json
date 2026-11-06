@@ -1,0 +1,26 @@
+{
+  "id": "scale_syn_0097",
+  "ground_truth": "12.450",
+  "product_profile": "general_scale",
+  "theme_key": "led_ice_blue",
+  "theme_name": "Modern Laboratory Ice Blue LED",
+  "condition": "clean_frontal",
+  "total_slots": 7,
+  "has_decimal": true,
+  "frames_count": 5,
+  "frame_paths": [
+    "data\\synthetic\\scale_syn_0097\\frame_01.jpg",
+    "data\\synthetic\\scale_syn_0097\\frame_02.jpg",
+    "data\\synthetic\\scale_syn_0097\\frame_03.jpg",
+    "data\\synthetic\\scale_syn_0097\\frame_04.jpg",
+    "data\\synthetic\\scale_syn_0097\\frame_05.jpg"
+  ],
+  "base_path": "data\\synthetic\\scale_syn_0097\\clean_base.png",
+  "roi_bbox": [
+    28,
+    26,
+    598,
+    189
+  ],
+  "inject_glitch": false
+}

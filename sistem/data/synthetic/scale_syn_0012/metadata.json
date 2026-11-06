@@ -1,0 +1,26 @@
+{
+  "id": "scale_syn_0012",
+  "ground_truth": "50.0",
+  "product_profile": "beras_50kg",
+  "theme_key": "led_amber",
+  "theme_name": "Warehouse Heavy Duty Amber/Orange LED",
+  "condition": "dusty_scratched",
+  "total_slots": 5,
+  "has_decimal": true,
+  "frames_count": 5,
+  "frame_paths": [
+    "data\\synthetic\\scale_syn_0012\\frame_01.jpg",
+    "data\\synthetic\\scale_syn_0012\\frame_02.jpg",
+    "data\\synthetic\\scale_syn_0012\\frame_03.jpg",
+    "data\\synthetic\\scale_syn_0012\\frame_04.jpg",
+    "data\\synthetic\\scale_syn_0012\\frame_05.jpg"
+  ],
+  "base_path": "data\\synthetic\\scale_syn_0012\\clean_base.png",
+  "roi_bbox": [
+    28,
+    26,
+    458,
+    189
+  ],
+  "inject_glitch": true
+}

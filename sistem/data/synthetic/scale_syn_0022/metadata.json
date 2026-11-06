@@ -1,0 +1,26 @@
+{
+  "id": "scale_syn_0022",
+  "ground_truth": "12.450",
+  "product_profile": "general_scale",
+  "theme_key": "mettler_lcd_white",
+  "theme_name": "Mettler Toledo IND231 (White/Cyan Backlit LCD)",
+  "condition": "low_contrast_passive",
+  "total_slots": 7,
+  "has_decimal": true,
+  "frames_count": 5,
+  "frame_paths": [
+    "data\\synthetic\\scale_syn_0022\\frame_01.jpg",
+    "data\\synthetic\\scale_syn_0022\\frame_02.jpg",
+    "data\\synthetic\\scale_syn_0022\\frame_03.jpg",
+    "data\\synthetic\\scale_syn_0022\\frame_04.jpg",
+    "data\\synthetic\\scale_syn_0022\\frame_05.jpg"
+  ],
+  "base_path": "data\\synthetic\\scale_syn_0022\\clean_base.png",
+  "roi_bbox": [
+    28,
+    26,
+    598,
+    189
+  ],
+  "inject_glitch": false
+}

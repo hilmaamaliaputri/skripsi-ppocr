@@ -1,0 +1,26 @@
+{
+  "id": "scale_syn_0052",
+  "ground_truth": "25.05",
+  "product_profile": "beras_25kg",
+  "theme_key": "and_led_red",
+  "theme_name": "A&D / Industrial Red LED Display",
+  "condition": "low_contrast_passive",
+  "total_slots": 6,
+  "has_decimal": true,
+  "frames_count": 5,
+  "frame_paths": [
+    "data\\synthetic\\scale_syn_0052\\frame_01.jpg",
+    "data\\synthetic\\scale_syn_0052\\frame_02.jpg",
+    "data\\synthetic\\scale_syn_0052\\frame_03.jpg",
+    "data\\synthetic\\scale_syn_0052\\frame_04.jpg",
+    "data\\synthetic\\scale_syn_0052\\frame_05.jpg"
+  ],
+  "base_path": "data\\synthetic\\scale_syn_0052\\clean_base.png",
+  "roi_bbox": [
+    28,
+    26,
+    528,
+    189
+  ],
+  "inject_glitch": false
+}

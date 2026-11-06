@@ -1,15 +1,46 @@
+# Python
 __pycache__/
-*.pyc
-.DS_Store
-.env
-*.db
-models/
-data/
-
-node_modules/
+*.py[cod]
+*$py.class
 .venv/
 venv/
+env/
+*.egg-info/
+dist/
+build/
+
+# Node / Frontend
+node_modules/
+.npm/
+.next/
+dist/
+
+# Large raw dataset frames (do not commit raw frames to git)
+sistem/data/calib/frames/
+sistem/data/test/frames/
+sistem/data/synthetic/*/frame_*.jpg
+sistem/data/synthetic/*/clean_base.png
+models/
+*.onnx
+*.bin
+*.tar.gz
+
+# Local logs, temporary, and database
 *.log
+*.sqlite
+*.sqlite3
+*.db
+sistem/data/audit/
+
+# Large PDF files and binary drafts
+jurnal/
+pedoman/
+Draft TA/
+skripsi-ppocrv6-main/
+
+# Environment & credentials
+.env
+.env.local
 *.pem
 *.key
 credentials*
