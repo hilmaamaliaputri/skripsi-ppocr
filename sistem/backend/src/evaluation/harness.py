@@ -9,6 +9,7 @@ import os
 import time
 from typing import Dict, List, Optional
 import cv2
+import numpy as np
 import yaml
 
 from ..engine.decision_engine import DecisionEngine

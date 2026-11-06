@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import type { SampleEvaluation } from '../types/evaluator';
-import { Filter, Eye, Check, X, AlertCircle } from 'lucide-react';
+import type { SampleEvaluation, FrameEvaluationItem } from '../types/evaluator';
+import { Filter, Eye, Check, X, AlertCircle, ZoomIn } from 'lucide-react';
 
 interface SampleInspectorProps {
   samples: SampleEvaluation[];
@@ -9,6 +9,7 @@ interface SampleInspectorProps {
 export const SampleInspector: React.FC<SampleInspectorProps> = ({ samples }) => {
   const [filterDecision, setFilterDecision] = useState<string>('ALL');
   const [selectedSample, setSelectedSample] = useState<SampleEvaluation | null>(samples[0] || null);
+  const [lightboxFrame, setLightboxFrame] = useState<FrameEvaluationItem | null>(null);
 
   const filtered = samples.filter((s) => {
     if (filterDecision === 'ALL') return true;
@@ -149,20 +150,22 @@ export const SampleInspector: React.FC<SampleInspectorProps> = ({ samples }) => 
                     <span className="text-[11px] font-bold text-industrial-400 uppercase tracking-wider">
                       Analisis Citra Bingkai (Burst {selectedSample.frames.length} Frame):
                     </span>
-                    <span className="text-[10px] text-cyan-400 font-mono">Keputusan Tiap Frame</span>
+                    <span className="text-[10px] text-cyan-400 font-mono">Klik frame untuk perbesar</span>
                   </div>
                   <div className="grid grid-cols-5 gap-1.5">
                     {selectedSample.frames.map((f) => (
                       <div
                         key={f.frame_idx}
-                        className="rounded bg-industrial-950 p-1.5 border border-industrial-800 text-center flex flex-col justify-between"
+                        onClick={() => setLightboxFrame(f)}
+                        className="rounded bg-industrial-950 p-1.5 border border-industrial-800 hover:border-cyan-500 cursor-pointer text-center flex flex-col justify-between transition-all hover:scale-[1.03] group relative shadow-md"
+                        title="Klik untuk melihat foto resolusi penuh"
                       >
-                        <div className="w-full aspect-[4/3] bg-black/60 rounded overflow-hidden flex items-center justify-center border border-industrial-800/80 mb-1">
+                        <div className="w-full aspect-[4/3] bg-black/60 rounded overflow-hidden flex items-center justify-center border border-industrial-800/80 mb-1 relative">
                           {f.image_url ? (
                             <img
                               src={f.image_url}
                               alt={`Frame ${f.frame_idx}`}
-                              className="w-full h-full object-cover"
+                              className="w-full h-full object-cover group-hover:opacity-90"
                               onError={(e) => {
                                 (e.target as HTMLElement).style.display = 'none';
                               }}
@@ -170,6 +173,9 @@ export const SampleInspector: React.FC<SampleInspectorProps> = ({ samples }) => 
                           ) : (
                             <span className="text-[9px] text-industrial-500 font-mono">F{f.frame_idx}</span>
                           )}
+                          <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+                            <ZoomIn className="w-4 h-4 text-cyan-300" />
+                          </div>
                         </div>
                         <span className="text-[9px] font-mono text-industrial-400 font-bold">Frame #{f.frame_idx}</span>
                         <span className="text-[10px] font-mono font-bold text-white truncate">{f.normalized_text}</span>
@@ -283,6 +289,69 @@ export const SampleInspector: React.FC<SampleInspectorProps> = ({ samples }) => 
           )}
         </div>
       </div>
+
+      {/* High-Resolution Frame Modal / Lightbox */}
+      {lightboxFrame && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md p-4 selection:bg-cyan-900"
+          onClick={() => setLightboxFrame(null)}
+        >
+          <div
+            className="w-full max-w-4xl rounded-lg bg-industrial-900 border border-industrial-700 shadow-2xl flex flex-col overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Lightbox Header */}
+            <div className="p-3 border-b border-industrial-800 flex items-center justify-between bg-industrial-950">
+              <div className="flex items-center gap-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-cyan-400"></span>
+                <span className="text-xs font-mono font-bold uppercase text-white tracking-wider">
+                  Inspeksi Resolusi Penuh: Frame #{lightboxFrame.frame_idx} • {selectedSample?.id}
+                </span>
+              </div>
+              <button
+                onClick={() => setLightboxFrame(null)}
+                className="p-1 rounded text-industrial-400 hover:text-white hover:bg-industrial-800 transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* High-Res Image Canvas */}
+            <div className="p-6 bg-black flex items-center justify-center min-h-[320px] max-h-[65vh] overflow-hidden">
+              {lightboxFrame.image_url ? (
+                <img
+                  src={lightboxFrame.image_url}
+                  alt={`Frame ${lightboxFrame.frame_idx}`}
+                  className="max-h-[60vh] max-w-full object-contain rounded border border-industrial-800 shadow-2xl"
+                />
+              ) : (
+                <div className="text-xs font-mono text-industrial-500">Citra frame tidak ditemukan</div>
+              )}
+            </div>
+
+            {/* Metadata Footer */}
+            <div className="p-3.5 bg-industrial-950 border-t border-industrial-800 flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
+              <div className="flex items-center gap-4 text-industrial-300">
+                <span>Teks Mentah: <strong className="text-white">{lightboxFrame.raw_text}</strong></span>
+                <span>Normalisasi: <strong className="text-cyan-400">{lightboxFrame.normalized_text}</strong></span>
+                <span>Keyakinan: <strong className="text-amber-300">{(lightboxFrame.confidence * 100).toFixed(1)}%</strong></span>
+              </div>
+
+              <div>
+                <span
+                  className={`px-2.5 py-1 rounded text-xs font-mono font-bold ${
+                    lightboxFrame.decision === 'TERIMA'
+                      ? 'bg-emerald-950 text-emerald-400 border border-emerald-800'
+                      : 'bg-red-950 text-red-400 border border-red-800'
+                  }`}
+                >
+                  STATUS: {lightboxFrame.decision}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
