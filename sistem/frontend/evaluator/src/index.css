@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-industrial-950 text-industrial-200 font-sans antialiased selection:bg-cyan-900 selection:text-white;
+    margin: 0;
+    min-height: 100vh;
+  }
+}
+
+/* Custom scrollbars for data tables and inspectors */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0b0f17;
+}
+::-webkit-scrollbar-thumb {
+  background: #1f293d;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #334155;
+}
