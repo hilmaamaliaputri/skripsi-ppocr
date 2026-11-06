@@ -10,6 +10,7 @@ from ..pipeline.normalizer import StringNormalizer
 from ..pipeline.schema import (
     DecisionContract,
     DecisionState,
+    FrameEvaluation,
     LayerResult,
     ReadingContract,
     SlotProfile,
@@ -70,6 +71,17 @@ class DecisionEngine:
         t_pass, t_res, agreed_reading = self.v_temporal.verify(normalized_texts)
         layer_results.append(t_res)
 
+        frame_evaluations: List[FrameEvaluation] = [
+            FrameEvaluation(
+                frame_idx=idx + 1,
+                raw_text=r.raw_text,
+                normalized_text=norm_txt,
+                confidence=round(r.raw_score, 4),
+                decision=DecisionState.TERIMA if norm_txt == agreed_reading else DecisionState.TOLAK,
+            )
+            for idx, (r, norm_txt) in enumerate(zip(frame_readings, normalized_texts))
+        ]
+
         if not t_pass:
             # Gagal L3 -> Minta Konfirmasi (ambil foto ulang)
             return DecisionContract(
@@ -82,6 +94,7 @@ class DecisionEngine:
                 product_id=product_id,
                 device_id=device_id,
                 layer_results=layer_results,
+                frames=frame_evaluations,
             )
 
         # 3. Uji Struktur (L1: Format slot & titik desimal)
@@ -105,6 +118,7 @@ class DecisionEngine:
                 product_id=product_id,
                 device_id=device_id,
                 layer_results=layer_results,
+                frames=frame_evaluations,
             )
 
         # 4. Uji Fisik (L2: Batas produk & toleransi riwayat)
@@ -127,6 +141,7 @@ class DecisionEngine:
                 product_id=product_id,
                 device_id=device_id,
                 layer_results=layer_results,
+                frames=frame_evaluations,
             )
 
         # 5. Uji Kalibrasi Keyakinan (L4: Temperature Scaling & Threshold)
@@ -153,6 +168,7 @@ class DecisionEngine:
                 product_id=product_id,
                 device_id=device_id,
                 layer_results=layer_results,
+                frames=frame_evaluations,
             )
 
         # Seluruh Lapis L1-L4 Lolos -> TERIMA
@@ -166,4 +182,5 @@ class DecisionEngine:
             product_id=product_id,
             device_id=device_id,
             layer_results=layer_results,
+            frames=frame_evaluations,
         )

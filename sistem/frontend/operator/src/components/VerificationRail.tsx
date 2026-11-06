@@ -21,10 +21,10 @@ export const VerificationRail: React.FC<VerificationRailProps> = ({ layers }) =>
   }
 
   const layerList = [
-    { key: 'temporal', title: 'L3: Temporal Multi-Frame', data: layers.temporal },
-    { key: 'structural', title: 'L1: Struktur Display & Slot', data: layers.structural },
-    { key: 'physical', title: 'L2: Fisik & Toleransi Produk', data: layers.physical },
-    { key: 'calibration', title: 'L4: Kalibrasi Suhu (&tau;)', data: layers.calibration },
+    { key: 'temporal', title: 'Stabilitas Multi-Frame', data: layers.temporal },
+    { key: 'structural', title: 'Struktur Display & Digit', data: layers.structural },
+    { key: 'physical', title: 'Batas & Toleransi Produk', data: layers.physical },
+    { key: 'calibration', title: 'Kalibrasi Probabilitas', data: layers.calibration },
   ];
 
   return (
@@ -52,7 +52,7 @@ export const VerificationRail: React.FC<VerificationRailProps> = ({ layers }) =>
                 </span>
               ) : isWarning ? (
                 <span className="flex items-center gap-1 text-[10px] text-amber-400 font-bold">
-                  <AlertTriangle className="w-3.5 h-3.5" /> CONFIRM
+                  <AlertTriangle className="w-3.5 h-3.5" /> PERLU KONFIRMASI
                 </span>
               ) : (
                 <span className="flex items-center gap-1 text-[10px] text-red-400 font-bold">

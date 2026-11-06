@@ -129,6 +129,17 @@ class BenchmarkHarness:
                 "calibrated_score": decision.calibrated_score,
                 "product_id": prod_id,
                 "device_id": dev_id,
+                "frames": [
+                    {
+                        "frame_idx": f_idx + 1,
+                        "image_url": f"/data/{rel.replace('\\', '/')}",
+                        "raw_text": fr.raw_text,
+                        "normalized_text": fr.normalized_text,
+                        "confidence": round(fr.raw_score, 4),
+                        "decision": "TERIMA" if fr.normalized_text == gt else "TOLAK",
+                    }
+                    for f_idx, (fr, rel) in enumerate(zip(frame_readings, frame_paths))
+                ],
             })
 
         # Hitung seluruh metrik

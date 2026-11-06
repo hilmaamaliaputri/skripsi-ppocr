@@ -142,13 +142,59 @@ export const SampleInspector: React.FC<SampleInspectorProps> = ({ samples }) => 
                 </div>
               </div>
 
+              {/* Visual Frame Strip (Setiap Frame Diperlihatkan) */}
+              {selectedSample.frames && selectedSample.frames.length > 0 && (
+                <div className="space-y-1.5 pt-2 border-t border-industrial-800">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[11px] font-bold text-industrial-400 uppercase tracking-wider">
+                      Analisis Citra Bingkai (Burst {selectedSample.frames.length} Frame):
+                    </span>
+                    <span className="text-[10px] text-cyan-400 font-mono">Keputusan Tiap Frame</span>
+                  </div>
+                  <div className="grid grid-cols-5 gap-1.5">
+                    {selectedSample.frames.map((f) => (
+                      <div
+                        key={f.frame_idx}
+                        className="rounded bg-industrial-950 p-1.5 border border-industrial-800 text-center flex flex-col justify-between"
+                      >
+                        <div className="w-full aspect-[4/3] bg-black/60 rounded overflow-hidden flex items-center justify-center border border-industrial-800/80 mb-1">
+                          {f.image_url ? (
+                            <img
+                              src={f.image_url}
+                              alt={`Frame ${f.frame_idx}`}
+                              className="w-full h-full object-cover"
+                              onError={(e) => {
+                                (e.target as HTMLElement).style.display = 'none';
+                              }}
+                            />
+                          ) : (
+                            <span className="text-[9px] text-industrial-500 font-mono">F{f.frame_idx}</span>
+                          )}
+                        </div>
+                        <span className="text-[9px] font-mono text-industrial-400 font-bold">Frame #{f.frame_idx}</span>
+                        <span className="text-[10px] font-mono font-bold text-white truncate">{f.normalized_text}</span>
+                        <span
+                          className={`text-[8px] font-mono font-bold mt-0.5 px-1 rounded ${
+                            f.decision === 'TERIMA'
+                              ? 'bg-emerald-950 text-emerald-400 border border-emerald-800'
+                              : 'bg-red-950 text-red-400 border border-red-800'
+                          }`}
+                        >
+                          {f.decision}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               {/* Multi-Layer Diagnostic */}
-              <div className="space-y-1.5">
+              <div className="space-y-1.5 pt-1">
                 <span className="text-[11px] font-bold text-industrial-400 uppercase tracking-wider">
-                  Hasil 4-Lapis Verifikasi:
+                  Hasil Verifikasi Empat Lapis:
                 </span>
 
-                {/* L3 Temporal */}
+                {/* Stabilitas Multi-Frame */}
                 <div className="p-2 rounded bg-industrial-950/70 border border-industrial-800 flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     {selectedSample.layers.temporal.passed ? (
@@ -156,14 +202,14 @@ export const SampleInspector: React.FC<SampleInspectorProps> = ({ samples }) => 
                     ) : (
                       <X className="w-3.5 h-3.5 text-red-400" />
                     )}
-                    <span className="text-[11px] text-industrial-300">L3: Temporal Consensus</span>
+                    <span className="text-[11px] text-industrial-300">Stabilitas Multi-Frame</span>
                   </div>
-                  <span className="text-[10px] font-bold text-white">
-                    {selectedSample.layers.temporal.passed ? 'PASSED' : 'FAILED'}
+                  <span className={`text-[10px] font-bold ${selectedSample.layers.temporal.passed ? 'text-emerald-400' : 'text-red-400'}`}>
+                    {selectedSample.layers.temporal.passed ? 'LOLOS' : 'GAGAL'}
                   </span>
                 </div>
 
-                {/* L1 Structural */}
+                {/* Struktur Display & Digit */}
                 <div className="p-2 rounded bg-industrial-950/70 border border-industrial-800 flex flex-col gap-1">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
@@ -172,10 +218,10 @@ export const SampleInspector: React.FC<SampleInspectorProps> = ({ samples }) => 
                       ) : (
                         <X className="w-3.5 h-3.5 text-red-400" />
                       )}
-                      <span className="text-[11px] text-industrial-300">L1: Struktur & Slot Profiler</span>
+                      <span className="text-[11px] text-industrial-300">Struktur Display & Digit</span>
                     </div>
-                    <span className="text-[10px] font-bold text-white">
-                      {selectedSample.layers.structural.passed ? 'PASSED' : 'FAILED'}
+                    <span className={`text-[10px] font-bold ${selectedSample.layers.structural.passed ? 'text-emerald-400' : 'text-red-400'}`}>
+                      {selectedSample.layers.structural.passed ? 'LOLOS' : 'GAGAL'}
                     </span>
                   </div>
                   {selectedSample.layers.structural.reason && (
@@ -185,7 +231,7 @@ export const SampleInspector: React.FC<SampleInspectorProps> = ({ samples }) => 
                   )}
                 </div>
 
-                {/* L2 Physical */}
+                {/* Batas & Toleransi Produk */}
                 <div className="p-2 rounded bg-industrial-950/70 border border-industrial-800 flex flex-col gap-1">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
@@ -194,10 +240,10 @@ export const SampleInspector: React.FC<SampleInspectorProps> = ({ samples }) => 
                       ) : (
                         <X className="w-3.5 h-3.5 text-red-400" />
                       )}
-                      <span className="text-[11px] text-industrial-300">L2: Fisik & Toleransi Produk</span>
+                      <span className="text-[11px] text-industrial-300">Batas & Toleransi Produk</span>
                     </div>
-                    <span className="text-[10px] font-bold text-white">
-                      {selectedSample.layers.physical.passed ? 'PASSED' : 'FAILED'}
+                    <span className={`text-[10px] font-bold ${selectedSample.layers.physical.passed ? 'text-emerald-400' : 'text-red-400'}`}>
+                      {selectedSample.layers.physical.passed ? 'LOLOS' : 'GAGAL'}
                     </span>
                   </div>
                   {selectedSample.layers.physical.reason && (
@@ -207,7 +253,7 @@ export const SampleInspector: React.FC<SampleInspectorProps> = ({ samples }) => 
                   )}
                 </div>
 
-                {/* L4 Calibration */}
+                {/* Kalibrasi Probabilitas */}
                 <div className="p-2 rounded bg-industrial-950/70 border border-industrial-800 flex flex-col gap-1">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
@@ -216,10 +262,10 @@ export const SampleInspector: React.FC<SampleInspectorProps> = ({ samples }) => 
                       ) : (
                         <AlertCircle className="w-3.5 h-3.5 text-amber-400" />
                       )}
-                      <span className="text-[11px] text-industrial-300">L4: Kalibrasi Suhu (&tau;)</span>
+                      <span className="text-[11px] text-industrial-300">Kalibrasi Probabilitas</span>
                     </div>
-                    <span className="text-[10px] font-bold text-white">
-                      {selectedSample.layers.calibration.passed ? 'PASSED' : 'CONFIRM REQ'}
+                    <span className={`text-[10px] font-bold ${selectedSample.layers.calibration.passed ? 'text-emerald-400' : 'text-amber-400'}`}>
+                      {selectedSample.layers.calibration.passed ? 'LOLOS' : 'PERLU KONFIRMASI'}
                     </span>
                   </div>
                   {selectedSample.layers.calibration.reason && (

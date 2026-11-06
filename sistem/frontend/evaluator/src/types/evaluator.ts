@@ -42,6 +42,15 @@ export interface LayerCheck {
   details?: Record<string, unknown>;
 }
 
+export interface FrameEvaluationItem {
+  frame_idx: number;
+  image_url?: string;
+  raw_text: string;
+  normalized_text: string;
+  confidence: number;
+  decision: 'TERIMA' | 'TOLAK' | 'KONFIRMASI' | 'BATAL';
+}
+
 export interface SampleEvaluation {
   id: string;
   device_id: string;
@@ -63,6 +72,7 @@ export interface SampleEvaluation {
   latency_ms: number;
   detected_slots?: number;
   detected_decimal_pos?: number;
+  frames?: FrameEvaluationItem[];
 }
 
 export interface CalibrationResult {

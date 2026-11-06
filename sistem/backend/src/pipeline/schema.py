@@ -47,6 +47,16 @@ class LayerResult(BaseModel):
     details: Dict[str, Any] = Field(default_factory=dict, description="Metrik detail pendukung")
 
 
+class FrameEvaluation(BaseModel):
+    """Hasil evaluasi dan prediksi per bingkai citra dalam burst."""
+    frame_idx: int = Field(..., description="Nomor urut bingkai (1, 2, ...)")
+    image_url: Optional[str] = Field(default=None, description="URL path citra frame untuk visualisasi")
+    raw_text: str = Field(..., description="Teks mentah hasil OCR frame ini")
+    normalized_text: str = Field(..., description="Teks normalisasi frame ini")
+    confidence: float = Field(..., ge=0.0, le=1.0, description="Skor keyakinan OCR frame ini")
+    decision: DecisionState = Field(default=DecisionState.TERIMA, description="Status keputusan pada frame ini")
+
+
 class DecisionContract(BaseModel):
     """Kontrak keputusan verifikasi (spesifikasi/main.tex Bab IV)."""
     reading: str = Field(..., description="String berat yang disetujui atau dievaluasi")
@@ -64,3 +74,4 @@ class DecisionContract(BaseModel):
     product_id: Optional[str] = Field(default=None, description="ID produk aktif")
     device_id: Optional[str] = Field(default=None, description="ID perangkat display timbangan")
     layer_results: List[LayerResult] = Field(default_factory=list, description="Rincian hasil seluruh lapis")
+    frames: List[FrameEvaluation] = Field(default_factory=list, description="Rincian dan keputusan tiap bingkai visual")

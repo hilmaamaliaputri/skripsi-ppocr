@@ -190,7 +190,7 @@ export const RiskCoveragePlot: React.FC<RiskCoveragePlotProps> = ({
       <div className="mt-2 pt-2 border-t border-industrial-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs font-mono">
         <div className="flex items-center gap-2 text-industrial-400">
           <Info className="w-3.5 h-3.5 text-amber-400" />
-          <span>Ambang Keyakinan L4 (&tau;):</span>
+          <span>Ambang Batas Keyakinan Kalibrasi (&tau;):</span>
           <span className="font-bold text-amber-300 font-mono text-sm">{threshold.toFixed(2)}</span>
         </div>
 

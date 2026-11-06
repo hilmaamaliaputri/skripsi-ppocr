@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import type { FrameItem } from '../types/operator';
 import { Camera, Focus, RefreshCw } from 'lucide-react';
 
 interface CameraViewfinderProps {
@@ -6,12 +7,14 @@ interface CameraViewfinderProps {
   onTriggerBurst: () => void;
   slotCount: number;
   decimalPlaces: number;
+  frames?: FrameItem[];
 }
 
 export const CameraViewfinder: React.FC<CameraViewfinderProps> = ({
   isCapturing,
   onTriggerBurst,
   slotCount,
+  frames,
 }) => {
   const [burstFrame, setBurstFrame] = useState<number>(0);
 
@@ -101,6 +104,56 @@ export const CameraViewfinder: React.FC<CameraViewfinderProps> = ({
           </div>
         )}
       </div>
+
+      {/* Visual Burst Frame Results Strip (Setiap Frame Diperlihatkan) */}
+      {frames && frames.length > 0 && (
+        <div className="mb-3 p-2 rounded bg-industrial-950 border border-industrial-800">
+          <div className="flex items-center justify-between pb-1.5 border-b border-industrial-800/80 mb-2">
+            <span className="text-[10px] font-mono font-bold text-industrial-400 uppercase tracking-wider">
+              Keputusan Tiap Frame ({frames.length} Frame Burst):
+            </span>
+            <span className="text-[10px] font-mono text-cyan-400">Konsensus Temporal</span>
+          </div>
+
+          <div className="grid grid-cols-5 gap-1.5">
+            {frames.map((f) => (
+              <div
+                key={f.frame_idx}
+                className="rounded bg-industrial-900 p-1.5 border border-industrial-800 text-center flex flex-col justify-between"
+              >
+                <div className="w-full aspect-[4/3] bg-black rounded overflow-hidden flex items-center justify-center border border-industrial-800 mb-1">
+                  {f.image_url ? (
+                    <img
+                      src={f.image_url}
+                      alt={`Frame ${f.frame_idx}`}
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        (e.target as HTMLElement).style.display = 'none';
+                      }}
+                    />
+                  ) : (
+                    <span className="text-[9px] font-mono text-industrial-500">F#{f.frame_idx}</span>
+                  )}
+                </div>
+                <span className="text-[9px] font-mono text-industrial-400 font-bold">Frame #{f.frame_idx}</span>
+                <span className="text-[11px] font-mono font-bold text-white truncate">{f.raw_text}</span>
+                <span className="text-[9px] font-mono text-industrial-400">{(f.confidence * 100).toFixed(0)}%</span>
+                <span
+                  className={`text-[8px] font-mono font-bold mt-1 px-1 py-0.5 rounded ${
+                    f.decision === 'TERIMA'
+                      ? 'bg-emerald-950 text-emerald-400 border border-emerald-800'
+                      : f.decision === 'KONFIRMASI'
+                      ? 'bg-amber-950 text-amber-400 border border-amber-800'
+                      : 'bg-red-950 text-red-400 border border-red-800'
+                  }`}
+                >
+                  {f.decision}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Operator Trigger Button */}
       <button

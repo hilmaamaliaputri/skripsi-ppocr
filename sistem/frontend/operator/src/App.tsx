@@ -152,6 +152,7 @@ export function App() {
             onTriggerBurst={handleTriggerBurst}
             slotCount={activeDevice?.slot_count || 5}
             decimalPlaces={activeDevice?.decimal_places || 2}
+            frames={currentResult?.frames}
           />
 
           <DecisionDisplay
