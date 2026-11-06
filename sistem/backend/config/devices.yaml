@@ -1,0 +1,94 @@
+# Konfigurasi Profil Display Timbangan Digital
+# Digunakan oleh Verifikasi Lapis 1 (v_structural.py) & OpenCV Slot Profiler
+
+devices:
+  mettler_lcd_white:
+    name: "Mettler Toledo IND231 (White Backlit LCD)"
+    total_slots: 6
+    has_decimal: true
+    max_capacity: 150.0
+    display_type: "lcd_backlit"
+
+  cas_lcd_olive:
+    name: "CAS SW Series (Olive LCD)"
+    total_slots: 6
+    has_decimal: true
+    max_capacity: 30.0
+    display_type: "lcd_passive"
+
+  and_led_red:
+    name: "A&D Weighing SW Series (Red LED)"
+    total_slots: 7
+    has_decimal: true
+    max_capacity: 30.0
+    display_type: "led_red"
+
+  ind7_150kg:
+    name: "Indikator Industri 7-Slot 150 kg"
+    total_slots: 7
+    has_decimal: true
+    max_capacity: 150.0
+    display_type: "lcd_backlit"
+
+  lantai5_300kg:
+    name: "Timbangan Lantai 5-Slot 300 kg"
+    total_slots: 5
+    has_decimal: true
+    max_capacity: 300.0
+    display_type: "led_red"
+
+  lantai7_2000kg:
+    name: "Timbangan Lantai Truk 7-Slot 2000 kg"
+    total_slots: 7
+    has_decimal: true
+    max_capacity: 2000.0
+    display_type: "led_red"
+
+  lcd6_15kg:
+    name: "Timbangan Meja LCD 6-Slot 15 kg"
+    total_slots: 6
+    has_decimal: true
+    max_capacity: 15.0
+    display_type: "lcd_passive"
+
+  lcd6_30kg:
+    name: "Timbangan Meja LCD 6-Slot 30 kg"
+    total_slots: 6
+    has_decimal: true
+    max_capacity: 30.0
+    display_type: "lcd_passive"
+
+  led6_60kg:
+    name: "Timbangan Platform LED 6-Slot 60 kg"
+    total_slots: 6
+    has_decimal: true
+    max_capacity: 60.0
+    display_type: "led_red"
+
+  led_amber:
+    name: "Display Tujuh Segmen Amber 6-Slot"
+    total_slots: 6
+    has_decimal: true
+    max_capacity: 100.0
+    display_type: "led_amber"
+
+  led_emerald_green:
+    name: "Display Tujuh Segmen Hijau Emerald 6-Slot"
+    total_slots: 6
+    has_decimal: true
+    max_capacity: 100.0
+    display_type: "led_green"
+
+  led_ice_blue:
+    name: "Display Tujuh Segmen Ice Blue 6-Slot"
+    total_slots: 6
+    has_decimal: true
+    max_capacity: 100.0
+    display_type: "led_blue"
+
+  lcd_low_contrast:
+    name: "Display LCD Pasif Kontras Rendah"
+    total_slots: 6
+    has_decimal: true
+    max_capacity: 60.0
+    display_type: "lcd_passive"

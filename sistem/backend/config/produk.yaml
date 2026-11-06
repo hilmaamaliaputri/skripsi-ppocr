@@ -1,0 +1,59 @@
+# Konfigurasi Profil Produk & Batas Fisik Timbangan
+# Digunakan oleh Verifikasi Lapis 2 (v_physical.py)
+
+products:
+  beras_5kg:
+    name: "Beras Kemasan 5 kg"
+    min_weight: 4.80
+    max_weight: 5.25
+    tolerance: 0.15
+  karung_5:
+    name: "Karung 5 kg"
+    min_weight: 4.80
+    max_weight: 5.25
+    tolerance: 0.15
+
+  beras_10kg:
+    name: "Beras Kemasan 10 kg"
+    min_weight: 9.80
+    max_weight: 10.35
+    tolerance: 0.25
+  karung_10:
+    name: "Karung 10 kg"
+    min_weight: 9.80
+    max_weight: 10.35
+    tolerance: 0.25
+
+  beras_25kg:
+    name: "Beras Karung 25 kg"
+    min_weight: 24.70
+    max_weight: 25.40
+    tolerance: 0.50
+  karung_25:
+    name: "Karung 25 kg"
+    min_weight: 24.70
+    max_weight: 25.40
+    tolerance: 0.50
+
+  beras_50kg:
+    name: "Beras Karung 50 kg"
+    min_weight: 49.40
+    max_weight: 50.80
+    tolerance: 0.80
+  karung_50:
+    name: "Karung 50 kg"
+    min_weight: 49.40
+    max_weight: 50.80
+    tolerance: 0.80
+
+  curah:
+    name: "Timbang Curah Industri"
+    min_weight: 0.50
+    max_weight: 2500.00
+    tolerance: 50.00
+
+  general_scale:
+    name: "Timbangan Umum Standar"
+    min_weight: 0.10
+    max_weight: 500.00
+    tolerance: 15.00
