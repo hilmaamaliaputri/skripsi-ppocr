@@ -6,6 +6,7 @@ dan Jejak Audit ke antarmuka Evaluator & Operator.
 
 import base64
 import os
+import sys
 from typing import Any, Dict, List, Optional
 import cv2
 import numpy as np
@@ -14,18 +15,21 @@ from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
-from .src.engine.audit_logger import AuditLogger
-from .src.engine.decision_engine import DecisionEngine
-from .src.evaluation.calibration_optimizer import CalibrationOptimizer
-from .src.evaluation.harness import BenchmarkHarness
-from .src.evaluation.risk_coverage import RiskCoverageAnalyzer
-from .src.models.ppocrv6_onnx import PPOCRv6OnnxRecognizer
-from .src.pipeline.schema import DecisionContract, ReadingContract
-from .src.verification.v_calibration import CalibrationVerifier
-from .src.verification.v_physical import PhysicalVerifier
-from .src.verification.v_structural import StructuralVerifier
-from .src.verification.v_temporal import TemporalVerifier
-from .src.vision.slot_profiler import SlotProfiler
+# Ensure current directory is in sys.path
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
+from src.engine.audit_logger import AuditLogger
+from src.engine.decision_engine import DecisionEngine
+from src.evaluation.calibration_optimizer import CalibrationOptimizer
+from src.evaluation.harness import BenchmarkHarness
+from src.evaluation.risk_coverage import RiskCoverageAnalyzer
+from src.models.ppocrv6_onnx import PPOCRv6OnnxRecognizer
+from src.pipeline.schema import DecisionContract, ReadingContract
+from src.verification.v_calibration import CalibrationVerifier
+from src.verification.v_physical import PhysicalVerifier
+from src.verification.v_structural import StructuralVerifier
+from src.verification.v_temporal import TemporalVerifier
+from src.vision.slot_profiler import SlotProfiler
 
 app = FastAPI(
     title="Scale OCR Verification System API",
@@ -233,3 +237,9 @@ def run_calibration() -> Dict[str, Any]:
         "reliability_bins_before": bins_before,
         "reliability_bins_after": bins_after,
     }
+
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="127.0.0.1", port=8000, log_level="info")
+
