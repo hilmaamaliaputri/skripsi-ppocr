@@ -17,11 +17,11 @@
   .light-mode {
     --bg-page: #f8fafc;
     --bg-card: #ffffff;
-    --bg-card-subtle: #f8fafc;
-    --bg-inset: #f1f5f9;
+    --bg-card-subtle: #f1f5f9;
+    --bg-inset: #f8fafc;
     --border-color: #e2e8f0;
-    --text-primary: #1e293b;
-    --text-secondary: #475569;
+    --text-primary: #0f172a;
+    --text-secondary: #334155;
     --text-muted: #64748b;
   }
 
@@ -36,45 +36,45 @@
 }
 
 /* ==========================================================================
-   DEEP BLACK INDUSTRIAL OLED THEME (DARK MODE DEFAULT)
+   DARK MODE (DEEP BLACK INDUSTRIAL OLED)
    ========================================================================== */
-body {
+body:not(.light-mode) {
   background-color: #000000 !important;
   color: #f4f4f5 !important;
 }
 
-.theme-card,
-.bg-industrial-900 {
+body:not(.light-mode) .theme-card,
+body:not(.light-mode) .bg-industrial-900 {
   background-color: #09090b !important;
   border-color: #27272a !important;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.6);
 }
 
-.bg-industrial-850 {
+body:not(.light-mode) .bg-industrial-850 {
   background-color: #121215 !important;
   border-color: #27272a !important;
 }
 
-.bg-industrial-950 {
+body:not(.light-mode) .bg-industrial-950 {
   background-color: #000000 !important;
   border-color: #1f2937 !important;
 }
 
-.border-industrial-800 {
+body:not(.light-mode) .border-industrial-800 {
   border-color: #27272a !important;
 }
 
-.border-industrial-700 {
+body:not(.light-mode) .border-industrial-700 {
   border-color: #3f3f46 !important;
 }
 
-.theme-header {
+body:not(.light-mode) .theme-header {
   background-color: rgba(0, 0, 0, 0.95) !important;
   border-color: #27272a !important;
 }
 
 /* ==========================================================================
-   LIGHT MODE (CLEAN, SOFT & HIGH-CONTRAST)
+   LIGHT MODE (CRAFTED, SOFT & ULTRA-CLEAN EDITORIAL THEME)
    ========================================================================== */
 .light-mode {
   color-scheme: light;
@@ -82,20 +82,27 @@ body {
 
 .light-mode body {
   background-color: #f8fafc !important;
-  color: #1e293b !important;
+  color: #0f172a !important;
 }
 
-/* Cards & Surfaces */
+/* Root background override */
+.light-mode #root,
+.light-mode .min-h-screen {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+}
+
+/* Primary Surface Cards */
 .light-mode .theme-card,
 .light-mode .bg-industrial-900,
 .light-mode .bg-industrial-850 {
   background-color: #ffffff !important;
   border-color: #e2e8f0 !important;
-  color: #1e293b !important;
-  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.04), 0 1px 2px -1px rgba(15, 23, 42, 0.04);
+  color: #0f172a !important;
+  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.04), 0 1px 2px -1px rgba(15, 23, 42, 0.02) !important;
 }
 
-/* Inset Panels & Secondary Surfaces */
+/* Inset / Secondary Panels */
 .light-mode .bg-industrial-950 {
   background-color: #f8fafc !important;
   border-color: #e2e8f0 !important;
@@ -108,91 +115,127 @@ body {
   border-color: #e2e8f0 !important;
 }
 
-/* Text Hierarchy */
+/* Text Hierarchy (High Contrast, Deep Ink Tone) */
 .light-mode .theme-text-primary,
 .light-mode .text-white,
+.light-mode .text-zinc-100,
 .light-mode .text-industrial-100,
 .light-mode .text-industrial-200 {
-  color: #1e293b !important;
+  color: #0f172a !important;
 }
 
-.light-mode .text-industrial-300 {
+.light-mode .text-industrial-300,
+.light-mode .text-zinc-300 {
   color: #334155 !important;
 }
 
-.light-mode .text-industrial-400 {
+.light-mode .text-industrial-400,
+.light-mode .text-zinc-400 {
+  color: #475569 !important;
+}
+
+.light-mode .text-industrial-500,
+.light-mode .text-zinc-500 {
   color: #64748b !important;
 }
 
-.light-mode .text-industrial-500 {
-  color: #94a3b8 !important;
-}
-
-/* Navigation & Header */
+/* Header & Tab Bar in Light Mode */
 .light-mode .theme-header {
   background-color: rgba(255, 255, 255, 0.95) !important;
   border-color: #e2e8f0 !important;
-  box-shadow: 0 1px 2px 0 rgba(15, 23, 42, 0.03);
+  box-shadow: 0 1px 2px 0 rgba(15, 23, 42, 0.03) !important;
 }
 
-/* Table Elements */
+/* Active and Inactive Tab Pills in Light Mode */
+.light-mode nav button:not(.bg-sky-600) {
+  color: #475569 !important;
+}
+
+.light-mode nav button:not(.bg-sky-600):hover {
+  background-color: #f1f5f9 !important;
+  color: #0f172a !important;
+}
+
+.light-mode nav button.bg-sky-600 {
+  background-color: #0284c7 !important;
+  color: #ffffff !important;
+  box-shadow: 0 1px 2px 0 rgba(2, 132, 199, 0.3) !important;
+}
+
+/* Table Elements in Light Mode */
 .light-mode table thead,
-.light-mode thead {
-  background-color: #f8fafc !important;
-  color: #475569 !important;
-}
-
+.light-mode thead,
 .light-mode th {
-  color: #475569 !important;
-  font-weight: 600;
+  background-color: #f1f5f9 !important;
+  color: #334155 !important;
+  font-weight: 600 !important;
   border-color: #e2e8f0 !important;
 }
 
 .light-mode tbody tr {
   border-color: #f1f5f9 !important;
+  color: #334155 !important;
 }
 
 .light-mode tr:hover {
   background-color: #f8fafc !important;
 }
 
-/* Form Controls (Inputs, Selects) */
+.light-mode tr.bg-sky-950\/40 {
+  background-color: #f0f9ff !important;
+  color: #0369a1 !important;
+}
+
+/* Form Controls (Inputs, Selects) in Light Mode */
 .light-mode select,
 .light-mode input {
   background-color: #ffffff !important;
   border-color: #cbd5e1 !important;
-  color: #1e293b !important;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.02);
+  color: #0f172a !important;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03) !important;
+}
+
+.light-mode select:hover,
+.light-mode input:hover {
+  border-color: #94a3b8 !important;
 }
 
 .light-mode select:focus,
 .light-mode input:focus {
   border-color: #0284c7 !important;
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.15);
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.12) !important;
 }
 
 .light-mode select option {
   background-color: #ffffff !important;
-  color: #1e293b !important;
+  color: #0f172a !important;
 }
 
-/* ==========================================================================
-   SOFT ACCENT BADGES (LIGHT MODE)
-   ========================================================================== */
+/* Status Badges in Light Mode (Fresh Pastel & High Contrast Text) */
 .light-mode .bg-emerald-950,
 .light-mode .bg-emerald-950\/90,
 .light-mode .bg-emerald-950\/80 {
   background-color: #ecfdf5 !important;
   color: #065f46 !important;
-  border-color: #bbf7d0 !important;
+  border-color: #a7f3d0 !important;
+}
+
+.light-mode .text-emerald-400 {
+  color: #059669 !important;
 }
 
 .light-mode .bg-red-950,
-.light-mode .bg-red-950\/90 {
+.light-mode .bg-red-950\/90,
+.light-mode .bg-rose-950 {
   background-color: #fff1f2 !important;
   color: #9f1239 !important;
   border-color: #fecdd3 !important;
+}
+
+.light-mode .text-red-400,
+.light-mode .text-rose-400 {
+  color: #e11d48 !important;
 }
 
 .light-mode .bg-amber-950,
@@ -202,11 +245,21 @@ body {
   border-color: #fde68a !important;
 }
 
+.light-mode .text-amber-400 {
+  color: #d97706 !important;
+}
+
 .light-mode .bg-cyan-950,
-.light-mode .bg-cyan-950\/80 {
+.light-mode .bg-cyan-950\/80,
+.light-mode .bg-sky-950 {
   background-color: #f0f9ff !important;
   color: #0369a1 !important;
   border-color: #bae6fd !important;
+}
+
+.light-mode .text-cyan-400,
+.light-mode .text-sky-400 {
+  color: #0284c7 !important;
 }
 
 .light-mode .bg-purple-950,
@@ -216,41 +269,98 @@ body {
   border-color: #e9d5ff !important;
 }
 
-/* Row Highlights (Soft Pastel) */
+.light-mode .text-purple-400 {
+  color: #7c3aed !important;
+}
+
+/* Icon Containers in Light Mode (KPI Circular Badges) */
+.light-mode .bg-emerald-500\/10 {
+  background-color: #ecfdf5 !important;
+  color: #059669 !important;
+}
+
+.light-mode .bg-sky-500\/10 {
+  background-color: #f0f9ff !important;
+  color: #0284c7 !important;
+}
+
+.light-mode .bg-cyan-500\/10 {
+  background-color: #ecfeff !important;
+  color: #0891b2 !important;
+}
+
+.light-mode .bg-rose-500\/10 {
+  background-color: #fff1f2 !important;
+  color: #e11d48 !important;
+}
+
+.light-mode .bg-purple-500\/10 {
+  background-color: #faf5ff !important;
+  color: #7c3aed !important;
+}
+
+.light-mode .bg-amber-500\/10 {
+  background-color: #fffbeb !important;
+  color: #d97706 !important;
+}
+
+/* Table Row Highlights in Light Mode */
 .light-mode .bg-emerald-950\/25 {
   background-color: #f0fdf4 !important;
+  border-left-color: #10b981 !important;
 }
 
-.light-mode .bg-cyan-950\/30 {
+.light-mode .bg-sky-950\/30 {
   background-color: #f0f9ff !important;
+  border-left-color: #0ea5e9 !important;
 }
 
-/* Custom Scrollbars */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+/* Frame Preview Boxes in Light Mode */
+.light-mode .bg-zinc-900 {
+  background-color: #f1f5f9 !important;
+  border-color: #e2e8f0 !important;
 }
 
-::-webkit-scrollbar-track {
-  background: #000000;
+/* Button & Action Overrides in Light Mode */
+.light-mode .bg-industrial-800 {
+  background-color: #f1f5f9 !important;
+  border-color: #e2e8f0 !important;
+  color: #334155 !important;
 }
 
+.light-mode .bg-industrial-800:hover {
+  background-color: #e2e8f0 !important;
+  color: #0f172a !important;
+}
+
+/* SVG Chart Typography & Gridlines in Light Mode */
+.light-mode svg text {
+  fill: #475569 !important;
+  font-weight: 500;
+}
+
+.light-mode svg line[stroke="#64748b"] {
+  stroke: #cbd5e1 !important;
+  stroke-opacity: 0.5 !important;
+}
+
+.light-mode svg line[stroke="#94a3b8"] {
+  stroke: #94a3b8 !important;
+  stroke-opacity: 0.4 !important;
+}
+
+.light-mode .bg-industrial-950 pre {
+  color: #1e293b !important;
+}
+
+/* Custom Scrollbars in Light Mode */
 .light-mode ::-webkit-scrollbar-track {
   background: #f8fafc;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #27272a;
-  border-radius: 4px;
 }
 
 .light-mode ::-webkit-scrollbar-thumb {
   background: #cbd5e1;
   border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #3f3f46;
 }
 
 .light-mode ::-webkit-scrollbar-thumb:hover {

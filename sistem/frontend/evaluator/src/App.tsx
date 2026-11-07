@@ -36,11 +36,9 @@ export function App() {
     if (isLightMode) {
       document.documentElement.classList.add('light-mode');
       document.body.classList.add('light-mode');
-      document.body.classList.add('light-theme');
     } else {
       document.documentElement.classList.remove('light-mode');
       document.body.classList.remove('light-mode');
-      document.body.classList.remove('light-theme');
     }
   }, [isLightMode]);
 
@@ -235,7 +233,7 @@ export function App() {
     parameters.verification_mode === 'aktif';
 
   return (
-    <div className="min-h-screen bg-black text-zinc-100 flex flex-col font-sans transition-colors duration-150">
+    <div className={`min-h-screen ${isLightMode ? 'bg-[#f8fafc] text-slate-800' : 'bg-black text-zinc-100'} flex flex-col font-sans transition-colors duration-200`}>
       {/* Top Header */}
       <Header
         isLoading={isLoading}
@@ -246,8 +244,12 @@ export function App() {
         onToggleLightMode={toggleLightMode}
       />
 
-      {/* Navigation Tabs Bar (Clean, Soft Pill Design) */}
-      <div className="border-b border-industrial-800 bg-industrial-900/90 backdrop-blur-md theme-header sticky top-0 z-20">
+      {/* Navigation Tabs Bar */}
+      <div className={`border-b transition-colors duration-200 sticky top-0 z-20 ${
+        isLightMode
+          ? 'bg-white/95 border-slate-200 shadow-xs backdrop-blur-md'
+          : 'bg-black/95 border-zinc-800 backdrop-blur-md'
+      }`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <nav className="flex items-center gap-1.5 sm:gap-3 py-2.5 overflow-x-auto">
             <button
@@ -255,10 +257,12 @@ export function App() {
               className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-sans font-medium transition-all shrink-0 ${
                 activeTab === 'overview'
                   ? 'bg-sky-600 text-white font-semibold shadow-sm'
-                  : 'text-industrial-400 hover:text-industrial-200 hover:bg-industrial-850'
+                  : isLightMode
+                  ? 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                  : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900'
               }`}
             >
-              <BarChart3 className="w-4 h-4 text-sky-400" />
+              <BarChart3 className="w-4 h-4 text-sky-500" />
               <span>1. Dashboard Metrik & Kurva</span>
             </button>
 
@@ -267,12 +271,18 @@ export function App() {
               className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-sans font-medium transition-all shrink-0 ${
                 activeTab === 'comparison'
                   ? 'bg-sky-600 text-white font-semibold shadow-sm'
-                  : 'text-industrial-400 hover:text-industrial-200 hover:bg-industrial-850'
+                  : isLightMode
+                  ? 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                  : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900'
               }`}
             >
-              <Layers className="w-4 h-4 text-emerald-400" />
+              <Layers className="w-4 h-4 text-emerald-500" />
               <span>2. Studi Komparasi (Tiny, Small, Medium)</span>
-              <span className="text-[10px] bg-emerald-950 text-emerald-400 border border-emerald-800 px-2 py-0.5 rounded-full font-mono font-semibold">
+              <span className={`text-[10px] px-2 py-0.5 rounded-full font-mono font-semibold shadow-xs ${
+                isLightMode
+                  ? 'bg-emerald-50 text-emerald-800 border border-emerald-200'
+                  : 'bg-emerald-950 text-emerald-400 border border-emerald-800'
+              }`}>
                 Bab IV
               </span>
             </button>
@@ -282,12 +292,18 @@ export function App() {
               className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-sans font-medium transition-all shrink-0 ${
                 activeTab === 'inspector'
                   ? 'bg-sky-600 text-white font-semibold shadow-sm'
-                  : 'text-industrial-400 hover:text-industrial-200 hover:bg-industrial-850'
+                  : isLightMode
+                  ? 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                  : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900'
               }`}
             >
-              <Search className="w-4 h-4 text-cyan-400" />
+              <Search className="w-4 h-4 text-cyan-500" />
               <span>3. Inspektur Sampel & Verifikasi (120 Folder)</span>
-              <span className="text-[10px] bg-industrial-800 text-industrial-300 px-2 py-0.5 rounded-full font-mono font-medium">
+              <span className={`text-[10px] px-2 py-0.5 rounded-full font-mono font-medium shadow-xs ${
+                isLightMode
+                  ? 'bg-slate-100 text-slate-700 border border-slate-200'
+                  : 'bg-zinc-800 text-zinc-300'
+              }`}>
                 600 Frame
               </span>
             </button>
@@ -297,20 +313,28 @@ export function App() {
 
       {/* Main Content Area */}
       <main className="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 space-y-6">
-        {/* Soft Hardware & Integrity Protocol Banner */}
-        <div className="p-3.5 rounded-xl bg-industrial-900 border border-industrial-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs font-sans theme-card">
-          <div className="flex items-center gap-2.5 text-industrial-400">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 shrink-0 animate-pulse" />
-            <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
+        {/* Hardware & Integrity Protocol Banner */}
+        <div className={`p-3.5 rounded-xl border flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs font-sans shadow-xs transition-colors ${
+          isLightMode
+            ? 'bg-white border-slate-200 text-slate-700'
+            : 'bg-zinc-950 border-zinc-800 text-zinc-400'
+        }`}>
+          <div className="flex items-center gap-2.5">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0 animate-pulse" />
+            <ShieldCheck className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
             <span>
-              Protokol Riset: Dataset Uji Terkunci ({data.sample_count} sampel). Ambang verifikasi diperoleh dari dataset kalibrasi.
+              Protokol Riset: Dataset Uji Terkunci ({data.sample_count} sampel). Ambang verifikasi disetel hanya dari dataset kalibrasi.
             </span>
           </div>
 
-          <div className="flex items-center gap-3 text-industrial-400 shrink-0">
-            <span className="flex items-center gap-1.5 bg-industrial-950 px-2.5 py-1 rounded-lg border border-industrial-800">
-              <Cpu className="w-3.5 h-3.5 text-sky-400" />
-              <span>Model Aktif: <strong className="text-white theme-text-primary uppercase font-mono font-semibold">PP-OCRv6-{parameters.model_variant}</strong></span>
+          <div className="flex items-center gap-3 shrink-0">
+            <span className={`flex items-center gap-1.5 px-3 py-1 rounded-lg border ${
+              isLightMode
+                ? 'bg-slate-50 border-slate-200 text-slate-700'
+                : 'bg-black border-zinc-800 text-zinc-300'
+            }`}>
+              <Cpu className="w-3.5 h-3.5 text-sky-500" />
+              <span>Model Aktif: <strong className={`font-mono font-bold uppercase ${isLightMode ? 'text-slate-900' : 'text-white'}`}>PP-OCRv6-{parameters.model_variant}</strong></span>
             </span>
           </div>
         </div>
@@ -371,7 +395,11 @@ export function App() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-industrial-800 bg-industrial-900/60 px-6 py-4 text-xs font-sans text-industrial-400 text-center theme-header mt-8">
+      <footer className={`border-t px-6 py-4 text-xs font-sans text-center mt-8 transition-colors ${
+        isLightMode
+          ? 'bg-white border-slate-200 text-slate-500'
+          : 'bg-zinc-950/80 border-zinc-800 text-zinc-500'
+      }`}>
         Laboratorium Visi Komputer & Pembacaan Timbangan Digital 7-Segmen &bull; Skripsi PP-OCRv6 (Tiny, Small, Medium) &bull; Antigravity Modular
       </footer>
 
