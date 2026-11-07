@@ -23,7 +23,7 @@ export const ReliabilityDiagram: React.FC<ReliabilityDiagramProps> = ({ calibrat
   const binWidth = plotW / bins.length;
 
   return (
-    <div className="p-4 rounded bg-industrial-900 border border-industrial-800 flex flex-col justify-between">
+    <div className="p-4 rounded-lg bg-industrial-900 border border-industrial-800 flex flex-col justify-between theme-card">
       <div className="flex items-center justify-between pb-2 border-b border-industrial-800">
         <div className="flex items-center gap-2">
           <BarChart3 className="w-4 h-4 text-emerald-400" />

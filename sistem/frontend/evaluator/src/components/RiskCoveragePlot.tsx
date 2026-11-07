@@ -50,7 +50,7 @@ export const RiskCoveragePlot: React.FC<RiskCoveragePlotProps> = ({
   };
 
   return (
-    <div className="p-4 rounded bg-industrial-900 border border-industrial-800 flex flex-col justify-between">
+    <div className="p-4 rounded-lg bg-industrial-900 border border-industrial-800 flex flex-col justify-between theme-card">
       <div className="flex items-center justify-between pb-2 border-b border-industrial-800">
         <div className="flex items-center gap-2">
           <Activity className="w-4 h-4 text-cyan-400" />

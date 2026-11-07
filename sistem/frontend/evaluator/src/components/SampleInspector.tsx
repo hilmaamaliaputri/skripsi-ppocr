@@ -34,7 +34,7 @@ export const SampleInspector: React.FC<SampleInspectorProps> = ({ samples }) => 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
       {/* Table list */}
-      <div className="lg:col-span-2 rounded bg-industrial-900 border border-industrial-800 flex flex-col">
+      <div className="lg:col-span-2 rounded bg-industrial-900 border border-industrial-800 flex flex-col theme-card">
         {/* Table Toolbar */}
         <div className="p-3 border-b border-industrial-800 flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center gap-2">
@@ -107,7 +107,7 @@ export const SampleInspector: React.FC<SampleInspectorProps> = ({ samples }) => 
       </div>
 
       {/* Detail Inspector Panel */}
-      <div className="rounded bg-industrial-900 border border-industrial-800 p-4 flex flex-col justify-between">
+      <div className="rounded bg-industrial-900 border border-industrial-800 p-4 flex flex-col justify-between theme-card">
         <div>
           <div className="pb-2 border-b border-industrial-800 flex items-center justify-between">
             <span className="text-xs font-mono font-bold uppercase text-white">Inspektur Sampel Lapis</span>
