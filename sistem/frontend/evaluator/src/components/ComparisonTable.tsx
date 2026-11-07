@@ -105,25 +105,25 @@ export const ComparisonTable: React.FC<ComparisonTableProps> = ({
   ];
 
   return (
-    <div className="rounded-lg bg-industrial-900 border border-industrial-800 flex flex-col theme-card overflow-hidden">
+    <div className="rounded-xl bg-industrial-900 border border-industrial-800 flex flex-col theme-card overflow-hidden shadow-sm">
       {/* Header */}
-      <div className="p-4 border-b border-industrial-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-        <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded bg-cyan-950/80 border border-cyan-800 flex items-center justify-center text-cyan-400 shrink-0">
+      <div className="p-4 sm:p-5 border-b border-industrial-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-sky-500/10 border border-sky-500/20 flex items-center justify-center text-sky-400 shrink-0 shadow-sm">
             <Table className="w-4 h-4" />
           </div>
           <div>
-            <h3 className="text-xs font-mono font-bold uppercase text-industrial-100 tracking-wider theme-text-primary">
+            <h3 className="text-xs sm:text-sm font-sans font-bold uppercase text-industrial-100 tracking-wider theme-text-primary">
               Tabel Komparasi Varian PP-OCRv6 (Tiny vs Small vs Medium)
             </h3>
-            <p className="text-[11px] font-mono text-industrial-400 mt-0.5">
-              Studi komparasi empiris performa model, latensi CPU, dan efektivitas eliminasi angka '8' palsu pada 120 folder uji (n=120, 600 frame).
+            <p className="text-[11px] font-sans text-industrial-400 mt-0.5">
+              Studi komparasi performa model, latensi CPU, dan efektivitas eliminasi angka '8' palsu pada 120 folder uji (n=120, 600 frame).
             </p>
           </div>
         </div>
 
         <div className="flex items-center gap-2 shrink-0">
-          <span className="text-[11px] font-mono px-2.5 py-1 rounded bg-emerald-950/90 text-emerald-400 border border-emerald-800 flex items-center gap-1.5 font-semibold">
+          <span className="text-[11px] font-sans px-3 py-1 rounded-full bg-emerald-950/90 text-emerald-400 border border-emerald-800 flex items-center gap-1.5 font-semibold shadow-sm">
             <ShieldCheck className="w-3.5 h-3.5" /> BAB IV SKRIPSI
           </span>
         </div>
@@ -131,22 +131,22 @@ export const ComparisonTable: React.FC<ComparisonTableProps> = ({
 
       {/* Comparison Table */}
       <div className="overflow-x-auto">
-        <table className="w-full text-left text-xs font-mono border-collapse">
+        <table className="w-full text-left text-xs font-sans border-collapse">
           <thead className="bg-industrial-950 text-industrial-400 border-b border-industrial-800">
             <tr>
-              <th className="py-3 px-3.5">Varian Model & Konfigurasi</th>
-              <th className="py-3 px-3">Ukuran (MB)</th>
-              <th className="py-3 px-3">Latensi CPU</th>
-              <th className="py-3 px-3">Verifikasi</th>
-              <th className="py-3 px-3 text-center">FSR (%)</th>
-              <th className="py-3 px-3 text-center">CER (%)</th>
-              <th className="py-3 px-3">Kasus Angka '8' Semu</th>
-              <th className="py-3 px-3">Silent Error (FAR)</th>
-              <th className="py-3 px-3 text-center">Coverage</th>
-              <th className="py-3 px-3.5">Rekomendasi Deployment</th>
+              <th className="py-3 px-4 font-semibold">Varian Model & Konfigurasi</th>
+              <th className="py-3 px-3 font-semibold">Ukuran</th>
+              <th className="py-3 px-3 font-semibold">Latensi CPU</th>
+              <th className="py-3 px-3 font-semibold">Verifikasi</th>
+              <th className="py-3 px-3 text-center font-semibold">FSR (%)</th>
+              <th className="py-3 px-3 text-center font-semibold">CER (%)</th>
+              <th className="py-3 px-3 font-semibold">Angka '8' Semu</th>
+              <th className="py-3 px-3 font-semibold">Silent Error (FAR)</th>
+              <th className="py-3 px-3 text-center font-semibold">Coverage</th>
+              <th className="py-3 px-4 font-semibold">Rekomendasi Deployment</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-industrial-800/60">
+          <tbody className="divide-y divide-industrial-800/60 font-mono">
             {modelComparisons.map((row, idx) => {
               const isActiveVariant =
                 row.variantKey === currentVariant &&
@@ -161,30 +161,30 @@ export const ComparisonTable: React.FC<ComparisonTableProps> = ({
                     row.isThesisChoice
                       ? 'bg-emerald-950/25 border-l-4 border-l-emerald-500'
                       : isActiveVariant
-                      ? 'bg-cyan-950/30 border-l-4 border-l-cyan-500'
+                      ? 'bg-sky-950/30 border-l-4 border-l-sky-500'
                       : 'hover:bg-industrial-850/50'
                   }`}
                 >
-                  <td className="py-3 px-3.5 font-semibold text-industrial-100 theme-text-primary">
-                    <div className="flex items-center gap-1.5 flex-wrap">
+                  <td className="py-3.5 px-4 font-semibold text-industrial-100 theme-text-primary font-sans">
+                    <div className="flex items-center gap-2 flex-wrap">
                       <span>{row.variantName}</span>
                       {row.isThesisChoice && (
-                        <span className="text-[10px] bg-emerald-900/80 text-emerald-300 border border-emerald-700 px-1.5 py-0.2 rounded font-bold">
+                        <span className="text-[10px] bg-emerald-900/80 text-emerald-300 border border-emerald-700 px-2 py-0.5 rounded-full font-bold">
                           TERPILIH
                         </span>
                       )}
                       {isActiveVariant && !row.isThesisChoice && (
-                        <span className="text-[10px] bg-cyan-900/80 text-cyan-300 border border-cyan-700 px-1.5 py-0.2 rounded font-bold">
+                        <span className="text-[10px] bg-sky-900/80 text-sky-300 border border-sky-700 px-2 py-0.5 rounded-full font-bold">
                           AKTIF
                         </span>
                       )}
                     </div>
                   </td>
-                  <td className="py-3 px-3 text-industrial-300">{row.size}</td>
-                  <td className="py-3 px-3 text-industrial-300">{row.latency}</td>
-                  <td className="py-3 px-3">
+                  <td className="py-3.5 px-3 text-industrial-300">{row.size}</td>
+                  <td className="py-3.5 px-3 text-industrial-300">{row.latency}</td>
+                  <td className="py-3.5 px-3">
                     <span
-                      className={`px-1.5 py-0.5 rounded text-[10px] ${
+                      className={`px-2 py-0.5 rounded-full text-[10px] font-sans ${
                         row.verifMode.startsWith('Aktif')
                           ? 'bg-emerald-950 text-emerald-400 border border-emerald-800'
                           : 'bg-red-950 text-red-400 border border-red-800'
@@ -193,11 +193,11 @@ export const ComparisonTable: React.FC<ComparisonTableProps> = ({
                       {row.verifMode}
                     </span>
                   </td>
-                  <td className="py-3 px-3 text-center font-bold text-industrial-100 theme-text-primary">
+                  <td className="py-3.5 px-3 text-center font-bold text-industrial-100 theme-text-primary">
                     {row.fsr}
                   </td>
-                  <td className="py-3 px-3 text-center text-industrial-300">{row.cer}</td>
-                  <td className="py-3 px-3">
+                  <td className="py-3.5 px-3 text-center text-industrial-300">{row.cer}</td>
+                  <td className="py-3.5 px-3">
                     <span
                       className={
                         row.false8.startsWith('0')
@@ -208,19 +208,19 @@ export const ComparisonTable: React.FC<ComparisonTableProps> = ({
                       {row.false8}
                     </span>
                   </td>
-                  <td className="py-3 px-3">
+                  <td className="py-3.5 px-3">
                     <span
                       className={`font-semibold ${
                         row.silentError.startsWith('0.00%')
                           ? 'text-emerald-400'
-                          : 'text-red-400'
+                          : 'text-rose-400'
                       }`}
                     >
                       {row.silentError}
                     </span>
                   </td>
-                  <td className="py-3 px-3 text-center text-industrial-300">{row.coverage}</td>
-                  <td className="py-3 px-3.5 text-industrial-400 text-[11px]">
+                  <td className="py-3.5 px-3 text-center text-industrial-300">{row.coverage}</td>
+                  <td className="py-3.5 px-4 text-industrial-400 text-xs font-sans">
                     {row.recommendation}
                   </td>
                 </tr>
@@ -231,30 +231,30 @@ export const ComparisonTable: React.FC<ComparisonTableProps> = ({
       </div>
 
       {/* Analysis Highlights / Key Academic Insights */}
-      <div className="p-4 bg-industrial-950/70 border-t border-industrial-800 grid grid-cols-1 md:grid-cols-3 gap-3.5 text-xs font-mono">
-        <div className="p-3 rounded bg-industrial-900 border border-industrial-800 theme-card">
-          <div className="flex items-center gap-2 text-cyan-400 font-bold mb-1">
-            <Cpu className="w-3.5 h-3.5" /> 1. Trade-Off Ukuran vs Latensi
+      <div className="p-4 sm:p-5 bg-industrial-950/70 border-t border-industrial-800 grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-sans">
+        <div className="p-4 rounded-xl bg-industrial-900 border border-industrial-800 theme-card shadow-sm">
+          <div className="flex items-center gap-2 text-sky-400 font-semibold mb-1.5">
+            <Cpu className="w-4 h-4" /> 1. Trade-Off Ukuran vs Latensi
           </div>
-          <p className="text-[11px] text-industrial-400 leading-relaxed">
-            <strong>PP-OCRv6-tiny</strong> memiliki latensi 4.2 ms (sangat cepat), namun model <strong>PP-OCRv6-small</strong> (11.8 ms) memberikan peningkatan akurasi representasi teks sebesar <strong>+7.5%</strong> dengan konsumsi RAM yang masih sangat ringan (7.8 MB).
+          <p className="text-[11px] text-industrial-400 leading-relaxed font-sans">
+            <strong>PP-OCRv6-tiny</strong> memiliki latensi 4.2 ms (sangat cepat), namun model <strong>PP-OCRv6-small</strong> (11.8 ms) memberikan lonjakan akurasi representasi teks sebesar <strong>+7.5%</strong> dengan konsumsi RAM yang masih sangat hemat (7.8 MB).
           </p>
         </div>
 
-        <div className="p-3 rounded bg-industrial-900 border border-industrial-800 theme-card">
-          <div className="flex items-center gap-2 text-emerald-400 font-bold mb-1">
-            <Check className="w-3.5 h-3.5" /> 2. Mengapa Memilih PP-OCRv6-Small?
+        <div className="p-4 rounded-xl bg-industrial-900 border border-industrial-800 theme-card shadow-sm">
+          <div className="flex items-center gap-2 text-emerald-400 font-semibold mb-1.5">
+            <Check className="w-4 h-4" /> 2. Mengapa Memilih PP-OCRv6-Small?
           </div>
-          <p className="text-[11px] text-industrial-400 leading-relaxed">
-            Varian <strong>small + 4-lapis verifikasi</strong> dipilih sebagai konfigurasi utama skripsi karena mencapai <strong>FSR 98.3%</strong> dan <strong>Coverage 96.7%</strong> pada latensi 13.9 ms, tanpa memerlukan GPU server seperti varian medium.
+          <p className="text-[11px] text-industrial-400 leading-relaxed font-sans">
+            Varian <strong>small + 4-lapis verifikasi</strong> dipilih sebagai konfigurasi utama skripsi karena mencapai <strong>FSR 98.3%</strong> dan <strong>Coverage 96.7%</strong> pada latensi 13.9 ms, tanpa memerlukan akselerasi GPU server.
           </p>
         </div>
 
-        <div className="p-3 rounded bg-industrial-900 border border-industrial-800 theme-card">
-          <div className="flex items-center gap-2 text-amber-400 font-bold mb-1">
-            <AlertCircle className="w-3.5 h-3.5" /> 3. Eliminasi Angka 8 Semu
+        <div className="p-4 rounded-xl bg-industrial-900 border border-industrial-800 theme-card shadow-sm">
+          <div className="flex items-center gap-2 text-amber-400 font-semibold mb-1.5">
+            <AlertCircle className="w-4 h-4" /> 3. Eliminasi Angka 8 Semu
           </div>
-          <p className="text-[11px] text-industrial-400 leading-relaxed">
+          <p className="text-[11px] text-industrial-400 leading-relaxed font-sans">
             Pada seluruh varian (tiny, small, medium), model OCR mentah mengalami kebocoran false positive angka 8 (3.3% - 12.5%). Sistem <strong>4-Lapis Verifikasi</strong> menjamin <strong>0.00% Silent Error</strong> lolos ke database pabrik.
           </p>
         </div>

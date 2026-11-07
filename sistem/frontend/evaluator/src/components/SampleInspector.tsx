@@ -21,37 +21,37 @@ export const SampleInspector: React.FC<SampleInspectorProps> = ({ samples }) => 
   const getStatusBadge = (decision: SampleEvaluation['decision']) => {
     switch (decision) {
       case 'TERIMA':
-        return <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-950 text-emerald-400 border border-emerald-800">TERIMA</span>;
+        return <span className="px-2.5 py-0.5 rounded-full text-[10px] font-sans font-semibold bg-emerald-950 text-emerald-400 border border-emerald-800">TERIMA</span>;
       case 'TOLAK':
-        return <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-red-950 text-red-400 border border-red-800">TOLAK</span>;
+        return <span className="px-2.5 py-0.5 rounded-full text-[10px] font-sans font-semibold bg-red-950 text-red-400 border border-red-800">TOLAK</span>;
       case 'KONFIRMASI':
-        return <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-950 text-amber-400 border border-amber-800">KONFIRMASI</span>;
+        return <span className="px-2.5 py-0.5 rounded-full text-[10px] font-sans font-semibold bg-amber-950 text-amber-400 border border-amber-800">KONFIRMASI</span>;
       default:
-        return <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-slate-900 text-slate-400 border border-slate-700">BATAL</span>;
+        return <span className="px-2.5 py-0.5 rounded-full text-[10px] font-sans font-semibold bg-slate-900 text-slate-400 border border-slate-700">BATAL</span>;
     }
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
       {/* Table list */}
-      <div className="lg:col-span-2 rounded bg-industrial-900 border border-industrial-800 flex flex-col theme-card">
+      <div className="lg:col-span-2 rounded-xl bg-industrial-900 border border-industrial-800 flex flex-col theme-card shadow-sm overflow-hidden">
         {/* Table Toolbar */}
-        <div className="p-3 border-b border-industrial-800 flex flex-wrap items-center justify-between gap-2">
+        <div className="p-4 border-b border-industrial-800 flex flex-wrap items-center justify-between gap-3 bg-industrial-900">
           <div className="flex items-center gap-2">
-            <Filter className="w-4 h-4 text-industrial-400" />
-            <span className="text-xs font-mono font-bold text-white uppercase">Data Sampel Evaluasi</span>
-            <span className="text-[11px] font-mono text-industrial-400">({filtered.length} dari {samples.length})</span>
+            <Filter className="w-4 h-4 text-sky-400" />
+            <span className="text-xs font-sans font-bold text-white uppercase tracking-wider theme-text-primary">Data Sampel Uji</span>
+            <span className="text-[11px] font-sans text-industrial-400">({filtered.length} dari {samples.length} folder)</span>
           </div>
 
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1.5 flex-wrap">
             {(['ALL', 'TERIMA', 'TOLAK', 'KONFIRMASI', 'ERRORS'] as const).map((mode) => (
               <button
                 key={mode}
                 onClick={() => setFilterDecision(mode)}
-                className={`px-2 py-1 rounded text-[10px] font-mono transition-colors ${
+                className={`px-3 py-1 rounded-lg text-xs font-sans transition-all ${
                   filterDecision === mode
-                    ? 'bg-industrial-800 text-white border border-industrial-700 font-bold'
-                    : 'text-industrial-400 hover:text-industrial-200'
+                    ? 'bg-sky-600 text-white font-semibold shadow-sm'
+                    : 'text-industrial-400 hover:text-industrial-200 hover:bg-industrial-850'
                 }`}
               >
                 {mode}
@@ -61,20 +61,20 @@ export const SampleInspector: React.FC<SampleInspectorProps> = ({ samples }) => 
         </div>
 
         {/* Scrollable Table */}
-        <div className="overflow-x-auto max-h-[380px]">
-          <table className="w-full text-left text-xs font-mono border-collapse">
-            <thead className="bg-industrial-950 text-industrial-400 sticky top-0 border-b border-industrial-800">
+        <div className="overflow-x-auto max-h-[460px]">
+          <table className="w-full text-left text-xs font-sans border-collapse">
+            <thead className="bg-industrial-950 text-industrial-400 sticky top-0 border-b border-industrial-800 z-10 shadow-sm">
               <tr>
-                <th className="py-2 px-3">ID</th>
-                <th className="py-2 px-3">Ground Truth</th>
-                <th className="py-2 px-3">Prediksi OCR</th>
-                <th className="py-2 px-3">Raw Conf</th>
-                <th className="py-2 px-3">Calib Conf</th>
-                <th className="py-2 px-3">Keputusan</th>
-                <th className="py-2 px-3 text-right">Aksi</th>
+                <th className="py-2.5 px-3.5 font-semibold">ID Sampel</th>
+                <th className="py-2.5 px-3 font-semibold">Ground Truth</th>
+                <th className="py-2.5 px-3 font-semibold">Prediksi OCR</th>
+                <th className="py-2.5 px-3 font-semibold">Raw Conf</th>
+                <th className="py-2.5 px-3 font-semibold">Calib Conf</th>
+                <th className="py-2.5 px-3 font-semibold">Keputusan</th>
+                <th className="py-2.5 px-3.5 text-right font-semibold">Aksi</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-industrial-800/60">
+            <tbody className="divide-y divide-industrial-800/60 font-mono">
               {filtered.map((s) => {
                 const isSelected = selectedSample?.id === s.id;
                 return (
@@ -82,19 +82,19 @@ export const SampleInspector: React.FC<SampleInspectorProps> = ({ samples }) => 
                     key={s.id}
                     onClick={() => setSelectedSample(s)}
                     className={`cursor-pointer transition-colors ${
-                      isSelected ? 'bg-cyan-950/40 text-cyan-200' : 'hover:bg-industrial-850/50 text-industrial-300'
+                      isSelected ? 'bg-sky-950/40 text-sky-200' : 'hover:bg-industrial-850/50 text-industrial-300'
                     }`}
                   >
-                    <td className="py-2 px-3 font-semibold text-industrial-200">{s.id}</td>
-                    <td className="py-2 px-3 text-emerald-400">{s.gt_value}</td>
-                    <td className={`py-2 px-3 font-semibold ${s.is_correct ? 'text-white' : 'text-red-400'}`}>
+                    <td className="py-2.5 px-3.5 font-semibold text-industrial-200">{s.id}</td>
+                    <td className="py-2.5 px-3 text-emerald-400 font-semibold">{s.gt_value}</td>
+                    <td className={`py-2.5 px-3 font-semibold ${s.is_correct ? 'text-white' : 'text-rose-400'}`}>
                       {s.pred_normalized}
                     </td>
-                    <td className="py-2 px-3 text-industrial-400">{(s.raw_confidence * 100).toFixed(1)}%</td>
-                    <td className="py-2 px-3 font-bold text-cyan-400">{(s.calibrated_confidence * 100).toFixed(1)}%</td>
-                    <td className="py-2 px-3">{getStatusBadge(s.decision)}</td>
-                    <td className="py-2 px-3 text-right">
-                      <button className="p-1 rounded hover:bg-industrial-800 text-industrial-400 hover:text-white">
+                    <td className="py-2.5 px-3 text-industrial-400">{(s.raw_confidence * 100).toFixed(1)}%</td>
+                    <td className="py-2.5 px-3 font-bold text-sky-400">{(s.calibrated_confidence * 100).toFixed(1)}%</td>
+                    <td className="py-2.5 px-3">{getStatusBadge(s.decision)}</td>
+                    <td className="py-2.5 px-3.5 text-right">
+                      <button className="p-1.5 rounded-lg hover:bg-industrial-800 text-industrial-400 hover:text-white transition-colors">
                         <Eye className="w-3.5 h-3.5" />
                       </button>
                     </td>
@@ -107,60 +107,60 @@ export const SampleInspector: React.FC<SampleInspectorProps> = ({ samples }) => 
       </div>
 
       {/* Detail Inspector Panel */}
-      <div className="rounded bg-industrial-900 border border-industrial-800 p-4 flex flex-col justify-between theme-card">
+      <div className="rounded-xl bg-industrial-900 border border-industrial-800 p-4 sm:p-5 flex flex-col justify-between theme-card shadow-sm">
         <div>
-          <div className="pb-2 border-b border-industrial-800 flex items-center justify-between">
-            <span className="text-xs font-mono font-bold uppercase text-white">Inspektur Sampel Lapis</span>
+          <div className="pb-3 border-b border-industrial-800 flex items-center justify-between">
+            <span className="text-xs font-sans font-bold uppercase tracking-wider text-white theme-text-primary">Inspeksi Lapis Verifikasi</span>
             {selectedSample && getStatusBadge(selectedSample.decision)}
           </div>
 
           {selectedSample ? (
-            <div className="mt-3 space-y-3 font-mono text-xs">
-              <div className="bg-industrial-950 p-2.5 rounded border border-industrial-800 space-y-1.5">
+            <div className="mt-4 space-y-4 text-xs font-sans">
+              <div className="bg-industrial-950 p-3 rounded-xl border border-industrial-800 space-y-2 font-mono">
                 <div className="flex justify-between text-industrial-400">
-                  <span>ID Sampel:</span>
+                  <span className="font-sans">ID Sampel:</span>
                   <span className="text-white font-bold">{selectedSample.id}</span>
                 </div>
                 <div className="flex justify-between text-industrial-400">
-                  <span>Perangkat / Produk:</span>
-                  <span className="text-cyan-300">{selectedSample.device_id} / {selectedSample.product_id}</span>
+                  <span className="font-sans">Perangkat / Produk:</span>
+                  <span className="text-sky-300">{selectedSample.device_id} / {selectedSample.product_id}</span>
                 </div>
                 <div className="flex justify-between text-industrial-400">
-                  <span>Ground Truth:</span>
+                  <span className="font-sans">Ground Truth:</span>
                   <span className="text-emerald-400 font-bold">{selectedSample.gt_value}</span>
                 </div>
                 <div className="flex justify-between text-industrial-400">
-                  <span>Prediksi Mentah:</span>
+                  <span className="font-sans">Prediksi Mentah:</span>
                   <span className="text-white">{selectedSample.pred_raw}</span>
                 </div>
                 <div className="flex justify-between text-industrial-400">
-                  <span>Prediksi Normal:</span>
-                  <span className="text-cyan-400 font-bold">{selectedSample.pred_normalized}</span>
+                  <span className="font-sans">Prediksi Normal:</span>
+                  <span className="text-sky-400 font-bold">{selectedSample.pred_normalized}</span>
                 </div>
                 <div className="flex justify-between text-industrial-400">
-                  <span>Latensi Eksekusi:</span>
+                  <span className="font-sans">Latensi Eksekusi:</span>
                   <span className="text-purple-400">{selectedSample.latency_ms.toFixed(1)} ms</span>
                 </div>
               </div>
 
-              {/* Visual Frame Strip (Setiap Frame Diperlihatkan) */}
+              {/* Visual Frame Strip (5 Frame Burst Preview) */}
               {selectedSample.frames && selectedSample.frames.length > 0 && (
-                <div className="space-y-1.5 pt-2 border-t border-industrial-800">
+                <div className="space-y-2 pt-2 border-t border-industrial-800">
                   <div className="flex items-center justify-between">
                     <span className="text-[11px] font-bold text-industrial-400 uppercase tracking-wider">
-                      Analisis Citra Bingkai (Burst {selectedSample.frames.length} Frame):
+                      Burst {selectedSample.frames.length} Frame Citra:
                     </span>
-                    <span className="text-[10px] text-cyan-400 font-mono">Klik frame untuk perbesar</span>
+                    <span className="text-[10px] text-sky-400 font-sans">Klik frame untuk perbesar</span>
                   </div>
                   <div className="grid grid-cols-5 gap-1.5">
                     {selectedSample.frames.map((f) => (
                       <div
                         key={f.frame_idx}
                         onClick={() => setLightboxFrame(f)}
-                        className="rounded bg-industrial-950 p-1.5 border border-industrial-800 hover:border-cyan-500 cursor-pointer text-center flex flex-col justify-between transition-all hover:scale-[1.03] group relative shadow-md"
+                        className="rounded-lg bg-industrial-950 p-1.5 border border-industrial-800 hover:border-sky-500 cursor-pointer text-center flex flex-col justify-between transition-all hover:scale-[1.03] group relative shadow-sm"
                         title="Klik untuk melihat foto resolusi penuh"
                       >
-                        <div className="w-full aspect-[4/3] bg-black/60 rounded overflow-hidden flex items-center justify-center border border-industrial-800/80 mb-1 relative">
+                        <div className="w-full aspect-[4/3] bg-black/60 rounded-md overflow-hidden flex items-center justify-center border border-industrial-800/80 mb-1 relative">
                           {f.image_url ? (
                             <img
                               src={f.image_url}
@@ -174,13 +174,13 @@ export const SampleInspector: React.FC<SampleInspectorProps> = ({ samples }) => 
                             <span className="text-[9px] text-industrial-500 font-mono">F{f.frame_idx}</span>
                           )}
                           <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
-                            <ZoomIn className="w-4 h-4 text-cyan-300" />
+                            <ZoomIn className="w-4 h-4 text-sky-300" />
                           </div>
                         </div>
-                        <span className="text-[9px] font-mono text-industrial-400 font-bold">Frame #{f.frame_idx}</span>
+                        <span className="text-[9px] font-sans text-industrial-400 font-semibold">Frame #{f.frame_idx}</span>
                         <span className="text-[10px] font-mono font-bold text-white truncate">{f.normalized_text}</span>
                         <span
-                          className={`text-[8px] font-mono font-bold mt-0.5 px-1 rounded ${
+                          className={`text-[8px] font-sans font-semibold mt-0.5 px-1 py-0.2 rounded ${
                             f.decision === 'TERIMA'
                               ? 'bg-emerald-950 text-emerald-400 border border-emerald-800'
                               : 'bg-red-950 text-red-400 border border-red-800'
@@ -195,87 +195,87 @@ export const SampleInspector: React.FC<SampleInspectorProps> = ({ samples }) => 
               )}
 
               {/* Multi-Layer Diagnostic */}
-              <div className="space-y-1.5 pt-1">
+              <div className="space-y-2 pt-2 border-t border-industrial-800">
                 <span className="text-[11px] font-bold text-industrial-400 uppercase tracking-wider">
-                  Hasil Verifikasi Empat Lapis:
+                  Hasil Diagnostik 4 Lapis Verifikasi:
                 </span>
 
                 {/* Stabilitas Multi-Frame */}
-                <div className="p-2 rounded bg-industrial-950/70 border border-industrial-800 flex items-center justify-between">
+                <div className="p-2.5 rounded-lg bg-industrial-950/70 border border-industrial-800 flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     {selectedSample.layers.temporal.passed ? (
-                      <Check className="w-3.5 h-3.5 text-emerald-400" />
+                      <Check className="w-4 h-4 text-emerald-400" />
                     ) : (
-                      <X className="w-3.5 h-3.5 text-red-400" />
+                      <X className="w-4 h-4 text-red-400" />
                     )}
-                    <span className="text-[11px] text-industrial-300">Stabilitas Multi-Frame</span>
+                    <span className="text-[11px] text-industrial-300 font-medium">Stabilitas Multi-Frame</span>
                   </div>
-                  <span className={`text-[10px] font-bold ${selectedSample.layers.temporal.passed ? 'text-emerald-400' : 'text-red-400'}`}>
+                  <span className={`text-[10px] font-semibold ${selectedSample.layers.temporal.passed ? 'text-emerald-400' : 'text-red-400'}`}>
                     {selectedSample.layers.temporal.passed ? 'LOLOS' : 'GAGAL'}
                   </span>
                 </div>
 
                 {/* Struktur Display & Digit */}
-                <div className="p-2 rounded bg-industrial-950/70 border border-industrial-800 flex flex-col gap-1">
+                <div className="p-2.5 rounded-lg bg-industrial-950/70 border border-industrial-800 flex flex-col gap-1">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       {selectedSample.layers.structural.passed ? (
-                        <Check className="w-3.5 h-3.5 text-emerald-400" />
+                        <Check className="w-4 h-4 text-emerald-400" />
                       ) : (
-                        <X className="w-3.5 h-3.5 text-red-400" />
+                        <X className="w-4 h-4 text-red-400" />
                       )}
-                      <span className="text-[11px] text-industrial-300">Struktur Display & Digit</span>
+                      <span className="text-[11px] text-industrial-300 font-medium">Struktur Display & Digit</span>
                     </div>
-                    <span className={`text-[10px] font-bold ${selectedSample.layers.structural.passed ? 'text-emerald-400' : 'text-red-400'}`}>
+                    <span className={`text-[10px] font-semibold ${selectedSample.layers.structural.passed ? 'text-emerald-400' : 'text-red-400'}`}>
                       {selectedSample.layers.structural.passed ? 'LOLOS' : 'GAGAL'}
                     </span>
                   </div>
                   {selectedSample.layers.structural.reason && (
-                    <span className="text-[10px] text-red-400/90 pl-5">
+                    <span className="text-[10px] text-rose-400/90 pl-6 leading-tight">
                       {selectedSample.layers.structural.reason}
                     </span>
                   )}
                 </div>
 
                 {/* Batas & Toleransi Produk */}
-                <div className="p-2 rounded bg-industrial-950/70 border border-industrial-800 flex flex-col gap-1">
+                <div className="p-2.5 rounded-lg bg-industrial-950/70 border border-industrial-800 flex flex-col gap-1">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       {selectedSample.layers.physical.passed ? (
-                        <Check className="w-3.5 h-3.5 text-emerald-400" />
+                        <Check className="w-4 h-4 text-emerald-400" />
                       ) : (
-                        <X className="w-3.5 h-3.5 text-red-400" />
+                        <X className="w-4 h-4 text-red-400" />
                       )}
-                      <span className="text-[11px] text-industrial-300">Batas & Toleransi Produk</span>
+                      <span className="text-[11px] text-industrial-300 font-medium">Batas & Toleransi Produk</span>
                     </div>
-                    <span className={`text-[10px] font-bold ${selectedSample.layers.physical.passed ? 'text-emerald-400' : 'text-red-400'}`}>
+                    <span className={`text-[10px] font-semibold ${selectedSample.layers.physical.passed ? 'text-emerald-400' : 'text-red-400'}`}>
                       {selectedSample.layers.physical.passed ? 'LOLOS' : 'GAGAL'}
                     </span>
                   </div>
                   {selectedSample.layers.physical.reason && (
-                    <span className="text-[10px] text-red-400/90 pl-5">
+                    <span className="text-[10px] text-rose-400/90 pl-6 leading-tight">
                       {selectedSample.layers.physical.reason}
                     </span>
                   )}
                 </div>
 
                 {/* Kalibrasi Probabilitas */}
-                <div className="p-2 rounded bg-industrial-950/70 border border-industrial-800 flex flex-col gap-1">
+                <div className="p-2.5 rounded-lg bg-industrial-950/70 border border-industrial-800 flex flex-col gap-1">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       {selectedSample.layers.calibration.passed ? (
-                        <Check className="w-3.5 h-3.5 text-emerald-400" />
+                        <Check className="w-4 h-4 text-emerald-400" />
                       ) : (
-                        <AlertCircle className="w-3.5 h-3.5 text-amber-400" />
+                        <AlertCircle className="w-4 h-4 text-amber-400" />
                       )}
-                      <span className="text-[11px] text-industrial-300">Kalibrasi Probabilitas</span>
+                      <span className="text-[11px] text-industrial-300 font-medium">Kalibrasi Probabilitas</span>
                     </div>
-                    <span className={`text-[10px] font-bold ${selectedSample.layers.calibration.passed ? 'text-emerald-400' : 'text-amber-400'}`}>
+                    <span className={`text-[10px] font-semibold ${selectedSample.layers.calibration.passed ? 'text-emerald-400' : 'text-amber-400'}`}>
                       {selectedSample.layers.calibration.passed ? 'LOLOS' : 'PERLU KONFIRMASI'}
                     </span>
                   </div>
                   {selectedSample.layers.calibration.reason && (
-                    <span className="text-[10px] text-amber-400/90 pl-5">
+                    <span className="text-[10px] text-amber-400/90 pl-6 leading-tight">
                       {selectedSample.layers.calibration.reason}
                     </span>
                   )}
@@ -283,7 +283,7 @@ export const SampleInspector: React.FC<SampleInspectorProps> = ({ samples }) => 
               </div>
             </div>
           ) : (
-            <div className="py-12 text-center text-xs font-mono text-industrial-500">
+            <div className="py-12 text-center text-xs font-sans text-industrial-500">
               Pilih sampel dari tabel untuk inspeksi lapis.
             </div>
           )}
@@ -293,61 +293,50 @@ export const SampleInspector: React.FC<SampleInspectorProps> = ({ samples }) => 
       {/* High-Resolution Frame Modal / Lightbox */}
       {lightboxFrame && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md p-4 selection:bg-cyan-900"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4 selection:bg-sky-900"
           onClick={() => setLightboxFrame(null)}
         >
           <div
-            className="w-full max-w-4xl rounded-lg bg-industrial-900 border border-industrial-700 shadow-2xl flex flex-col overflow-hidden"
+            className="w-full max-w-4xl rounded-2xl bg-industrial-900 border border-industrial-700 shadow-2xl flex flex-col overflow-hidden theme-card"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Lightbox Header */}
-            <div className="p-3 border-b border-industrial-800 flex items-center justify-between bg-industrial-950">
+            {/* Modal Header */}
+            <div className="p-4 border-b border-industrial-800 flex items-center justify-between bg-industrial-950">
               <div className="flex items-center gap-2">
-                <span className="w-2.5 h-2.5 rounded-full bg-cyan-400"></span>
-                <span className="text-xs font-mono font-bold uppercase text-white tracking-wider">
-                  Inspeksi Resolusi Penuh: Frame #{lightboxFrame.frame_idx} • {selectedSample?.id}
-                </span>
+                <span className="w-2.5 h-2.5 rounded-full bg-sky-400 animate-pulse" />
+                <h3 className="text-xs font-mono font-bold uppercase text-white theme-text-primary">
+                  Inspeksi Resolusi Penuh: Frame #{lightboxFrame.frame_idx} &bull; {selectedSample?.id}
+                </h3>
               </div>
               <button
                 onClick={() => setLightboxFrame(null)}
-                className="p-1 rounded text-industrial-400 hover:text-white hover:bg-industrial-800 transition-colors"
+                className="p-1 rounded-lg text-industrial-400 hover:text-white hover:bg-industrial-800 transition-colors"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            {/* High-Res Image Canvas */}
-            <div className="p-6 bg-black flex items-center justify-center min-h-[320px] max-h-[65vh] overflow-hidden">
+            {/* Image Stage */}
+            <div className="p-6 bg-black/90 flex items-center justify-center min-h-[360px] max-h-[60vh] overflow-hidden">
               {lightboxFrame.image_url ? (
                 <img
                   src={lightboxFrame.image_url}
-                  alt={`Frame ${lightboxFrame.frame_idx}`}
-                  className="max-h-[60vh] max-w-full object-contain rounded border border-industrial-800 shadow-2xl"
+                  alt={`High Res Frame ${lightboxFrame.frame_idx}`}
+                  className="max-h-[55vh] max-w-full object-contain rounded-lg shadow-2xl border border-industrial-800"
                 />
               ) : (
-                <div className="text-xs font-mono text-industrial-500">Citra frame tidak ditemukan</div>
+                <div className="text-industrial-500 font-mono text-sm">Citra frame tidak ditemukan</div>
               )}
             </div>
 
-            {/* Metadata Footer */}
-            <div className="p-3.5 bg-industrial-950 border-t border-industrial-800 flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
-              <div className="flex items-center gap-4 text-industrial-300">
+            {/* Modal Footer Info */}
+            <div className="p-4 border-t border-industrial-800 bg-industrial-950 flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
+              <div className="flex items-center gap-4">
                 <span>Teks Mentah: <strong className="text-white">{lightboxFrame.raw_text}</strong></span>
-                <span>Normalisasi: <strong className="text-cyan-400">{lightboxFrame.normalized_text}</strong></span>
-                <span>Keyakinan: <strong className="text-amber-300">{(lightboxFrame.confidence * 100).toFixed(1)}%</strong></span>
+                <span>Normalisasi: <strong className="text-sky-400">{lightboxFrame.normalized_text}</strong></span>
+                <span>Keyakinan: <strong className="text-emerald-400">{(lightboxFrame.confidence * 100).toFixed(1)}%</strong></span>
               </div>
-
-              <div>
-                <span
-                  className={`px-2.5 py-1 rounded text-xs font-mono font-bold ${
-                    lightboxFrame.decision === 'TERIMA'
-                      ? 'bg-emerald-950 text-emerald-400 border border-emerald-800'
-                      : 'bg-red-950 text-red-400 border border-red-800'
-                  }`}
-                >
-                  STATUS: {lightboxFrame.decision}
-                </span>
-              </div>
+              <div>{getStatusBadge(lightboxFrame.decision)}</div>
             </div>
           </div>
         </div>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import type { RiskCoverageCoord } from '../types/evaluator';
-import { Activity, Info } from 'lucide-react';
+import { Activity } from 'lucide-react';
 
 interface RiskCoveragePlotProps {
   coords: RiskCoverageCoord[];
@@ -38,6 +38,11 @@ export const RiskCoveragePlot: React.FC<RiskCoveragePlotProps> = ({
     return `${acc} ${idx === 0 ? 'M' : 'L'} ${x} ${y}`;
   }, '');
 
+  // Area under curve path
+  const areaD = coords.length > 0
+    ? `${pathD} L ${scaleX(coords[coords.length - 1].coverage)} ${padding.top + plotH} L ${scaleX(coords[0].coverage)} ${padding.top + plotH} Z`
+    : '';
+
   // Active point matching threshold
   const activePoint = coords.reduce((prev, curr) =>
     Math.abs(curr.threshold - threshold) < Math.abs(prev.threshold - threshold) ? curr : prev
@@ -50,23 +55,35 @@ export const RiskCoveragePlot: React.FC<RiskCoveragePlotProps> = ({
   };
 
   return (
-    <div className="p-4 rounded-lg bg-industrial-900 border border-industrial-800 flex flex-col justify-between theme-card">
-      <div className="flex items-center justify-between pb-2 border-b border-industrial-800">
-        <div className="flex items-center gap-2">
-          <Activity className="w-4 h-4 text-cyan-400" />
-          <h2 className="text-xs font-mono font-bold tracking-wider text-white uppercase">
-            Kurva Risk-Coverage (Selective Classification)
-          </h2>
+    <div className="p-5 rounded-xl bg-industrial-900 border border-industrial-800 flex flex-col justify-between theme-card shadow-sm">
+      <div className="flex items-center justify-between pb-3 border-b border-industrial-800">
+        <div className="flex items-center gap-2.5">
+          <div className="w-8 h-8 rounded-lg bg-sky-500/10 flex items-center justify-center text-sky-400">
+            <Activity className="w-4 h-4" />
+          </div>
+          <div>
+            <h2 className="text-xs font-sans font-bold tracking-wider text-white uppercase theme-text-primary">
+              Kurva Risk-Coverage (Selective Classification)
+            </h2>
+            <p className="text-[11px] font-sans text-industrial-400">Trade-off antara rasio cakupan otomatis vs risiko silent error.</p>
+          </div>
         </div>
         <div className="flex items-center gap-2">
-          <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-cyan-950 border border-cyan-800 text-cyan-300">
+          <span className="text-[11px] font-mono px-2.5 py-1 rounded-full bg-sky-950 border border-sky-800 text-sky-300 font-semibold shadow-sm">
             AURC: {aurc.toFixed(4)}
           </span>
         </div>
       </div>
 
-      <div className="relative my-2 flex justify-center">
+      <div className="relative my-3 flex justify-center">
         <svg viewBox={`0 0 ${width} ${height}`} className="w-full max-w-[540px] select-none">
+          <defs>
+            <linearGradient id="riskAreaGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#0284c7" stopOpacity="0.25" />
+              <stop offset="100%" stopColor="#0284c7" stopOpacity="0.0" />
+            </linearGradient>
+          </defs>
+
           {/* Background grid */}
           {[0, 0.25, 0.5, 0.75, 1.0].map((v) => {
             const x = scaleX(v);
@@ -77,7 +94,8 @@ export const RiskCoveragePlot: React.FC<RiskCoveragePlotProps> = ({
                 y1={padding.top}
                 x2={x}
                 y2={padding.top + plotH}
-                stroke="#1f293d"
+                stroke="#64748b"
+                strokeOpacity="0.2"
                 strokeDasharray="2 3"
               />
             );
@@ -91,14 +109,17 @@ export const RiskCoveragePlot: React.FC<RiskCoveragePlotProps> = ({
                   y1={y}
                   x2={padding.left + plotW}
                   y2={y}
-                  stroke="#1f293d"
+                  stroke="#64748b"
+                  strokeOpacity="0.2"
                   strokeDasharray="2 3"
                 />
                 <text
                   x={padding.left - 8}
                   y={y + 3}
                   textAnchor="end"
-                  className="text-[9px] fill-industrial-400 font-mono"
+                  fontSize="10"
+                  fill="#94a3b8"
+                  fontFamily="monospace"
                 >
                   {(r * 100).toFixed(1)}%
                 </text>
@@ -106,62 +127,20 @@ export const RiskCoveragePlot: React.FC<RiskCoveragePlotProps> = ({
             );
           })}
 
-          {/* X Axis ticks */}
-          {[0, 0.25, 0.5, 0.75, 1.0].map((v) => (
-            <text
-              key={`tx-${v}`}
-              x={scaleX(v)}
-              y={height - padding.bottom + 16}
-              textAnchor="middle"
-              className="text-[9px] fill-industrial-400 font-mono"
-            >
-              {(v * 100).toFixed(0)}%
-            </text>
-          ))}
+          {/* Area under curve */}
+          {areaD && <path d={areaD} fill="url(#riskAreaGrad)" />}
 
-          {/* Axis Labels */}
-          <text
-            x={padding.left + plotW / 2}
-            y={height - 6}
-            textAnchor="middle"
-            className="text-[10px] fill-industrial-400 font-mono"
-          >
-            Coverage (Fraksi Data Otomatis Diterima)
-          </text>
-          <text
-            x={14}
-            y={padding.top + plotH / 2}
-            textAnchor="middle"
-            transform={`rotate(-90 14 ${padding.top + plotH / 2})`}
-            className="text-[10px] fill-industrial-400 font-mono"
-          >
-            Risk (Empirical Error Rate)
-          </text>
-
-          {/* Area fill under curve */}
+          {/* Risk-Coverage curve line */}
           <path
-            d={`${pathD} L ${scaleX(coords[coords.length - 1]?.coverage || 1)} ${scaleY(0)} L ${scaleX(coords[0]?.coverage || 0)} ${scaleY(0)} Z`}
-            fill="#06b6d4"
-            fillOpacity="0.08"
+            d={pathD}
+            fill="none"
+            stroke="#0284c7"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           />
 
-          {/* Curve line */}
-          <path d={pathD} fill="none" stroke="#06b6d4" strokeWidth="2.5" />
-
-          {/* Data Points */}
-          {coords.map((pt, i) => (
-            <circle
-              key={i}
-              cx={scaleX(pt.coverage)}
-              cy={scaleY(pt.risk)}
-              r="3.5"
-              fill="#0b0f17"
-              stroke="#06b6d4"
-              strokeWidth="2"
-            />
-          ))}
-
-          {/* Active Operating Point Crosshair */}
+          {/* Active Operating Point indicator */}
           {activePoint && (
             <g>
               <line
@@ -169,44 +148,110 @@ export const RiskCoveragePlot: React.FC<RiskCoveragePlotProps> = ({
                 y1={padding.top}
                 x2={scaleX(activePoint.coverage)}
                 y2={padding.top + plotH}
-                stroke="#f59e0b"
-                strokeWidth="1.5"
+                stroke="#38bdf8"
                 strokeDasharray="3 3"
+                strokeWidth="1.5"
+              />
+              <line
+                x1={padding.left}
+                y1={scaleY(activePoint.risk)}
+                x2={padding.left + plotW}
+                y2={scaleY(activePoint.risk)}
+                stroke="#38bdf8"
+                strokeDasharray="3 3"
+                strokeWidth="1.5"
               />
               <circle
                 cx={scaleX(activePoint.coverage)}
                 cy={scaleY(activePoint.risk)}
-                r="6"
-                fill="#f59e0b"
-                stroke="#ffffff"
+                r="5"
+                fill="#38bdf8"
+                stroke="#0f172a"
                 strokeWidth="2"
               />
             </g>
           )}
+
+          {/* X Axis line & labels */}
+          <line
+            x1={padding.left}
+            y1={padding.top + plotH}
+            x2={padding.left + plotW}
+            y2={padding.top + plotH}
+            stroke="#64748b"
+            strokeOpacity="0.4"
+          />
+          {[0, 0.25, 0.5, 0.75, 1.0].map((v) => (
+            <text
+              key={`lx-${v}`}
+              x={scaleX(v)}
+              y={height - padding.bottom + 16}
+              textAnchor="middle"
+              fontSize="10"
+              fill="#94a3b8"
+              fontFamily="monospace"
+            >
+              {(v * 100).toFixed(0)}%
+            </text>
+          ))}
+
+          {/* Axis Titles */}
+          <text
+            x={padding.left + plotW / 2}
+            y={height - 8}
+            textAnchor="middle"
+            fontSize="11"
+            fill="#94a3b8"
+            fontFamily="sans-serif"
+            fontWeight="500"
+          >
+            Coverage (Cakupan Otomatis)
+          </text>
+          <text
+            x={15}
+            y={padding.top + plotH / 2}
+            textAnchor="middle"
+            fontSize="11"
+            fill="#94a3b8"
+            fontFamily="sans-serif"
+            fontWeight="500"
+            transform={`rotate(-90 15 ${padding.top + plotH / 2})`}
+          >
+            Empirical Risk (FAR)
+          </text>
         </svg>
       </div>
 
-      {/* Operating Threshold Controls */}
-      <div className="mt-2 pt-2 border-t border-industrial-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs font-mono">
-        <div className="flex items-center gap-2 text-industrial-400">
-          <Info className="w-3.5 h-3.5 text-amber-400" />
-          <span>Ambang Batas Keyakinan Kalibrasi (&tau;):</span>
-          <span className="font-bold text-amber-300 font-mono text-sm">{threshold.toFixed(2)}</span>
+      {/* Threshold Slider & Interactive Operating Point */}
+      <div className="bg-industrial-950 p-3.5 rounded-xl border border-industrial-800 space-y-2.5">
+        <div className="flex items-center justify-between text-xs font-sans">
+          <span className="text-industrial-400 font-medium">
+            Ambang Keyakinan Operasional (&tau;*):
+          </span>
+          <span className="font-mono font-bold text-sky-400">
+            {threshold.toFixed(2)} ({(threshold * 100).toFixed(0)}%)
+          </span>
         </div>
 
-        <div className="flex items-center gap-3">
-          <input
-            type="range"
-            min="0.50"
-            max="0.99"
-            step="0.01"
-            value={threshold}
-            onChange={handleSliderChange}
-            className="w-36 h-1.5 bg-industrial-800 rounded appearance-none cursor-pointer accent-amber-400"
-          />
-          <span className="text-[11px] text-industrial-300">
-            Cov: <strong className="text-white">{(activePoint.coverage * 100).toFixed(1)}%</strong> | Risk: <strong className="text-red-400">{(activePoint.risk * 100).toFixed(2)}%</strong>
-          </span>
+        <input
+          type="range"
+          min="0.50"
+          max="0.99"
+          step="0.01"
+          value={threshold}
+          onChange={handleSliderChange}
+          className="w-full accent-sky-500 cursor-pointer h-1.5 bg-industrial-800 rounded-lg appearance-none"
+        />
+
+        <div className="grid grid-cols-2 gap-2 text-xs font-mono pt-1">
+          <div className="bg-industrial-900 p-2 rounded-lg border border-industrial-800/60 flex justify-between">
+            <span className="text-industrial-400 font-sans">Cakupan (Cov):</span>
+            <span className="text-white font-bold">{((activePoint?.coverage || 0) * 100).toFixed(1)}%</span>
+          </div>
+          <div className="bg-industrial-900 p-2 rounded-lg border border-industrial-800/60 flex justify-between">
+            <span className="text-industrial-400 font-sans">Risiko (Risk):</span>
+            <span className="text-emerald-400 font-bold">{((activePoint?.risk || 0) * 100).toFixed(2)}%</span>
+          </div>
         </div>
       </div>
     </div>

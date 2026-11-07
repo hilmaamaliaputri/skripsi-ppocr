@@ -92,7 +92,7 @@ export function App() {
             })),
           };
         } else if (!isVerifActive) {
-          // Baseline without verification accepts raw false '8' into system (dangerous!)
+          // Baseline without verification accepts raw false '8' into system
           return {
             ...s,
             pred_raw: `88${s.gt_value}`,
@@ -157,7 +157,6 @@ export function App() {
     const { model_variant, verification_mode } = parameters;
 
     if (verification_mode === 'nonaktif') {
-      // Baseline Raw Models without 4-layer verification
       if (model_variant === 'tiny') {
         return {
           ...data.metrics,
@@ -181,7 +180,6 @@ export function App() {
           ece: 0.068,
         };
       } else {
-        // small
         return {
           ...data.metrics,
           fsr: 85.8,
@@ -194,7 +192,6 @@ export function App() {
         };
       }
     } else {
-      // With 4-Layer Verification Active
       if (model_variant === 'tiny') {
         return {
           ...data.metrics,
@@ -218,7 +215,6 @@ export function App() {
           ece: 0.018,
         };
       } else {
-        // small (Optimal Skripsi)
         return {
           ...data.metrics,
           fsr: 98.3,
@@ -239,7 +235,7 @@ export function App() {
     parameters.verification_mode === 'aktif';
 
   return (
-    <div className="min-h-screen bg-industrial-950 text-industrial-200 flex flex-col font-sans transition-colors duration-150">
+    <div className="min-h-screen bg-slate-900 text-slate-100 flex flex-col font-sans transition-colors duration-150">
       {/* Top Header */}
       <Header
         isLoading={isLoading}
@@ -250,49 +246,49 @@ export function App() {
         onToggleLightMode={toggleLightMode}
       />
 
-      {/* Navigation Tabs (Breaks the dense single-page into clear, elegant sections) */}
-      <div className="border-b border-industrial-800 bg-industrial-900/90 backdrop-blur theme-header sticky top-0 z-20">
+      {/* Navigation Tabs Bar (Clean, Soft Pill Design) */}
+      <div className="border-b border-industrial-800 bg-industrial-900/90 backdrop-blur-md theme-header sticky top-0 z-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <nav className="flex items-center gap-1 sm:gap-2 py-2 overflow-x-auto">
+          <nav className="flex items-center gap-1.5 sm:gap-3 py-2.5 overflow-x-auto">
             <button
               onClick={() => setActiveTab('overview')}
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-md text-xs font-mono font-medium transition-all shrink-0 ${
+              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-sans font-medium transition-all shrink-0 ${
                 activeTab === 'overview'
-                  ? 'bg-cyan-600 text-white font-bold shadow-sm'
-                  : 'text-industrial-400 hover:text-industrial-100 hover:bg-industrial-850'
+                  ? 'bg-sky-600 text-white font-semibold shadow-sm'
+                  : 'text-industrial-400 hover:text-industrial-200 hover:bg-industrial-850'
               }`}
             >
-              <BarChart3 className="w-4 h-4" />
+              <BarChart3 className="w-4 h-4 text-sky-400" />
               <span>1. Dashboard Metrik & Kurva</span>
             </button>
 
             <button
               onClick={() => setActiveTab('comparison')}
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-md text-xs font-mono font-medium transition-all shrink-0 ${
+              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-sans font-medium transition-all shrink-0 ${
                 activeTab === 'comparison'
-                  ? 'bg-cyan-600 text-white font-bold shadow-sm'
-                  : 'text-industrial-400 hover:text-industrial-100 hover:bg-industrial-850'
+                  ? 'bg-sky-600 text-white font-semibold shadow-sm'
+                  : 'text-industrial-400 hover:text-industrial-200 hover:bg-industrial-850'
               }`}
             >
-              <Layers className="w-4 h-4" />
+              <Layers className="w-4 h-4 text-emerald-400" />
               <span>2. Studi Komparasi (Tiny, Small, Medium)</span>
-              <span className="text-[10px] bg-emerald-950 text-emerald-400 border border-emerald-800 px-1.5 py-0.2 rounded font-mono font-bold">
+              <span className="text-[10px] bg-emerald-950 text-emerald-400 border border-emerald-800 px-2 py-0.5 rounded-full font-mono font-semibold">
                 Bab IV
               </span>
             </button>
 
             <button
               onClick={() => setActiveTab('inspector')}
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-md text-xs font-mono font-medium transition-all shrink-0 ${
+              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-sans font-medium transition-all shrink-0 ${
                 activeTab === 'inspector'
-                  ? 'bg-cyan-600 text-white font-bold shadow-sm'
-                  : 'text-industrial-400 hover:text-industrial-100 hover:bg-industrial-850'
+                  ? 'bg-sky-600 text-white font-semibold shadow-sm'
+                  : 'text-industrial-400 hover:text-industrial-200 hover:bg-industrial-850'
               }`}
             >
-              <Search className="w-4 h-4" />
-              <span>3. Inspektur Sampel (120 Folder / 600 Frame)</span>
-              <span className="text-[10px] bg-industrial-800 text-industrial-300 px-1.5 py-0.2 rounded font-mono">
-                120
+              <Search className="w-4 h-4 text-cyan-400" />
+              <span>3. Inspektur Sampel & Verifikasi (120 Folder)</span>
+              <span className="text-[10px] bg-industrial-800 text-industrial-300 px-2 py-0.5 rounded-full font-mono font-medium">
+                600 Frame
               </span>
             </button>
           </nav>
@@ -300,32 +296,31 @@ export function App() {
       </div>
 
       {/* Main Content Area */}
-      <main className="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 space-y-5">
-        {/* Hardware & Integrity Badge */}
-        <div className="p-3 rounded-lg bg-industrial-900 border border-industrial-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs font-mono theme-card">
+      <main className="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 space-y-6">
+        {/* Soft Hardware & Integrity Protocol Banner */}
+        <div className="p-3.5 rounded-xl bg-industrial-900 border border-industrial-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs font-sans theme-card">
           <div className="flex items-center gap-2.5 text-industrial-400">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 shrink-0 animate-pulse" />
             <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
             <span>
-              Protokol Integritas Skripsi: Dataset Uji Terkunci ({data.sample_count} sampel). Ambang verifikasi diperoleh dari dataset kalibrasi.
+              Protokol Riset: Dataset Uji Terkunci ({data.sample_count} sampel). Ambang verifikasi diperoleh dari dataset kalibrasi.
             </span>
           </div>
 
           <div className="flex items-center gap-3 text-industrial-400 shrink-0">
-            <span className="flex items-center gap-1.5">
-              <Cpu className="w-3.5 h-3.5 text-cyan-400" />
-              Model Aktif: <strong className="text-white theme-text-primary uppercase font-mono">PP-OCRv6-{parameters.model_variant}</strong>
+            <span className="flex items-center gap-1.5 bg-industrial-950 px-2.5 py-1 rounded-lg border border-industrial-800">
+              <Cpu className="w-3.5 h-3.5 text-sky-400" />
+              <span>Model Aktif: <strong className="text-white theme-text-primary uppercase font-mono font-semibold">PP-OCRv6-{parameters.model_variant}</strong></span>
             </span>
           </div>
         </div>
 
         {/* TAB 1: METRICS DASHBOARD & EVALUATION CURVES */}
         {activeTab === 'overview' && (
-          <div className="space-y-5">
-            {/* KPI Cards */}
+          <div className="space-y-6">
             <MetricsOverview metrics={activeMetrics} sampleCount={data.sample_count} />
 
-            {/* Visual Plots: Risk-Coverage & Reliability Diagram */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <RiskCoveragePlot
                 coords={data.risk_coverage.coords}
                 aurc={activeMetrics.aurc || data.risk_coverage.aurc}
@@ -339,8 +334,7 @@ export function App() {
 
         {/* TAB 2: MODEL COMPARISON (TINY, SMALL, MEDIUM) & ABLATION STUDY */}
         {activeTab === 'comparison' && (
-          <div className="space-y-5">
-            {/* Parameter Tuning Toolbar */}
+          <div className="space-y-6">
             <ParameterToolbar
               parameters={parameters}
               onChangeParameters={setParameters}
@@ -361,7 +355,6 @@ export function App() {
               isOptimal={isOptimal}
             />
 
-            {/* Comparison Table */}
             <ComparisonTable
               currentVariant={parameters.model_variant}
               verificationActive={parameters.verification_mode === 'aktif'}
@@ -378,7 +371,7 @@ export function App() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-industrial-800 bg-industrial-900/60 px-6 py-4 text-xs font-mono text-industrial-500 text-center theme-header">
+      <footer className="border-t border-industrial-800 bg-industrial-900/60 px-6 py-4 text-xs font-sans text-industrial-400 text-center theme-header mt-8">
         Laboratorium Visi Komputer & Pembacaan Timbangan Digital 7-Segmen &bull; Skripsi PP-OCRv6 (Tiny, Small, Medium) &bull; Antigravity Modular
       </footer>
 
