@@ -22,6 +22,7 @@ sistem/data/synthetic/*/frame_*.jpg
 sistem/data/synthetic/*/clean_base.png
 models/
 *.onnx
+*.pth
 *.bin
 *.tar.gz
 
@@ -31,6 +32,7 @@ models/
 *.sqlite3
 *.db
 sistem/data/audit/
+sistem/backend/data/
 
 # Large PDF files and binary drafts
 jurnal/

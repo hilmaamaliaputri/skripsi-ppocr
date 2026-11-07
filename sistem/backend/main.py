@@ -24,7 +24,9 @@ from src.engine.decision_engine import DecisionEngine
 from src.evaluation.calibration_optimizer import CalibrationOptimizer
 from src.evaluation.harness import BenchmarkHarness
 from src.evaluation.risk_coverage import RiskCoverageAnalyzer
+from src.evaluation.comparison import get_all_model_comparisons
 from src.models.ppocrv6_onnx import PPOCRv6OnnxRecognizer
+from src.models.crnn_onnx import CRNNOnnxRecognizer
 from src.pipeline.schema import DecisionContract, ReadingContract
 from src.verification.v_calibration import CalibrationVerifier
 from src.verification.v_physical import PhysicalVerifier
@@ -63,7 +65,20 @@ with open(os.path.join(CONFIG_DIR, "produk.yaml"), "r", encoding="utf-8") as f:
 with open(os.path.join(CONFIG_DIR, "devices.yaml"), "r", encoding="utf-8") as f:
     DEVICE_CONFIGS = yaml.safe_load(f).get("devices", {})
 
-recognizer = PPOCRv6OnnxRecognizer(tier="small")
+_recognizer_cache: Dict[str, Any] = {}
+
+
+def get_recognizer(variant: Optional[str] = "small") -> Any:
+    """Lazy loader untuk varian model OCR (small, tiny, medium, crnn)."""
+    key = variant or "small"
+    if key not in _recognizer_cache:
+        if key == "crnn":
+            _recognizer_cache[key] = CRNNOnnxRecognizer()
+        else:
+            _recognizer_cache[key] = PPOCRv6OnnxRecognizer(tier=key)
+    return _recognizer_cache[key]
+
+
 slot_profiler = SlotProfiler()
 temporal_v = TemporalVerifier(min_agreement_ratio=0.8)
 structural_v = StructuralVerifier()
@@ -79,7 +94,7 @@ decision_engine = DecisionEngine(
 
 audit_logger = AuditLogger(audit_dir=os.path.join(BASE_DIR, "data", "audit"))
 benchmark_harness = BenchmarkHarness(
-    recognizer=recognizer,
+    recognizer=None,
     slot_profiler=slot_profiler,
     decision_engine=decision_engine,
     base_dir=BASE_DIR,
@@ -92,6 +107,7 @@ class ProcessBurstRequest(BaseModel):
     product_id: Optional[str] = Field(default="beras_25kg")
     device_id: Optional[str] = Field(default="mettler_lcd_white")
     roi_bbox: Optional[List[int]] = Field(default=None, description="[x1, y1, x2, y2]")
+    model_variant: Optional[str] = Field(default="small", description="small, tiny, medium, crnn")
     simulated_reading: Optional[str] = Field(default=None)
 
 
@@ -128,6 +144,8 @@ def process_burst(req: ProcessBurstRequest) -> DecisionContract:
     expected_slots = DEVICE_CONFIGS.get(req.device_id, {}).get("total_slots", 6)
     frame_urls: List[str] = []
 
+    active_rec = get_recognizer(req.model_variant)
+
     if req.frames_base64 and len(req.frames_base64) > 0:
         for idx, b64_str in enumerate(req.frames_base64):
             try:
@@ -148,7 +166,7 @@ def process_burst(req: ProcessBurstRequest) -> DecisionContract:
                 if idx == 0 and crop.size > 0:
                     slot_prof = slot_profiler.profile(crop, expected_slots=expected_slots)
 
-                reading = recognizer.predict(crop)
+                reading = active_rec.predict(crop)
                 frame_readings.append(reading)
                 frame_urls.append("")
             except Exception:
@@ -174,7 +192,7 @@ def process_burst(req: ProcessBurstRequest) -> DecisionContract:
                     continue
                 if idx == 0:
                     slot_prof = slot_profiler.profile(img, expected_slots=expected_slots)
-                reading = recognizer.predict(img)
+                reading = active_rec.predict(img)
                 frame_readings.append(reading)
                 frame_urls.append(f"/data/synthetic/{sample_folder}/{fn}")
 
@@ -231,14 +249,24 @@ def get_transaction_summary() -> Dict[str, int]:
 @app.get("/api/eval/benchmark")
 @app.get("/api/eval/benchmark/quick20")
 @app.post("/api/eval/benchmark/quick20")
-def run_benchmark_dataset(all_data: bool = True) -> Dict[str, Any]:
+def run_benchmark_dataset(
+    model: str = Query("small", description="Pilihan varian model: small, tiny, medium, crnn"),
+    all_data: bool = True,
+) -> Dict[str, Any]:
     """Menjalankan evaluasi benchmark pada seluruh dataset terkunci di folder (120 sampel)."""
     manifest_p = os.path.join(BASE_DIR, "data", "locked_test_set", "manifest.json")
     if not os.path.exists(manifest_p):
         manifest_p = os.path.join(BASE_DIR, "data", "locked_test_set", "quick_20.json")
     if not os.path.exists(manifest_p):
         raise HTTPException(status_code=404, detail="Berkas manifest dataset tidak ditemukan")
+    benchmark_harness.recognizer = get_recognizer(model)
     return benchmark_harness.run_manifest(manifest_p)
+
+
+@app.get("/api/eval/comparison-matrix")
+def get_comparison_matrix() -> List[Dict[str, Any]]:
+    """Mengembalikan matriks komparasi 4 varian model dan 4 lapis verifikasi."""
+    return get_all_model_comparisons()
 
 
 @app.post("/api/eval/calibrate")
@@ -268,7 +296,7 @@ def run_calibration() -> Dict[str, Any]:
         if img is None:
             continue
 
-        reading = recognizer.predict(img)
+        reading = get_recognizer("small").predict(img)
         raw_scores.append(reading.raw_score)
         # Evaluasi kecocokan (menggunakan heuristik format untuk kalibrasi unlabelled)
         labels.append(1 if reading.raw_score > 0.85 else 0)

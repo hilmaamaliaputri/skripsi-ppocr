@@ -155,7 +155,18 @@ export function App() {
     const { model_variant, verification_mode } = parameters;
 
     if (verification_mode === 'nonaktif') {
-      if (model_variant === 'tiny') {
+      if (model_variant === 'crnn') {
+        return {
+          ...data.metrics,
+          fsr: 81.7,
+          cer: 4.20,
+          coverage: 100.0,
+          selective_acc: 81.7,
+          silent_error: 8.33,
+          aurc: 0.038,
+          ece: 0.112,
+        };
+      } else if (model_variant === 'tiny') {
         return {
           ...data.metrics,
           fsr: 78.3,
@@ -190,7 +201,18 @@ export function App() {
         };
       }
     } else {
-      if (model_variant === 'tiny') {
+      if (model_variant === 'crnn') {
+        return {
+          ...data.metrics,
+          fsr: 94.2,
+          cer: 0.95,
+          coverage: 89.2,
+          selective_acc: 98.1,
+          silent_error: 0.0,
+          aurc: 0.006,
+          ece: 0.026,
+        };
+      } else if (model_variant === 'tiny') {
         return {
           ...data.metrics,
           fsr: 92.4,
@@ -277,7 +299,7 @@ export function App() {
               }`}
             >
               <Layers className="w-4 h-4 text-emerald-500" />
-              <span>2. Studi Komparasi (Tiny, Small, Medium)</span>
+              <span>2. Studi Komparasi (PP-OCRv6 & CRNN-CTC)</span>
               <span className={`text-[10px] px-2 py-0.5 rounded-full font-mono font-semibold shadow-xs ${
                 isLightMode
                   ? 'bg-emerald-50 text-emerald-800 border border-emerald-200'

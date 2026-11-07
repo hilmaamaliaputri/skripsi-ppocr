@@ -32,10 +32,20 @@ class BenchmarkHarness:
         base_dir: str = "sistem",
     ):
         self.base_dir = base_dir
-        self.recognizer = recognizer or PPOCRv6OnnxRecognizer()
+        self._recognizer = recognizer
         self.slot_profiler = slot_profiler or SlotProfiler()
         self.decision_engine = decision_engine or DecisionEngine()
         self.risk_analyzer = RiskCoverageAnalyzer()
+
+    @property
+    def recognizer(self):
+        if self._recognizer is None:
+            self._recognizer = PPOCRv6OnnxRecognizer(tier="small")
+        return self._recognizer
+
+    @recognizer.setter
+    def recognizer(self, val):
+        self._recognizer = val
 
     def run_manifest(
         self, manifest_path: str, max_samples: Optional[int] = None

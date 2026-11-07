@@ -1,7 +1,7 @@
 import React from 'react';
 import { Sliders, CheckCircle2, AlertTriangle, ShieldCheck, Cpu } from 'lucide-react';
 
-export type PPOCRv6Variant = 'tiny' | 'small' | 'medium';
+export type PPOCRv6Variant = 'tiny' | 'small' | 'medium' | 'crnn';
 
 export interface ModelParameters {
   model_variant: PPOCRv6Variant;
@@ -34,7 +34,7 @@ export const ParameterToolbar: React.FC<ParameterToolbarProps> = ({
         <div>
           <div className="flex items-center gap-2 flex-wrap">
             <span className="text-xs font-sans font-bold uppercase tracking-wider text-industrial-100 theme-text-primary">
-              Parameter Model PP-OCRv6 (Tiny, Small, Medium)
+              Parameter Model & Komparasi Baseline (PP-OCRv6 & CRNN-CTC)
             </span>
             {isOptimal ? (
               <span className="px-2.5 py-0.5 rounded-full text-[10px] font-sans font-semibold bg-emerald-950 text-emerald-400 border border-emerald-800 flex items-center gap-1 shadow-sm">
@@ -73,7 +73,8 @@ export const ParameterToolbar: React.FC<ParameterToolbarProps> = ({
             }
             className="bg-industrial-950 border border-industrial-800 rounded-lg px-3 py-1.5 text-xs font-sans text-industrial-100 focus:outline-none focus:border-sky-500 cursor-pointer shadow-sm transition-all"
           >
-            <option value="small">PP-OCRv6-small (7.8 MB • Standar Skripsi)</option>
+            <option value="small">PP-OCRv6-small (7.8 MB • Standar Skripsi Usulan)</option>
+            <option value="crnn">CRNN-CTC (0.12 MB ONNX • Baseline Klasik 2016)</option>
             <option value="tiny">PP-OCRv6-tiny (2.1 MB • Ultra Cepat Edge)</option>
             <option value="medium">PP-OCRv6-medium (18.4 MB • Server Grade)</option>
           </select>

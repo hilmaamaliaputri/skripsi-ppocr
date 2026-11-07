@@ -66,9 +66,9 @@ export const MOCK_BENCHMARK_DATA: BenchmarkResponse = {
   samples: SAMPLES_120,
 };
 
-export async function fetchQuickBenchmark(): Promise<BenchmarkResponse> {
+export async function fetchQuickBenchmark(model: string = 'small'): Promise<BenchmarkResponse> {
   try {
-    const res = await fetch(`${API_BASE}/eval/benchmark`, {
+    const res = await fetch(`${API_BASE}/eval/benchmark?model=${model}`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
     });
@@ -164,4 +164,16 @@ export async function runCalibration(temperature?: number, threshold?: number): 
       ece_improvement_pct: 80.95,
     };
   }
+}
+
+export async function fetchComparisonMatrix(): Promise<any[]> {
+  try {
+    const res = await fetch(`${API_BASE}/eval/comparison-matrix`);
+    if (res.ok) {
+      return await res.json();
+    }
+  } catch (err) {
+    console.warn('[Evaluator API] Backend offline, returning fallback comparison:', err);
+  }
+  return [];
 }
