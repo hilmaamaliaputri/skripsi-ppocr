@@ -235,7 +235,7 @@ export function App() {
     parameters.verification_mode === 'aktif';
 
   return (
-    <div className="min-h-screen bg-slate-900 text-slate-100 flex flex-col font-sans transition-colors duration-150">
+    <div className="min-h-screen bg-black text-zinc-100 flex flex-col font-sans transition-colors duration-150">
       {/* Top Header */}
       <Header
         isLoading={isLoading}

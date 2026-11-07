@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import type { SampleEvaluation, FrameEvaluationItem } from '../types/evaluator';
-import { Filter, Eye, Check, X, AlertCircle, ZoomIn } from 'lucide-react';
+import { Filter, Eye, Check, X, AlertCircle, ZoomIn, Image as ImageIcon } from 'lucide-react';
 
 interface SampleInspectorProps {
   samples: SampleEvaluation[];
@@ -31,12 +31,26 @@ export const SampleInspector: React.FC<SampleInspectorProps> = ({ samples }) => 
     }
   };
 
+  // Helper to reliably construct image URL from frame or sample ID
+  const resolveImageUrl = (f: FrameEvaluationItem, sampleId?: string) => {
+    let url = f.image_url || '';
+    if (url.includes('/data/data/')) {
+      url = url.replace('/data/data/', '/data/');
+    }
+    if (!url && sampleId) {
+      url = `http://127.0.0.1:8000/data/synthetic/${sampleId}/frame_0${f.frame_idx}.jpg`;
+    } else if (url && !url.startsWith('http')) {
+      url = `http://127.0.0.1:8000${url.startsWith('/') ? '' : '/'}${url}`;
+    }
+    return url;
+  };
+
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-      {/* Table list */}
-      <div className="lg:col-span-2 rounded-xl bg-industrial-900 border border-industrial-800 flex flex-col theme-card shadow-sm overflow-hidden">
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 items-stretch">
+      {/* 1. Left Table List - Full height, flex-1 scrollable without hanging gap */}
+      <div className="lg:col-span-2 rounded-xl bg-industrial-900 border border-industrial-800 flex flex-col theme-card shadow-sm overflow-hidden h-[730px]">
         {/* Table Toolbar */}
-        <div className="p-4 border-b border-industrial-800 flex flex-wrap items-center justify-between gap-3 bg-industrial-900">
+        <div className="p-4 border-b border-industrial-800 flex flex-wrap items-center justify-between gap-3 bg-industrial-900 shrink-0">
           <div className="flex items-center gap-2">
             <Filter className="w-4 h-4 text-sky-400" />
             <span className="text-xs font-sans font-bold text-white uppercase tracking-wider theme-text-primary">Data Sampel Uji</span>
@@ -60,8 +74,8 @@ export const SampleInspector: React.FC<SampleInspectorProps> = ({ samples }) => 
           </div>
         </div>
 
-        {/* Scrollable Table */}
-        <div className="overflow-x-auto max-h-[460px]">
+        {/* Scrollable Table - Stretches perfectly to fill container height */}
+        <div className="overflow-x-auto overflow-y-auto flex-1 h-0">
           <table className="w-full text-left text-xs font-sans border-collapse">
             <thead className="bg-industrial-950 text-industrial-400 sticky top-0 border-b border-industrial-800 z-10 shadow-sm">
               <tr>
@@ -104,10 +118,16 @@ export const SampleInspector: React.FC<SampleInspectorProps> = ({ samples }) => 
             </tbody>
           </table>
         </div>
+
+        {/* Table Footer - Closes the container cleanly */}
+        <div className="px-4 py-2.5 border-t border-industrial-800 bg-industrial-950/80 text-[11px] font-sans text-industrial-400 flex items-center justify-between shrink-0">
+          <span>Menampilkan <strong>{filtered.length}</strong> folder sampel uji</span>
+          <span className="text-sky-400">Klik baris sampel untuk inspeksi burst citra</span>
+        </div>
       </div>
 
-      {/* Detail Inspector Panel */}
-      <div className="rounded-xl bg-industrial-900 border border-industrial-800 p-4 sm:p-5 flex flex-col justify-between theme-card shadow-sm">
+      {/* 2. Detail Inspector Panel - Matches left column height (730px) */}
+      <div className="rounded-xl bg-industrial-900 border border-industrial-800 p-4 sm:p-5 flex flex-col justify-between theme-card shadow-sm h-[730px] overflow-y-auto">
         <div>
           <div className="pb-3 border-b border-industrial-800 flex items-center justify-between">
             <span className="text-xs font-sans font-bold uppercase tracking-wider text-white theme-text-primary">Inspeksi Lapis Verifikasi</span>
@@ -153,43 +173,54 @@ export const SampleInspector: React.FC<SampleInspectorProps> = ({ samples }) => 
                     <span className="text-[10px] text-sky-400 font-sans">Klik frame untuk perbesar</span>
                   </div>
                   <div className="grid grid-cols-5 gap-1.5">
-                    {selectedSample.frames.map((f) => (
-                      <div
-                        key={f.frame_idx}
-                        onClick={() => setLightboxFrame(f)}
-                        className="rounded-lg bg-industrial-950 p-1.5 border border-industrial-800 hover:border-sky-500 cursor-pointer text-center flex flex-col justify-between transition-all hover:scale-[1.03] group relative shadow-sm"
-                        title="Klik untuk melihat foto resolusi penuh"
-                      >
-                        <div className="w-full aspect-[4/3] bg-black/60 rounded-md overflow-hidden flex items-center justify-center border border-industrial-800/80 mb-1 relative">
-                          {f.image_url ? (
-                            <img
-                              src={f.image_url}
-                              alt={`Frame ${f.frame_idx}`}
-                              className="w-full h-full object-cover group-hover:opacity-90"
-                              onError={(e) => {
-                                (e.target as HTMLElement).style.display = 'none';
-                              }}
-                            />
-                          ) : (
-                            <span className="text-[9px] text-industrial-500 font-mono">F{f.frame_idx}</span>
-                          )}
-                          <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
-                            <ZoomIn className="w-4 h-4 text-sky-300" />
-                          </div>
-                        </div>
-                        <span className="text-[9px] font-sans text-industrial-400 font-semibold">Frame #{f.frame_idx}</span>
-                        <span className="text-[10px] font-mono font-bold text-white truncate">{f.normalized_text}</span>
-                        <span
-                          className={`text-[8px] font-sans font-semibold mt-0.5 px-1 py-0.2 rounded ${
-                            f.decision === 'TERIMA'
-                              ? 'bg-emerald-950 text-emerald-400 border border-emerald-800'
-                              : 'bg-red-950 text-red-400 border border-red-800'
-                          }`}
+                    {selectedSample.frames.map((f) => {
+                      const imgUrl = resolveImageUrl(f, selectedSample.id);
+                      return (
+                        <div
+                          key={f.frame_idx}
+                          onClick={() => setLightboxFrame({ ...f, image_url: imgUrl })}
+                          className="rounded-lg bg-industrial-950 p-1.5 border border-industrial-800 hover:border-sky-500 cursor-pointer text-center flex flex-col justify-between transition-all hover:scale-[1.03] group relative shadow-sm"
+                          title="Klik untuk melihat foto resolusi penuh"
                         >
-                          {f.decision}
-                        </span>
-                      </div>
-                    ))}
+                          <div className="w-full aspect-[4/3] bg-zinc-900 rounded-md overflow-hidden flex items-center justify-center border border-industrial-800 mb-1 relative">
+                            {imgUrl ? (
+                              <img
+                                src={imgUrl}
+                                alt={`Frame ${f.frame_idx}`}
+                                className="w-full h-full object-cover group-hover:opacity-90 transition-opacity"
+                                onError={(e) => {
+                                  // Fallback direct path
+                                  const target = e.currentTarget;
+                                  const fallback = `http://127.0.0.1:8000/data/synthetic/${selectedSample.id}/frame_0${f.frame_idx}.jpg`;
+                                  if (target.src !== fallback) {
+                                    target.src = fallback;
+                                  }
+                                }}
+                              />
+                            ) : (
+                              <div className="flex flex-col items-center justify-center text-zinc-500">
+                                <ImageIcon className="w-4 h-4 mb-0.5" />
+                                <span className="text-[8px] font-mono">F{f.frame_idx}</span>
+                              </div>
+                            )}
+                            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+                              <ZoomIn className="w-4 h-4 text-sky-300" />
+                            </div>
+                          </div>
+                          <span className="text-[9px] font-sans text-industrial-400 font-semibold">Frame #{f.frame_idx}</span>
+                          <span className="text-[10px] font-mono font-bold text-white truncate">{f.normalized_text}</span>
+                          <span
+                            className={`text-[8px] font-sans font-semibold mt-0.5 px-1 py-0.2 rounded ${
+                              f.decision === 'TERIMA'
+                                ? 'bg-emerald-950 text-emerald-400 border border-emerald-800'
+                                : 'bg-red-950 text-red-400 border border-red-800'
+                            }`}
+                          >
+                            {f.decision}
+                          </span>
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               )}
@@ -293,7 +324,7 @@ export const SampleInspector: React.FC<SampleInspectorProps> = ({ samples }) => 
       {/* High-Resolution Frame Modal / Lightbox */}
       {lightboxFrame && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4 selection:bg-sky-900"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-md p-4 selection:bg-sky-900"
           onClick={() => setLightboxFrame(null)}
         >
           <div
@@ -317,15 +348,15 @@ export const SampleInspector: React.FC<SampleInspectorProps> = ({ samples }) => 
             </div>
 
             {/* Image Stage */}
-            <div className="p-6 bg-black/90 flex items-center justify-center min-h-[360px] max-h-[60vh] overflow-hidden">
+            <div className="p-6 bg-black flex items-center justify-center min-h-[360px] max-h-[60vh] overflow-hidden">
               {lightboxFrame.image_url ? (
                 <img
-                  src={lightboxFrame.image_url}
+                  src={resolveImageUrl(lightboxFrame, selectedSample?.id)}
                   alt={`High Res Frame ${lightboxFrame.frame_idx}`}
-                  className="max-h-[55vh] max-w-full object-contain rounded-lg shadow-2xl border border-industrial-800"
+                  className="max-h-[55vh] max-w-full object-contain rounded-lg shadow-2xl border border-zinc-800"
                 />
               ) : (
-                <div className="text-industrial-500 font-mono text-sm">Citra frame tidak ditemukan</div>
+                <div className="text-zinc-500 font-mono text-sm">Citra frame tidak ditemukan</div>
               )}
             </div>
 

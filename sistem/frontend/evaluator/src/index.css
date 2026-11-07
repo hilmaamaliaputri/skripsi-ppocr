@@ -4,14 +4,14 @@
 
 @layer base {
   :root {
-    --bg-page: #0f172a;
-    --bg-card: #1e293b;
-    --bg-card-subtle: #172033;
-    --bg-inset: #0b0f17;
-    --border-color: #334155;
-    --text-primary: #f8fafc;
-    --text-secondary: #94a3b8;
-    --text-muted: #64748b;
+    --bg-page: #000000;
+    --bg-card: #09090b;
+    --bg-card-subtle: #121215;
+    --bg-inset: #040405;
+    --border-color: #27272a;
+    --text-primary: #f4f4f5;
+    --text-secondary: #a1a1aa;
+    --text-muted: #71717a;
   }
 
   .light-mode {
@@ -36,28 +36,45 @@
 }
 
 /* ==========================================================================
-   SOFT PALETTE & MODERN REFINED INDUSTRIAL THEME
+   DEEP BLACK INDUSTRIAL OLED THEME (DARK MODE DEFAULT)
    ========================================================================== */
-
-/* Dark Mode (Default) - Warm Slate Palette */
 body {
-  background-color: #0f172a;
-  color: #f1f5f9;
+  background-color: #000000 !important;
+  color: #f4f4f5 !important;
 }
 
-.theme-card {
-  background-color: #1e293b;
-  border-color: #334155;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
+.theme-card,
+.bg-industrial-900 {
+  background-color: #09090b !important;
+  border-color: #27272a !important;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.6);
+}
+
+.bg-industrial-850 {
+  background-color: #121215 !important;
+  border-color: #27272a !important;
+}
+
+.bg-industrial-950 {
+  background-color: #000000 !important;
+  border-color: #1f2937 !important;
+}
+
+.border-industrial-800 {
+  border-color: #27272a !important;
+}
+
+.border-industrial-700 {
+  border-color: #3f3f46 !important;
 }
 
 .theme-header {
-  background-color: rgba(15, 23, 42, 0.92);
-  border-color: #334155;
+  background-color: rgba(0, 0, 0, 0.95) !important;
+  border-color: #27272a !important;
 }
 
 /* ==========================================================================
-   LIGHT MODE (SOFT, GENTLE & EASY ON THE EYES)
+   LIGHT MODE (CLEAN, SOFT & HIGH-CONTRAST)
    ========================================================================== */
 .light-mode {
   color-scheme: light;
@@ -215,7 +232,7 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #0f172a;
+  background: #000000;
 }
 
 .light-mode ::-webkit-scrollbar-track {
@@ -223,7 +240,7 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #334155;
+  background: #27272a;
   border-radius: 4px;
 }
 
@@ -233,7 +250,7 @@ body {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #475569;
+  background: #3f3f46;
 }
 
 .light-mode ::-webkit-scrollbar-thumb:hover {

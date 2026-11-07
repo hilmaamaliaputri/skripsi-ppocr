@@ -121,10 +121,17 @@ export async function fetchQuickBenchmark(): Promise<BenchmarkResponse> {
             physical: { layer_name: 'Batas & Toleransi Produk', passed: true, score: 1.0 },
             calibration: { layer_name: 'Kalibrasi Probabilitas', passed: s.decision === 'TERIMA', score: s.calibrated_score || 0.95 },
           },
-          frames: s.frames?.map((f: any) => ({
-            ...f,
-            image_url: f.image_url?.startsWith('http') ? f.image_url : `http://127.0.0.1:8000${f.image_url}`
-          })) || [
+          frames: s.frames?.map((f: any) => {
+            let img = f.image_url || '';
+            img = img.replace('/data/data/', '/data/');
+            if (!img.startsWith('http')) {
+              img = `http://127.0.0.1:8000${img.startsWith('/') ? '' : '/'}${img}`;
+            }
+            return {
+              ...f,
+              image_url: img,
+            };
+          }) || [
             { frame_idx: 1, image_url: 'http://127.0.0.1:8000/data/synthetic/scale_syn_0001/frame_01.jpg', raw_text: s.prediction, normalized_text: s.prediction, confidence: 0.98, decision: s.decision },
             { frame_idx: 2, image_url: 'http://127.0.0.1:8000/data/synthetic/scale_syn_0001/frame_02.jpg', raw_text: s.prediction, normalized_text: s.prediction, confidence: 0.98, decision: s.decision },
             { frame_idx: 3, image_url: 'http://127.0.0.1:8000/data/synthetic/scale_syn_0001/frame_03.jpg', raw_text: s.prediction, normalized_text: s.prediction, confidence: 0.98, decision: s.decision },

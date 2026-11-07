@@ -133,7 +133,7 @@ class BenchmarkHarness:
                 "frames": [
                     {
                         "frame_idx": f_idx + 1,
-                        "image_url": f"/data/{rel.replace('\\', '/')}",
+                        "image_url": f"/data/{rel.replace('\\', '/')[5:]}" if rel.replace('\\', '/').startswith('data/') else f"/data/{rel.replace('\\', '/')}",
                         "raw_text": fr.raw_text,
                         "normalized_text": fr.normalized_text,
                         "confidence": round(fr.raw_score, 4),
