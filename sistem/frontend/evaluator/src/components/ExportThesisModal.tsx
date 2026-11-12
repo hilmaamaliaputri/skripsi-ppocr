@@ -133,46 +133,46 @@ PP-OCRv6-medium + 4-Lapis & 18.4 MB & 28.6 ms & 99.2\\% & 0.18\\% & 0.0\\% & 0.0
               onClick={() => setActiveTab('latex_metrics')}
               className={`flex items-center gap-1.5 pb-2 text-xs font-mono border-b-2 transition-colors ${
                 activeTab === 'latex_metrics'
-                  ? 'border-cyan-400 text-cyan-300 font-bold'
+                  ? 'border-[#F47721] text-[#F47721] font-bold'
                   : 'border-transparent text-industrial-400 hover:text-industrial-200'
               }`}
             >
-              <Code className="w-3.5 h-3.5" /> LaTeX (Tabel Metrik)
+              <Code className="w-3.5 h-3.5" /> LaTeX Metrik
             </button>
             <button
               onClick={() => setActiveTab('latex_comparison')}
               className={`flex items-center gap-1.5 pb-2 text-xs font-mono border-b-2 transition-colors ${
                 activeTab === 'latex_comparison'
-                  ? 'border-cyan-400 text-cyan-300 font-bold'
+                  ? 'border-[#F47721] text-[#F47721] font-bold'
                   : 'border-transparent text-industrial-400 hover:text-industrial-200'
               }`}
             >
-              <Code className="w-3.5 h-3.5" /> LaTeX (Tabel Komparasi Tiny/Small/Medium)
+              <Code className="w-3.5 h-3.5" /> LaTeX Komparasi
             </button>
             <button
               onClick={() => setActiveTab('markdown')}
               className={`flex items-center gap-1.5 pb-2 text-xs font-mono border-b-2 transition-colors ${
                 activeTab === 'markdown'
-                  ? 'border-cyan-400 text-cyan-300 font-bold'
+                  ? 'border-[#F47721] text-[#F47721] font-bold'
                   : 'border-transparent text-industrial-400 hover:text-industrial-200'
               }`}
             >
-              <FileText className="w-3.5 h-3.5" /> Markdown (.md)
+              <FileText className="w-3.5 h-3.5" /> Markdown
             </button>
           </div>
 
           <button
             onClick={handleCopy}
-            className="flex items-center gap-1.5 px-3 py-1 mb-2 rounded bg-cyan-700 hover:bg-cyan-600 text-white text-xs font-mono font-bold transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1 mb-2 rounded bg-[#F47721] hover:bg-[#FF974D] text-white text-xs font-mono font-bold transition-colors shadow-xs"
           >
             {copied ? <Check className="w-3.5 h-3.5 text-emerald-300" /> : <Copy className="w-3.5 h-3.5" />}
-            {copied ? 'TERSALIN!' : 'SALIN TEKS'}
+            {copied ? 'Tersalin' : 'Salin'}
           </button>
         </div>
 
         {/* Code Content */}
         <div className="p-4 overflow-y-auto flex-1 font-mono text-xs text-industrial-300 bg-industrial-950">
-          <pre className="whitespace-pre-wrap selection:bg-cyan-800 selection:text-white">
+          <pre className="whitespace-pre-wrap selection:bg-[#F47721]/40 selection:text-white">
             {getActiveContent()}
           </pre>
         </div>

@@ -25,7 +25,7 @@ export const ReliabilityDiagram: React.FC<ReliabilityDiagramProps> = ({ calibrat
     <div className="p-5 rounded-xl bg-industrial-900 border border-industrial-800 flex flex-col justify-between theme-card shadow-sm">
       <div className="flex items-center justify-between pb-3 border-b border-industrial-800">
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-400">
+          <div className="w-8 h-8 rounded-lg bg-[#16A36A]/10 flex items-center justify-center text-[#16A36A] dark:text-[#38C98A]">
             <BarChart3 className="w-4 h-4" />
           </div>
           <div>
@@ -41,7 +41,7 @@ export const ReliabilityDiagram: React.FC<ReliabilityDiagramProps> = ({ calibrat
             onClick={() => setViewMode('after')}
             className={`px-2.5 py-1 rounded-md text-[11px] font-sans transition-all ${
               viewMode === 'after'
-                ? 'bg-emerald-600 text-white font-semibold shadow-sm'
+                ? 'bg-[#16A36A] dark:bg-[#38C98A] text-white font-semibold shadow-xs'
                 : 'text-industrial-400 hover:text-industrial-200'
             }`}
           >
@@ -51,7 +51,7 @@ export const ReliabilityDiagram: React.FC<ReliabilityDiagramProps> = ({ calibrat
             onClick={() => setViewMode('before')}
             className={`px-2.5 py-1 rounded-md text-[11px] font-sans transition-all ${
               viewMode === 'before'
-                ? 'bg-rose-600 text-white font-semibold shadow-sm'
+                ? 'bg-[#EF4444] text-white font-semibold shadow-xs'
                 : 'text-industrial-400 hover:text-industrial-200'
             }`}
           >
@@ -91,9 +91,9 @@ export const ReliabilityDiagram: React.FC<ReliabilityDiagramProps> = ({ calibrat
                   y={padding.top + plotH - confH}
                   width={barW}
                   height={confH}
-                  fill={isOverconfident ? '#f43f5e' : '#0ea5e9'}
+                  fill={isOverconfident ? '#EF4444' : '#F47721'}
                   fillOpacity="0.18"
-                  stroke={isOverconfident ? '#f43f5e' : '#0ea5e9'}
+                  stroke={isOverconfident ? '#EF4444' : '#F47721'}
                   strokeWidth="1"
                   strokeDasharray="2 2"
                   rx="3"
@@ -105,7 +105,7 @@ export const ReliabilityDiagram: React.FC<ReliabilityDiagramProps> = ({ calibrat
                   y={padding.top + plotH - accH}
                   width={barW}
                   height={accH}
-                  fill={viewMode === 'after' ? '#10b981' : '#f59e0b'}
+                  fill={viewMode === 'after' ? '#16A36A' : '#F47721'}
                   fillOpacity="0.85"
                   rx="3"
                 />

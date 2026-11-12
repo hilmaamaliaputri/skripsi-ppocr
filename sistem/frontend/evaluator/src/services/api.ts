@@ -1,7 +1,7 @@
 import type { BenchmarkResponse, RiskCoverageCoord, CalibrationBin } from '../types/evaluator';
 import { SAMPLES_120 } from '../data/samples120';
 
-const API_BASE = 'http://127.0.0.1:8000/api';
+const API_BASE = '/api';
 
 const MOCK_COORDS: RiskCoverageCoord[] = [
   { coverage: 0.10, risk: 0.000, threshold: 0.98 },
@@ -66,11 +66,11 @@ export const MOCK_BENCHMARK_DATA: BenchmarkResponse = {
   samples: SAMPLES_120,
 };
 
-export async function fetchQuickBenchmark(model: string = 'small'): Promise<BenchmarkResponse> {
+export async function fetchQuickBenchmark(model: string = 'small', forceRerun: boolean = false): Promise<BenchmarkResponse> {
   try {
-    const res = await fetch(`${API_BASE}/eval/benchmark?model=${model}`, {
+    const res = await fetch(`${API_BASE}/eval/benchmark?model=${model}&force_rerun=${forceRerun}`, {
       method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'ngrok-skip-browser-warning': '1' },
     });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
@@ -114,29 +114,49 @@ export async function fetchQuickBenchmark(model: string = 'small'): Promise<Benc
           decision: s.decision,
           is_correct: s.is_correct,
           is_silent_error: false,
-          latency_ms: 18.2,
+          latency_ms: data.summary.model_metrics?.latency_p50_ms || 18.2,
           layers: {
-            temporal: { layer_name: 'Stabilitas Multi-Frame', passed: true, score: 1.0 },
-            structural: { layer_name: 'Struktur Display & Digit', passed: s.decision !== 'TOLAK', score: s.decision !== 'TOLAK' ? 1.0 : 0.0, reason: s.decision === 'TOLAK' ? s.reason : undefined },
-            physical: { layer_name: 'Batas & Toleransi Produk', passed: true, score: 1.0 },
-            calibration: { layer_name: 'Kalibrasi Probabilitas', passed: s.decision === 'TERIMA', score: s.calibrated_score || 0.95 },
+            temporal: {
+              layer_name: 'Stabilitas Multi-Frame',
+              passed: s.trigger_layer !== 'L3',
+              score: s.trigger_layer === 'L3' ? 0.0 : 1.0,
+              reason: s.trigger_layer === 'L3' ? s.reason : undefined,
+            },
+            structural: {
+              layer_name: 'Struktur Display & Digit',
+              passed: s.trigger_layer !== 'L1',
+              score: s.trigger_layer === 'L1' ? 0.0 : 1.0,
+              reason: s.trigger_layer === 'L1' ? s.reason : undefined,
+            },
+            physical: {
+              layer_name: 'Batas & Toleransi Produk',
+              passed: s.trigger_layer !== 'L2',
+              score: s.trigger_layer === 'L2' ? 0.0 : 1.0,
+              reason: s.trigger_layer === 'L2' ? s.reason : undefined,
+            },
+            calibration: {
+              layer_name: 'Kalibrasi Probabilitas',
+              passed: s.trigger_layer !== 'L4' && s.decision === 'TERIMA',
+              score: s.calibrated_score || (s.decision === 'TERIMA' ? 0.95 : 0.5),
+              reason: s.trigger_layer === 'L4' ? s.reason : undefined,
+            },
           },
           frames: s.frames?.map((f: any) => {
             let img = f.image_url || '';
             img = img.replace('/data/data/', '/data/');
-            if (!img.startsWith('http')) {
-              img = `http://127.0.0.1:8000${img.startsWith('/') ? '' : '/'}${img}`;
+            if (!img.startsWith('/') && !img.startsWith('http')) {
+              img = `/${img}`;
             }
             return {
               ...f,
               image_url: img,
             };
           }) || [
-            { frame_idx: 1, image_url: 'http://127.0.0.1:8000/data/synthetic/scale_syn_0001/frame_01.jpg', raw_text: s.prediction, normalized_text: s.prediction, confidence: 0.98, decision: s.decision },
-            { frame_idx: 2, image_url: 'http://127.0.0.1:8000/data/synthetic/scale_syn_0001/frame_02.jpg', raw_text: s.prediction, normalized_text: s.prediction, confidence: 0.98, decision: s.decision },
-            { frame_idx: 3, image_url: 'http://127.0.0.1:8000/data/synthetic/scale_syn_0001/frame_03.jpg', raw_text: s.prediction, normalized_text: s.prediction, confidence: 0.98, decision: s.decision },
-            { frame_idx: 4, image_url: 'http://127.0.0.1:8000/data/synthetic/scale_syn_0001/frame_04.jpg', raw_text: s.prediction, normalized_text: s.prediction, confidence: 0.98, decision: s.decision },
-            { frame_idx: 5, image_url: 'http://127.0.0.1:8000/data/synthetic/scale_syn_0001/frame_05.jpg', raw_text: s.prediction, normalized_text: s.prediction, confidence: 0.98, decision: s.decision },
+            { frame_idx: 1, image_url: '/data/synthetic/scale_syn_0001/frame_01.jpg', raw_text: s.prediction, normalized_text: s.prediction, confidence: 0.98, decision: s.decision },
+            { frame_idx: 2, image_url: '/data/synthetic/scale_syn_0001/frame_02.jpg', raw_text: s.prediction, normalized_text: s.prediction, confidence: 0.98, decision: s.decision },
+            { frame_idx: 3, image_url: '/data/synthetic/scale_syn_0001/frame_03.jpg', raw_text: s.prediction, normalized_text: s.prediction, confidence: 0.98, decision: s.decision },
+            { frame_idx: 4, image_url: '/data/synthetic/scale_syn_0001/frame_04.jpg', raw_text: s.prediction, normalized_text: s.prediction, confidence: 0.98, decision: s.decision },
+            { frame_idx: 5, image_url: '/data/synthetic/scale_syn_0001/frame_05.jpg', raw_text: s.prediction, normalized_text: s.prediction, confidence: 0.98, decision: s.decision },
           ]
         })) || SAMPLES_120,
       };
@@ -152,7 +172,7 @@ export async function runCalibration(temperature?: number, threshold?: number): 
   try {
     const res = await fetch(`${API_BASE}/eval/calibrate`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'ngrok-skip-browser-warning': '1' },
       body: JSON.stringify({ temperature, threshold }),
     });
     return await res.json();
@@ -168,7 +188,7 @@ export async function runCalibration(temperature?: number, threshold?: number): 
 
 export async function fetchComparisonMatrix(): Promise<any[]> {
   try {
-    const res = await fetch(`${API_BASE}/eval/comparison-matrix`);
+    const res = await fetch(`${API_BASE}/eval/comparison-matrix`, { headers: { 'ngrok-skip-browser-warning': '1' } });
     if (res.ok) {
       return await res.json();
     }

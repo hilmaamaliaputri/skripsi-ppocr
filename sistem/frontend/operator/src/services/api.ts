@@ -6,7 +6,7 @@ import type {
   DecisionType,
 } from '../types/operator';
 
-const API_BASE = 'http://127.0.0.1:8000/api';
+const API_BASE = '/api';
 
 export const DEFAULT_DEVICES: DeviceConfig[] = [
   { id: 'mettler_ind231', name: 'Mettler Toledo IND231', slot_count: 5, decimal_places: 2, display_type: '7-segment' },
@@ -24,9 +24,20 @@ export const DEFAULT_PRODUCTS: ProductConfig[] = [
 
 export async function fetchDevices(): Promise<DeviceConfig[]> {
   try {
-    const res = await fetch(`${API_BASE}/config/devices`);
+    const res = await fetch(`${API_BASE}/config/devices`, { headers: { 'ngrok-skip-browser-warning': '1' } });
     if (!res.ok) throw new Error('Failed to fetch devices');
-    return await res.json();
+    const data = await res.json();
+    if (Array.isArray(data)) return data;
+    if (typeof data === 'object' && data !== null) {
+      return Object.entries(data).map(([id, conf]: [string, any]) => ({
+        id,
+        name: conf.name || id,
+        slot_count: conf.total_slots || conf.slot_count || 5,
+        decimal_places: conf.decimal_places ?? (conf.has_decimal ? 2 : 0),
+        display_type: conf.display_type || '7-segment',
+      }));
+    }
+    return DEFAULT_DEVICES;
   } catch (err) {
     console.warn('[Operator API] Backend offline, using default devices:', err);
     return DEFAULT_DEVICES;
@@ -35,9 +46,23 @@ export async function fetchDevices(): Promise<DeviceConfig[]> {
 
 export async function fetchProducts(): Promise<ProductConfig[]> {
   try {
-    const res = await fetch(`${API_BASE}/config/products`);
+    const res = await fetch(`${API_BASE}/config/products`, { headers: { 'ngrok-skip-browser-warning': '1' } });
     if (!res.ok) throw new Error('Failed to fetch products');
-    return await res.json();
+    const data = await res.json();
+    if (Array.isArray(data)) return data;
+    if (typeof data === 'object' && data !== null) {
+      return Object.entries(data).map(([id, conf]: [string, any]) => ({
+        id,
+        name: conf.name || id,
+        target_weight: typeof conf.min_weight === 'number' && typeof conf.max_weight === 'number'
+          ? (conf.min_weight + conf.max_weight) / 2
+          : 25.0,
+        min_weight: conf.min_weight ?? 24.5,
+        max_weight: conf.max_weight ?? 25.5,
+        tolerance_pct: conf.tolerance ?? 2.0,
+      }));
+    }
+    return DEFAULT_PRODUCTS;
   } catch (err) {
     console.warn('[Operator API] Backend offline, using default products:', err);
     return DEFAULT_PRODUCTS;
@@ -46,7 +71,7 @@ export async function fetchProducts(): Promise<ProductConfig[]> {
 
 export async function fetchTransactions(): Promise<TransactionItem[]> {
   try {
-    const res = await fetch(`${API_BASE}/transactions`);
+    const res = await fetch(`${API_BASE}/transactions`, { headers: { 'ngrok-skip-browser-warning': '1' } });
     if (!res.ok) throw new Error('Failed to fetch transactions');
     return await res.json();
   } catch (err) {
@@ -94,7 +119,7 @@ export async function triggerBurstProcessing(
   try {
     const res = await fetch(`${API_BASE}/process-burst`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'ngrok-skip-browser-warning': '1' },
       body: JSON.stringify({
         device_id: deviceId,
         product_id: productId,
@@ -132,13 +157,13 @@ export async function triggerBurstProcessing(
       product_id: productId,
       frames: data.frames?.map((f: any) => ({
         ...f,
-        image_url: f.image_url?.startsWith('http') ? f.image_url : `http://127.0.0.1:8000${f.image_url}`,
+        image_url: f.image_url?.startsWith('http') ? f.image_url : f.image_url.startsWith('/') ? f.image_url : `/${f.image_url}`,
       })) || [
-        { frame_idx: 1, image_url: 'http://127.0.0.1:8000/data/synthetic/scale_syn_0001/frame_01.jpg', raw_text: data.reading, confidence: 0.985, decision: data.decision },
-        { frame_idx: 2, image_url: 'http://127.0.0.1:8000/data/synthetic/scale_syn_0001/frame_02.jpg', raw_text: data.reading, confidence: 0.982, decision: data.decision },
-        { frame_idx: 3, image_url: 'http://127.0.0.1:8000/data/synthetic/scale_syn_0001/frame_03.jpg', raw_text: data.reading, confidence: 0.987, decision: data.decision },
-        { frame_idx: 4, image_url: 'http://127.0.0.1:8000/data/synthetic/scale_syn_0001/frame_04.jpg', raw_text: data.reading, confidence: 0.984, decision: data.decision },
-        { frame_idx: 5, image_url: 'http://127.0.0.1:8000/data/synthetic/scale_syn_0001/frame_05.jpg', raw_text: data.reading, confidence: 0.986, decision: data.decision },
+        { frame_idx: 1, image_url: '/data/synthetic/scale_syn_0001/frame_01.jpg', raw_text: data.reading, confidence: 0.985, decision: data.decision },
+        { frame_idx: 2, image_url: '/data/synthetic/scale_syn_0001/frame_02.jpg', raw_text: data.reading, confidence: 0.982, decision: data.decision },
+        { frame_idx: 3, image_url: '/data/synthetic/scale_syn_0001/frame_03.jpg', raw_text: data.reading, confidence: 0.987, decision: data.decision },
+        { frame_idx: 4, image_url: '/data/synthetic/scale_syn_0001/frame_04.jpg', raw_text: data.reading, confidence: 0.984, decision: data.decision },
+        { frame_idx: 5, image_url: '/data/synthetic/scale_syn_0001/frame_05.jpg', raw_text: data.reading, confidence: 0.986, decision: data.decision },
       ],
     };
   } catch (err) {
@@ -184,11 +209,11 @@ export async function triggerBurstProcessing(
       device_id: deviceId,
       product_id: productId,
       frames: [
-        { frame_idx: 1, image_url: 'http://127.0.0.1:8000/data/synthetic/scale_syn_0001/frame_01.jpg', raw_text: val, confidence: 0.985, decision },
-        { frame_idx: 2, image_url: 'http://127.0.0.1:8000/data/synthetic/scale_syn_0001/frame_02.jpg', raw_text: val, confidence: 0.982, decision },
-        { frame_idx: 3, image_url: 'http://127.0.0.1:8000/data/synthetic/scale_syn_0001/frame_03.jpg', raw_text: val, confidence: 0.987, decision },
-        { frame_idx: 4, image_url: 'http://127.0.0.1:8000/data/synthetic/scale_syn_0001/frame_04.jpg', raw_text: val, confidence: 0.984, decision },
-        { frame_idx: 5, image_url: 'http://127.0.0.1:8000/data/synthetic/scale_syn_0001/frame_05.jpg', raw_text: val, confidence: 0.986, decision },
+        { frame_idx: 1, image_url: '/data/synthetic/scale_syn_0001/frame_01.jpg', raw_text: val, confidence: 0.985, decision },
+        { frame_idx: 2, image_url: '/data/synthetic/scale_syn_0001/frame_02.jpg', raw_text: val, confidence: 0.982, decision },
+        { frame_idx: 3, image_url: '/data/synthetic/scale_syn_0001/frame_03.jpg', raw_text: val, confidence: 0.987, decision },
+        { frame_idx: 4, image_url: '/data/synthetic/scale_syn_0001/frame_04.jpg', raw_text: val, confidence: 0.984, decision },
+        { frame_idx: 5, image_url: '/data/synthetic/scale_syn_0001/frame_05.jpg', raw_text: val, confidence: 0.986, decision },
       ],
     };
   }

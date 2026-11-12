@@ -1,6 +1,6 @@
 import React from 'react';
 import type { DeviceConfig, ProductConfig } from '../types/operator';
-import { Scale, Package, ShieldCheck, Activity } from 'lucide-react';
+import { Scale, Package, ShieldCheck, Activity, ExternalLink } from 'lucide-react';
 
 interface HeaderProps {
   devices: DeviceConfig[];
@@ -86,6 +86,18 @@ export const Header: React.FC<HeaderProps> = ({
             <Activity className="w-3 h-3 animate-pulse" />
             <span>ONLINE</span>
           </div>
+
+          {/* Shortcut to Evaluator */}
+          <a
+            href="http://localhost:5173/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded bg-industrial-950 hover:bg-industrial-800 border border-[#F47721]/40 text-[11px] font-mono text-[#F47721] transition-colors"
+            title="Buka Evaluator Skripsi (:5173)"
+          >
+            <ExternalLink className="w-3 h-3 text-[#F47721]" />
+            <span>Evaluator :5173</span>
+          </a>
         </div>
       </div>
     </header>

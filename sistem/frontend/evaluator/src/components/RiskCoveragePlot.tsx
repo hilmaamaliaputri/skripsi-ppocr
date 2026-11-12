@@ -58,7 +58,7 @@ export const RiskCoveragePlot: React.FC<RiskCoveragePlotProps> = ({
     <div className="p-5 rounded-xl bg-industrial-900 border border-industrial-800 flex flex-col justify-between theme-card shadow-sm">
       <div className="flex items-center justify-between pb-3 border-b border-industrial-800">
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-sky-500/10 flex items-center justify-center text-sky-400">
+          <div className="w-8 h-8 rounded-lg bg-[#F47721]/15 flex items-center justify-center text-[#F47721]">
             <Activity className="w-4 h-4" />
           </div>
           <div>
@@ -69,7 +69,7 @@ export const RiskCoveragePlot: React.FC<RiskCoveragePlotProps> = ({
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <span className="text-[11px] font-mono px-2.5 py-1 rounded-full bg-sky-950 border border-sky-800 text-sky-300 font-semibold shadow-sm">
+          <span className="text-[11px] font-mono px-2.5 py-1 rounded-full bg-[#F47721]/15 border border-[#F47721]/30 text-[#F47721] font-semibold shadow-xs">
             AURC: {aurc.toFixed(4)}
           </span>
         </div>
@@ -79,8 +79,8 @@ export const RiskCoveragePlot: React.FC<RiskCoveragePlotProps> = ({
         <svg viewBox={`0 0 ${width} ${height}`} className="w-full max-w-[540px] select-none">
           <defs>
             <linearGradient id="riskAreaGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#0284c7" stopOpacity="0.25" />
-              <stop offset="100%" stopColor="#0284c7" stopOpacity="0.0" />
+              <stop offset="0%" stopColor="#F47721" stopOpacity="0.28" />
+              <stop offset="100%" stopColor="#F47721" stopOpacity="0.0" />
             </linearGradient>
           </defs>
 
@@ -134,7 +134,7 @@ export const RiskCoveragePlot: React.FC<RiskCoveragePlotProps> = ({
           <path
             d={pathD}
             fill="none"
-            stroke="#0284c7"
+            stroke="#F47721"
             strokeWidth="2.5"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -148,7 +148,7 @@ export const RiskCoveragePlot: React.FC<RiskCoveragePlotProps> = ({
                 y1={padding.top}
                 x2={scaleX(activePoint.coverage)}
                 y2={padding.top + plotH}
-                stroke="#38bdf8"
+                stroke="#F47721"
                 strokeDasharray="3 3"
                 strokeWidth="1.5"
               />
@@ -157,7 +157,7 @@ export const RiskCoveragePlot: React.FC<RiskCoveragePlotProps> = ({
                 y1={scaleY(activePoint.risk)}
                 x2={padding.left + plotW}
                 y2={scaleY(activePoint.risk)}
-                stroke="#38bdf8"
+                stroke="#F47721"
                 strokeDasharray="3 3"
                 strokeWidth="1.5"
               />
@@ -165,8 +165,8 @@ export const RiskCoveragePlot: React.FC<RiskCoveragePlotProps> = ({
                 cx={scaleX(activePoint.coverage)}
                 cy={scaleY(activePoint.risk)}
                 r="5"
-                fill="#38bdf8"
-                stroke="#0f172a"
+                fill="#F47721"
+                stroke="#ffffff"
                 strokeWidth="2"
               />
             </g>
@@ -228,7 +228,7 @@ export const RiskCoveragePlot: React.FC<RiskCoveragePlotProps> = ({
           <span className="text-industrial-400 font-medium">
             Ambang Keyakinan Operasional (&tau;*):
           </span>
-          <span className="font-mono font-bold text-sky-400">
+          <span className="font-mono font-bold text-[#F47721]">
             {threshold.toFixed(2)} ({(threshold * 100).toFixed(0)}%)
           </span>
         </div>
@@ -240,7 +240,7 @@ export const RiskCoveragePlot: React.FC<RiskCoveragePlotProps> = ({
           step="0.01"
           value={threshold}
           onChange={handleSliderChange}
-          className="w-full accent-sky-500 cursor-pointer h-1.5 bg-industrial-800 rounded-lg appearance-none"
+          className="w-full accent-[#F47721] cursor-pointer h-1.5 bg-industrial-800 rounded-lg appearance-none"
         />
 
         <div className="grid grid-cols-2 gap-2 text-xs font-mono pt-1">
@@ -250,7 +250,7 @@ export const RiskCoveragePlot: React.FC<RiskCoveragePlotProps> = ({
           </div>
           <div className="bg-industrial-900 p-2 rounded-lg border border-industrial-800/60 flex justify-between">
             <span className="text-industrial-400 font-sans">Risiko (Risk):</span>
-            <span className="text-emerald-400 font-bold">{((activePoint?.risk || 0) * 100).toFixed(2)}%</span>
+            <span className="text-[#16A36A] dark:text-[#38C98A] font-bold">{((activePoint?.risk || 0) * 100).toFixed(2)}%</span>
           </div>
         </div>
       </div>

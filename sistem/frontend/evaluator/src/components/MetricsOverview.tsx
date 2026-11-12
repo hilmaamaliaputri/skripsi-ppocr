@@ -24,10 +24,10 @@ export const MetricsOverview: React.FC<MetricsOverviewProps> = ({ metrics }) => 
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3.5">
       {/* 1. FSR */}
-      <div className="p-4 rounded-xl bg-industrial-900 border border-industrial-800 flex flex-col justify-between theme-card hover:border-slate-600/50 transition-all shadow-sm">
+      <div className="p-4 rounded-xl bg-industrial-900 border border-industrial-800 flex flex-col justify-between theme-card hover:border-[#F47721]/40 transition-all shadow-sm">
         <div className="flex items-center justify-between text-industrial-400">
           <span className="text-[11px] font-sans font-semibold uppercase tracking-wider">Akurasi FSR</span>
-          <div className="w-6 h-6 rounded-full bg-emerald-500/10 flex items-center justify-center text-emerald-400">
+          <div className="w-6 h-6 rounded-full bg-[#16A36A]/10 flex items-center justify-center text-[#16A36A] dark:text-[#38C98A]">
             <Target className="w-3.5 h-3.5" />
           </div>
         </div>
@@ -42,10 +42,10 @@ export const MetricsOverview: React.FC<MetricsOverviewProps> = ({ metrics }) => 
       </div>
 
       {/* 2. CER */}
-      <div className="p-4 rounded-xl bg-industrial-900 border border-industrial-800 flex flex-col justify-between theme-card hover:border-slate-600/50 transition-all shadow-sm">
+      <div className="p-4 rounded-xl bg-industrial-900 border border-industrial-800 flex flex-col justify-between theme-card hover:border-[#F47721]/40 transition-all shadow-sm">
         <div className="flex items-center justify-between text-industrial-400">
           <span className="text-[11px] font-sans font-semibold uppercase tracking-wider">Karakter CER</span>
-          <div className="w-6 h-6 rounded-full bg-sky-500/10 flex items-center justify-center text-sky-400">
+          <div className="w-6 h-6 rounded-full bg-[#F47721]/15 flex items-center justify-center text-[#F47721]">
             <Percent className="w-3.5 h-3.5" />
           </div>
         </div>
@@ -60,10 +60,10 @@ export const MetricsOverview: React.FC<MetricsOverviewProps> = ({ metrics }) => 
       </div>
 
       {/* 3. Decimal Accuracy */}
-      <div className="p-4 rounded-xl bg-industrial-900 border border-industrial-800 flex flex-col justify-between theme-card hover:border-slate-600/50 transition-all shadow-sm">
+      <div className="p-4 rounded-xl bg-industrial-900 border border-industrial-800 flex flex-col justify-between theme-card hover:border-[#F47721]/40 transition-all shadow-sm">
         <div className="flex items-center justify-between text-industrial-400">
           <span className="text-[11px] font-sans font-semibold uppercase tracking-wider">Titik Desimal</span>
-          <div className="w-6 h-6 rounded-full bg-cyan-500/10 flex items-center justify-center text-cyan-400">
+          <div className="w-6 h-6 rounded-full bg-[#3B82F6]/10 flex items-center justify-center text-[#3B82F6]">
             <Zap className="w-3.5 h-3.5" />
           </div>
         </div>
@@ -78,15 +78,23 @@ export const MetricsOverview: React.FC<MetricsOverviewProps> = ({ metrics }) => 
       </div>
 
       {/* 4. Silent Error */}
-      <div className="p-4 rounded-xl bg-industrial-900 border border-industrial-800 flex flex-col justify-between theme-card hover:border-slate-600/50 transition-all shadow-sm">
+      <div className="p-4 rounded-xl bg-industrial-900 border border-industrial-800 flex flex-col justify-between theme-card hover:border-[#F47721]/40 transition-all shadow-sm">
         <div className="flex items-center justify-between text-industrial-400">
           <span className="text-[11px] font-sans font-semibold uppercase tracking-wider">Silent Error</span>
-          <div className="w-6 h-6 rounded-full bg-rose-500/10 flex items-center justify-center text-rose-400">
+          <div className={`w-6 h-6 rounded-full flex items-center justify-center ${
+            silentError === '0.00'
+              ? 'bg-[#16A36A]/10 text-[#16A36A] dark:text-[#38C98A]'
+              : 'bg-[#EF4444]/10 text-[#EF4444]'
+          }`}>
             <AlertTriangle className="w-3.5 h-3.5" />
           </div>
         </div>
         <div className="mt-3">
-          <div className={`text-2xl font-bold font-mono tracking-tight ${silentError === '0.00' ? 'text-emerald-400' : 'text-rose-400'}`}>
+          <div className={`text-2xl font-bold font-mono tracking-tight ${
+            silentError === '0.00'
+              ? 'text-[#16A36A] dark:text-[#38C98A]'
+              : 'text-[#EF4444]'
+          }`}>
             {silentError}%
           </div>
           <div className="text-[10px] font-sans text-industrial-400 mt-1">
@@ -96,10 +104,10 @@ export const MetricsOverview: React.FC<MetricsOverviewProps> = ({ metrics }) => 
       </div>
 
       {/* 5. Coverage */}
-      <div className="p-4 rounded-xl bg-industrial-900 border border-industrial-800 flex flex-col justify-between theme-card hover:border-slate-600/50 transition-all shadow-sm">
+      <div className="p-4 rounded-xl bg-industrial-900 border border-industrial-800 flex flex-col justify-between theme-card hover:border-[#F47721]/40 transition-all shadow-sm">
         <div className="flex items-center justify-between text-industrial-400">
           <span className="text-[11px] font-sans font-semibold uppercase tracking-wider">Coverage Otomatis</span>
-          <div className="w-6 h-6 rounded-full bg-purple-500/10 flex items-center justify-center text-purple-400">
+          <div className="w-6 h-6 rounded-full bg-[#3B82F6]/10 flex items-center justify-center text-[#3B82F6]">
             <Layers className="w-3.5 h-3.5" />
           </div>
         </div>
@@ -114,10 +122,10 @@ export const MetricsOverview: React.FC<MetricsOverviewProps> = ({ metrics }) => 
       </div>
 
       {/* 6. Latency */}
-      <div className="p-4 rounded-xl bg-industrial-900 border border-industrial-800 flex flex-col justify-between theme-card hover:border-slate-600/50 transition-all shadow-sm">
+      <div className="p-4 rounded-xl bg-industrial-900 border border-industrial-800 flex flex-col justify-between theme-card hover:border-[#F47721]/40 transition-all shadow-sm">
         <div className="flex items-center justify-between text-industrial-400">
           <span className="text-[11px] font-sans font-semibold uppercase tracking-wider">Latensi CPU</span>
-          <div className="w-6 h-6 rounded-full bg-amber-500/10 flex items-center justify-center text-amber-400">
+          <div className="w-6 h-6 rounded-full bg-[#F47721]/15 flex items-center justify-center text-[#F47721]">
             <Clock className="w-3.5 h-3.5" />
           </div>
         </div>

@@ -81,7 +81,7 @@ export const TransactionHistory: React.FC<TransactionHistoryProps> = ({ transact
                 <td className="py-2 px-3">{t.product_id}</td>
                 <td className="py-2 px-3 font-bold text-white">{t.final_value || '0.00'} kg</td>
                 <td className="py-2 px-3">{getDecisionBadge(t.decision)}</td>
-                <td className="py-2 px-3 text-right text-purple-400">{t.latency_ms.toFixed(1)} ms</td>
+                <td className="py-2 px-3 text-right text-purple-400">{(t.latency_ms ?? 18.2).toFixed(1)} ms</td>
               </tr>
             ))}
           </tbody>

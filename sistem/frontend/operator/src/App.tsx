@@ -38,11 +38,15 @@ export function App() {
         fetchProducts(),
         fetchTransactions(),
       ]);
-      setDevices(devs);
-      setProducts(prods);
-      setTransactions(txs);
-      if (devs.length > 0) setSelectedDeviceId(devs[0].id);
-      if (prods.length > 0) setSelectedProductId(prods[0].id);
+      const validDevs = Array.isArray(devs) && devs.length > 0 ? devs : DEFAULT_DEVICES;
+      const validProds = Array.isArray(prods) && prods.length > 0 ? prods : DEFAULT_PRODUCTS;
+      const validTxs = Array.isArray(txs) ? txs : [];
+
+      setDevices(validDevs);
+      setProducts(validProds);
+      setTransactions(validTxs);
+      if (validDevs.length > 0) setSelectedDeviceId(validDevs[0].id);
+      if (validProds.length > 0) setSelectedProductId(validProds[0].id);
     }
     init();
   }, []);
@@ -128,14 +132,16 @@ export function App() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [handleTriggerBurst, handleManualApprove, handleManualCancel]);
 
-  const activeDevice = devices.find((d) => d.id === selectedDeviceId) || devices[0];
+  const safeDevices = Array.isArray(devices) && devices.length > 0 ? devices : DEFAULT_DEVICES;
+  const safeProducts = Array.isArray(products) && products.length > 0 ? products : DEFAULT_PRODUCTS;
+  const activeDevice = safeDevices.find((d) => d.id === selectedDeviceId) || safeDevices[0];
 
   return (
     <div className="min-h-screen bg-industrial-950 text-industrial-200 flex flex-col font-sans selection:bg-emerald-900 selection:text-white">
       {/* Station Header */}
       <Header
-        devices={devices}
-        products={products}
+        devices={safeDevices}
+        products={safeProducts}
         selectedDevice={selectedDeviceId}
         selectedProduct={selectedProductId}
         onSelectDevice={setSelectedDeviceId}

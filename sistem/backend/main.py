@@ -246,12 +246,16 @@ def get_transaction_summary() -> Dict[str, int]:
     return audit_logger.get_summary_counts()
 
 
+_benchmark_cache: Dict[str, Any] = {}
+
+
 @app.get("/api/eval/benchmark")
 @app.get("/api/eval/benchmark/quick20")
 @app.post("/api/eval/benchmark/quick20")
 def run_benchmark_dataset(
     model: str = Query("small", description="Pilihan varian model: small, tiny, medium, crnn"),
     all_data: bool = True,
+    force_rerun: bool = False,
 ) -> Dict[str, Any]:
     """Menjalankan evaluasi benchmark pada seluruh dataset terkunci di folder (120 sampel)."""
     manifest_p = os.path.join(BASE_DIR, "data", "locked_test_set", "manifest.json")
@@ -259,8 +263,14 @@ def run_benchmark_dataset(
         manifest_p = os.path.join(BASE_DIR, "data", "locked_test_set", "quick_20.json")
     if not os.path.exists(manifest_p):
         raise HTTPException(status_code=404, detail="Berkas manifest dataset tidak ditemukan")
+
+    if not force_rerun and model in _benchmark_cache:
+        return _benchmark_cache[model]
+
     benchmark_harness.recognizer = get_recognizer(model)
-    return benchmark_harness.run_manifest(manifest_p)
+    result = benchmark_harness.run_manifest(manifest_p)
+    _benchmark_cache[model] = result
+    return result
 
 
 @app.get("/api/eval/comparison-matrix")
@@ -321,7 +331,36 @@ def run_calibration() -> Dict[str, Any]:
     }
 
 
+# Mount antarmuka web produksi (Evaluator & Operator PWA)
+from fastapi.responses import FileResponse
+
+operator_dist = os.path.abspath(os.path.join(BASE_DIR, "frontend", "operator", "dist"))
+evaluator_dist = os.path.abspath(os.path.join(BASE_DIR, "frontend", "evaluator", "dist"))
+
+if os.path.exists(os.path.join(operator_dist, "assets")):
+    app.mount("/operator/assets", StaticFiles(directory=os.path.join(operator_dist, "assets")), name="operator_assets")
+
+if os.path.exists(os.path.join(evaluator_dist, "assets")):
+    app.mount("/assets", StaticFiles(directory=os.path.join(evaluator_dist, "assets")), name="evaluator_assets")
+
+@app.get("/operator")
+@app.get("/operator/")
+def serve_operator():
+    return FileResponse(os.path.join(operator_dist, "index.html"))
+
+@app.get("/")
+def serve_evaluator():
+    return FileResponse(os.path.join(evaluator_dist, "index.html"))
+
+@app.get("/favicon.svg")
+def serve_favicon():
+    p = os.path.join(evaluator_dist, "favicon.svg")
+    if os.path.exists(p):
+        return FileResponse(p)
+    raise HTTPException(status_code=404)
+
+
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="127.0.0.1", port=8000, log_level="info")
+    uvicorn.run(app, host="0.0.0.0", port=8000, log_level="info")
 
