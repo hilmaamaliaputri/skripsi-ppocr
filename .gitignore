@@ -16,6 +16,9 @@ node_modules/
 dist/
 
 # Large raw dataset frames (do not commit raw frames to git)
+dataset/*/images/
+sistem/data/dataset_latih/
+sistem/data/dataset_uji/
 sistem/data/calib/frames/
 sistem/data/test/frames/
 sistem/data/synthetic/*/frame_*.jpg

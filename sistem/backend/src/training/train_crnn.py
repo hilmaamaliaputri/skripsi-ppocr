@@ -57,37 +57,54 @@ def generate_synthetic_corpus(output_dir: str, count: int = 1200) -> List[Dict[s
 
 
 def collect_training_samples(base_dir: str) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]]]:
-    """Kumpulkan dataset latih dan validasi (Test set 120 folder tetap terkunci)."""
+    """Kumpulkan dataset latih dan validasi (dari dataset_latih terpadu 3 sumber atau fallback sintetis)."""
     samples: List[Dict[str, Any]] = []
-    synthetic_dir = os.path.join(base_dir, "data", "synthetic")
 
-    # Ambil folder sampel sintetis
-    folder_paths = sorted(glob.glob(os.path.join(synthetic_dir, "scale_syn_*")))
+    # Cek folder dataset_latih terpadu terlebih dahulu
+    candidates = [
+        os.path.join(base_dir, "data", "dataset_latih", "manifest.json"),
+        os.path.abspath(os.path.join(base_dir, "..", "data", "dataset_latih", "manifest.json")),
+        os.path.abspath(os.path.join(base_dir, "..", "..", "dataset", "dataset_latih", "manifest.json")),
+        os.path.abspath(os.path.join(base_dir, "..", "dataset", "dataset_latih", "manifest.json")),
+    ]
+    unified_p = next((p for p in candidates if os.path.exists(p)), None)
 
-    # Sesuai aturan akademik: 80 folder pertama untuk latih/validasi, sisa untuk evaluasi
-    train_folders = folder_paths[:80]
+    if unified_p and os.path.exists(unified_p):
+        with open(unified_p, "r", encoding="utf-8") as f:
+            manifest_items = json.load(f)
+        img_dir = os.path.join(os.path.dirname(unified_p), "images")
+        for item in manifest_items:
+            img_p = os.path.join(img_dir, item["filename"])
+            if os.path.exists(img_p) and item.get("label"):
+                samples.append({
+                    "image_path": img_p,
+                    "label": str(item["label"]),
+                    "roi_bbox": item.get("roi_bbox"),
+                })
+        print(f"[Dataset] Memuat {len(samples)} sampel dari dataset_latih terpadu (3 Sumber: Timbangan + CRNN + SachaIZADI).")
+    else:
+        synthetic_dir = os.path.join(base_dir, "data", "synthetic")
+        folder_paths = sorted(glob.glob(os.path.join(synthetic_dir, "scale_syn_*")))
+        train_folders = folder_paths[:80]
 
-    for fld in train_folders:
-        meta_file = os.path.join(fld, "metadata.json")
-        if not os.path.exists(meta_file):
-            continue
+        for fld in train_folders:
+            meta_file = os.path.join(fld, "metadata.json")
+            if not os.path.exists(meta_file):
+                continue
+            try:
+                with open(meta_file, "r", encoding="utf-8") as f:
+                    meta = json.load(f)
+                label = str(meta.get("ground_truth", ""))
+                roi_bbox = meta.get("roi_bbox")
+            except Exception:
+                continue
 
-        try:
-            with open(meta_file, "r", encoding="utf-8") as f:
-                meta = json.load(f)
-            label = str(meta.get("ground_truth", ""))
-            roi_bbox = meta.get("roi_bbox")
-        except Exception:
-            continue
+            for frame_file in sorted(glob.glob(os.path.join(fld, "frame_*.jpg"))):
+                samples.append({"image_path": frame_file, "label": label, "roi_bbox": roi_bbox})
 
-        # Ambil setiap frame (frame_01.jpg s.d. frame_05.jpg)
-        for frame_file in sorted(glob.glob(os.path.join(fld, "frame_*.jpg"))):
-            samples.append({"image_path": frame_file, "label": label, "roi_bbox": roi_bbox})
-
-    # Tambahkan korpus sintetis 7-segmen yang mencakup ghost segments
-    synth_cache_dir = os.path.join(base_dir, "data", "train_synth")
-    synth_samples = generate_synthetic_corpus(synth_cache_dir, count=1200)
-    samples.extend(synth_samples)
+        synth_cache_dir = os.path.join(base_dir, "data", "train_synth")
+        synth_samples = generate_synthetic_corpus(synth_cache_dir, count=1200)
+        samples.extend(synth_samples)
 
     # Shuffle dan split: 85% train, 15% validation
     np.random.seed(42)
