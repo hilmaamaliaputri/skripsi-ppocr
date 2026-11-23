@@ -17,7 +17,7 @@ const ABLATION_LABELS: Record<string, string> = {
 
 export const ExperimentTrackerPanel: React.FC<ExperimentTrackerPanelProps> = ({ isLightMode }) => {
   const [overview, setOverview] = useState<ExperimentOverviewResponse | null>(null);
-  const [ablationModel, setAblationModel] = useState<'crnn' | 'tiny' | 'small'>('crnn');
+  const [ablationModel, setAblationModel] = useState<'tiny_ft' | 'crnn' | 'tiny' | 'small'>('tiny_ft');
   const [scope, setScope] = useState<'burst_120' | 'unified_755'>('burst_120');
 
   useEffect(() => {
@@ -102,9 +102,10 @@ export const ExperimentTrackerPanel: React.FC<ExperimentTrackerPanelProps> = ({ 
             <select
               aria-label="Pilih model ablasi"
               value={ablationModel}
-              onChange={(e) => setAblationModel(e.target.value as 'crnn' | 'tiny' | 'small')}
+              onChange={(e) => setAblationModel(e.target.value as 'tiny_ft' | 'crnn' | 'tiny' | 'small')}
               className={`rounded-md border px-2.5 py-1 text-xs font-mono ${surfaceCls}`}
             >
+              <option value="tiny_ft">PP-OCRv6 Tiny (Fine-Tuned 22ep)</option>
               <option value="crnn">CRNN-CTC (Retrained 50ep)</option>
               <option value="tiny">PP-OCRv6 Tiny (Zero-Shot)</option>
               <option value="small">PP-OCRv6 Small (Zero-Shot)</option>

@@ -69,9 +69,10 @@ export const ParameterToolbar: React.FC<ParameterToolbarProps> = ({
             }
             className="bg-industrial-950 border border-industrial-700 rounded-md px-2.5 py-1.5 text-xs font-sans text-industrial-100 focus:outline-none focus:ring-2 focus:ring-[#F47721] cursor-pointer"
           >
+            <option value="tiny_ft">PP-OCRv6 Tiny (Fine-Tuned · 22 Ep · Champion)</option>
             <option value="crnn">CRNN-CTC (Dilatih Ulang 50ep)</option>
-            <option value="tiny">PP-OCRv6 Tiny (1.50M • Edge)</option>
-            <option value="small">PP-OCRv6 Small (7.70M • Edge)</option>
+            <option value="tiny">PP-OCRv6 Tiny (1.50M • Zero-Shot)</option>
+            <option value="small">PP-OCRv6 Small (7.70M • Zero-Shot)</option>
             <option value="medium">PP-OCRv6 Medium (34.5M • Server)</option>
             <option value="ppocrv5">PP-OCRv5 Mobile (4.11M)</option>
             <option value="dbnet_parseq">DBNet + PARSeq (26.3M • 2-Stage)</option>

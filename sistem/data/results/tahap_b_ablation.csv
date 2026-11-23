@@ -9,6 +9,16 @@ tiny,stage3_temporal_structural_physical,burst_120,120,14.17,36.18,3.33,0.0,100.
 tiny,stage3_temporal_structural_physical,unified_755,755,9.93,48.48,9.54,1.59,83.33,0.7087
 tiny,stage4_full_4layer,burst_120,120,14.17,36.18,3.33,0.0,100.0,0.7289
 tiny,stage4_full_4layer,unified_755,755,9.93,48.48,9.01,1.32,85.29,0.7087
+tiny_ft,baseline_raw,burst_120,120,53.33,11.45,100.0,46.67,53.33,0.7347
+tiny_ft,baseline_raw,unified_755,755,49.54,16.65,100.0,50.46,49.54,0.655
+tiny_ft,stage1_temporal,burst_120,120,61.67,8.73,81.67,32.5,60.2,0.6537
+tiny_ft,stage1_temporal,unified_755,755,49.54,16.65,100.0,50.46,49.54,0.655
+tiny_ft,stage2_temporal_structural,burst_120,120,61.67,8.73,49.17,0.0,100.0,0.0912
+tiny_ft,stage2_temporal_structural,unified_755,755,49.54,16.65,62.65,13.11,79.07,0.1949
+tiny_ft,stage3_temporal_structural_physical,burst_120,120,61.67,8.73,45.83,0.0,100.0,0.0999
+tiny_ft,stage3_temporal_structural_physical,unified_755,755,49.54,16.65,55.63,11.92,78.57,0.2182
+tiny_ft,stage4_full_4layer,burst_120,120,61.67,8.73,43.33,0.0,100.0,0.0999
+tiny_ft,stage4_full_4layer,unified_755,755,49.54,16.65,40.53,3.97,90.2,0.2182
 small,baseline_raw,burst_120,120,9.17,50.36,100.0,90.83,9.17,0.8721
 small,baseline_raw,unified_755,755,8.21,51.33,100.0,91.79,8.21,0.9084
 small,stage1_temporal,burst_120,120,10.83,48.73,43.33,40.83,5.77,0.9331

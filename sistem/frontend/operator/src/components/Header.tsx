@@ -38,7 +38,7 @@ export const Header: React.FC<HeaderProps> = ({
               </span>
             </div>
             <p className="text-[11px] font-mono text-industrial-400">
-              Akuisisi Cepat 5-Frame &bull; Model PP-OCRv6 ONNX &bull; Toleransi L1–L4
+              Akuisisi Cepat 5-Frame &bull; PP-OCRv6 Tiny (Fine-Tuned) ONNX &bull; Toleransi L1–L4
             </p>
           </div>
         </div>

@@ -123,6 +123,7 @@ export async function triggerBurstProcessing(
       body: JSON.stringify({
         device_id: deviceId,
         product_id: productId,
+        model_variant: 'tiny_ft',
         simulated_reading: simulatedValue,
       }),
     });

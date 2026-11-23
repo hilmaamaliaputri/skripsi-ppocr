@@ -23,7 +23,7 @@ class ProcessBurstRequest(BaseModel):
     product_id: Optional[str] = Field(default="beras_25kg")
     device_id: Optional[str] = Field(default="mettler_lcd_white")
     roi_bbox: Optional[List[int]] = Field(default=None, description="[x1, y1, x2, y2]")
-    model_variant: Optional[str] = Field(default="small", description="small, tiny, medium, ppocrv5, crnn, dbnet_parseq")
+    model_variant: Optional[str] = Field(default="tiny_ft", description="tiny_ft, tiny, small, medium, ppocrv5, crnn, dbnet_parseq")
     simulated_reading: Optional[str] = Field(default=None)
 
 
@@ -32,7 +32,7 @@ def health_check() -> Dict[str, Any]:
     """Cek kesehatan server dan kesiapan konfigurasi sistem."""
     return {
         "status": "online",
-        "model": "PP-OCRv6_small_onnx",
+        "model": "PP-OCRv6_tiny_ft_onnx",
         "engine": "ONNXRuntime-CPU",
         "version": "1.0.0",
         "products_available": list(runtime.PRODUCT_CONFIGS.keys()),

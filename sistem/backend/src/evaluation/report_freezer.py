@@ -8,6 +8,7 @@ from typing import Any, Dict, List, Optional, Tuple
 
 MODEL_LABELS: Dict[str, str] = {
     "tiny": "PP-OCRv6 Tiny",
+    "tiny_ft": "PP-OCRv6 Tiny (FT)",
     "small": "PP-OCRv6 Small",
     "medium": "PP-OCRv6 Medium",
     "ppocrv5": "PP-OCRv5 Mobile",

@@ -1,9 +1,9 @@
 {
-  "champion_edge": "crnn",
-  "champion_overall": "crnn",
+  "champion_edge": "tiny_ft",
+  "champion_overall": "tiny_ft",
   "edge_threshold_p95_ms": 50.0,
   "tahap_b_models": [
-    "crnn",
+    "tiny_ft",
     "small"
   ]
 }

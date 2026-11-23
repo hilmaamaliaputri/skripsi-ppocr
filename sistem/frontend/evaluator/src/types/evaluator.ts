@@ -4,7 +4,7 @@ export interface BootstrapCI {
   mean: number;
 }
 
-export type OCRModelVariant = 'tiny' | 'small' | 'medium' | 'ppocrv5' | 'crnn' | 'dbnet_parseq';
+export type OCRModelVariant = 'tiny' | 'tiny_ft' | 'small' | 'medium' | 'ppocrv5' | 'crnn' | 'dbnet_parseq';
 
 export interface EpochHistoryItem {
   epoch: number;
@@ -12,11 +12,22 @@ export interface EpochHistoryItem {
   val_loss: number;
   val_fsr: number;
   val_cer: number;
-  lr: number;
+  lr?: number;
+  lr_head?: number;
 }
 
 export interface TrainingHistoryResponse {
   crnn: {
+    epochs_ran?: number;
+    max_epochs?: number;
+    best_epoch?: number;
+    best_val_fsr?: number;
+    best_val_cer?: number;
+    train_samples?: number;
+    val_samples?: number;
+    history?: EpochHistoryItem[];
+  };
+  tiny_ft?: {
     epochs_ran?: number;
     max_epochs?: number;
     best_epoch?: number;

@@ -16,6 +16,12 @@ MODEL_META: Dict[str, Dict[str, str]] = {
         "params": "1.50M",
         "arch": "PP-LCNet + SVTR",
     },
+    "tiny_ft": {
+        "name": "PP-OCRv6 Tiny (Fine-Tuned)",
+        "size": "5.8 MB (ONNX)",
+        "params": "1.50M",
+        "arch": "PP-LCNet + SVTR (FT 12-cls)",
+    },
     "small": {
         "name": "PP-OCRv6 Small",
         "size": "18.0 MB (ONNX)",

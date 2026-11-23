@@ -69,14 +69,20 @@ def get_comparison_matrix() -> List[Dict[str, Any]]:
 
 @router.get("/training-history")
 def get_training_history() -> Dict[str, Any]:
-    """Mengembalikan catatan historis per-epoch pelatihan CRNN-CTC & info model lain."""
-    hist_p = os.path.join(runtime.CONFIG_DIR, "crnn_training_history.json")
+    """Mengembalikan catatan historis per-epoch pelatihan CRNN-CTC & PP-OCRv6 Tiny FT."""
+    crnn_p = os.path.join(runtime.CONFIG_DIR, "crnn_training_history.json")
+    v6ft_p = os.path.join(runtime.CONFIG_DIR, "ppocrv6_tiny_ft_history.json")
     crnn_hist: Dict[str, Any] = {}
-    if os.path.exists(hist_p):
-        with open(hist_p, "r", encoding="utf-8") as f:
+    v6ft_hist: Dict[str, Any] = {}
+    if os.path.exists(crnn_p):
+        with open(crnn_p, "r", encoding="utf-8") as f:
             crnn_hist = json.load(f)
+    if os.path.exists(v6ft_p):
+        with open(v6ft_p, "r", encoding="utf-8") as f:
+            v6ft_hist = json.load(f)
     return {
         "crnn": crnn_hist,
+        "tiny_ft": v6ft_hist,
         "pretrained_models": {
             key: {"epochs_local": 0, "mode": "Pretrained ONNX Zero-Shot"}
             for key in ("tiny", "small", "medium", "ppocrv5", "dbnet_parseq")

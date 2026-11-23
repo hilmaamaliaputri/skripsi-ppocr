@@ -174,7 +174,8 @@ class TestNewModelsAndAblation(unittest.TestCase):
         from src.evaluation.risk_coverage import RiskCoverageAnalyzer
         from src.models.registry import MODEL_ORDER
 
-        self.assertEqual(len(MODEL_ORDER), 6)
+        self.assertEqual(len(MODEL_ORDER), 7)
+        self.assertIn("tiny_ft", MODEL_ORDER)
         self.assertEqual(len(ABLATION_CONFIGS), 5)
         self.assertEqual(ABLATION_CONFIGS[1][1], {"L3"})
         rss = get_process_rss_mb()

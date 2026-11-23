@@ -25,7 +25,7 @@ export function App() {
   const [activeTab, setActiveTab] = useState<ActiveTab>('overview');
 
   const [parameters, setParameters] = useState<ModelParameters>({
-    model_variant: 'crnn',
+    model_variant: 'tiny_ft',
     unlit_filter_mode: 'aktif',
     verification_mode: 'aktif',
   });
@@ -66,7 +66,7 @@ export function App() {
   );
 
   useEffect(() => {
-    loadBenchmark('crnn', false, true);
+    loadBenchmark('tiny_ft', false, true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -82,8 +82,8 @@ export function App() {
   };
 
   const applyOptimalPreset = () => {
-    setParameters({ model_variant: 'crnn', unlit_filter_mode: 'aktif', verification_mode: 'aktif' });
-    loadBenchmark('crnn', false, true);
+    setParameters({ model_variant: 'tiny_ft', unlit_filter_mode: 'aktif', verification_mode: 'aktif' });
+    loadBenchmark('tiny_ft', false, true);
   };
 
   const applyBaselinePreset = () => {
@@ -92,7 +92,7 @@ export function App() {
   };
 
   const isVerificationActive = parameters.verification_mode === 'aktif';
-  const isOptimal = parameters.model_variant === 'crnn' && isVerificationActive;
+  const isOptimal = parameters.model_variant === 'tiny_ft' && isVerificationActive;
 
   return (
     <div

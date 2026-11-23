@@ -2,67 +2,78 @@
   {
     "model": "tiny",
     "param_count": 1500000,
-    "cold_load_ms": 299.17,
-    "rss_before_mb": 156.8,
-    "rss_after_mb": 178.06,
-    "rss_delta_mb": 21.26,
+    "cold_load_ms": 257.32,
+    "rss_before_mb": 181.8,
+    "rss_after_mb": 202.75,
+    "rss_delta_mb": 20.95,
     "n_crops": 30,
-    "latency_p50_ms": 4.97,
-    "latency_p95_ms": 7.32
+    "latency_p50_ms": 4.82,
+    "latency_p95_ms": 6.03
+  },
+  {
+    "model": "tiny_ft",
+    "param_count": 1500000,
+    "cold_load_ms": 86.98,
+    "rss_before_mb": 203.86,
+    "rss_after_mb": 200.32,
+    "rss_delta_mb": 0.0,
+    "n_crops": 30,
+    "latency_p50_ms": 7.12,
+    "latency_p95_ms": 13.12
   },
   {
     "model": "small",
     "param_count": 7700000,
-    "cold_load_ms": 803.36,
-    "rss_before_mb": 179.19,
-    "rss_after_mb": 208.98,
-    "rss_delta_mb": 29.79,
+    "cold_load_ms": 806.04,
+    "rss_before_mb": 201.03,
+    "rss_after_mb": 236.15,
+    "rss_delta_mb": 35.12,
     "n_crops": 30,
-    "latency_p50_ms": 25.84,
-    "latency_p95_ms": 41.95
+    "latency_p50_ms": 23.88,
+    "latency_p95_ms": 26.09
   },
   {
     "model": "medium",
     "param_count": 34500000,
-    "cold_load_ms": 936.36,
-    "rss_before_mb": 212.37,
-    "rss_after_mb": 266.12,
-    "rss_delta_mb": 53.75,
+    "cold_load_ms": 984.01,
+    "rss_before_mb": 239.25,
+    "rss_after_mb": 289.79,
+    "rss_delta_mb": 50.54,
     "n_crops": 30,
-    "latency_p50_ms": 100.69,
-    "latency_p95_ms": 119.15
+    "latency_p50_ms": 99.16,
+    "latency_p95_ms": 110.5
   },
   {
     "model": "ppocrv5",
     "param_count": 4113256,
-    "cold_load_ms": 818.27,
-    "rss_before_mb": 271.95,
-    "rss_after_mb": 207.83,
+    "cold_load_ms": 882.23,
+    "rss_before_mb": 295.55,
+    "rss_after_mb": 233.57,
     "rss_delta_mb": 0.0,
     "n_crops": 30,
-    "latency_p50_ms": 24.48,
-    "latency_p95_ms": 28.75
+    "latency_p50_ms": 22.87,
+    "latency_p95_ms": 24.93
   },
   {
     "model": "crnn",
     "param_count": 850000,
-    "cold_load_ms": 178.56,
-    "rss_before_mb": 181.9,
-    "rss_after_mb": 215.89,
-    "rss_delta_mb": 33.99,
+    "cold_load_ms": 262.8,
+    "rss_before_mb": 237.18,
+    "rss_after_mb": 223.54,
+    "rss_delta_mb": 0.0,
     "n_crops": 30,
-    "latency_p50_ms": 11.43,
-    "latency_p95_ms": 12.83
+    "latency_p50_ms": 11.23,
+    "latency_p95_ms": 13.44
   },
   {
     "model": "dbnet_parseq",
     "param_count": 26296439,
-    "cold_load_ms": 12533.82,
-    "rss_before_mb": 201.66,
-    "rss_after_mb": 333.08,
-    "rss_delta_mb": 131.42,
+    "cold_load_ms": 11425.5,
+    "rss_before_mb": 224.69,
+    "rss_after_mb": 357.78,
+    "rss_delta_mb": 133.09,
     "n_crops": 30,
-    "latency_p50_ms": 419.13,
-    "latency_p95_ms": 640.86
+    "latency_p50_ms": 425.68,
+    "latency_p95_ms": 677.71
   }
 ]

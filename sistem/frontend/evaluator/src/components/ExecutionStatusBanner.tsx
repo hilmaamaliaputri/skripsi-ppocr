@@ -3,7 +3,8 @@ import { ShieldCheck, Cpu } from 'lucide-react';
 import type { OCRModelVariant } from '../types/evaluator';
 
 export const MODEL_OPTIONS: { value: OCRModelVariant; label: string }[] = [
-  { value: 'crnn', label: 'CRNN-CTC (Champion Edge · 50 Ep)' },
+  { value: 'tiny_ft', label: 'PP-OCRv6 Tiny (Fine-Tuned · 22 Ep · Champion)' },
+  { value: 'crnn', label: 'CRNN-CTC (Domain-Trained · 50 Ep)' },
   { value: 'tiny', label: 'PP-OCRv6 Tiny (Zero-Shot · 1.5M)' },
   { value: 'small', label: 'PP-OCRv6 Small (Zero-Shot · 7.7M)' },
   { value: 'medium', label: 'PP-OCRv6 Medium (Zero-Shot · 34.5M)' },

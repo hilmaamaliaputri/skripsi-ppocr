@@ -64,10 +64,10 @@ export const ComparisonTable: React.FC<ComparisonTableProps> = ({
 
   const summary = useMemo(() => {
     const champ = rows.find((r) => r.isThesisChoice);
-    const crnnRaw = rows.find((r) => r.variantKey === 'crnn' && r.verifMode.toLowerCase().includes('nonaktif'));
-    const crnnVer = rows.find((r) => r.variantKey === 'crnn' && !r.verifMode.toLowerCase().includes('nonaktif'));
+    const champRaw = rows.find((r) => r.variantKey === (champ?.variantKey || 'tiny_ft') && r.verifMode.toLowerCase().includes('nonaktif'));
+    const tinyZero = rows.find((r) => r.variantKey === 'tiny' && r.verifMode.toLowerCase().includes('nonaktif'));
     const smallVer = rows.find((r) => r.variantKey === 'small' && !r.verifMode.toLowerCase().includes('nonaktif'));
-    return { champ, crnnRaw, crnnVer, smallVer };
+    return { champ, champRaw, tinyZero, smallVer };
   }, [rows]);
 
   return (
@@ -77,7 +77,7 @@ export const ComparisonTable: React.FC<ComparisonTableProps> = ({
           <div className="flex items-center gap-2 flex-wrap">
             <Layers className="w-4 h-4 text-[#F47721]" aria-hidden="true" />
             <h3 className="text-sm font-mono font-bold uppercase tracking-wider text-industrial-100 theme-text-primary">
-              Matriks Komparasi 6 Model OCR (n = 755 Citra Terkunci)
+              Matriks Komparasi Model OCR (n = 755 Citra Terkunci)
             </h3>
             <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#16A36A]/15 text-[#16A36A] dark:text-[#38C98A] border border-[#16A36A]/35 font-semibold">
               Data Backend Langsung
@@ -252,10 +252,10 @@ export const ComparisonTable: React.FC<ComparisonTableProps> = ({
 
           <div className="p-3.5 rounded-lg border border-[#F47721]/30 bg-[#F47721]/5 space-y-1">
             <div className="flex items-center gap-1.5 text-[11px] font-mono font-bold uppercase text-[#F47721]">
-              <ShieldAlert className="w-3.5 h-3.5" aria-hidden="true" /> Dampak Penjaga 4-Lapis
+              <ShieldAlert className="w-3.5 h-3.5" aria-hidden="true" /> Dampak Fine-Tune &amp; 4-Lapis
             </div>
             <p className="text-xs font-sans text-industrial-200 theme-text-primary">
-              Pada CRNN-CTC, Silent Error turun dari <strong>{summary.crnnRaw?.silentError || '-'}</strong> (Mentah) menjadi <strong>{summary.crnnVer?.silentError || '-'}</strong>, dengan Selective Acc <strong>{summary.crnnVer?.selectiveAcc || '-'}</strong>.
+              Fine-tuning melonjakkan FSR Tiny dari <strong>{summary.tinyZero?.fsr || '-'}</strong> menjadi <strong>{summary.champRaw?.fsr || '-'}</strong>, lalu 4-Lapis menekan Silent Error ke <strong>{summary.champ?.silentError || '-'}</strong>.
             </p>
           </div>
 

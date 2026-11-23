@@ -159,12 +159,12 @@ export const Sidebar: React.FC<SidebarProps> = ({
                   ? 'bg-white hover:bg-[#F8FAFC] text-[#202832] border-[#E2E8F0]'
                   : 'bg-[#222D38] hover:bg-[#2E3A47] text-[#F1F5F9] border-[#2E3A47]'
               }`}
-              title="Lihat Kurva Training CRNN-CTC (50 Epoch)"
+              title="Lihat Kurva Training PP-OCRv6 Tiny FT & CRNN-CTC"
             >
               <span className="flex items-center gap-1.5">
-                <TrendingUp className="w-3.5 h-3.5 text-[#16A36A]" aria-hidden="true" /> Kurva CRNN
+                <TrendingUp className="w-3.5 h-3.5 text-[#16A36A]" aria-hidden="true" /> Kurva Latih
               </span>
-              <span className="font-mono text-[10px] text-[#16A36A]">50 Ep</span>
+              <span className="font-mono text-[10px] text-[#15803D] dark:text-[#38C98A]">2 Model</span>
             </button>
           </div>
         </div>

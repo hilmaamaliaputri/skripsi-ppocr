@@ -41,14 +41,16 @@ def generate_all_figures(base_dir: str, backend_dir: str, docs_out_dir: str, cha
         ax1.bar(x + 0.18, ver_se, width=0.35, label="+ 4-Lapis Verifikasi", color="#16a34a")
         ax1.set_title("Silent Error (%) pada 755 Citra Uji Terkunci")
         ax1.set_xticks(x, labels, rotation=22, ha="right")
+        ax1.set_ylim(0, 118)
         ax1.set_ylabel("Silent Error (%)")
-        ax1.legend()
+        ax1.legend(loc="upper right")
 
         lats = [float(raw_m[k]["latency_p95_ms"]) for k in keys]
         ax2.scatter(lats, raw_fsr, s=90, color="#2563eb", zorder=3)
         for lx, ly, lb in zip(lats, raw_fsr, labels):
             ax2.annotate(lb, (lx, ly), textcoords="offset points", xytext=(5, 4), fontsize=8)
         ax2.axvline(50.0, color="#ea580c", linestyle="--", linewidth=1, label="Batas Edge 50 ms")
+        ax2.set_xlim(-60, max(lats) * 1.15)
         ax2.set_title("Trade-off FSR Mentah (%) vs Latensi p95 CPU (ms)")
         ax2.set_xlabel("Latensi p95 (ms)")
         ax2.set_ylabel("FSR Mentah (%)")

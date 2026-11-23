@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import type { RiskCoverageCoord } from '../types/evaluator';
 import { Activity } from 'lucide-react';
 
@@ -12,10 +12,14 @@ interface RiskCoveragePlotProps {
 export const RiskCoveragePlot: React.FC<RiskCoveragePlotProps> = ({
   coords,
   aurc,
-  initialThreshold = 0.80,
+  initialThreshold = 0.56,
   onThresholdChange,
 }) => {
   const [threshold, setThreshold] = useState<number>(initialThreshold);
+
+  useEffect(() => {
+    setThreshold(initialThreshold);
+  }, [initialThreshold]);
 
   // SVG dimensions
   const width = 500;
