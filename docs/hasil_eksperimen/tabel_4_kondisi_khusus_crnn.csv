@@ -1,0 +1,8 @@
+Model,Kondisi,n,FSR_Mentah_pct,SilentErr_Mentah_pct,Coverage_Verif_pct,SilentErr_Verif_pct,SelectiveAcc_Verif_pct
+crnn,clean_frontal,100,49.0,51.0,44.0,3.0,93.18
+crnn,glare,100,38.0,62.0,27.0,1.0,96.3
+crnn,tilt_15_30,100,2.0,98.0,2.0,2.0,0.0
+crnn,low_contrast_passive,100,42.0,58.0,32.0,5.0,84.38
+crnn,wet_foggy,100,26.0,74.0,33.0,12.0,63.64
+crnn,dusty_scratched,100,59.0,41.0,47.0,5.0,89.36
+crnn,sachaizadi_real,155,25.81,74.19,43.23,21.29,50.75

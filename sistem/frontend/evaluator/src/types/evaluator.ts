@@ -4,6 +4,43 @@ export interface BootstrapCI {
   mean: number;
 }
 
+export type OCRModelVariant = 'tiny' | 'small' | 'medium' | 'ppocrv5' | 'crnn' | 'dbnet_parseq';
+
+export interface EpochHistoryItem {
+  epoch: number;
+  train_loss: number;
+  val_loss: number;
+  val_fsr: number;
+  val_cer: number;
+  lr: number;
+}
+
+export interface TrainingHistoryResponse {
+  crnn: {
+    epochs_ran?: number;
+    max_epochs?: number;
+    best_epoch?: number;
+    best_val_fsr?: number;
+    best_val_cer?: number;
+    train_samples?: number;
+    val_samples?: number;
+    history?: EpochHistoryItem[];
+  };
+  pretrained_models: Record<string, { epochs_local: number; mode: string }>;
+}
+
+export interface ExperimentOverviewResponse {
+  calibration: Record<string, any>;
+  tahap_a: Record<string, string>[];
+  tahap_b: Record<string, string>[];
+  edge_profile: Record<string, string>[];
+  champion: {
+    champion_edge?: string;
+    champion_overall?: string;
+    tahap_b_models?: string[];
+  };
+}
+
 export interface MetricStats {
   fsr: number;
   cer: number;

@@ -1,0 +1,1424 @@
+{
+  "tiny": {
+    "samples": 600,
+    "exact_match_rate_pct": 9.17,
+    "optimal_temperature": 10.0,
+    "locked_threshold": 0.517,
+    "calib_policy_note": "min_risk_at_min_coverage",
+    "ece_before": 0.5348,
+    "ece_after": 0.4126,
+    "calib_expected_risk": 0.8477,
+    "calib_achieved_coverage": 0.5033,
+    "calib_aurc": 0.8607,
+    "median_latency_ms": 6.49,
+    "reliability_bins_before": [
+      {
+        "bin_index": 0,
+        "bin_range": [
+          0.0,
+          0.1
+        ],
+        "count": 33,
+        "accuracy": 0.0,
+        "confidence": 0.0051,
+        "gap": 0.0051
+      },
+      {
+        "bin_index": 1,
+        "bin_range": [
+          0.1,
+          0.2
+        ],
+        "count": 9,
+        "accuracy": 0.0,
+        "confidence": 0.1511,
+        "gap": 0.1511
+      },
+      {
+        "bin_index": 2,
+        "bin_range": [
+          0.2,
+          0.3
+        ],
+        "count": 19,
+        "accuracy": 0.0,
+        "confidence": 0.2469,
+        "gap": 0.2469
+      },
+      {
+        "bin_index": 3,
+        "bin_range": [
+          0.3,
+          0.4
+        ],
+        "count": 31,
+        "accuracy": 0.0,
+        "confidence": 0.3442,
+        "gap": 0.3442
+      },
+      {
+        "bin_index": 4,
+        "bin_range": [
+          0.4,
+          0.5
+        ],
+        "count": 54,
+        "accuracy": 0.0185,
+        "confidence": 0.4482,
+        "gap": 0.4297
+      },
+      {
+        "bin_index": 5,
+        "bin_range": [
+          0.5,
+          0.6
+        ],
+        "count": 74,
+        "accuracy": 0.027,
+        "confidence": 0.5505,
+        "gap": 0.5235
+      },
+      {
+        "bin_index": 6,
+        "bin_range": [
+          0.6,
+          0.7
+        ],
+        "count": 126,
+        "accuracy": 0.1032,
+        "confidence": 0.6529,
+        "gap": 0.5497
+      },
+      {
+        "bin_index": 7,
+        "bin_range": [
+          0.7,
+          0.8
+        ],
+        "count": 106,
+        "accuracy": 0.1321,
+        "confidence": 0.7515,
+        "gap": 0.6194
+      },
+      {
+        "bin_index": 8,
+        "bin_range": [
+          0.8,
+          0.9
+        ],
+        "count": 76,
+        "accuracy": 0.1447,
+        "confidence": 0.8469,
+        "gap": 0.7021
+      },
+      {
+        "bin_index": 9,
+        "bin_range": [
+          0.9,
+          1.0
+        ],
+        "count": 72,
+        "accuracy": 0.1944,
+        "confidence": 0.9409,
+        "gap": 0.7464
+      }
+    ],
+    "reliability_bins_after": [
+      {
+        "bin_index": 0,
+        "bin_range": [
+          0.0,
+          0.1
+        ],
+        "count": 0,
+        "accuracy": 0.0,
+        "confidence": 0.05,
+        "gap": 0.0
+      },
+      {
+        "bin_index": 1,
+        "bin_range": [
+          0.1,
+          0.2
+        ],
+        "count": 0,
+        "accuracy": 0.0,
+        "confidence": 0.15,
+        "gap": 0.0
+      },
+      {
+        "bin_index": 2,
+        "bin_range": [
+          0.2,
+          0.3
+        ],
+        "count": 31,
+        "accuracy": 0.0,
+        "confidence": 0.2008,
+        "gap": 0.2008
+      },
+      {
+        "bin_index": 3,
+        "bin_range": [
+          0.3,
+          0.4
+        ],
+        "count": 0,
+        "accuracy": 0.0,
+        "confidence": 0.35,
+        "gap": 0.0
+      },
+      {
+        "bin_index": 4,
+        "bin_range": [
+          0.4,
+          0.5
+        ],
+        "count": 115,
+        "accuracy": 0.0087,
+        "confidence": 0.4841,
+        "gap": 0.4754
+      },
+      {
+        "bin_index": 5,
+        "bin_range": [
+          0.5,
+          0.6
+        ],
+        "count": 454,
+        "accuracy": 0.1189,
+        "confidence": 0.5301,
+        "gap": 0.4111
+      },
+      {
+        "bin_index": 6,
+        "bin_range": [
+          0.6,
+          0.7
+        ],
+        "count": 0,
+        "accuracy": 0.0,
+        "confidence": 0.65,
+        "gap": 0.0
+      },
+      {
+        "bin_index": 7,
+        "bin_range": [
+          0.7,
+          0.8
+        ],
+        "count": 0,
+        "accuracy": 0.0,
+        "confidence": 0.75,
+        "gap": 0.0
+      },
+      {
+        "bin_index": 8,
+        "bin_range": [
+          0.8,
+          0.9
+        ],
+        "count": 0,
+        "accuracy": 0.0,
+        "confidence": 0.85,
+        "gap": 0.0
+      },
+      {
+        "bin_index": 9,
+        "bin_range": [
+          0.9,
+          1.0
+        ],
+        "count": 0,
+        "accuracy": 0.0,
+        "confidence": 0.95,
+        "gap": 0.0
+      }
+    ]
+  },
+  "small": {
+    "samples": 600,
+    "exact_match_rate_pct": 19.17,
+    "optimal_temperature": 10.0,
+    "locked_threshold": 0.5425,
+    "calib_policy_note": "min_risk_at_min_coverage",
+    "ece_before": 0.5774,
+    "ece_after": 0.3416,
+    "calib_expected_risk": 0.7067,
+    "calib_achieved_coverage": 0.5,
+    "calib_aurc": 0.6975,
+    "median_latency_ms": 31.02,
+    "reliability_bins_before": [
+      {
+        "bin_index": 0,
+        "bin_range": [
+          0.0,
+          0.1
+        ],
+        "count": 23,
+        "accuracy": 0.0,
+        "confidence": 0.0,
+        "gap": 0.0
+      },
+      {
+        "bin_index": 1,
+        "bin_range": [
+          0.1,
+          0.2
+        ],
+        "count": 1,
+        "accuracy": 0.0,
+        "confidence": 0.1696,
+        "gap": 0.1696
+      },
+      {
+        "bin_index": 2,
+        "bin_range": [
+          0.2,
+          0.3
+        ],
+        "count": 7,
+        "accuracy": 0.0,
+        "confidence": 0.2516,
+        "gap": 0.2516
+      },
+      {
+        "bin_index": 3,
+        "bin_range": [
+          0.3,
+          0.4
+        ],
+        "count": 16,
+        "accuracy": 0.0,
+        "confidence": 0.3529,
+        "gap": 0.3529
+      },
+      {
+        "bin_index": 4,
+        "bin_range": [
+          0.4,
+          0.5
+        ],
+        "count": 23,
+        "accuracy": 0.0,
+        "confidence": 0.4516,
+        "gap": 0.4516
+      },
+      {
+        "bin_index": 5,
+        "bin_range": [
+          0.5,
+          0.6
+        ],
+        "count": 37,
+        "accuracy": 0.1081,
+        "confidence": 0.5534,
+        "gap": 0.4453
+      },
+      {
+        "bin_index": 6,
+        "bin_range": [
+          0.6,
+          0.7
+        ],
+        "count": 51,
+        "accuracy": 0.0784,
+        "confidence": 0.647,
+        "gap": 0.5686
+      },
+      {
+        "bin_index": 7,
+        "bin_range": [
+          0.7,
+          0.8
+        ],
+        "count": 84,
+        "accuracy": 0.0952,
+        "confidence": 0.755,
+        "gap": 0.6597
+      },
+      {
+        "bin_index": 8,
+        "bin_range": [
+          0.8,
+          0.9
+        ],
+        "count": 156,
+        "accuracy": 0.2372,
+        "confidence": 0.8549,
+        "gap": 0.6177
+      },
+      {
+        "bin_index": 9,
+        "bin_range": [
+          0.9,
+          1.0
+        ],
+        "count": 202,
+        "accuracy": 0.3069,
+        "confidence": 0.9566,
+        "gap": 0.6496
+      }
+    ],
+    "reliability_bins_after": [
+      {
+        "bin_index": 0,
+        "bin_range": [
+          0.0,
+          0.1
+        ],
+        "count": 0,
+        "accuracy": 0.0,
+        "confidence": 0.05,
+        "gap": 0.0
+      },
+      {
+        "bin_index": 1,
+        "bin_range": [
+          0.1,
+          0.2
+        ],
+        "count": 0,
+        "accuracy": 0.0,
+        "confidence": 0.15,
+        "gap": 0.0
+      },
+      {
+        "bin_index": 2,
+        "bin_range": [
+          0.2,
+          0.3
+        ],
+        "count": 23,
+        "accuracy": 0.0,
+        "confidence": 0.2008,
+        "gap": 0.2008
+      },
+      {
+        "bin_index": 3,
+        "bin_range": [
+          0.3,
+          0.4
+        ],
+        "count": 0,
+        "accuracy": 0.0,
+        "confidence": 0.35,
+        "gap": 0.0
+      },
+      {
+        "bin_index": 4,
+        "bin_range": [
+          0.4,
+          0.5
+        ],
+        "count": 47,
+        "accuracy": 0.0,
+        "confidence": 0.4875,
+        "gap": 0.4875
+      },
+      {
+        "bin_index": 5,
+        "bin_range": [
+          0.5,
+          0.6
+        ],
+        "count": 484,
+        "accuracy": 0.1963,
+        "confidence": 0.5454,
+        "gap": 0.3491
+      },
+      {
+        "bin_index": 6,
+        "bin_range": [
+          0.6,
+          0.7
+        ],
+        "count": 46,
+        "accuracy": 0.4348,
+        "confidence": 0.6187,
+        "gap": 0.1839
+      },
+      {
+        "bin_index": 7,
+        "bin_range": [
+          0.7,
+          0.8
+        ],
+        "count": 0,
+        "accuracy": 0.0,
+        "confidence": 0.75,
+        "gap": 0.0
+      },
+      {
+        "bin_index": 8,
+        "bin_range": [
+          0.8,
+          0.9
+        ],
+        "count": 0,
+        "accuracy": 0.0,
+        "confidence": 0.85,
+        "gap": 0.0
+      },
+      {
+        "bin_index": 9,
+        "bin_range": [
+          0.9,
+          1.0
+        ],
+        "count": 0,
+        "accuracy": 0.0,
+        "confidence": 0.95,
+        "gap": 0.0
+      }
+    ]
+  },
+  "medium": {
+    "samples": 600,
+    "exact_match_rate_pct": 23.0,
+    "optimal_temperature": 10.0,
+    "locked_threshold": 0.5419,
+    "calib_policy_note": "min_risk_at_min_coverage",
+    "ece_before": 0.5511,
+    "ece_after": 0.3087,
+    "calib_expected_risk": 0.6367,
+    "calib_achieved_coverage": 0.5,
+    "calib_aurc": 0.6038,
+    "median_latency_ms": 98.89,
+    "reliability_bins_before": [
+      {
+        "bin_index": 0,
+        "bin_range": [
+          0.0,
+          0.1
+        ],
+        "count": 18,
+        "accuracy": 0.0,
+        "confidence": 0.0,
+        "gap": 0.0
+      },
+      {
+        "bin_index": 1,
+        "bin_range": [
+          0.1,
+          0.2
+        ],
+        "count": 1,
+        "accuracy": 0.0,
+        "confidence": 0.1543,
+        "gap": 0.1543
+      },
+      {
+        "bin_index": 2,
+        "bin_range": [
+          0.2,
+          0.3
+        ],
+        "count": 4,
+        "accuracy": 0.0,
+        "confidence": 0.2662,
+        "gap": 0.2662
+      },
+      {
+        "bin_index": 3,
+        "bin_range": [
+          0.3,
+          0.4
+        ],
+        "count": 15,
+        "accuracy": 0.0,
+        "confidence": 0.3693,
+        "gap": 0.3693
+      },
+      {
+        "bin_index": 4,
+        "bin_range": [
+          0.4,
+          0.5
+        ],
+        "count": 17,
+        "accuracy": 0.0,
+        "confidence": 0.4556,
+        "gap": 0.4556
+      },
+      {
+        "bin_index": 5,
+        "bin_range": [
+          0.5,
+          0.6
+        ],
+        "count": 44,
+        "accuracy": 0.0455,
+        "confidence": 0.5502,
+        "gap": 0.5047
+      },
+      {
+        "bin_index": 6,
+        "bin_range": [
+          0.6,
+          0.7
+        ],
+        "count": 57,
+        "accuracy": 0.1228,
+        "confidence": 0.651,
+        "gap": 0.5282
+      },
+      {
+        "bin_index": 7,
+        "bin_range": [
+          0.7,
+          0.8
+        ],
+        "count": 90,
+        "accuracy": 0.1111,
+        "confidence": 0.7518,
+        "gap": 0.6407
+      },
+      {
+        "bin_index": 8,
+        "bin_range": [
+          0.8,
+          0.9
+        ],
+        "count": 136,
+        "accuracy": 0.2059,
+        "confidence": 0.8547,
+        "gap": 0.6488
+      },
+      {
+        "bin_index": 9,
+        "bin_range": [
+          0.9,
+          1.0
+        ],
+        "count": 218,
+        "accuracy": 0.4174,
+        "confidence": 0.9583,
+        "gap": 0.5409
+      }
+    ],
+    "reliability_bins_after": [
+      {
+        "bin_index": 0,
+        "bin_range": [
+          0.0,
+          0.1
+        ],
+        "count": 0,
+        "accuracy": 0.0,
+        "confidence": 0.05,
+        "gap": 0.0
+      },
+      {
+        "bin_index": 1,
+        "bin_range": [
+          0.1,
+          0.2
+        ],
+        "count": 0,
+        "accuracy": 0.0,
+        "confidence": 0.15,
+        "gap": 0.0
+      },
+      {
+        "bin_index": 2,
+        "bin_range": [
+          0.2,
+          0.3
+        ],
+        "count": 18,
+        "accuracy": 0.0,
+        "confidence": 0.2008,
+        "gap": 0.2008
+      },
+      {
+        "bin_index": 3,
+        "bin_range": [
+          0.3,
+          0.4
+        ],
+        "count": 0,
+        "accuracy": 0.0,
+        "confidence": 0.35,
+        "gap": 0.0
+      },
+      {
+        "bin_index": 4,
+        "bin_range": [
+          0.4,
+          0.5
+        ],
+        "count": 37,
+        "accuracy": 0.0,
+        "confidence": 0.4886,
+        "gap": 0.4886
+      },
+      {
+        "bin_index": 5,
+        "bin_range": [
+          0.5,
+          0.6
+        ],
+        "count": 484,
+        "accuracy": 0.2107,
+        "confidence": 0.5438,
+        "gap": 0.3331
+      },
+      {
+        "bin_index": 6,
+        "bin_range": [
+          0.6,
+          0.7
+        ],
+        "count": 61,
+        "accuracy": 0.5902,
+        "confidence": 0.6285,
+        "gap": 0.0383
+      },
+      {
+        "bin_index": 7,
+        "bin_range": [
+          0.7,
+          0.8
+        ],
+        "count": 0,
+        "accuracy": 0.0,
+        "confidence": 0.75,
+        "gap": 0.0
+      },
+      {
+        "bin_index": 8,
+        "bin_range": [
+          0.8,
+          0.9
+        ],
+        "count": 0,
+        "accuracy": 0.0,
+        "confidence": 0.85,
+        "gap": 0.0
+      },
+      {
+        "bin_index": 9,
+        "bin_range": [
+          0.9,
+          1.0
+        ],
+        "count": 0,
+        "accuracy": 0.0,
+        "confidence": 0.95,
+        "gap": 0.0
+      }
+    ]
+  },
+  "ppocrv5": {
+    "samples": 600,
+    "exact_match_rate_pct": 1.33,
+    "optimal_temperature": 10.0,
+    "locked_threshold": 0.5172,
+    "calib_policy_note": "min_risk_at_min_coverage",
+    "ece_before": 0.5835,
+    "ece_after": 0.4746,
+    "calib_expected_risk": 0.98,
+    "calib_achieved_coverage": 0.5,
+    "calib_aurc": 0.9746,
+    "median_latency_ms": 27.23,
+    "reliability_bins_before": [
+      {
+        "bin_index": 0,
+        "bin_range": [
+          0.0,
+          0.1
+        ],
+        "count": 60,
+        "accuracy": 0.0,
+        "confidence": 0.0,
+        "gap": 0.0
+      },
+      {
+        "bin_index": 1,
+        "bin_range": [
+          0.1,
+          0.2
+        ],
+        "count": 3,
+        "accuracy": 0.0,
+        "confidence": 0.1762,
+        "gap": 0.1762
+      },
+      {
+        "bin_index": 2,
+        "bin_range": [
+          0.2,
+          0.3
+        ],
+        "count": 17,
+        "accuracy": 0.0,
+        "confidence": 0.2644,
+        "gap": 0.2644
+      },
+      {
+        "bin_index": 3,
+        "bin_range": [
+          0.3,
+          0.4
+        ],
+        "count": 31,
+        "accuracy": 0.0,
+        "confidence": 0.353,
+        "gap": 0.353
+      },
+      {
+        "bin_index": 4,
+        "bin_range": [
+          0.4,
+          0.5
+        ],
+        "count": 52,
+        "accuracy": 0.0192,
+        "confidence": 0.4592,
+        "gap": 0.4399
+      },
+      {
+        "bin_index": 5,
+        "bin_range": [
+          0.5,
+          0.6
+        ],
+        "count": 75,
+        "accuracy": 0.0133,
+        "confidence": 0.5565,
+        "gap": 0.5432
+      },
+      {
+        "bin_index": 6,
+        "bin_range": [
+          0.6,
+          0.7
+        ],
+        "count": 100,
+        "accuracy": 0.0,
+        "confidence": 0.6526,
+        "gap": 0.6526
+      },
+      {
+        "bin_index": 7,
+        "bin_range": [
+          0.7,
+          0.8
+        ],
+        "count": 138,
+        "accuracy": 0.0072,
+        "confidence": 0.7473,
+        "gap": 0.7401
+      },
+      {
+        "bin_index": 8,
+        "bin_range": [
+          0.8,
+          0.9
+        ],
+        "count": 90,
+        "accuracy": 0.0444,
+        "confidence": 0.8497,
+        "gap": 0.8052
+      },
+      {
+        "bin_index": 9,
+        "bin_range": [
+          0.9,
+          1.0
+        ],
+        "count": 34,
+        "accuracy": 0.0294,
+        "confidence": 0.9306,
+        "gap": 0.9011
+      }
+    ],
+    "reliability_bins_after": [
+      {
+        "bin_index": 0,
+        "bin_range": [
+          0.0,
+          0.1
+        ],
+        "count": 0,
+        "accuracy": 0.0,
+        "confidence": 0.05,
+        "gap": 0.0
+      },
+      {
+        "bin_index": 1,
+        "bin_range": [
+          0.1,
+          0.2
+        ],
+        "count": 0,
+        "accuracy": 0.0,
+        "confidence": 0.15,
+        "gap": 0.0
+      },
+      {
+        "bin_index": 2,
+        "bin_range": [
+          0.2,
+          0.3
+        ],
+        "count": 60,
+        "accuracy": 0.0,
+        "confidence": 0.2008,
+        "gap": 0.2008
+      },
+      {
+        "bin_index": 3,
+        "bin_range": [
+          0.3,
+          0.4
+        ],
+        "count": 0,
+        "accuracy": 0.0,
+        "confidence": 0.35,
+        "gap": 0.0
+      },
+      {
+        "bin_index": 4,
+        "bin_range": [
+          0.4,
+          0.5
+        ],
+        "count": 103,
+        "accuracy": 0.0097,
+        "confidence": 0.488,
+        "gap": 0.4783
+      },
+      {
+        "bin_index": 5,
+        "bin_range": [
+          0.5,
+          0.6
+        ],
+        "count": 436,
+        "accuracy": 0.0161,
+        "confidence": 0.5272,
+        "gap": 0.5111
+      },
+      {
+        "bin_index": 6,
+        "bin_range": [
+          0.6,
+          0.7
+        ],
+        "count": 1,
+        "accuracy": 0.0,
+        "confidence": 0.607,
+        "gap": 0.607
+      },
+      {
+        "bin_index": 7,
+        "bin_range": [
+          0.7,
+          0.8
+        ],
+        "count": 0,
+        "accuracy": 0.0,
+        "confidence": 0.75,
+        "gap": 0.0
+      },
+      {
+        "bin_index": 8,
+        "bin_range": [
+          0.8,
+          0.9
+        ],
+        "count": 0,
+        "accuracy": 0.0,
+        "confidence": 0.85,
+        "gap": 0.0
+      },
+      {
+        "bin_index": 9,
+        "bin_range": [
+          0.9,
+          1.0
+        ],
+        "count": 0,
+        "accuracy": 0.0,
+        "confidence": 0.95,
+        "gap": 0.0
+      }
+    ]
+  },
+  "crnn": {
+    "samples": 600,
+    "exact_match_rate_pct": 13.67,
+    "optimal_temperature": 10.0,
+    "locked_threshold": 0.5541,
+    "calib_policy_note": "min_risk_at_min_coverage",
+    "ece_before": 0.7403,
+    "ece_after": 0.4283,
+    "calib_expected_risk": 0.75,
+    "calib_achieved_coverage": 0.5,
+    "calib_aurc": 0.79,
+    "median_latency_ms": 12.83,
+    "reliability_bins_before": [
+      {
+        "bin_index": 0,
+        "bin_range": [
+          0.0,
+          0.1
+        ],
+        "count": 0,
+        "accuracy": 0.0,
+        "confidence": 0.05,
+        "gap": 0.0
+      },
+      {
+        "bin_index": 1,
+        "bin_range": [
+          0.1,
+          0.2
+        ],
+        "count": 0,
+        "accuracy": 0.0,
+        "confidence": 0.15,
+        "gap": 0.0
+      },
+      {
+        "bin_index": 2,
+        "bin_range": [
+          0.2,
+          0.3
+        ],
+        "count": 0,
+        "accuracy": 0.0,
+        "confidence": 0.25,
+        "gap": 0.0
+      },
+      {
+        "bin_index": 3,
+        "bin_range": [
+          0.3,
+          0.4
+        ],
+        "count": 1,
+        "accuracy": 0.0,
+        "confidence": 0.3868,
+        "gap": 0.3868
+      },
+      {
+        "bin_index": 4,
+        "bin_range": [
+          0.4,
+          0.5
+        ],
+        "count": 1,
+        "accuracy": 0.0,
+        "confidence": 0.473,
+        "gap": 0.473
+      },
+      {
+        "bin_index": 5,
+        "bin_range": [
+          0.5,
+          0.6
+        ],
+        "count": 12,
+        "accuracy": 0.0,
+        "confidence": 0.5789,
+        "gap": 0.5789
+      },
+      {
+        "bin_index": 6,
+        "bin_range": [
+          0.6,
+          0.7
+        ],
+        "count": 31,
+        "accuracy": 0.0,
+        "confidence": 0.6644,
+        "gap": 0.6644
+      },
+      {
+        "bin_index": 7,
+        "bin_range": [
+          0.7,
+          0.8
+        ],
+        "count": 81,
+        "accuracy": 0.0123,
+        "confidence": 0.7581,
+        "gap": 0.7458
+      },
+      {
+        "bin_index": 8,
+        "bin_range": [
+          0.8,
+          0.9
+        ],
+        "count": 179,
+        "accuracy": 0.0335,
+        "confidence": 0.8541,
+        "gap": 0.8206
+      },
+      {
+        "bin_index": 9,
+        "bin_range": [
+          0.9,
+          1.0
+        ],
+        "count": 295,
+        "accuracy": 0.2542,
+        "confidence": 0.9609,
+        "gap": 0.7067
+      }
+    ],
+    "reliability_bins_after": [
+      {
+        "bin_index": 0,
+        "bin_range": [
+          0.0,
+          0.1
+        ],
+        "count": 0,
+        "accuracy": 0.0,
+        "confidence": 0.05,
+        "gap": 0.0
+      },
+      {
+        "bin_index": 1,
+        "bin_range": [
+          0.1,
+          0.2
+        ],
+        "count": 0,
+        "accuracy": 0.0,
+        "confidence": 0.15,
+        "gap": 0.0
+      },
+      {
+        "bin_index": 2,
+        "bin_range": [
+          0.2,
+          0.3
+        ],
+        "count": 0,
+        "accuracy": 0.0,
+        "confidence": 0.25,
+        "gap": 0.0
+      },
+      {
+        "bin_index": 3,
+        "bin_range": [
+          0.3,
+          0.4
+        ],
+        "count": 0,
+        "accuracy": 0.0,
+        "confidence": 0.35,
+        "gap": 0.0
+      },
+      {
+        "bin_index": 4,
+        "bin_range": [
+          0.4,
+          0.5
+        ],
+        "count": 2,
+        "accuracy": 0.0,
+        "confidence": 0.4929,
+        "gap": 0.4929
+      },
+      {
+        "bin_index": 5,
+        "bin_range": [
+          0.5,
+          0.6
+        ],
+        "count": 488,
+        "accuracy": 0.1045,
+        "confidence": 0.5495,
+        "gap": 0.445
+      },
+      {
+        "bin_index": 6,
+        "bin_range": [
+          0.6,
+          0.7
+        ],
+        "count": 110,
+        "accuracy": 0.2818,
+        "confidence": 0.635,
+        "gap": 0.3532
+      },
+      {
+        "bin_index": 7,
+        "bin_range": [
+          0.7,
+          0.8
+        ],
+        "count": 0,
+        "accuracy": 0.0,
+        "confidence": 0.75,
+        "gap": 0.0
+      },
+      {
+        "bin_index": 8,
+        "bin_range": [
+          0.8,
+          0.9
+        ],
+        "count": 0,
+        "accuracy": 0.0,
+        "confidence": 0.85,
+        "gap": 0.0
+      },
+      {
+        "bin_index": 9,
+        "bin_range": [
+          0.9,
+          1.0
+        ],
+        "count": 0,
+        "accuracy": 0.0,
+        "confidence": 0.95,
+        "gap": 0.0
+      }
+    ]
+  },
+  "dbnet_parseq": {
+    "samples": 600,
+    "exact_match_rate_pct": 2.83,
+    "optimal_temperature": 10.0,
+    "locked_threshold": 0.5557,
+    "calib_policy_note": "min_risk_at_min_coverage",
+    "ece_before": 0.8408,
+    "ece_after": 0.5442,
+    "calib_expected_risk": 0.9498,
+    "calib_achieved_coverage": 0.5317,
+    "calib_aurc": 0.9598,
+    "median_latency_ms": 305.9,
+    "reliability_bins_before": [
+      {
+        "bin_index": 0,
+        "bin_range": [
+          0.0,
+          0.1
+        ],
+        "count": 0,
+        "accuracy": 0.0,
+        "confidence": 0.05,
+        "gap": 0.0
+      },
+      {
+        "bin_index": 1,
+        "bin_range": [
+          0.1,
+          0.2
+        ],
+        "count": 1,
+        "accuracy": 0.0,
+        "confidence": 0.1847,
+        "gap": 0.1847
+      },
+      {
+        "bin_index": 2,
+        "bin_range": [
+          0.2,
+          0.3
+        ],
+        "count": 7,
+        "accuracy": 0.0,
+        "confidence": 0.2543,
+        "gap": 0.2543
+      },
+      {
+        "bin_index": 3,
+        "bin_range": [
+          0.3,
+          0.4
+        ],
+        "count": 6,
+        "accuracy": 0.0,
+        "confidence": 0.3421,
+        "gap": 0.3421
+      },
+      {
+        "bin_index": 4,
+        "bin_range": [
+          0.4,
+          0.5
+        ],
+        "count": 8,
+        "accuracy": 0.0,
+        "confidence": 0.463,
+        "gap": 0.463
+      },
+      {
+        "bin_index": 5,
+        "bin_range": [
+          0.5,
+          0.6
+        ],
+        "count": 15,
+        "accuracy": 0.0,
+        "confidence": 0.5606,
+        "gap": 0.5606
+      },
+      {
+        "bin_index": 6,
+        "bin_range": [
+          0.6,
+          0.7
+        ],
+        "count": 34,
+        "accuracy": 0.0,
+        "confidence": 0.6578,
+        "gap": 0.6578
+      },
+      {
+        "bin_index": 7,
+        "bin_range": [
+          0.7,
+          0.8
+        ],
+        "count": 62,
+        "accuracy": 0.0,
+        "confidence": 0.7584,
+        "gap": 0.7584
+      },
+      {
+        "bin_index": 8,
+        "bin_range": [
+          0.8,
+          0.9
+        ],
+        "count": 140,
+        "accuracy": 0.0071,
+        "confidence": 0.8526,
+        "gap": 0.8454
+      },
+      {
+        "bin_index": 9,
+        "bin_range": [
+          0.9,
+          1.0
+        ],
+        "count": 327,
+        "accuracy": 0.0489,
+        "confidence": 0.9682,
+        "gap": 0.9193
+      }
+    ],
+    "reliability_bins_after": [
+      {
+        "bin_index": 0,
+        "bin_range": [
+          0.0,
+          0.1
+        ],
+        "count": 0,
+        "accuracy": 0.0,
+        "confidence": 0.05,
+        "gap": 0.0
+      },
+      {
+        "bin_index": 1,
+        "bin_range": [
+          0.1,
+          0.2
+        ],
+        "count": 0,
+        "accuracy": 0.0,
+        "confidence": 0.15,
+        "gap": 0.0
+      },
+      {
+        "bin_index": 2,
+        "bin_range": [
+          0.2,
+          0.3
+        ],
+        "count": 0,
+        "accuracy": 0.0,
+        "confidence": 0.25,
+        "gap": 0.0
+      },
+      {
+        "bin_index": 3,
+        "bin_range": [
+          0.3,
+          0.4
+        ],
+        "count": 0,
+        "accuracy": 0.0,
+        "confidence": 0.35,
+        "gap": 0.0
+      },
+      {
+        "bin_index": 4,
+        "bin_range": [
+          0.4,
+          0.5
+        ],
+        "count": 22,
+        "accuracy": 0.0,
+        "confidence": 0.4839,
+        "gap": 0.4839
+      },
+      {
+        "bin_index": 5,
+        "bin_range": [
+          0.5,
+          0.6
+        ],
+        "count": 420,
+        "accuracy": 0.0214,
+        "confidence": 0.5498,
+        "gap": 0.5284
+      },
+      {
+        "bin_index": 6,
+        "bin_range": [
+          0.6,
+          0.7
+        ],
+        "count": 142,
+        "accuracy": 0.0563,
+        "confidence": 0.6363,
+        "gap": 0.5799
+      },
+      {
+        "bin_index": 7,
+        "bin_range": [
+          0.7,
+          0.8
+        ],
+        "count": 16,
+        "accuracy": 0.0,
+        "confidence": 0.7256,
+        "gap": 0.7256
+      },
+      {
+        "bin_index": 8,
+        "bin_range": [
+          0.8,
+          0.9
+        ],
+        "count": 0,
+        "accuracy": 0.0,
+        "confidence": 0.85,
+        "gap": 0.0
+      },
+      {
+        "bin_index": 9,
+        "bin_range": [
+          0.9,
+          1.0
+        ],
+        "count": 0,
+        "accuracy": 0.0,
+        "confidence": 0.95,
+        "gap": 0.0
+      }
+    ]
+  }
+}

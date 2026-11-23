@@ -2,7 +2,7 @@ import React from 'react';
 import { Play, ShieldCheck, Cpu, Cloud } from 'lucide-react';
 
 interface HeaderProps {
-  activeTab: 'overview' | 'comparison' | 'inspector';
+  activeTab: 'overview' | 'comparison' | 'inspector' | 'tracker';
   isLoading: boolean;
   onRunBenchmark: () => void;
   manifestName: string;
@@ -21,9 +21,11 @@ export const Header: React.FC<HeaderProps> = ({
       case 'overview':
         return 'Dashboard Metrik & Analisis Kurva';
       case 'comparison':
-        return 'Studi Komparasi Model (PP-OCRv6 & CRNN-CTC)';
+        return 'Studi Komparasi 6 Model OCR & Dampak 4-Lapis';
       case 'inspector':
         return 'Inspektur Sampel & Drill-Down Verifikasi';
+      case 'tracker':
+        return 'Pelacakan Eksperimen & Audit Dataset';
     }
   };
 
@@ -74,7 +76,7 @@ export const Header: React.FC<HeaderProps> = ({
               isLightMode ? 'text-[#64748B]' : 'text-[#94A3B8]'
             }`}
           >
-            Evaluasi Benchmark: 120 folder uji ({manifestName}) &bull; PP-OCRv6 Tiny, Small, Medium & CRNN-CTC
+            Evaluasi 6 Model OCR ({manifestName}) &bull; Sebelum vs Sesudah Verifikasi 4-Lapis
           </p>
         </div>
 

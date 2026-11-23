@@ -1,0 +1,601 @@
+sample_id,frame_idx,filename,frame_ground_truth,settled_ground_truth,device_id,product_id,scene_type,roi_bbox,is_stable_burst,agreement_ratio,is_physical_valid
+K0000,0,K0000_f0.jpg,24.7,24.7,lantai5_300kg,karung_25,pre_cropped,,True,1.0,True
+K0000,1,K0000_f1.jpg,24.7,24.7,lantai5_300kg,karung_25,pre_cropped,,True,1.0,True
+K0000,2,K0000_f2.jpg,24.7,24.7,lantai5_300kg,karung_25,pre_cropped,,True,1.0,True
+K0000,3,K0000_f3.jpg,24.7,24.7,lantai5_300kg,karung_25,pre_cropped,,True,1.0,True
+K0000,4,K0000_f4.jpg,24.7,24.7,lantai5_300kg,karung_25,pre_cropped,,True,1.0,True
+K0001,0,K0001_f0.jpg,5.02,5.02,led6_60kg,karung_5,full_scene,"[175, 175, 465, 270]",True,1.0,True
+K0001,1,K0001_f1.jpg,5.02,5.02,led6_60kg,karung_5,full_scene,"[195, 184, 485, 279]",True,1.0,True
+K0001,2,K0001_f2.jpg,5.02,5.02,led6_60kg,karung_5,full_scene,"[183, 185, 473, 280]",True,1.0,True
+K0001,3,K0001_f3.jpg,5.02,5.02,led6_60kg,karung_5,full_scene,"[195, 171, 485, 266]",True,1.0,True
+K0001,4,K0001_f4.jpg,5.02,5.02,led6_60kg,karung_5,full_scene,"[198, 177, 488, 272]",True,1.0,True
+K0002,0,K0002_f0.jpg,24.5,24.5,lantai7_2000kg,karung_25,full_scene,"[205, 294, 518, 407]",True,1.0,False
+K0002,1,K0002_f1.jpg,24.5,24.5,lantai7_2000kg,karung_25,full_scene,"[216, 285, 529, 398]",True,1.0,False
+K0002,2,K0002_f2.jpg,24.5,24.5,lantai7_2000kg,karung_25,full_scene,"[222, 293, 535, 406]",True,1.0,False
+K0002,3,K0002_f3.jpg,24.5,24.5,lantai7_2000kg,karung_25,full_scene,"[214, 276, 527, 389]",True,1.0,False
+K0002,4,K0002_f4.jpg,24.5,24.5,lantai7_2000kg,karung_25,full_scene,"[225, 287, 538, 400]",True,1.0,False
+K0003,0,K0003_f0.jpg,50.38,50.38,led6_60kg,karung_50,pre_cropped,,True,1.0,True
+K0003,1,K0003_f1.jpg,50.38,50.38,led6_60kg,karung_50,pre_cropped,,True,1.0,True
+K0003,2,K0003_f2.jpg,50.38,50.38,led6_60kg,karung_50,pre_cropped,,True,1.0,True
+K0003,3,K0003_f3.jpg,50.38,50.38,led6_60kg,karung_50,pre_cropped,,True,1.0,True
+K0003,4,K0003_f4.jpg,50.38,50.38,led6_60kg,karung_50,pre_cropped,,True,1.0,True
+K0004,0,K0004_f0.jpg,4.960,4.960,lcd6_15kg,karung_5,full_scene,"[289, 212, 651, 324]",True,1.0,True
+K0004,1,K0004_f1.jpg,4.960,4.960,lcd6_15kg,karung_5,full_scene,"[303, 212, 665, 324]",True,1.0,True
+K0004,2,K0004_f2.jpg,4.960,4.960,lcd6_15kg,karung_5,full_scene,"[297, 211, 659, 323]",True,1.0,True
+K0004,3,K0004_f3.jpg,4.960,4.960,lcd6_15kg,karung_5,full_scene,"[294, 212, 656, 324]",True,1.0,True
+K0004,4,K0004_f4.jpg,4.960,4.960,lcd6_15kg,karung_5,full_scene,"[298, 215, 660, 327]",True,1.0,True
+K0005,0,K0005_f0.jpg,11.07,11.07,lcd6_30kg,karung_10,full_scene,"[151, 305, 384, 391]",True,1.0,False
+K0005,1,K0005_f1.jpg,11.07,11.07,lcd6_30kg,karung_10,full_scene,"[145, 324, 378, 410]",True,1.0,False
+K0005,2,K0005_f2.jpg,11.07,11.07,lcd6_30kg,karung_10,full_scene,"[148, 327, 381, 413]",True,1.0,False
+K0005,3,K0005_f3.jpg,11.07,11.07,lcd6_30kg,karung_10,full_scene,"[139, 316, 372, 402]",True,1.0,False
+K0005,4,K0005_f4.jpg,11.07,11.07,lcd6_30kg,karung_10,full_scene,"[143, 312, 376, 398]",True,1.0,False
+K0006,0,K0006_f0.jpg,1.265,1.265,lcd6_15kg,curah,full_scene,"[253, 205, 497, 363]",True,1.0,True
+K0006,1,K0006_f1.jpg,1.265,1.265,lcd6_15kg,curah,full_scene,"[242, 208, 486, 366]",True,1.0,True
+K0006,2,K0006_f2.jpg,1.265,1.265,lcd6_15kg,curah,full_scene,"[255, 204, 499, 362]",True,1.0,True
+K0006,3,K0006_f3.jpg,1.265,1.265,lcd6_15kg,curah,full_scene,"[250, 206, 494, 364]",True,1.0,True
+K0006,4,K0006_f4.jpg,1.265,1.265,lcd6_15kg,curah,full_scene,"[230, 207, 474, 365]",True,1.0,True
+K0007,0,K0007_f0.jpg,9.92,9.92,ind7_150kg,karung_10,pre_cropped,,True,1.0,True
+K0007,1,K0007_f1.jpg,9.92,9.92,ind7_150kg,karung_10,pre_cropped,,True,1.0,True
+K0007,2,K0007_f2.jpg,9.92,9.92,ind7_150kg,karung_10,pre_cropped,,True,1.0,True
+K0007,3,K0007_f3.jpg,9.92,9.92,ind7_150kg,karung_10,pre_cropped,,True,1.0,True
+K0007,4,K0007_f4.jpg,9.92,9.92,ind7_150kg,karung_10,pre_cropped,,True,1.0,True
+K0008,0,K0008_f0.jpg,5.0,5.0,lantai5_300kg,karung_5,full_scene,"[283, 133, 484, 254]",True,1.0,True
+K0008,1,K0008_f1.jpg,5.0,5.0,lantai5_300kg,karung_5,full_scene,"[273, 128, 474, 249]",True,1.0,True
+K0008,2,K0008_f2.jpg,5.0,5.0,lantai5_300kg,karung_5,full_scene,"[266, 130, 467, 251]",True,1.0,True
+K0008,3,K0008_f3.jpg,5.0,5.0,lantai5_300kg,karung_5,full_scene,"[269, 131, 470, 252]",True,1.0,True
+K0008,4,K0008_f4.jpg,5.0,5.0,lantai5_300kg,karung_5,full_scene,"[278, 127, 479, 248]",True,1.0,True
+K0009,0,K0009_f0.jpg,25.0,25.0,lantai7_2000kg,karung_25,full_scene,"[268, 157, 581, 276]",True,1.0,True
+K0009,1,K0009_f1.jpg,25.0,25.0,lantai7_2000kg,karung_25,full_scene,"[256, 152, 569, 271]",True,1.0,True
+K0009,2,K0009_f2.jpg,25.0,25.0,lantai7_2000kg,karung_25,full_scene,"[270, 160, 583, 279]",True,1.0,True
+K0009,3,K0009_f3.jpg,25.0,25.0,lantai7_2000kg,karung_25,full_scene,"[262, 152, 575, 271]",True,1.0,True
+K0009,4,K0009_f4.jpg,25.0,25.0,lantai7_2000kg,karung_25,full_scene,"[260, 151, 573, 270]",True,1.0,True
+K0010,0,K0010_f0.jpg,50.80,50.80,ind7_150kg,karung_50,full_scene,"[198, 252, 727, 435]",True,1.0,True
+K0010,1,K0010_f1.jpg,50.80,50.80,ind7_150kg,karung_50,full_scene,"[181, 264, 710, 447]",True,1.0,True
+K0010,2,K0010_f2.jpg,50.80,50.80,ind7_150kg,karung_50,full_scene,"[193, 250, 722, 433]",True,1.0,True
+K0010,3,K0010_f3.jpg,50.80,50.80,ind7_150kg,karung_50,full_scene,"[197, 251, 726, 434]",True,1.0,True
+K0010,4,K0010_f4.jpg,50.80,50.80,ind7_150kg,karung_50,full_scene,"[203, 252, 732, 435]",True,1.0,True
+K0011,0,K0011_f0.jpg,5.04,5.04,led6_60kg,karung_5,full_scene,"[120, 179, 488, 370]",True,1.0,True
+K0011,1,K0011_f1.jpg,5.04,5.04,led6_60kg,karung_5,full_scene,"[112, 162, 480, 353]",True,1.0,True
+K0011,2,K0011_f2.jpg,5.04,5.04,led6_60kg,karung_5,full_scene,"[122, 166, 490, 357]",True,1.0,True
+K0011,3,K0011_f3.jpg,5.04,5.04,led6_60kg,karung_5,full_scene,"[116, 166, 484, 357]",True,1.0,True
+K0011,4,K0011_f4.jpg,5.04,5.04,led6_60kg,karung_5,full_scene,"[132, 178, 500, 369]",True,1.0,True
+K0012,0,K0012_f0.jpg,49.94,49.94,led6_60kg,karung_50,full_scene,"[198, 122, 690, 365]",True,1.0,True
+K0012,1,K0012_f1.jpg,49.94,49.94,led6_60kg,karung_50,full_scene,"[198, 119, 690, 362]",True,1.0,True
+K0012,2,K0012_f2.jpg,49.94,49.94,led6_60kg,karung_50,full_scene,"[196, 119, 688, 362]",True,1.0,True
+K0012,3,K0012_f3.jpg,49.94,49.94,led6_60kg,karung_50,full_scene,"[210, 122, 702, 365]",True,1.0,True
+K0012,4,K0012_f4.jpg,49.94,49.94,led6_60kg,karung_50,full_scene,"[205, 114, 697, 357]",True,1.0,True
+K0013,0,K0013_f0.jpg,25.8,25.8,lantai5_300kg,karung_25,pre_cropped,,True,1.0,False
+K0013,1,K0013_f1.jpg,25.8,25.8,lantai5_300kg,karung_25,pre_cropped,,True,1.0,False
+K0013,2,K0013_f2.jpg,25.8,25.8,lantai5_300kg,karung_25,pre_cropped,,True,1.0,False
+K0013,3,K0013_f3.jpg,25.8,25.8,lantai5_300kg,karung_25,pre_cropped,,True,1.0,False
+K0013,4,K0013_f4.jpg,25.8,25.8,lantai5_300kg,karung_25,pre_cropped,,True,1.0,False
+K0014,0,K0014_f0.jpg,5.1,5.1,lantai5_300kg,karung_5,pre_cropped,,True,1.0,True
+K0014,1,K0014_f1.jpg,5.1,5.1,lantai5_300kg,karung_5,pre_cropped,,True,1.0,True
+K0014,2,K0014_f2.jpg,5.1,5.1,lantai5_300kg,karung_5,pre_cropped,,True,1.0,True
+K0014,3,K0014_f3.jpg,5.1,5.1,lantai5_300kg,karung_5,pre_cropped,,True,1.0,True
+K0014,4,K0014_f4.jpg,5.1,5.1,lantai5_300kg,karung_5,pre_cropped,,True,1.0,True
+K0015,0,K0015_f0.jpg,9.90,9.90,lcd6_30kg,karung_10,full_scene,"[81, 421, 281, 493]",True,1.0,True
+K0015,1,K0015_f1.jpg,9.90,9.90,lcd6_30kg,karung_10,full_scene,"[90, 420, 290, 492]",True,1.0,True
+K0015,2,K0015_f2.jpg,9.90,9.90,lcd6_30kg,karung_10,full_scene,"[92, 426, 292, 498]",True,1.0,True
+K0015,3,K0015_f3.jpg,9.90,9.90,lcd6_30kg,karung_10,full_scene,"[82, 421, 282, 493]",True,1.0,True
+K0015,4,K0015_f4.jpg,9.90,9.90,lcd6_30kg,karung_10,full_scene,"[91, 433, 291, 505]",True,1.0,True
+K0016,0,K0016_f0.jpg,25.14,25.14,led6_60kg,karung_25,full_scene,"[307, 280, 641, 392]",True,1.0,True
+K0016,1,K0016_f1.jpg,25.14,25.14,led6_60kg,karung_25,full_scene,"[311, 285, 645, 397]",True,1.0,True
+K0016,2,K0016_f2.jpg,25.14,25.14,led6_60kg,karung_25,full_scene,"[321, 282, 655, 394]",True,1.0,True
+K0016,3,K0016_f3.jpg,25.14,25.14,led6_60kg,karung_25,full_scene,"[316, 274, 650, 386]",True,1.0,True
+K0016,4,K0016_f4.jpg,25.14,25.14,led6_60kg,karung_25,full_scene,"[317, 276, 651, 388]",True,1.0,True
+K0017,0,K0017_f0.jpg,5.22,5.02,lcd6_30kg,karung_5,pre_cropped,,False,0.8,True
+K0017,1,K0017_f1.jpg,5.02,5.02,lcd6_30kg,karung_5,pre_cropped,,False,0.8,True
+K0017,2,K0017_f2.jpg,5.02,5.02,lcd6_30kg,karung_5,pre_cropped,,False,0.8,True
+K0017,3,K0017_f3.jpg,5.02,5.02,lcd6_30kg,karung_5,pre_cropped,,False,0.8,True
+K0017,4,K0017_f4.jpg,5.02,5.02,lcd6_30kg,karung_5,pre_cropped,,False,0.8,True
+K0018,0,K0018_f0.jpg,56.04,56.04,ind7_150kg,curah,full_scene,"[233, 193, 594, 315]",True,1.0,True
+K0018,1,K0018_f1.jpg,56.04,56.04,ind7_150kg,curah,full_scene,"[241, 198, 602, 320]",True,1.0,True
+K0018,2,K0018_f2.jpg,56.04,56.04,ind7_150kg,curah,full_scene,"[238, 202, 599, 324]",True,1.0,True
+K0018,3,K0018_f3.jpg,56.04,56.04,ind7_150kg,curah,full_scene,"[243, 188, 604, 310]",True,1.0,True
+K0018,4,K0018_f4.jpg,56.04,56.04,ind7_150kg,curah,full_scene,"[242, 187, 603, 309]",True,1.0,True
+K0019,0,K0019_f0.jpg,4.96,4.96,led6_60kg,karung_5,full_scene,"[120, 391, 383, 486]",True,1.0,True
+K0019,1,K0019_f1.jpg,4.96,4.96,led6_60kg,karung_5,full_scene,"[122, 384, 385, 479]",True,1.0,True
+K0019,2,K0019_f2.jpg,4.96,4.96,led6_60kg,karung_5,full_scene,"[120, 379, 383, 474]",True,1.0,True
+K0019,3,K0019_f3.jpg,4.96,4.96,led6_60kg,karung_5,full_scene,"[115, 394, 378, 489]",True,1.0,True
+K0019,4,K0019_f4.jpg,4.96,4.96,led6_60kg,karung_5,full_scene,"[121, 393, 384, 488]",True,1.0,True
+K0020,0,K0020_f0.jpg,5.1,5.1,lantai5_300kg,karung_5,full_scene,"[280, 258, 656, 408]",True,1.0,True
+K0020,1,K0020_f1.jpg,5.1,5.1,lantai5_300kg,karung_5,full_scene,"[270, 255, 646, 405]",True,1.0,True
+K0020,2,K0020_f2.jpg,5.1,5.1,lantai5_300kg,karung_5,full_scene,"[276, 245, 652, 395]",True,1.0,True
+K0020,3,K0020_f3.jpg,5.1,5.1,lantai5_300kg,karung_5,full_scene,"[292, 264, 668, 414]",True,1.0,True
+K0020,4,K0020_f4.jpg,5.1,5.1,lantai5_300kg,karung_5,full_scene,"[262, 261, 638, 411]",True,1.0,True
+K0021,0,K0021_f0.jpg,9.9,9.9,lantai5_300kg,karung_10,pre_cropped,,True,1.0,True
+K0021,1,K0021_f1.jpg,9.9,9.9,lantai5_300kg,karung_10,pre_cropped,,True,1.0,True
+K0021,2,K0021_f2.jpg,9.9,9.9,lantai5_300kg,karung_10,pre_cropped,,True,1.0,True
+K0021,3,K0021_f3.jpg,9.9,9.9,lantai5_300kg,karung_10,pre_cropped,,True,1.0,True
+K0021,4,K0021_f4.jpg,9.9,9.9,lantai5_300kg,karung_10,pre_cropped,,True,1.0,True
+K0022,0,K0022_f0.jpg,24.5,24.5,lantai7_2000kg,karung_25,pre_cropped,,True,1.0,False
+K0022,1,K0022_f1.jpg,24.5,24.5,lantai7_2000kg,karung_25,pre_cropped,,True,1.0,False
+K0022,2,K0022_f2.jpg,24.5,24.5,lantai7_2000kg,karung_25,pre_cropped,,True,1.0,False
+K0022,3,K0022_f3.jpg,24.5,24.5,lantai7_2000kg,karung_25,pre_cropped,,True,1.0,False
+K0022,4,K0022_f4.jpg,24.5,24.5,lantai7_2000kg,karung_25,pre_cropped,,True,1.0,False
+K0023,0,K0023_f0.jpg,25.0,25.0,lantai7_2000kg,karung_25,full_scene,"[312, 221, 738, 376]",True,1.0,True
+K0023,1,K0023_f1.jpg,25.0,25.0,lantai7_2000kg,karung_25,full_scene,"[289, 232, 715, 387]",True,1.0,True
+K0023,2,K0023_f2.jpg,25.0,25.0,lantai7_2000kg,karung_25,full_scene,"[294, 231, 720, 386]",True,1.0,True
+K0023,3,K0023_f3.jpg,25.0,25.0,lantai7_2000kg,karung_25,full_scene,"[299, 229, 725, 384]",True,1.0,True
+K0023,4,K0023_f4.jpg,25.0,25.0,lantai7_2000kg,karung_25,full_scene,"[290, 226, 716, 381]",True,1.0,True
+K0024,0,K0024_f0.jpg,25.68,25.68,led6_60kg,curah,full_scene,"[300, 166, 684, 321]",True,1.0,True
+K0024,1,K0024_f1.jpg,25.68,25.68,led6_60kg,curah,full_scene,"[279, 159, 663, 314]",True,1.0,True
+K0024,2,K0024_f2.jpg,25.68,25.68,led6_60kg,curah,full_scene,"[280, 172, 664, 327]",True,1.0,True
+K0024,3,K0024_f3.jpg,25.68,25.68,led6_60kg,curah,full_scene,"[276, 163, 660, 318]",True,1.0,True
+K0024,4,K0024_f4.jpg,25.68,25.68,led6_60kg,curah,full_scene,"[291, 163, 675, 318]",True,1.0,True
+K0025,0,K0025_f0.jpg,5.00,5.00,lcd6_30kg,karung_5,full_scene,"[203, 200, 607, 335]",True,1.0,True
+K0025,1,K0025_f1.jpg,5.00,5.00,lcd6_30kg,karung_5,full_scene,"[208, 191, 612, 326]",True,1.0,True
+K0025,2,K0025_f2.jpg,5.00,5.00,lcd6_30kg,karung_5,full_scene,"[200, 196, 604, 331]",True,1.0,True
+K0025,3,K0025_f3.jpg,5.00,5.00,lcd6_30kg,karung_5,full_scene,"[196, 202, 600, 337]",True,1.0,True
+K0025,4,K0025_f4.jpg,5.00,5.00,lcd6_30kg,karung_5,full_scene,"[198, 187, 602, 322]",True,1.0,True
+K0026,0,K0026_f0.jpg,9.9,9.9,lantai5_300kg,karung_10,pre_cropped,,True,1.0,True
+K0026,1,K0026_f1.jpg,9.9,9.9,lantai5_300kg,karung_10,pre_cropped,,True,1.0,True
+K0026,2,K0026_f2.jpg,9.9,9.9,lantai5_300kg,karung_10,pre_cropped,,True,1.0,True
+K0026,3,K0026_f3.jpg,9.9,9.9,lantai5_300kg,karung_10,pre_cropped,,True,1.0,True
+K0026,4,K0026_f4.jpg,9.9,9.9,lantai5_300kg,karung_10,pre_cropped,,True,1.0,True
+K0027,0,K0027_f0.jpg,4.960,4.960,lcd6_15kg,karung_5,pre_cropped,,True,1.0,True
+K0027,1,K0027_f1.jpg,4.960,4.960,lcd6_15kg,karung_5,pre_cropped,,True,1.0,True
+K0027,2,K0027_f2.jpg,4.960,4.960,lcd6_15kg,karung_5,pre_cropped,,True,1.0,True
+K0027,3,K0027_f3.jpg,4.960,4.960,lcd6_15kg,karung_5,pre_cropped,,True,1.0,True
+K0027,4,K0027_f4.jpg,4.960,4.960,lcd6_15kg,karung_5,pre_cropped,,True,1.0,True
+K0028,0,K0028_f0.jpg,10.14,10.14,led6_60kg,karung_10,full_scene,"[210, 148, 619, 308]",True,1.0,True
+K0028,1,K0028_f1.jpg,10.14,10.14,led6_60kg,karung_10,full_scene,"[204, 149, 613, 309]",True,1.0,True
+K0028,2,K0028_f2.jpg,10.14,10.14,led6_60kg,karung_10,full_scene,"[200, 150, 609, 310]",True,1.0,True
+K0028,3,K0028_f3.jpg,10.14,10.14,led6_60kg,karung_10,full_scene,"[210, 137, 619, 297]",True,1.0,True
+K0028,4,K0028_f4.jpg,10.14,10.14,led6_60kg,karung_10,full_scene,"[205, 142, 614, 302]",True,1.0,True
+K0029,0,K0029_f0.jpg,10.08,10.08,ind7_150kg,karung_10,pre_cropped,,True,1.0,True
+K0029,1,K0029_f1.jpg,10.08,10.08,ind7_150kg,karung_10,pre_cropped,,True,1.0,True
+K0029,2,K0029_f2.jpg,10.08,10.08,ind7_150kg,karung_10,pre_cropped,,True,1.0,True
+K0029,3,K0029_f3.jpg,10.08,10.08,ind7_150kg,karung_10,pre_cropped,,True,1.0,True
+K0029,4,K0029_f4.jpg,10.08,10.08,ind7_150kg,karung_10,pre_cropped,,True,1.0,True
+K0030,0,K0030_f0.jpg,11.23,11.23,lcd6_30kg,curah,full_scene,"[193, 442, 421, 511]",True,1.0,True
+K0030,1,K0030_f1.jpg,11.23,11.23,lcd6_30kg,curah,full_scene,"[194, 426, 422, 495]",True,1.0,True
+K0030,2,K0030_f2.jpg,11.23,11.23,lcd6_30kg,curah,full_scene,"[187, 435, 415, 504]",True,1.0,True
+K0030,3,K0030_f3.jpg,11.23,11.23,lcd6_30kg,curah,full_scene,"[201, 432, 429, 501]",True,1.0,True
+K0030,4,K0030_f4.jpg,11.23,11.23,lcd6_30kg,curah,full_scene,"[199, 435, 427, 504]",True,1.0,True
+K0031,0,K0031_f0.jpg,24.5,24.5,lantai7_2000kg,karung_25,pre_cropped,,True,1.0,False
+K0031,1,K0031_f1.jpg,24.5,24.5,lantai7_2000kg,karung_25,pre_cropped,,True,1.0,False
+K0031,2,K0031_f2.jpg,24.5,24.5,lantai7_2000kg,karung_25,pre_cropped,,True,1.0,False
+K0031,3,K0031_f3.jpg,24.5,24.5,lantai7_2000kg,karung_25,pre_cropped,,True,1.0,False
+K0031,4,K0031_f4.jpg,24.5,24.5,lantai7_2000kg,karung_25,pre_cropped,,True,1.0,False
+K0032,0,K0032_f0.jpg,9.9,9.9,lantai5_300kg,karung_10,full_scene,"[245, 193, 474, 309]",True,1.0,True
+K0032,1,K0032_f1.jpg,9.9,9.9,lantai5_300kg,karung_10,full_scene,"[251, 193, 480, 309]",True,1.0,True
+K0032,2,K0032_f2.jpg,9.9,9.9,lantai5_300kg,karung_10,full_scene,"[253, 191, 482, 307]",True,1.0,True
+K0032,3,K0032_f3.jpg,9.9,9.9,lantai5_300kg,karung_10,full_scene,"[261, 198, 490, 314]",True,1.0,True
+K0032,4,K0032_f4.jpg,9.9,9.9,lantai5_300kg,karung_10,full_scene,"[255, 203, 484, 319]",True,1.0,True
+K0033,0,K0033_f0.jpg,9.24,9.24,led6_60kg,curah,full_scene,"[185, 116, 680, 347]",True,1.0,True
+K0033,1,K0033_f1.jpg,9.24,9.24,led6_60kg,curah,full_scene,"[177, 117, 672, 348]",True,1.0,True
+K0033,2,K0033_f2.jpg,9.24,9.24,led6_60kg,curah,full_scene,"[180, 119, 675, 350]",True,1.0,True
+K0033,3,K0033_f3.jpg,9.24,9.24,led6_60kg,curah,full_scene,"[178, 114, 673, 345]",True,1.0,True
+K0033,4,K0033_f4.jpg,9.24,9.24,led6_60kg,curah,full_scene,"[190, 122, 685, 353]",True,1.0,True
+K0034,0,K0034_f0.jpg,694.5,694.5,lantai7_2000kg,curah,full_scene,"[309, 220, 592, 323]",True,1.0,True
+K0034,1,K0034_f1.jpg,694.5,694.5,lantai7_2000kg,curah,full_scene,"[314, 227, 597, 330]",True,1.0,True
+K0034,2,K0034_f2.jpg,694.5,694.5,lantai7_2000kg,curah,full_scene,"[294, 237, 577, 340]",True,1.0,True
+K0034,3,K0034_f3.jpg,694.5,694.5,lantai7_2000kg,curah,full_scene,"[303, 229, 586, 332]",True,1.0,True
+K0034,4,K0034_f4.jpg,694.5,694.5,lantai7_2000kg,curah,full_scene,"[294, 238, 577, 341]",True,1.0,True
+K0035,0,K0035_f0.jpg,5.50,6.34,led6_60kg,curah,full_scene,"[272, 295, 468, 392]",False,0.8,True
+K0035,1,K0035_f1.jpg,6.34,6.34,led6_60kg,curah,full_scene,"[271, 292, 467, 389]",False,0.8,True
+K0035,2,K0035_f2.jpg,6.34,6.34,led6_60kg,curah,full_scene,"[279, 289, 475, 386]",False,0.8,True
+K0035,3,K0035_f3.jpg,6.34,6.34,led6_60kg,curah,full_scene,"[266, 276, 462, 373]",False,0.8,True
+K0035,4,K0035_f4.jpg,6.34,6.34,led6_60kg,curah,full_scene,"[275, 298, 471, 395]",False,0.8,True
+K0036,0,K0036_f0.jpg,0.435,0.435,lcd6_15kg,curah,full_scene,"[259, 194, 548, 304]",True,1.0,False
+K0036,1,K0036_f1.jpg,0.435,0.435,lcd6_15kg,curah,full_scene,"[242, 185, 531, 295]",True,1.0,False
+K0036,2,K0036_f2.jpg,0.435,0.435,lcd6_15kg,curah,full_scene,"[250, 181, 539, 291]",True,1.0,False
+K0036,3,K0036_f3.jpg,0.435,0.435,lcd6_15kg,curah,full_scene,"[254, 196, 543, 306]",True,1.0,False
+K0036,4,K0036_f4.jpg,0.435,0.435,lcd6_15kg,curah,full_scene,"[251, 186, 540, 296]",True,1.0,False
+K0037,0,K0037_f0.jpg,57.32,55.18,led6_60kg,karung_50,full_scene,"[249, 217, 617, 338]",False,0.6,False
+K0037,1,K0037_f1.jpg,57.88,55.18,led6_60kg,karung_50,full_scene,"[256, 208, 624, 329]",False,0.6,False
+K0037,2,K0037_f2.jpg,55.18,55.18,led6_60kg,karung_50,full_scene,"[252, 214, 620, 335]",False,0.6,False
+K0037,3,K0037_f3.jpg,55.18,55.18,led6_60kg,karung_50,full_scene,"[253, 216, 621, 337]",False,0.6,False
+K0037,4,K0037_f4.jpg,55.18,55.18,led6_60kg,karung_50,full_scene,"[254, 219, 622, 340]",False,0.6,False
+K0038,0,K0038_f0.jpg,25.06,25.06,ind7_150kg,karung_25,pre_cropped,,True,1.0,True
+K0038,1,K0038_f1.jpg,25.06,25.06,ind7_150kg,karung_25,pre_cropped,,True,1.0,True
+K0038,2,K0038_f2.jpg,25.06,25.06,ind7_150kg,karung_25,pre_cropped,,True,1.0,True
+K0038,3,K0038_f3.jpg,25.06,25.06,ind7_150kg,karung_25,pre_cropped,,True,1.0,True
+K0038,4,K0038_f4.jpg,25.06,25.06,ind7_150kg,karung_25,pre_cropped,,True,1.0,True
+K0039,0,K0039_f0.jpg,1723.0,1723.0,lantai7_2000kg,curah,pre_cropped,,True,1.0,True
+K0039,1,K0039_f1.jpg,1723.0,1723.0,lantai7_2000kg,curah,pre_cropped,,True,1.0,True
+K0039,2,K0039_f2.jpg,1723.0,1723.0,lantai7_2000kg,curah,pre_cropped,,True,1.0,True
+K0039,3,K0039_f3.jpg,1723.0,1723.0,lantai7_2000kg,curah,pre_cropped,,True,1.0,True
+K0039,4,K0039_f4.jpg,1723.0,1723.0,lantai7_2000kg,curah,pre_cropped,,True,1.0,True
+K0040,0,K0040_f0.jpg,6.1,7.0,lantai5_300kg,curah,full_scene,"[142, 265, 510, 463]",False,0.4,True
+K0040,1,K0040_f1.jpg,7.9,7.0,lantai5_300kg,curah,full_scene,"[140, 266, 508, 464]",False,0.4,True
+K0040,2,K0040_f2.jpg,6.5,7.0,lantai5_300kg,curah,full_scene,"[128, 276, 496, 474]",False,0.4,True
+K0040,3,K0040_f3.jpg,7.0,7.0,lantai5_300kg,curah,full_scene,"[143, 268, 511, 466]",False,0.4,True
+K0040,4,K0040_f4.jpg,7.0,7.0,lantai5_300kg,curah,full_scene,"[145, 260, 513, 458]",False,0.4,True
+K0041,0,K0041_f0.jpg,9.995,9.995,lcd6_15kg,karung_10,pre_cropped,,True,1.0,True
+K0041,1,K0041_f1.jpg,9.995,9.995,lcd6_15kg,karung_10,pre_cropped,,True,1.0,True
+K0041,2,K0041_f2.jpg,9.995,9.995,lcd6_15kg,karung_10,pre_cropped,,True,1.0,True
+K0041,3,K0041_f3.jpg,9.995,9.995,lcd6_15kg,karung_10,pre_cropped,,True,1.0,True
+K0041,4,K0041_f4.jpg,9.995,9.995,lcd6_15kg,karung_10,pre_cropped,,True,1.0,True
+K0042,0,K0042_f0.jpg,12.0,12.0,lantai7_2000kg,curah,full_scene,"[37, 267, 400, 407]",True,1.0,True
+K0042,1,K0042_f1.jpg,12.0,12.0,lantai7_2000kg,curah,full_scene,"[48, 273, 411, 413]",True,1.0,True
+K0042,2,K0042_f2.jpg,12.0,12.0,lantai7_2000kg,curah,full_scene,"[50, 259, 413, 399]",True,1.0,True
+K0042,3,K0042_f3.jpg,12.0,12.0,lantai7_2000kg,curah,full_scene,"[48, 273, 411, 413]",True,1.0,True
+K0042,4,K0042_f4.jpg,12.0,12.0,lantai7_2000kg,curah,full_scene,"[42, 264, 405, 404]",True,1.0,True
+K0043,0,K0043_f0.jpg,25.32,25.32,led6_60kg,karung_25,full_scene,"[117, 130, 583, 307]",True,1.0,True
+K0043,1,K0043_f1.jpg,25.32,25.32,led6_60kg,karung_25,full_scene,"[107, 129, 573, 306]",True,1.0,True
+K0043,2,K0043_f2.jpg,25.32,25.32,led6_60kg,karung_25,full_scene,"[107, 130, 573, 307]",True,1.0,True
+K0043,3,K0043_f3.jpg,25.32,25.32,led6_60kg,karung_25,full_scene,"[108, 125, 574, 302]",True,1.0,True
+K0043,4,K0043_f4.jpg,25.32,25.32,led6_60kg,karung_25,full_scene,"[106, 123, 572, 300]",True,1.0,True
+K0044,0,K0044_f0.jpg,50.4,50.4,lantai5_300kg,karung_50,pre_cropped,,True,1.0,True
+K0044,1,K0044_f1.jpg,50.4,50.4,lantai5_300kg,karung_50,pre_cropped,,True,1.0,True
+K0044,2,K0044_f2.jpg,50.4,50.4,lantai5_300kg,karung_50,pre_cropped,,True,1.0,True
+K0044,3,K0044_f3.jpg,50.4,50.4,lantai5_300kg,karung_50,pre_cropped,,True,1.0,True
+K0044,4,K0044_f4.jpg,50.4,50.4,lantai5_300kg,karung_50,pre_cropped,,True,1.0,True
+K0045,0,K0045_f0.jpg,308.5,308.5,lantai7_2000kg,curah,full_scene,"[111, 305, 425, 424]",True,1.0,True
+K0045,1,K0045_f1.jpg,308.5,308.5,lantai7_2000kg,curah,full_scene,"[105, 287, 419, 406]",True,1.0,True
+K0045,2,K0045_f2.jpg,308.5,308.5,lantai7_2000kg,curah,full_scene,"[120, 302, 434, 421]",True,1.0,True
+K0045,3,K0045_f3.jpg,308.5,308.5,lantai7_2000kg,curah,full_scene,"[111, 315, 425, 434]",True,1.0,True
+K0045,4,K0045_f4.jpg,308.5,308.5,lantai7_2000kg,curah,full_scene,"[110, 295, 424, 414]",True,1.0,True
+K0046,0,K0046_f0.jpg,4.9,4.9,lantai5_300kg,karung_5,full_scene,"[155, 157, 467, 275]",True,1.0,True
+K0046,1,K0046_f1.jpg,4.9,4.9,lantai5_300kg,karung_5,full_scene,"[169, 160, 481, 278]",True,1.0,True
+K0046,2,K0046_f2.jpg,4.9,4.9,lantai5_300kg,karung_5,full_scene,"[155, 159, 467, 277]",True,1.0,True
+K0046,3,K0046_f3.jpg,4.9,4.9,lantai5_300kg,karung_5,full_scene,"[162, 154, 474, 272]",True,1.0,True
+K0046,4,K0046_f4.jpg,4.9,4.9,lantai5_300kg,karung_5,full_scene,"[145, 149, 457, 267]",True,1.0,True
+K0047,0,K0047_f0.jpg,49.48,50.40,led6_60kg,karung_50,full_scene,"[262, 173, 606, 306]",False,0.8,True
+K0047,1,K0047_f1.jpg,50.40,50.40,led6_60kg,karung_50,full_scene,"[256, 182, 600, 315]",False,0.8,True
+K0047,2,K0047_f2.jpg,50.40,50.40,led6_60kg,karung_50,full_scene,"[261, 177, 605, 310]",False,0.8,True
+K0047,3,K0047_f3.jpg,50.40,50.40,led6_60kg,karung_50,full_scene,"[258, 179, 602, 312]",False,0.8,True
+K0047,4,K0047_f4.jpg,50.40,50.40,led6_60kg,karung_50,full_scene,"[275, 181, 619, 314]",False,0.8,True
+K0048,0,K0048_f0.jpg,5.42,5.04,ind7_150kg,karung_5,full_scene,"[142, 290, 350, 410]",False,0.4,True
+K0048,1,K0048_f1.jpg,5.28,5.04,ind7_150kg,karung_5,full_scene,"[146, 278, 354, 398]",False,0.4,True
+K0048,2,K0048_f2.jpg,4.66,5.04,ind7_150kg,karung_5,full_scene,"[138, 287, 346, 407]",False,0.4,True
+K0048,3,K0048_f3.jpg,5.04,5.04,ind7_150kg,karung_5,full_scene,"[144, 290, 352, 410]",False,0.4,True
+K0048,4,K0048_f4.jpg,5.04,5.04,ind7_150kg,karung_5,full_scene,"[139, 289, 347, 409]",False,0.4,True
+K0049,0,K0049_f0.jpg,27.02,27.02,lcd6_30kg,karung_25,full_scene,"[220, 185, 615, 334]",True,1.0,False
+K0049,1,K0049_f1.jpg,27.02,27.02,lcd6_30kg,karung_25,full_scene,"[222, 176, 617, 325]",True,1.0,False
+K0049,2,K0049_f2.jpg,27.02,27.02,lcd6_30kg,karung_25,full_scene,"[217, 173, 612, 322]",True,1.0,False
+K0049,3,K0049_f3.jpg,27.02,27.02,lcd6_30kg,karung_25,full_scene,"[226, 178, 621, 327]",True,1.0,False
+K0049,4,K0049_f4.jpg,27.02,27.02,lcd6_30kg,karung_25,full_scene,"[240, 176, 635, 325]",True,1.0,False
+K0050,0,K0050_f0.jpg,9.010,10.010,lcd6_15kg,karung_10,full_scene,"[91, 113, 498, 242]",False,0.8,True
+K0050,1,K0050_f1.jpg,10.010,10.010,lcd6_15kg,karung_10,full_scene,"[98, 110, 505, 239]",False,0.8,True
+K0050,2,K0050_f2.jpg,10.010,10.010,lcd6_15kg,karung_10,full_scene,"[82, 104, 489, 233]",False,0.8,True
+K0050,3,K0050_f3.jpg,10.010,10.010,lcd6_15kg,karung_10,full_scene,"[84, 110, 491, 239]",False,0.8,True
+K0050,4,K0050_f4.jpg,10.010,10.010,lcd6_15kg,karung_10,full_scene,"[84, 112, 491, 241]",False,0.8,True
+K0051,0,K0051_f0.jpg,10.0,10.0,lantai5_300kg,karung_10,full_scene,"[258, 363, 371, 419]",True,1.0,True
+K0051,1,K0051_f1.jpg,10.0,10.0,lantai5_300kg,karung_10,full_scene,"[260, 357, 373, 413]",True,1.0,True
+K0051,2,K0051_f2.jpg,10.0,10.0,lantai5_300kg,karung_10,full_scene,"[251, 369, 364, 425]",True,1.0,True
+K0051,3,K0051_f3.jpg,10.0,10.0,lantai5_300kg,karung_10,full_scene,"[252, 364, 365, 420]",True,1.0,True
+K0051,4,K0051_f4.jpg,10.0,10.0,lantai5_300kg,karung_10,full_scene,"[256, 379, 369, 435]",True,1.0,True
+K0052,0,K0052_f0.jpg,5.995,5.995,lcd6_15kg,curah,full_scene,"[235, 220, 509, 312]",True,1.0,True
+K0052,1,K0052_f1.jpg,5.995,5.995,lcd6_15kg,curah,full_scene,"[246, 217, 520, 309]",True,1.0,True
+K0052,2,K0052_f2.jpg,5.995,5.995,lcd6_15kg,curah,full_scene,"[237, 208, 511, 300]",True,1.0,True
+K0052,3,K0052_f3.jpg,5.995,5.995,lcd6_15kg,curah,full_scene,"[247, 218, 521, 310]",True,1.0,True
+K0052,4,K0052_f4.jpg,5.995,5.995,lcd6_15kg,curah,full_scene,"[245, 213, 519, 305]",True,1.0,True
+K0053,0,K0053_f0.jpg,23.5,23.5,lantai5_300kg,karung_25,pre_cropped,,True,1.0,False
+K0053,1,K0053_f1.jpg,23.5,23.5,lantai5_300kg,karung_25,pre_cropped,,True,1.0,False
+K0053,2,K0053_f2.jpg,23.5,23.5,lantai5_300kg,karung_25,pre_cropped,,True,1.0,False
+K0053,3,K0053_f3.jpg,23.5,23.5,lantai5_300kg,karung_25,pre_cropped,,True,1.0,False
+K0053,4,K0053_f4.jpg,23.5,23.5,lantai5_300kg,karung_25,pre_cropped,,True,1.0,False
+K0054,0,K0054_f0.jpg,10.10,10.10,led6_60kg,karung_10,pre_cropped,,True,1.0,True
+K0054,1,K0054_f1.jpg,10.10,10.10,led6_60kg,karung_10,pre_cropped,,True,1.0,True
+K0054,2,K0054_f2.jpg,10.10,10.10,led6_60kg,karung_10,pre_cropped,,True,1.0,True
+K0054,3,K0054_f3.jpg,10.10,10.10,led6_60kg,karung_10,pre_cropped,,True,1.0,True
+K0054,4,K0054_f4.jpg,10.10,10.10,led6_60kg,karung_10,pre_cropped,,True,1.0,True
+K0055,0,K0055_f0.jpg,10.315,10.035,lcd6_15kg,karung_10,full_scene,"[32, 246, 320, 367]",False,0.6,True
+K0055,1,K0055_f1.jpg,10.400,10.035,lcd6_15kg,karung_10,full_scene,"[36, 246, 324, 367]",False,0.6,True
+K0055,2,K0055_f2.jpg,10.035,10.035,lcd6_15kg,karung_10,full_scene,"[44, 250, 332, 371]",False,0.6,True
+K0055,3,K0055_f3.jpg,10.035,10.035,lcd6_15kg,karung_10,full_scene,"[43, 253, 331, 374]",False,0.6,True
+K0055,4,K0055_f4.jpg,10.035,10.035,lcd6_15kg,karung_10,full_scene,"[27, 239, 315, 360]",False,0.6,True
+K0056,0,K0056_f0.jpg,158.5,150.5,lantai7_2000kg,curah,full_scene,"[259, 206, 541, 328]",False,0.6,True
+K0056,1,K0056_f1.jpg,160.5,150.5,lantai7_2000kg,curah,full_scene,"[263, 216, 545, 338]",False,0.6,True
+K0056,2,K0056_f2.jpg,150.5,150.5,lantai7_2000kg,curah,full_scene,"[258, 212, 540, 334]",False,0.6,True
+K0056,3,K0056_f3.jpg,150.5,150.5,lantai7_2000kg,curah,full_scene,"[261, 216, 543, 338]",False,0.6,True
+K0056,4,K0056_f4.jpg,150.5,150.5,lantai7_2000kg,curah,full_scene,"[250, 210, 532, 332]",False,0.6,True
+K0057,0,K0057_f0.jpg,4.9,4.9,lantai5_300kg,karung_5,full_scene,"[268, 165, 448, 256]",True,1.0,True
+K0057,1,K0057_f1.jpg,4.9,4.9,lantai5_300kg,karung_5,full_scene,"[261, 167, 441, 258]",True,1.0,True
+K0057,2,K0057_f2.jpg,4.9,4.9,lantai5_300kg,karung_5,full_scene,"[272, 169, 452, 260]",True,1.0,True
+K0057,3,K0057_f3.jpg,4.9,4.9,lantai5_300kg,karung_5,full_scene,"[253, 171, 433, 262]",True,1.0,True
+K0057,4,K0057_f4.jpg,4.9,4.9,lantai5_300kg,karung_5,full_scene,"[261, 170, 441, 261]",True,1.0,True
+K0058,0,K0058_f0.jpg,8.3,9.9,lantai5_300kg,karung_10,full_scene,"[424, 94, 836, 355]",False,0.4,True
+K0058,1,K0058_f1.jpg,9.6,9.9,lantai5_300kg,karung_10,full_scene,"[425, 100, 837, 361]",False,0.4,True
+K0058,2,K0058_f2.jpg,10.6,9.9,lantai5_300kg,karung_10,full_scene,"[415, 94, 827, 355]",False,0.4,True
+K0058,3,K0058_f3.jpg,9.9,9.9,lantai5_300kg,karung_10,full_scene,"[421, 100, 833, 361]",False,0.4,True
+K0058,4,K0058_f4.jpg,9.9,9.9,lantai5_300kg,karung_10,full_scene,"[420, 105, 832, 366]",False,0.4,True
+K0059,0,K0059_f0.jpg,5.02,5.02,ind7_150kg,karung_5,full_scene,"[66, 228, 565, 408]",True,1.0,True
+K0059,1,K0059_f1.jpg,5.02,5.02,ind7_150kg,karung_5,full_scene,"[73, 230, 572, 410]",True,1.0,True
+K0059,2,K0059_f2.jpg,5.02,5.02,ind7_150kg,karung_5,full_scene,"[66, 214, 565, 394]",True,1.0,True
+K0059,3,K0059_f3.jpg,5.02,5.02,ind7_150kg,karung_5,full_scene,"[67, 228, 566, 408]",True,1.0,True
+K0059,4,K0059_f4.jpg,5.02,5.02,ind7_150kg,karung_5,full_scene,"[58, 213, 557, 393]",True,1.0,True
+K0060,0,K0060_f0.jpg,9.92,9.92,led6_60kg,karung_10,pre_cropped,,True,1.0,True
+K0060,1,K0060_f1.jpg,9.92,9.92,led6_60kg,karung_10,pre_cropped,,True,1.0,True
+K0060,2,K0060_f2.jpg,9.92,9.92,led6_60kg,karung_10,pre_cropped,,True,1.0,True
+K0060,3,K0060_f3.jpg,9.92,9.92,led6_60kg,karung_10,pre_cropped,,True,1.0,True
+K0060,4,K0060_f4.jpg,9.92,9.92,led6_60kg,karung_10,pre_cropped,,True,1.0,True
+K0061,0,K0061_f0.jpg,50.5,50.5,lantai7_2000kg,karung_50,full_scene,"[214, 184, 567, 301]",True,1.0,True
+K0061,1,K0061_f1.jpg,50.5,50.5,lantai7_2000kg,karung_50,full_scene,"[219, 182, 572, 299]",True,1.0,True
+K0061,2,K0061_f2.jpg,50.5,50.5,lantai7_2000kg,karung_50,full_scene,"[225, 174, 578, 291]",True,1.0,True
+K0061,3,K0061_f3.jpg,50.5,50.5,lantai7_2000kg,karung_50,full_scene,"[228, 195, 581, 312]",True,1.0,True
+K0061,4,K0061_f4.jpg,50.5,50.5,lantai7_2000kg,karung_50,full_scene,"[222, 184, 575, 301]",True,1.0,True
+K0062,0,K0062_f0.jpg,50.62,50.62,led6_60kg,karung_50,full_scene,"[74, 98, 589, 345]",True,1.0,True
+K0062,1,K0062_f1.jpg,50.62,50.62,led6_60kg,karung_50,full_scene,"[80, 88, 595, 335]",True,1.0,True
+K0062,2,K0062_f2.jpg,50.62,50.62,led6_60kg,karung_50,full_scene,"[77, 99, 592, 346]",True,1.0,True
+K0062,3,K0062_f3.jpg,50.62,50.62,led6_60kg,karung_50,full_scene,"[66, 100, 581, 347]",True,1.0,True
+K0062,4,K0062_f4.jpg,50.62,50.62,led6_60kg,karung_50,full_scene,"[69, 94, 584, 341]",True,1.0,True
+K0063,0,K0063_f0.jpg,5.010,4.730,lcd6_15kg,karung_5,pre_cropped,,False,0.4,False
+K0063,1,K0063_f1.jpg,4.045,4.730,lcd6_15kg,karung_5,pre_cropped,,False,0.4,False
+K0063,2,K0063_f2.jpg,4.055,4.730,lcd6_15kg,karung_5,pre_cropped,,False,0.4,False
+K0063,3,K0063_f3.jpg,4.730,4.730,lcd6_15kg,karung_5,pre_cropped,,False,0.4,False
+K0063,4,K0063_f4.jpg,4.730,4.730,lcd6_15kg,karung_5,pre_cropped,,False,0.4,False
+K0064,0,K0064_f0.jpg,5.06,5.06,ind7_150kg,karung_5,full_scene,"[230, 195, 635, 334]",True,1.0,True
+K0064,1,K0064_f1.jpg,5.06,5.06,ind7_150kg,karung_5,full_scene,"[229, 194, 634, 333]",True,1.0,True
+K0064,2,K0064_f2.jpg,5.06,5.06,ind7_150kg,karung_5,full_scene,"[223, 200, 628, 339]",True,1.0,True
+K0064,3,K0064_f3.jpg,5.06,5.06,ind7_150kg,karung_5,full_scene,"[239, 198, 644, 337]",True,1.0,True
+K0064,4,K0064_f4.jpg,5.06,5.06,ind7_150kg,karung_5,full_scene,"[235, 205, 640, 344]",True,1.0,True
+K0065,0,K0065_f0.jpg,49.86,49.86,ind7_150kg,karung_50,full_scene,"[162, 214, 503, 340]",True,1.0,True
+K0065,1,K0065_f1.jpg,49.86,49.86,ind7_150kg,karung_50,full_scene,"[168, 227, 509, 353]",True,1.0,True
+K0065,2,K0065_f2.jpg,49.86,49.86,ind7_150kg,karung_50,full_scene,"[167, 226, 508, 352]",True,1.0,True
+K0065,3,K0065_f3.jpg,49.86,49.86,ind7_150kg,karung_50,full_scene,"[168, 219, 509, 345]",True,1.0,True
+K0065,4,K0065_f4.jpg,49.86,49.86,ind7_150kg,karung_50,full_scene,"[170, 225, 511, 351]",True,1.0,True
+K0066,0,K0066_f0.jpg,24.62,24.62,led6_60kg,karung_25,full_scene,"[68, 326, 403, 463]",True,1.0,False
+K0066,1,K0066_f1.jpg,24.62,24.62,led6_60kg,karung_25,full_scene,"[74, 320, 409, 457]",True,1.0,False
+K0066,2,K0066_f2.jpg,24.62,24.62,led6_60kg,karung_25,full_scene,"[79, 323, 414, 460]",True,1.0,False
+K0066,3,K0066_f3.jpg,24.62,24.62,led6_60kg,karung_25,full_scene,"[73, 328, 408, 465]",True,1.0,False
+K0066,4,K0066_f4.jpg,24.62,24.62,led6_60kg,karung_25,full_scene,"[75, 325, 410, 462]",True,1.0,False
+K0067,0,K0067_f0.jpg,10.1,10.1,lantai5_300kg,karung_10,full_scene,"[254, 326, 514, 440]",True,1.0,True
+K0067,1,K0067_f1.jpg,10.1,10.1,lantai5_300kg,karung_10,full_scene,"[252, 336, 512, 450]",True,1.0,True
+K0067,2,K0067_f2.jpg,10.1,10.1,lantai5_300kg,karung_10,full_scene,"[264, 342, 524, 456]",True,1.0,True
+K0067,3,K0067_f3.jpg,10.1,10.1,lantai5_300kg,karung_10,full_scene,"[262, 343, 522, 457]",True,1.0,True
+K0067,4,K0067_f4.jpg,10.1,10.1,lantai5_300kg,karung_10,full_scene,"[259, 339, 519, 453]",True,1.0,True
+K0068,0,K0068_f0.jpg,4.32,4.32,led6_60kg,curah,full_scene,"[243, 195, 549, 325]",True,1.0,True
+K0068,1,K0068_f1.jpg,4.32,4.32,led6_60kg,curah,full_scene,"[254, 198, 560, 328]",True,1.0,True
+K0068,2,K0068_f2.jpg,4.32,4.32,led6_60kg,curah,full_scene,"[250, 203, 556, 333]",True,1.0,True
+K0068,3,K0068_f3.jpg,4.32,4.32,led6_60kg,curah,full_scene,"[246, 201, 552, 331]",True,1.0,True
+K0068,4,K0068_f4.jpg,4.32,4.32,led6_60kg,curah,full_scene,"[251, 198, 557, 328]",True,1.0,True
+K0069,0,K0069_f0.jpg,1.24,1.24,led6_60kg,curah,pre_cropped,,True,1.0,True
+K0069,1,K0069_f1.jpg,1.24,1.24,led6_60kg,curah,pre_cropped,,True,1.0,True
+K0069,2,K0069_f2.jpg,1.24,1.24,led6_60kg,curah,pre_cropped,,True,1.0,True
+K0069,3,K0069_f3.jpg,1.24,1.24,led6_60kg,curah,pre_cropped,,True,1.0,True
+K0069,4,K0069_f4.jpg,1.24,1.24,led6_60kg,curah,pre_cropped,,True,1.0,True
+K0070,0,K0070_f0.jpg,10.81,10.81,lcd6_30kg,karung_10,full_scene,"[219, 377, 417, 468]",True,1.0,False
+K0070,1,K0070_f1.jpg,10.81,10.81,lcd6_30kg,karung_10,full_scene,"[198, 376, 396, 467]",True,1.0,False
+K0070,2,K0070_f2.jpg,10.81,10.81,lcd6_30kg,karung_10,full_scene,"[214, 372, 412, 463]",True,1.0,False
+K0070,3,K0070_f3.jpg,10.81,10.81,lcd6_30kg,karung_10,full_scene,"[222, 366, 420, 457]",True,1.0,False
+K0070,4,K0070_f4.jpg,10.81,10.81,lcd6_30kg,karung_10,full_scene,"[223, 380, 421, 471]",True,1.0,False
+K0071,0,K0071_f0.jpg,2.91,2.91,lcd6_30kg,curah,full_scene,"[260, 408, 585, 580]",True,1.0,True
+K0071,1,K0071_f1.jpg,2.91,2.91,lcd6_30kg,curah,full_scene,"[274, 412, 599, 584]",True,1.0,True
+K0071,2,K0071_f2.jpg,2.91,2.91,lcd6_30kg,curah,full_scene,"[266, 412, 591, 584]",True,1.0,True
+K0071,3,K0071_f3.jpg,2.91,2.91,lcd6_30kg,curah,full_scene,"[274, 412, 599, 584]",True,1.0,True
+K0071,4,K0071_f4.jpg,2.91,2.91,lcd6_30kg,curah,full_scene,"[280, 409, 605, 581]",True,1.0,True
+K0072,0,K0072_f0.jpg,4.945,4.945,lcd6_15kg,karung_5,full_scene,"[160, 120, 589, 292]",True,1.0,True
+K0072,1,K0072_f1.jpg,4.945,4.945,lcd6_15kg,karung_5,full_scene,"[172, 120, 601, 292]",True,1.0,True
+K0072,2,K0072_f2.jpg,4.945,4.945,lcd6_15kg,karung_5,full_scene,"[164, 116, 593, 288]",True,1.0,True
+K0072,3,K0072_f3.jpg,4.945,4.945,lcd6_15kg,karung_5,full_scene,"[154, 118, 583, 290]",True,1.0,True
+K0072,4,K0072_f4.jpg,4.945,4.945,lcd6_15kg,karung_5,full_scene,"[156, 118, 585, 290]",True,1.0,True
+K0073,0,K0073_f0.jpg,25.00,25.00,ind7_150kg,karung_25,full_scene,"[190, 222, 569, 371]",True,1.0,True
+K0073,1,K0073_f1.jpg,25.00,25.00,ind7_150kg,karung_25,full_scene,"[187, 212, 566, 361]",True,1.0,True
+K0073,2,K0073_f2.jpg,25.00,25.00,ind7_150kg,karung_25,full_scene,"[194, 227, 573, 376]",True,1.0,True
+K0073,3,K0073_f3.jpg,25.00,25.00,ind7_150kg,karung_25,full_scene,"[185, 217, 564, 366]",True,1.0,True
+K0073,4,K0073_f4.jpg,25.00,25.00,ind7_150kg,karung_25,full_scene,"[187, 222, 566, 371]",True,1.0,True
+K0074,0,K0074_f0.jpg,46.72,49.68,led6_60kg,karung_50,full_scene,"[68, 285, 359, 372]",False,0.4,True
+K0074,1,K0074_f1.jpg,47.64,49.68,led6_60kg,karung_50,full_scene,"[74, 273, 365, 360]",False,0.4,True
+K0074,2,K0074_f2.jpg,6.42,49.68,led6_60kg,karung_50,full_scene,"[75, 284, 366, 371]",False,0.4,True
+K0074,3,K0074_f3.jpg,49.68,49.68,led6_60kg,karung_50,full_scene,"[65, 285, 356, 372]",False,0.4,True
+K0074,4,K0074_f4.jpg,49.68,49.68,led6_60kg,karung_50,full_scene,"[68, 289, 359, 376]",False,0.4,True
+K0075,0,K0075_f0.jpg,28.0,28.0,lantai7_2000kg,karung_25,pre_cropped,,True,1.0,False
+K0075,1,K0075_f1.jpg,28.0,28.0,lantai7_2000kg,karung_25,pre_cropped,,True,1.0,False
+K0075,2,K0075_f2.jpg,28.0,28.0,lantai7_2000kg,karung_25,pre_cropped,,True,1.0,False
+K0075,3,K0075_f3.jpg,28.0,28.0,lantai7_2000kg,karung_25,pre_cropped,,True,1.0,False
+K0075,4,K0075_f4.jpg,28.0,28.0,lantai7_2000kg,karung_25,pre_cropped,,True,1.0,False
+K0076,0,K0076_f0.jpg,1610.0,1610.0,lantai7_2000kg,curah,full_scene,"[177, 429, 425, 522]",True,1.0,True
+K0076,1,K0076_f1.jpg,1610.0,1610.0,lantai7_2000kg,curah,full_scene,"[178, 422, 426, 515]",True,1.0,True
+K0076,2,K0076_f2.jpg,1610.0,1610.0,lantai7_2000kg,curah,full_scene,"[177, 426, 425, 519]",True,1.0,True
+K0076,3,K0076_f3.jpg,1610.0,1610.0,lantai7_2000kg,curah,full_scene,"[176, 419, 424, 512]",True,1.0,True
+K0076,4,K0076_f4.jpg,1610.0,1610.0,lantai7_2000kg,curah,full_scene,"[172, 423, 420, 516]",True,1.0,True
+K0077,0,K0077_f0.jpg,5.075,5.075,lcd6_15kg,karung_5,full_scene,"[170, 243, 424, 346]",True,1.0,True
+K0077,1,K0077_f1.jpg,5.075,5.075,lcd6_15kg,karung_5,full_scene,"[191, 244, 445, 347]",True,1.0,True
+K0077,2,K0077_f2.jpg,5.075,5.075,lcd6_15kg,karung_5,full_scene,"[187, 252, 441, 355]",True,1.0,True
+K0077,3,K0077_f3.jpg,5.075,5.075,lcd6_15kg,karung_5,full_scene,"[178, 235, 432, 338]",True,1.0,True
+K0077,4,K0077_f4.jpg,5.075,5.075,lcd6_15kg,karung_5,full_scene,"[183, 242, 437, 345]",True,1.0,True
+K0078,0,K0078_f0.jpg,25.0,25.0,lantai7_2000kg,karung_25,full_scene,"[233, 94, 630, 305]",True,1.0,True
+K0078,1,K0078_f1.jpg,25.0,25.0,lantai7_2000kg,karung_25,full_scene,"[223, 80, 620, 291]",True,1.0,True
+K0078,2,K0078_f2.jpg,25.0,25.0,lantai7_2000kg,karung_25,full_scene,"[234, 91, 631, 302]",True,1.0,True
+K0078,3,K0078_f3.jpg,25.0,25.0,lantai7_2000kg,karung_25,full_scene,"[230, 90, 627, 301]",True,1.0,True
+K0078,4,K0078_f4.jpg,25.0,25.0,lantai7_2000kg,karung_25,full_scene,"[232, 94, 629, 305]",True,1.0,True
+K0079,0,K0079_f0.jpg,50.0,50.0,lantai7_2000kg,karung_50,full_scene,"[244, 225, 668, 426]",True,1.0,True
+K0079,1,K0079_f1.jpg,50.0,50.0,lantai7_2000kg,karung_50,full_scene,"[234, 222, 658, 423]",True,1.0,True
+K0079,2,K0079_f2.jpg,50.0,50.0,lantai7_2000kg,karung_50,full_scene,"[237, 239, 661, 440]",True,1.0,True
+K0079,3,K0079_f3.jpg,50.0,50.0,lantai7_2000kg,karung_50,full_scene,"[237, 231, 661, 432]",True,1.0,True
+K0079,4,K0079_f4.jpg,50.0,50.0,lantai7_2000kg,karung_50,full_scene,"[233, 230, 657, 431]",True,1.0,True
+K0080,0,K0080_f0.jpg,11.5,10.2,lantai5_300kg,curah,full_scene,"[180, 117, 576, 277]",False,0.6,True
+K0080,1,K0080_f1.jpg,9.0,10.2,lantai5_300kg,curah,full_scene,"[179, 117, 575, 277]",False,0.6,True
+K0080,2,K0080_f2.jpg,10.2,10.2,lantai5_300kg,curah,full_scene,"[196, 114, 592, 274]",False,0.6,True
+K0080,3,K0080_f3.jpg,10.2,10.2,lantai5_300kg,curah,full_scene,"[180, 115, 576, 275]",False,0.6,True
+K0080,4,K0080_f4.jpg,10.2,10.2,lantai5_300kg,curah,full_scene,"[187, 108, 583, 268]",False,0.6,True
+K0081,0,K0081_f0.jpg,59.10,49.86,led6_60kg,karung_50,pre_cropped,,False,0.4,True
+K0081,1,K0081_f1.jpg,45.08,49.86,led6_60kg,karung_50,pre_cropped,,False,0.4,True
+K0081,2,K0081_f2.jpg,53.04,49.86,led6_60kg,karung_50,pre_cropped,,False,0.4,True
+K0081,3,K0081_f3.jpg,49.86,49.86,led6_60kg,karung_50,pre_cropped,,False,0.4,True
+K0081,4,K0081_f4.jpg,49.86,49.86,led6_60kg,karung_50,pre_cropped,,False,0.4,True
+K0082,0,K0082_f0.jpg,7.17,7.17,lcd6_30kg,curah,full_scene,"[123, 332, 389, 462]",True,1.0,True
+K0082,1,K0082_f1.jpg,7.17,7.17,lcd6_30kg,curah,full_scene,"[119, 307, 385, 437]",True,1.0,True
+K0082,2,K0082_f2.jpg,7.17,7.17,lcd6_30kg,curah,full_scene,"[130, 318, 396, 448]",True,1.0,True
+K0082,3,K0082_f3.jpg,7.17,7.17,lcd6_30kg,curah,full_scene,"[127, 320, 393, 450]",True,1.0,True
+K0082,4,K0082_f4.jpg,7.17,7.17,lcd6_30kg,curah,full_scene,"[124, 313, 390, 443]",True,1.0,True
+K0083,0,K0083_f0.jpg,13.9,13.9,lantai5_300kg,curah,pre_cropped,,True,1.0,True
+K0083,1,K0083_f1.jpg,13.9,13.9,lantai5_300kg,curah,pre_cropped,,True,1.0,True
+K0083,2,K0083_f2.jpg,13.9,13.9,lantai5_300kg,curah,pre_cropped,,True,1.0,True
+K0083,3,K0083_f3.jpg,13.9,13.9,lantai5_300kg,curah,pre_cropped,,True,1.0,True
+K0083,4,K0083_f4.jpg,13.9,13.9,lantai5_300kg,curah,pre_cropped,,True,1.0,True
+K0084,0,K0084_f0.jpg,24.5,24.5,lantai7_2000kg,karung_25,full_scene,"[280, 133, 575, 223]",True,1.0,False
+K0084,1,K0084_f1.jpg,24.5,24.5,lantai7_2000kg,karung_25,full_scene,"[301, 139, 596, 229]",True,1.0,False
+K0084,2,K0084_f2.jpg,24.5,24.5,lantai7_2000kg,karung_25,full_scene,"[294, 138, 589, 228]",True,1.0,False
+K0084,3,K0084_f3.jpg,24.5,24.5,lantai7_2000kg,karung_25,full_scene,"[303, 145, 598, 235]",True,1.0,False
+K0084,4,K0084_f4.jpg,24.5,24.5,lantai7_2000kg,karung_25,full_scene,"[300, 134, 595, 224]",True,1.0,False
+K0085,0,K0085_f0.jpg,9.96,9.96,ind7_150kg,karung_10,full_scene,"[159, 196, 553, 319]",True,1.0,True
+K0085,1,K0085_f1.jpg,9.96,9.96,ind7_150kg,karung_10,full_scene,"[165, 193, 559, 316]",True,1.0,True
+K0085,2,K0085_f2.jpg,9.96,9.96,ind7_150kg,karung_10,full_scene,"[165, 187, 559, 310]",True,1.0,True
+K0085,3,K0085_f3.jpg,9.96,9.96,ind7_150kg,karung_10,full_scene,"[157, 199, 551, 322]",True,1.0,True
+K0085,4,K0085_f4.jpg,9.96,9.96,ind7_150kg,karung_10,full_scene,"[160, 190, 554, 313]",True,1.0,True
+K0086,0,K0086_f0.jpg,23.5,23.5,lantai7_2000kg,curah,full_scene,"[205, 216, 512, 294]",True,1.0,True
+K0086,1,K0086_f1.jpg,23.5,23.5,lantai7_2000kg,curah,full_scene,"[211, 216, 518, 294]",True,1.0,True
+K0086,2,K0086_f2.jpg,23.5,23.5,lantai7_2000kg,curah,full_scene,"[202, 206, 509, 284]",True,1.0,True
+K0086,3,K0086_f3.jpg,23.5,23.5,lantai7_2000kg,curah,full_scene,"[205, 210, 512, 288]",True,1.0,True
+K0086,4,K0086_f4.jpg,23.5,23.5,lantai7_2000kg,curah,full_scene,"[199, 218, 506, 296]",True,1.0,True
+K0087,0,K0087_f0.jpg,10.005,10.005,lcd6_15kg,karung_10,pre_cropped,,True,1.0,True
+K0087,1,K0087_f1.jpg,10.005,10.005,lcd6_15kg,karung_10,pre_cropped,,True,1.0,True
+K0087,2,K0087_f2.jpg,10.005,10.005,lcd6_15kg,karung_10,pre_cropped,,True,1.0,True
+K0087,3,K0087_f3.jpg,10.005,10.005,lcd6_15kg,karung_10,pre_cropped,,True,1.0,True
+K0087,4,K0087_f4.jpg,10.005,10.005,lcd6_15kg,karung_10,pre_cropped,,True,1.0,True
+K0088,0,K0088_f0.jpg,56.4,56.4,lantai5_300kg,curah,full_scene,"[376, 157, 643, 294]",True,1.0,True
+K0088,1,K0088_f1.jpg,56.4,56.4,lantai5_300kg,curah,full_scene,"[368, 154, 635, 291]",True,1.0,True
+K0088,2,K0088_f2.jpg,56.4,56.4,lantai5_300kg,curah,full_scene,"[362, 151, 629, 288]",True,1.0,True
+K0088,3,K0088_f3.jpg,56.4,56.4,lantai5_300kg,curah,full_scene,"[369, 153, 636, 290]",True,1.0,True
+K0088,4,K0088_f4.jpg,56.4,56.4,lantai5_300kg,curah,full_scene,"[366, 151, 633, 288]",True,1.0,True
+K0089,0,K0089_f0.jpg,24.90,24.90,led6_60kg,karung_25,full_scene,"[110, 127, 715, 302]",True,1.0,True
+K0089,1,K0089_f1.jpg,24.90,24.90,led6_60kg,karung_25,full_scene,"[112, 125, 717, 300]",True,1.0,True
+K0089,2,K0089_f2.jpg,24.90,24.90,led6_60kg,karung_25,full_scene,"[99, 131, 704, 306]",True,1.0,True
+K0089,3,K0089_f3.jpg,24.90,24.90,led6_60kg,karung_25,full_scene,"[107, 125, 712, 300]",True,1.0,True
+K0089,4,K0089_f4.jpg,24.90,24.90,led6_60kg,karung_25,full_scene,"[114, 126, 719, 301]",True,1.0,True
+K0090,0,K0090_f0.jpg,49.68,49.68,ind7_150kg,karung_50,full_scene,"[26, 172, 452, 379]",True,1.0,True
+K0090,1,K0090_f1.jpg,49.68,49.68,ind7_150kg,karung_50,full_scene,"[36, 169, 462, 376]",True,1.0,True
+K0090,2,K0090_f2.jpg,49.68,49.68,ind7_150kg,karung_50,full_scene,"[32, 174, 458, 381]",True,1.0,True
+K0090,3,K0090_f3.jpg,49.68,49.68,ind7_150kg,karung_50,full_scene,"[32, 181, 458, 388]",True,1.0,True
+K0090,4,K0090_f4.jpg,49.68,49.68,ind7_150kg,karung_50,full_scene,"[38, 174, 464, 381]",True,1.0,True
+K0091,0,K0091_f0.jpg,5.02,5.02,ind7_150kg,karung_5,full_scene,"[299, 195, 714, 351]",True,1.0,True
+K0091,1,K0091_f1.jpg,5.02,5.02,ind7_150kg,karung_5,full_scene,"[294, 195, 709, 351]",True,1.0,True
+K0091,2,K0091_f2.jpg,5.02,5.02,ind7_150kg,karung_5,full_scene,"[302, 196, 717, 352]",True,1.0,True
+K0091,3,K0091_f3.jpg,5.02,5.02,ind7_150kg,karung_5,full_scene,"[289, 191, 704, 347]",True,1.0,True
+K0091,4,K0091_f4.jpg,5.02,5.02,ind7_150kg,karung_5,full_scene,"[297, 197, 712, 353]",True,1.0,True
+K0092,0,K0092_f0.jpg,5.29,5.29,lcd6_30kg,karung_5,full_scene,"[173, 179, 548, 322]",True,1.0,False
+K0092,1,K0092_f1.jpg,5.29,5.29,lcd6_30kg,karung_5,full_scene,"[158, 177, 533, 320]",True,1.0,False
+K0092,2,K0092_f2.jpg,5.29,5.29,lcd6_30kg,karung_5,full_scene,"[165, 173, 540, 316]",True,1.0,False
+K0092,3,K0092_f3.jpg,5.29,5.29,lcd6_30kg,karung_5,full_scene,"[170, 175, 545, 318]",True,1.0,False
+K0092,4,K0092_f4.jpg,5.29,5.29,lcd6_30kg,karung_5,full_scene,"[156, 171, 531, 314]",True,1.0,False
+K0093,0,K0093_f0.jpg,10.235,10.025,lcd6_15kg,karung_10,pre_cropped,,False,0.8,True
+K0093,1,K0093_f1.jpg,10.025,10.025,lcd6_15kg,karung_10,pre_cropped,,False,0.8,True
+K0093,2,K0093_f2.jpg,10.025,10.025,lcd6_15kg,karung_10,pre_cropped,,False,0.8,True
+K0093,3,K0093_f3.jpg,10.025,10.025,lcd6_15kg,karung_10,pre_cropped,,False,0.8,True
+K0093,4,K0093_f4.jpg,10.025,10.025,lcd6_15kg,karung_10,pre_cropped,,False,0.8,True
+K0094,0,K0094_f0.jpg,49.5,49.5,lantai7_2000kg,karung_50,full_scene,"[342, 287, 464, 348]",True,1.0,True
+K0094,1,K0094_f1.jpg,49.5,49.5,lantai7_2000kg,karung_50,full_scene,"[340, 279, 462, 340]",True,1.0,True
+K0094,2,K0094_f2.jpg,49.5,49.5,lantai7_2000kg,karung_50,full_scene,"[340, 276, 462, 337]",True,1.0,True
+K0094,3,K0094_f3.jpg,49.5,49.5,lantai7_2000kg,karung_50,full_scene,"[339, 285, 461, 346]",True,1.0,True
+K0094,4,K0094_f4.jpg,49.5,49.5,lantai7_2000kg,karung_50,full_scene,"[353, 288, 475, 349]",True,1.0,True
+K0095,0,K0095_f0.jpg,19.63,22.20,lcd6_30kg,curah,pre_cropped,,False,0.4,True
+K0095,1,K0095_f1.jpg,24.83,22.20,lcd6_30kg,curah,pre_cropped,,False,0.4,True
+K0095,2,K0095_f2.jpg,21.98,22.20,lcd6_30kg,curah,pre_cropped,,False,0.4,True
+K0095,3,K0095_f3.jpg,22.20,22.20,lcd6_30kg,curah,pre_cropped,,False,0.4,True
+K0095,4,K0095_f4.jpg,22.20,22.20,lcd6_30kg,curah,pre_cropped,,False,0.4,True
+K0096,0,K0096_f0.jpg,3.55,3.55,lcd6_30kg,curah,pre_cropped,,True,1.0,True
+K0096,1,K0096_f1.jpg,3.55,3.55,lcd6_30kg,curah,pre_cropped,,True,1.0,True
+K0096,2,K0096_f2.jpg,3.55,3.55,lcd6_30kg,curah,pre_cropped,,True,1.0,True
+K0096,3,K0096_f3.jpg,3.55,3.55,lcd6_30kg,curah,pre_cropped,,True,1.0,True
+K0096,4,K0096_f4.jpg,3.55,3.55,lcd6_30kg,curah,pre_cropped,,True,1.0,True
+K0097,0,K0097_f0.jpg,2.220,2.220,lcd6_15kg,curah,pre_cropped,,True,1.0,True
+K0097,1,K0097_f1.jpg,2.220,2.220,lcd6_15kg,curah,pre_cropped,,True,1.0,True
+K0097,2,K0097_f2.jpg,2.220,2.220,lcd6_15kg,curah,pre_cropped,,True,1.0,True
+K0097,3,K0097_f3.jpg,2.220,2.220,lcd6_15kg,curah,pre_cropped,,True,1.0,True
+K0097,4,K0097_f4.jpg,2.220,2.220,lcd6_15kg,curah,pre_cropped,,True,1.0,True
+K0098,0,K0098_f0.jpg,8.16,10.14,lcd6_30kg,karung_10,pre_cropped,,False,0.6,True
+K0098,1,K0098_f1.jpg,9.83,10.14,lcd6_30kg,karung_10,pre_cropped,,False,0.6,True
+K0098,2,K0098_f2.jpg,10.14,10.14,lcd6_30kg,karung_10,pre_cropped,,False,0.6,True
+K0098,3,K0098_f3.jpg,10.14,10.14,lcd6_30kg,karung_10,pre_cropped,,False,0.6,True
+K0098,4,K0098_f4.jpg,10.14,10.14,lcd6_30kg,karung_10,pre_cropped,,False,0.6,True
+K0099,0,K0099_f0.jpg,10.675,10.675,lcd6_15kg,karung_10,pre_cropped,,True,1.0,False
+K0099,1,K0099_f1.jpg,10.675,10.675,lcd6_15kg,karung_10,pre_cropped,,True,1.0,False
+K0099,2,K0099_f2.jpg,10.675,10.675,lcd6_15kg,karung_10,pre_cropped,,True,1.0,False
+K0099,3,K0099_f3.jpg,10.675,10.675,lcd6_15kg,karung_10,pre_cropped,,True,1.0,False
+K0099,4,K0099_f4.jpg,10.675,10.675,lcd6_15kg,karung_10,pre_cropped,,True,1.0,False
+K0100,0,K0100_f0.jpg,25.0,25.0,lantai5_300kg,karung_25,pre_cropped,,True,1.0,True
+K0100,1,K0100_f1.jpg,25.0,25.0,lantai5_300kg,karung_25,pre_cropped,,True,1.0,True
+K0100,2,K0100_f2.jpg,25.0,25.0,lantai5_300kg,karung_25,pre_cropped,,True,1.0,True
+K0100,3,K0100_f3.jpg,25.0,25.0,lantai5_300kg,karung_25,pre_cropped,,True,1.0,True
+K0100,4,K0100_f4.jpg,25.0,25.0,lantai5_300kg,karung_25,pre_cropped,,True,1.0,True
+K0101,0,K0101_f0.jpg,24.5,24.5,lantai7_2000kg,karung_25,full_scene,"[331, 221, 421, 273]",True,1.0,False
+K0101,1,K0101_f1.jpg,24.5,24.5,lantai7_2000kg,karung_25,full_scene,"[332, 222, 422, 274]",True,1.0,False
+K0101,2,K0101_f2.jpg,24.5,24.5,lantai7_2000kg,karung_25,full_scene,"[337, 228, 427, 280]",True,1.0,False
+K0101,3,K0101_f3.jpg,24.5,24.5,lantai7_2000kg,karung_25,full_scene,"[336, 228, 426, 280]",True,1.0,False
+K0101,4,K0101_f4.jpg,24.5,24.5,lantai7_2000kg,karung_25,full_scene,"[331, 221, 421, 273]",True,1.0,False
+K0102,0,K0102_f0.jpg,25.0,25.0,lantai7_2000kg,karung_25,full_scene,"[217, 283, 635, 422]",True,1.0,True
+K0102,1,K0102_f1.jpg,25.0,25.0,lantai7_2000kg,karung_25,full_scene,"[223, 268, 641, 407]",True,1.0,True
+K0102,2,K0102_f2.jpg,25.0,25.0,lantai7_2000kg,karung_25,full_scene,"[231, 264, 649, 403]",True,1.0,True
+K0102,3,K0102_f3.jpg,25.0,25.0,lantai7_2000kg,karung_25,full_scene,"[216, 265, 634, 404]",True,1.0,True
+K0102,4,K0102_f4.jpg,25.0,25.0,lantai7_2000kg,karung_25,full_scene,"[218, 256, 636, 395]",True,1.0,True
+K0103,0,K0103_f0.jpg,0.115,0.115,lcd6_15kg,curah,pre_cropped,,True,1.0,False
+K0103,1,K0103_f1.jpg,0.115,0.115,lcd6_15kg,curah,pre_cropped,,True,1.0,False
+K0103,2,K0103_f2.jpg,0.115,0.115,lcd6_15kg,curah,pre_cropped,,True,1.0,False
+K0103,3,K0103_f3.jpg,0.115,0.115,lcd6_15kg,curah,pre_cropped,,True,1.0,False
+K0103,4,K0103_f4.jpg,0.115,0.115,lcd6_15kg,curah,pre_cropped,,True,1.0,False
+K0104,0,K0104_f0.jpg,1.30,1.30,ind7_150kg,curah,full_scene,"[217, 227, 438, 309]",True,1.0,True
+K0104,1,K0104_f1.jpg,1.30,1.30,ind7_150kg,curah,full_scene,"[209, 230, 430, 312]",True,1.0,True
+K0104,2,K0104_f2.jpg,1.30,1.30,ind7_150kg,curah,full_scene,"[200, 225, 421, 307]",True,1.0,True
+K0104,3,K0104_f3.jpg,1.30,1.30,ind7_150kg,curah,full_scene,"[198, 220, 419, 302]",True,1.0,True
+K0104,4,K0104_f4.jpg,1.30,1.30,ind7_150kg,curah,full_scene,"[207, 226, 428, 308]",True,1.0,True
+K0105,0,K0105_f0.jpg,7.255,7.255,lcd6_15kg,curah,full_scene,"[263, 136, 645, 253]",True,1.0,True
+K0105,1,K0105_f1.jpg,7.255,7.255,lcd6_15kg,curah,full_scene,"[266, 132, 648, 249]",True,1.0,True
+K0105,2,K0105_f2.jpg,7.255,7.255,lcd6_15kg,curah,full_scene,"[267, 141, 649, 258]",True,1.0,True
+K0105,3,K0105_f3.jpg,7.255,7.255,lcd6_15kg,curah,full_scene,"[272, 129, 654, 246]",True,1.0,True
+K0105,4,K0105_f4.jpg,7.255,7.255,lcd6_15kg,curah,full_scene,"[259, 132, 641, 249]",True,1.0,True
+K0106,0,K0106_f0.jpg,50.18,50.18,ind7_150kg,karung_50,pre_cropped,,True,1.0,True
+K0106,1,K0106_f1.jpg,50.18,50.18,ind7_150kg,karung_50,pre_cropped,,True,1.0,True
+K0106,2,K0106_f2.jpg,50.18,50.18,ind7_150kg,karung_50,pre_cropped,,True,1.0,True
+K0106,3,K0106_f3.jpg,50.18,50.18,ind7_150kg,karung_50,pre_cropped,,True,1.0,True
+K0106,4,K0106_f4.jpg,50.18,50.18,ind7_150kg,karung_50,pre_cropped,,True,1.0,True
+K0107,0,K0107_f0.jpg,9.9,9.9,lantai5_300kg,karung_10,pre_cropped,,True,1.0,True
+K0107,1,K0107_f1.jpg,9.9,9.9,lantai5_300kg,karung_10,pre_cropped,,True,1.0,True
+K0107,2,K0107_f2.jpg,9.9,9.9,lantai5_300kg,karung_10,pre_cropped,,True,1.0,True
+K0107,3,K0107_f3.jpg,9.9,9.9,lantai5_300kg,karung_10,pre_cropped,,True,1.0,True
+K0107,4,K0107_f4.jpg,9.9,9.9,lantai5_300kg,karung_10,pre_cropped,,True,1.0,True
+K0108,0,K0108_f0.jpg,4.78,4.78,lcd6_30kg,curah,full_scene,"[154, 184, 610, 337]",True,1.0,True
+K0108,1,K0108_f1.jpg,4.78,4.78,lcd6_30kg,curah,full_scene,"[168, 173, 624, 326]",True,1.0,True
+K0108,2,K0108_f2.jpg,4.78,4.78,lcd6_30kg,curah,full_scene,"[163, 179, 619, 332]",True,1.0,True
+K0108,3,K0108_f3.jpg,4.78,4.78,lcd6_30kg,curah,full_scene,"[165, 194, 621, 347]",True,1.0,True
+K0108,4,K0108_f4.jpg,4.78,4.78,lcd6_30kg,curah,full_scene,"[158, 181, 614, 334]",True,1.0,True
+K0109,0,K0109_f0.jpg,23.46,23.46,led6_60kg,karung_25,full_scene,"[278, 272, 603, 384]",True,1.0,False
+K0109,1,K0109_f1.jpg,23.46,23.46,led6_60kg,karung_25,full_scene,"[268, 286, 593, 398]",True,1.0,False
+K0109,2,K0109_f2.jpg,23.46,23.46,led6_60kg,karung_25,full_scene,"[272, 285, 597, 397]",True,1.0,False
+K0109,3,K0109_f3.jpg,23.46,23.46,led6_60kg,karung_25,full_scene,"[274, 280, 599, 392]",True,1.0,False
+K0109,4,K0109_f4.jpg,23.46,23.46,led6_60kg,karung_25,full_scene,"[279, 284, 604, 396]",True,1.0,False
+K0110,0,K0110_f0.jpg,28.42,25.25,lcd6_30kg,karung_25,pre_cropped,,False,0.4,True
+K0110,1,K0110_f1.jpg,21.98,25.25,lcd6_30kg,karung_25,pre_cropped,,False,0.4,True
+K0110,2,K0110_f2.jpg,23.56,25.25,lcd6_30kg,karung_25,pre_cropped,,False,0.4,True
+K0110,3,K0110_f3.jpg,25.25,25.25,lcd6_30kg,karung_25,pre_cropped,,False,0.4,True
+K0110,4,K0110_f4.jpg,25.25,25.25,lcd6_30kg,karung_25,pre_cropped,,False,0.4,True
+K0111,0,K0111_f0.jpg,0.140,0.140,lcd6_15kg,curah,full_scene,"[457, 226, 797, 444]",True,1.0,False
+K0111,1,K0111_f1.jpg,0.140,0.140,lcd6_15kg,curah,full_scene,"[456, 217, 796, 435]",True,1.0,False
+K0111,2,K0111_f2.jpg,0.140,0.140,lcd6_15kg,curah,full_scene,"[460, 235, 800, 453]",True,1.0,False
+K0111,3,K0111_f3.jpg,0.140,0.140,lcd6_15kg,curah,full_scene,"[458, 234, 798, 452]",True,1.0,False
+K0111,4,K0111_f4.jpg,0.140,0.140,lcd6_15kg,curah,full_scene,"[453, 230, 793, 448]",True,1.0,False
+K0112,0,K0112_f0.jpg,25.30,25.30,lcd6_30kg,karung_25,full_scene,"[454, 215, 787, 396]",True,1.0,True
+K0112,1,K0112_f1.jpg,25.30,25.30,lcd6_30kg,karung_25,full_scene,"[453, 215, 786, 396]",True,1.0,True
+K0112,2,K0112_f2.jpg,25.30,25.30,lcd6_30kg,karung_25,full_scene,"[455, 212, 788, 393]",True,1.0,True
+K0112,3,K0112_f3.jpg,25.30,25.30,lcd6_30kg,karung_25,full_scene,"[452, 210, 785, 391]",True,1.0,True
+K0112,4,K0112_f4.jpg,25.30,25.30,lcd6_30kg,karung_25,full_scene,"[450, 223, 783, 404]",True,1.0,True
+K0113,0,K0113_f0.jpg,5.53,5.53,lcd6_30kg,karung_5,full_scene,"[206, 266, 467, 371]",True,1.0,False
+K0113,1,K0113_f1.jpg,5.53,5.53,lcd6_30kg,karung_5,full_scene,"[199, 269, 460, 374]",True,1.0,False
+K0113,2,K0113_f2.jpg,5.53,5.53,lcd6_30kg,karung_5,full_scene,"[201, 261, 462, 366]",True,1.0,False
+K0113,3,K0113_f3.jpg,5.53,5.53,lcd6_30kg,karung_5,full_scene,"[204, 262, 465, 367]",True,1.0,False
+K0113,4,K0113_f4.jpg,5.53,5.53,lcd6_30kg,karung_5,full_scene,"[195, 261, 456, 366]",True,1.0,False
+K0114,0,K0114_f0.jpg,25.5,25.5,lantai7_2000kg,karung_25,full_scene,"[214, 429, 418, 499]",True,1.0,False
+K0114,1,K0114_f1.jpg,25.5,25.5,lantai7_2000kg,karung_25,full_scene,"[205, 427, 409, 497]",True,1.0,False
+K0114,2,K0114_f2.jpg,25.5,25.5,lantai7_2000kg,karung_25,full_scene,"[207, 435, 411, 505]",True,1.0,False
+K0114,3,K0114_f3.jpg,25.5,25.5,lantai7_2000kg,karung_25,full_scene,"[206, 423, 410, 493]",True,1.0,False
+K0114,4,K0114_f4.jpg,25.5,25.5,lantai7_2000kg,karung_25,full_scene,"[199, 432, 403, 502]",True,1.0,False
+K0115,0,K0115_f0.jpg,50.3,50.3,lantai5_300kg,karung_50,full_scene,"[250, 187, 597, 339]",True,1.0,True
+K0115,1,K0115_f1.jpg,50.3,50.3,lantai5_300kg,karung_50,full_scene,"[262, 181, 609, 333]",True,1.0,True
+K0115,2,K0115_f2.jpg,50.3,50.3,lantai5_300kg,karung_50,full_scene,"[261, 179, 608, 331]",True,1.0,True
+K0115,3,K0115_f3.jpg,50.3,50.3,lantai5_300kg,karung_50,full_scene,"[250, 185, 597, 337]",True,1.0,True
+K0115,4,K0115_f4.jpg,50.3,50.3,lantai5_300kg,karung_50,full_scene,"[253, 184, 600, 336]",True,1.0,True
+K0116,0,K0116_f0.jpg,49.3,55.7,lantai5_300kg,curah,full_scene,"[231, 292, 482, 408]",False,0.4,True
+K0116,1,K0116_f1.jpg,60.1,55.7,lantai5_300kg,curah,full_scene,"[233, 288, 484, 404]",False,0.4,True
+K0116,2,K0116_f2.jpg,53.2,55.7,lantai5_300kg,curah,full_scene,"[225, 293, 476, 409]",False,0.4,True
+K0116,3,K0116_f3.jpg,55.7,55.7,lantai5_300kg,curah,full_scene,"[229, 301, 480, 417]",False,0.4,True
+K0116,4,K0116_f4.jpg,55.7,55.7,lantai5_300kg,curah,full_scene,"[228, 293, 479, 409]",False,0.4,True
+K0117,0,K0117_f0.jpg,393.0,393.0,lantai7_2000kg,curah,pre_cropped,,True,1.0,True
+K0117,1,K0117_f1.jpg,393.0,393.0,lantai7_2000kg,curah,pre_cropped,,True,1.0,True
+K0117,2,K0117_f2.jpg,393.0,393.0,lantai7_2000kg,curah,pre_cropped,,True,1.0,True
+K0117,3,K0117_f3.jpg,393.0,393.0,lantai7_2000kg,curah,pre_cropped,,True,1.0,True
+K0117,4,K0117_f4.jpg,393.0,393.0,lantai7_2000kg,curah,pre_cropped,,True,1.0,True
+K0118,0,K0118_f0.jpg,9.870,9.870,lcd6_15kg,karung_10,pre_cropped,,True,1.0,True
+K0118,1,K0118_f1.jpg,9.870,9.870,lcd6_15kg,karung_10,pre_cropped,,True,1.0,True
+K0118,2,K0118_f2.jpg,9.870,9.870,lcd6_15kg,karung_10,pre_cropped,,True,1.0,True
+K0118,3,K0118_f3.jpg,9.870,9.870,lcd6_15kg,karung_10,pre_cropped,,True,1.0,True
+K0118,4,K0118_f4.jpg,9.870,9.870,lcd6_15kg,karung_10,pre_cropped,,True,1.0,True
+K0119,0,K0119_f0.jpg,16.5,19.0,lantai7_2000kg,curah,full_scene,"[265, 140, 750, 295]",False,0.4,True
+K0119,1,K0119_f1.jpg,14.5,19.0,lantai7_2000kg,curah,full_scene,"[244, 135, 729, 290]",False,0.4,True
+K0119,2,K0119_f2.jpg,22.0,19.0,lantai7_2000kg,curah,full_scene,"[268, 136, 753, 291]",False,0.4,True
+K0119,3,K0119_f3.jpg,19.0,19.0,lantai7_2000kg,curah,full_scene,"[266, 133, 751, 288]",False,0.4,True
+K0119,4,K0119_f4.jpg,19.0,19.0,lantai7_2000kg,curah,full_scene,"[261, 125, 746, 280]",False,0.4,True

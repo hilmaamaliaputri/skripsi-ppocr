@@ -1,0 +1,41 @@
+\begin{table}[htbp]
+\centering
+\caption{Hasil Uji Ablasi Verifikasi 4-Lapis (Urutan Fail-Fast: Temporal -> Struktural -> Fisik -> Kalibrasi)}
+\label{tab:tahap_b_ablasi}
+\begin{tabular}{lrrrrrr}
+\hline
+Model & Dataset & Tahap & Coverage & Silent Error & Sel. Acc. & AURC \\
+\hline
+PP-OCRv6 Tiny & burst\_120 & Tanpa Verifikasi & 100.0\% & 88.33\% & 11.67\% & 0.8237 \\
+PP-OCRv6 Tiny & unified\_755 & Tanpa Verifikasi & 100.0\% & 90.07\% & 9.93\% & 0.8422 \\
+PP-OCRv6 Tiny & burst\_120 & + Uji Temporal & 35.0\% & 31.67\% & 9.52\% & 0.8678 \\
+PP-OCRv6 Tiny & unified\_755 & + Uji Temporal & 100.0\% & 90.07\% & 9.93\% & 0.8422 \\
+PP-OCRv6 Tiny & burst\_120 & + Uji Struktur & 14.17\% & 10.83\% & 23.53\% & 0.8169 \\
+PP-OCRv6 Tiny & unified\_755 & + Uji Struktur & 32.05\% & 22.12\% & 30.99\% & 0.7468 \\
+PP-OCRv6 Tiny & burst\_120 & + Uji Fisik & 3.33\% & 0.0\% & 100.0\% & 0.7289 \\
+PP-OCRv6 Tiny & unified\_755 & + Uji Fisik & 9.54\% & 1.59\% & 83.33\% & 0.7087 \\
+PP-OCRv6 Tiny & burst\_120 & + Uji Kalibrasi & 3.33\% & 0.0\% & 100.0\% & 0.7289 \\
+PP-OCRv6 Tiny & unified\_755 & + Uji Kalibrasi & 9.01\% & 1.32\% & 85.29\% & 0.7087 \\
+PP-OCRv6 Small & burst\_120 & Tanpa Verifikasi & 100.0\% & 90.83\% & 9.17\% & 0.8721 \\
+PP-OCRv6 Small & unified\_755 & Tanpa Verifikasi & 100.0\% & 91.79\% & 8.21\% & 0.9084 \\
+PP-OCRv6 Small & burst\_120 & + Uji Temporal & 43.33\% & 40.83\% & 5.77\% & 0.9331 \\
+PP-OCRv6 Small & unified\_755 & + Uji Temporal & 100.0\% & 91.79\% & 8.21\% & 0.9084 \\
+PP-OCRv6 Small & burst\_120 & + Uji Struktur & 23.33\% & 20.83\% & 10.71\% & 0.8852 \\
+PP-OCRv6 Small & unified\_755 & + Uji Struktur & 43.97\% & 35.76\% & 18.67\% & 0.8328 \\
+PP-OCRv6 Small & burst\_120 & + Uji Fisik & 1.67\% & 0.0\% & 100.0\% & 0.7817 \\
+PP-OCRv6 Small & unified\_755 & + Uji Fisik & 9.01\% & 1.99\% & 77.94\% & 0.7366 \\
+PP-OCRv6 Small & burst\_120 & + Uji Kalibrasi & 1.67\% & 0.0\% & 100.0\% & 0.7817 \\
+PP-OCRv6 Small & unified\_755 & + Uji Kalibrasi & 7.55\% & 0.79\% & 89.47\% & 0.7366 \\
+CRNN-CTC (Baseline) & burst\_120 & Tanpa Verifikasi & 100.0\% & 62.5\% & 37.5\% & 0.6351 \\
+CRNN-CTC (Baseline) & unified\_755 & Tanpa Verifikasi & 100.0\% & 66.09\% & 33.91\% & 0.6171 \\
+CRNN-CTC (Baseline) & burst\_120 & + Uji Temporal & 47.5\% & 20.83\% & 56.14\% & 0.5474 \\
+CRNN-CTC (Baseline) & unified\_755 & + Uji Temporal & 100.0\% & 66.09\% & 33.91\% & 0.6171 \\
+CRNN-CTC (Baseline) & burst\_120 & + Uji Struktur & 32.5\% & 5.83\% & 82.05\% & 0.3042 \\
+CRNN-CTC (Baseline) & unified\_755 & + Uji Struktur & 76.42\% & 42.52\% & 44.37\% & 0.3876 \\
+CRNN-CTC (Baseline) & burst\_120 & + Uji Fisik & 22.5\% & 0.83\% & 96.3\% & 0.3137 \\
+CRNN-CTC (Baseline) & unified\_755 & + Uji Fisik & 49.93\% & 21.85\% & 56.23\% & 0.3835 \\
+CRNN-CTC (Baseline) & burst\_120 & + Uji Kalibrasi & 21.67\% & 0.83\% & 96.15\% & 0.3137 \\
+CRNN-CTC (Baseline) & unified\_755 & + Uji Kalibrasi & 33.38\% & 8.08\% & 75.79\% & 0.3836 \\
+\hline
+\end{tabular}
+\end{table}

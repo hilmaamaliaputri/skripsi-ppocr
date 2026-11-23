@@ -1,232 +1,286 @@
-import React, { useState } from 'react';
-import { X, TrendingUp, Cpu, Award, Zap, ShieldCheck } from 'lucide-react';
-
-interface EpochPoint {
-  epoch: number;
-  loss: number;
-  valFsr: number;
-  valCer: number;
-}
-
-const EPOCHS_DATA: EpochPoint[] = [
-  { epoch: 1, loss: 2.185, valFsr: 14.2, valCer: 28.5 },
-  { epoch: 2, loss: 1.642, valFsr: 29.8, valCer: 18.2 },
-  { epoch: 3, loss: 1.120, valFsr: 46.5, valCer: 12.1 },
-  { epoch: 4, loss: 0.845, valFsr: 58.2, valCer: 8.90 },
-  { epoch: 5, loss: 0.652, valFsr: 66.4, valCer: 6.80 },
-  { epoch: 6, loss: 0.518, valFsr: 71.0, valCer: 5.60 },
-  { epoch: 7, loss: 0.421, valFsr: 73.5, valCer: 5.10 },
-  { epoch: 8, loss: 0.356, valFsr: 75.2, valCer: 4.80 },
-  { epoch: 9, loss: 0.302, valFsr: 76.8, valCer: 4.50 },
-  { epoch: 10, loss: 0.261, valFsr: 77.5, valCer: 4.30 },
-  { epoch: 11, loss: 0.228, valFsr: 78.1, valCer: 4.25 },
-  { epoch: 12, loss: 0.198, valFsr: 78.9, valCer: 4.22 },
-  { epoch: 13, loss: 0.174, valFsr: 79.2, valCer: 4.20 },
-  { epoch: 14, loss: 0.152, valFsr: 79.8, valCer: 4.20 },
-  { epoch: 15, loss: 0.135, valFsr: 80.1, valCer: 4.20 },
-  { epoch: 16, loss: 0.119, valFsr: 80.5, valCer: 4.20 },
-  { epoch: 17, loss: 0.106, valFsr: 80.8, valCer: 4.20 },
-  { epoch: 18, loss: 0.095, valFsr: 81.0, valCer: 4.20 },
-  { epoch: 19, loss: 0.086, valFsr: 81.1, valCer: 4.20 },
-  { epoch: 20, loss: 0.078, valFsr: 81.2, valCer: 4.20 },
-  { epoch: 21, loss: 0.071, valFsr: 81.4, valCer: 4.20 },
-  { epoch: 22, loss: 0.063, valFsr: 81.5, valCer: 4.20 },
-  { epoch: 23, loss: 0.057, valFsr: 81.6, valCer: 4.20 },
-  { epoch: 24, loss: 0.052, valFsr: 81.7, valCer: 4.20 },
-  { epoch: 25, loss: 0.048, valFsr: 81.7, valCer: 4.20 },
-];
+import React, { useEffect, useState } from 'react';
+import { X, TrendingUp, Cpu, CheckCircle2, Info, RefreshCw } from 'lucide-react';
+import { fetchTrainingHistory } from '../services/api';
+import type { TrainingHistoryResponse } from '../types/evaluator';
 
 interface TrainingConvergenceModalProps {
   isOpen: boolean;
   onClose: () => void;
-  isLightMode: boolean;
+  isLightMode?: boolean;
 }
+
+const PRETRAINED_LABELS: { key: string; name: string; params: string }[] = [
+  { key: 'tiny', name: 'PP-OCRv6 Tiny', params: '1.5M' },
+  { key: 'small', name: 'PP-OCRv6 Small', params: '7.7M' },
+  { key: 'medium', name: 'PP-OCRv6 Medium', params: '34.5M' },
+  { key: 'ppocrv5', name: 'PP-OCRv5 Mobile', params: '4.1M' },
+  { key: 'dbnet_parseq', name: 'DBNet + PARSeq', params: '26.3M' },
+];
 
 export const TrainingConvergenceModal: React.FC<TrainingConvergenceModalProps> = ({
   isOpen,
   onClose,
-  isLightMode,
+  isLightMode = false,
 }) => {
-  const [hoveredEpoch, setHoveredEpoch] = useState<EpochPoint | null>(EPOCHS_DATA[EPOCHS_DATA.length - 1]);
+  const [data, setData] = useState<TrainingHistoryResponse | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [hoverIdx, setHoverIdx] = useState<number | null>(null);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    let active = true;
+    setLoading(true);
+    fetchTrainingHistory()
+      .then((res) => {
+        if (active && res) setData(res);
+      })
+      .finally(() => {
+        if (active) setLoading(false);
+      });
+    return () => {
+      active = false;
+    };
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
-  // Dimensi SVG
-  const width = 640;
-  const height = 260;
-  const pad = { top: 25, right: 55, bottom: 35, left: 55 };
-  const plotW = width - pad.left - pad.right;
-  const plotH = height - pad.top - pad.bottom;
+  const history = data?.crnn?.history || [];
+  const bestEpoch = data?.crnn?.best_epoch ?? 0;
+  const bestFsr = data?.crnn?.best_val_fsr ?? 0;
+  const bestCer = data?.crnn?.best_val_cer ?? 0;
+  const epochsRan = data?.crnn?.epochs_ran ?? history.length;
+  const trainSamples = data?.crnn?.train_samples ?? 0;
+  const valSamples = data?.crnn?.val_samples ?? 0;
 
-  // Skala
-  const scaleX = (ep: number) => pad.left + ((ep - 1) / 24) * plotW;
-  const scaleLossY = (loss: number) => pad.top + plotH - (loss / 2.3) * plotH;
-  const scaleAccY = (acc: number) => pad.top + plotH - (acc / 100.0) * plotH;
+  const chartW = 680;
+  const chartH = 220;
+  const padL = 44;
+  const padR = 20;
+  const padT = 18;
+  const padB = 28;
+  const plotW = chartW - padL - padR;
+  const plotH = chartH - padT - padB;
 
-  const lossPath = EPOCHS_DATA.reduce((acc, p, i) => `${acc} ${i === 0 ? 'M' : 'L'} ${scaleX(p.epoch)} ${scaleLossY(p.loss)}`, '');
-  const fsrPath = EPOCHS_DATA.reduce((acc, p, i) => `${acc} ${i === 0 ? 'M' : 'L'} ${scaleX(p.epoch)} ${scaleAccY(p.valFsr)}`, '');
-  const cerPath = EPOCHS_DATA.reduce((acc, p, i) => `${acc} ${i === 0 ? 'M' : 'L'} ${scaleX(p.epoch)} ${scaleAccY(p.valCer)}`, '');
+  const maxLoss = Math.max(3.5, ...history.map((h) => Math.max(h.train_loss, h.val_loss)));
+  const xOf = (idx: number) =>
+    history.length <= 1 ? padL : padL + (idx / (history.length - 1)) * plotW;
+  const yPct = (pct: number) => padT + (1 - Math.max(0, Math.min(100, pct)) / 100) * plotH;
+  const yLoss = (loss: number) => padT + (1 - Math.max(0, Math.min(maxLoss, loss)) / maxLoss) * plotH;
+
+  const fsrPoints = history.map((h, i) => `${xOf(i).toFixed(1)},${yPct(h.val_fsr).toFixed(1)}`).join(' ');
+  const trainLossPoints = history.map((h, i) => `${xOf(i).toFixed(1)},${yLoss(h.train_loss).toFixed(1)}`).join(' ');
+  const valLossPoints = history.map((h, i) => `${xOf(i).toFixed(1)},${yLoss(h.val_loss).toFixed(1)}`).join(' ');
+
+  const inspected = hoverIdx !== null && history[hoverIdx] ? history[hoverIdx] : history[history.length - 1];
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="crnn-modal-title"
+      onClick={onClose}
+    >
       <div
-        className={`w-full max-w-4xl rounded-2xl border shadow-2xl overflow-hidden flex flex-col max-h-[90vh] ${
-          isLightMode ? 'bg-white border-[#E2E8F0] text-[#0F172A]' : 'bg-[#171F28] border-[#2E3A47] text-[#F1F5F9]'
+        className={`w-full max-w-4xl rounded-lg border shadow-2xl flex flex-col max-h-[90vh] ${
+          isLightMode ? 'bg-white border-[#E2E8F0] text-[#202832]' : 'bg-[#171F28] border-[#2E3A47] text-[#F1F5F9]'
         }`}
+        onClick={(e) => e.stopPropagation()}
       >
-        {/* Header Modal */}
-        <div className={`p-4 sm:p-5 border-b flex items-center justify-between ${
-          isLightMode ? 'border-[#E2E8F0] bg-[#F8FAFC]' : 'border-[#2E3A47] bg-[#111820]'
-        }`}>
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#F47721]/15 border border-[#F47721]/30 flex items-center justify-center text-[#F47721]">
-              <TrendingUp className="w-5 h-5" />
-            </div>
+        <div
+          className={`p-4 border-b flex items-center justify-between ${
+            isLightMode ? 'border-[#E2E8F0]' : 'border-[#2E3A47]'
+          }`}
+        >
+          <div className="flex items-center gap-2.5">
+            <TrendingUp className="w-5 h-5 text-[#16A36A]" aria-hidden="true" />
             <div>
-              <h2 className="text-sm sm:text-base font-bold font-sans tracking-tight">
-                Kurva Konvergensi Pelatihan CRNN-CTC (25 Epoch)
-              </h2>
-              <p className={`text-xs ${isLightMode ? 'text-[#64748B]' : 'text-[#94A3B8]'}`}>
-                PyTorch CTCLoss + AdamW (lr=1e-3, Cosine Annealing) pada Korpus 7-Segmen
+              <h3 id="crnn-modal-title" className="text-sm font-mono font-bold uppercase tracking-wider">
+                Kurva Konvergensi CRNN-CTC & Rekap Epoch Semua Model
+              </h3>
+              <p className={`text-xs font-sans ${isLightMode ? 'text-[#64748B]' : 'text-[#94A3B8]'}`}>
+                Dilatih pada dataset bersih 01_latih ({trainSamples + valSamples} citra bebas duplikat & bebas kebocoran uji)
               </p>
             </div>
           </div>
           <button
+            type="button"
             onClick={onClose}
-            className={`p-2 rounded-lg transition-colors ${
-              isLightMode ? 'hover:bg-[#E2E8F0] text-[#64748B]' : 'hover:bg-[#222D38] text-[#94A3B8]'
-            }`}
+            aria-label="Tutup modal kurva training"
+            className="p-1.5 rounded-md text-[#94A3B8] hover:text-[#F47721] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F47721]"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4" />
           </button>
         </div>
 
-        {/* Content Body */}
-        <div className="p-5 sm:p-6 overflow-y-auto space-y-5">
-          {/* KPI Cards Ringkasan */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            <div className={`p-3.5 rounded-xl border ${
-              isLightMode ? 'bg-[#F0FDF4] border-[#BBF7D0]' : 'bg-[#16A36A]/10 border-[#16A36A]/30'
-            }`}>
-              <div className="flex items-center justify-between text-xs text-[#16A36A] font-semibold mb-1">
-                <span>Best Val FSR</span>
-                <Award className="w-4 h-4" />
-              </div>
-              <div className="text-xl sm:text-2xl font-bold font-mono text-[#16A36A]">81.7%</div>
-              <div className="text-[10px] text-[#16A36A]/80 font-mono">Epoch 25 (94.2% dg guard)</div>
+        <div className="p-5 overflow-y-auto space-y-5">
+          {loading ? (
+            <div className="py-12 flex items-center justify-center gap-2 text-xs font-mono text-[#94A3B8]">
+              <RefreshCw className="w-4 h-4 animate-spin text-[#F47721]" aria-hidden="true" />
+              Memuat catatan histori epoch dari crnn_training_history.json...
             </div>
-
-            <div className={`p-3.5 rounded-xl border ${
-              isLightMode ? 'bg-[#FFF7ED] border-[#FFEDD5]' : 'bg-[#F47721]/10 border-[#F47721]/30'
-            }`}>
-              <div className="flex items-center justify-between text-xs text-[#F47721] font-semibold mb-1">
-                <span>Loss CTC Akhir</span>
-                <Zap className="w-4 h-4" />
+          ) : (
+            <>
+              {/* Key KPI strip */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                <div className={`p-3 rounded-lg border ${isLightMode ? 'bg-[#F8FAFC] border-[#E2E8F0]' : 'bg-[#111820] border-[#2E3A47]'}`}>
+                  <div className="text-[11px] font-sans text-[#94A3B8]">Total Epoch Berjalan</div>
+                  <div className="text-lg font-mono font-bold tabular-nums mt-0.5">{epochsRan} Epoch</div>
+                </div>
+                <div className={`p-3 rounded-lg border ${isLightMode ? 'bg-[#F8FAFC] border-[#E2E8F0]' : 'bg-[#111820] border-[#2E3A47]'}`}>
+                  <div className="text-[11px] font-sans text-[#94A3B8]">Titik Bobot Terbaik</div>
+                  <div className="text-lg font-mono font-bold text-[#F47721] tabular-nums mt-0.5">Epoch {bestEpoch}</div>
+                </div>
+                <div className={`p-3 rounded-lg border ${isLightMode ? 'bg-[#F8FAFC] border-[#E2E8F0]' : 'bg-[#111820] border-[#2E3A47]'}`}>
+                  <div className="text-[11px] font-sans text-[#94A3B8]">Val FSR Terbaik</div>
+                  <div className="text-lg font-mono font-bold text-[#16A36A] dark:text-[#38C98A] tabular-nums mt-0.5">
+                    {bestFsr.toFixed(2)}%
+                  </div>
+                </div>
+                <div className={`p-3 rounded-lg border ${isLightMode ? 'bg-[#F8FAFC] border-[#E2E8F0]' : 'bg-[#111820] border-[#2E3A47]'}`}>
+                  <div className="text-[11px] font-sans text-[#94A3B8]">Val CER Terbaik</div>
+                  <div className="text-lg font-mono font-bold text-blue-400 tabular-nums mt-0.5">
+                    {bestCer.toFixed(2)}%
+                  </div>
+                </div>
               </div>
-              <div className="text-xl sm:text-2xl font-bold font-mono text-[#F47721]">0.048</div>
-              <div className="text-[10px] text-[#F47721]/80 font-mono">Turun dari 2.185 (Ep 1)</div>
-            </div>
 
-            <div className={`p-3.5 rounded-xl border ${
-              isLightMode ? 'bg-[#EFF6FF] border-[#DBEAFE]' : 'bg-[#3B82F6]/10 border-[#3B82F6]/30'
-            }`}>
-              <div className="flex items-center justify-between text-xs text-[#3B82F6] font-semibold mb-1">
-                <span>Val CER Terendah</span>
-                <Cpu className="w-4 h-4" />
+              {/* Real 50-Epoch Convergence Chart */}
+              {history.length > 0 && (
+                <div className={`p-4 rounded-lg border ${isLightMode ? 'bg-[#F8FAFC] border-[#E2E8F0]' : 'bg-[#111820] border-[#2E3A47]'}`}>
+                  <div className="flex flex-wrap items-center justify-between gap-2 mb-3 text-xs font-mono">
+                    <div className="flex items-center gap-4">
+                      <span className="inline-flex items-center gap-1.5 text-[#38C98A]">
+                        <span className="w-3 h-0.5 bg-[#38C98A] inline-block" /> Val FSR (%)
+                      </span>
+                      <span className="inline-flex items-center gap-1.5 text-[#F47721]">
+                        <span className="w-3 h-0.5 bg-[#F47721] inline-block" /> Train Loss
+                      </span>
+                      <span className="inline-flex items-center gap-1.5 text-blue-400">
+                        <span className="w-3 h-0.5 bg-blue-400 inline-block" /> Val Loss
+                      </span>
+                    </div>
+                    {inspected && (
+                      <div className="text-[11px] text-[#94A3B8] tabular-nums">
+                        Epoch {inspected.epoch}: FSR <strong>{inspected.val_fsr.toFixed(2)}%</strong> &bull; CER{' '}
+                        <strong>{inspected.val_cer.toFixed(2)}%</strong> &bull; Val Loss{' '}
+                        <strong>{inspected.val_loss.toFixed(3)}</strong>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="overflow-x-auto">
+                    <svg
+                      viewBox={`0 0 ${chartW} ${chartH}`}
+                      className="w-full h-56 min-w-[520px]"
+                      onMouseLeave={() => setHoverIdx(null)}
+                    >
+                      {[0, 25, 50, 75, 100].map((pct) => {
+                        const y = yPct(pct);
+                        return (
+                          <g key={pct}>
+                            <line x1={padL} y1={y} x2={chartW - padR} y2={y} stroke="#2E3A47" strokeDasharray="3 3" />
+                            <text x={padL - 8} y={y + 4} textAnchor="end" className="fill-[#94A3B8] text-[10px] font-mono">
+                              {pct}%
+                            </text>
+                          </g>
+                        );
+                      })}
+                      <polyline fill="none" stroke="#F47721" strokeWidth="1.8" strokeOpacity="0.85" points={trainLossPoints} />
+                      <polyline fill="none" stroke="#60A5FA" strokeWidth="1.8" strokeOpacity="0.85" points={valLossPoints} />
+                      <polyline fill="none" stroke="#38C98A" strokeWidth="2.4" points={fsrPoints} />
+
+                      {history.map((h, i) => (
+                        <circle
+                          key={h.epoch}
+                          cx={xOf(i)}
+                          cy={yPct(h.val_fsr)}
+                          r={h.epoch === bestEpoch ? 4.5 : 2.5}
+                          className={h.epoch === bestEpoch ? 'fill-[#F47721]' : 'fill-[#38C98A]/80 cursor-pointer'}
+                          onMouseEnter={() => setHoverIdx(i)}
+                        />
+                      ))}
+
+                      {[1, Math.ceil(history.length / 2), history.length].map((ep) => {
+                        const idx = Math.max(0, Math.min(history.length - 1, ep - 1));
+                        return (
+                          <text
+                            key={ep}
+                            x={xOf(idx)}
+                            y={chartH - 6}
+                            textAnchor="middle"
+                            className="fill-[#94A3B8] text-[10px] font-mono"
+                          >
+                            Ep {history[idx]?.epoch}
+                          </text>
+                        );
+                      })}
+                    </svg>
+                  </div>
+                </div>
+              )}
+
+              {/* All 6 models epoch transparency table */}
+              <div className="space-y-2">
+                <div className="flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider">
+                  <Cpu className="w-4 h-4 text-[#F47721]" aria-hidden="true" />
+                  <span>Status Pelatihan Seluruh 6 Model Pembanding</span>
+                </div>
+                <div className={`overflow-x-auto rounded-lg border ${isLightMode ? 'border-[#E2E8F0]' : 'border-[#2E3A47]'}`}>
+                  <table className="w-full text-left text-xs font-mono border-collapse">
+                    <thead>
+                      <tr className={isLightMode ? 'bg-[#F8FAFC] text-[#475569]' : 'bg-[#111820] text-[#94A3B8]'}>
+                        <th className="py-2 px-3">Model</th>
+                        <th className="py-2 px-3">Param</th>
+                        <th className="py-2 px-3">Epoch Lokal</th>
+                        <th className="py-2 px-3">Status Skema</th>
+                      </tr>
+                    </thead>
+                    <tbody className={`divide-y ${isLightMode ? 'divide-[#E2E8F0]' : 'divide-[#2E3A47]'}`}>
+                      <tr className="bg-[#16A36A]/10">
+                        <td className="py-2 px-3 font-semibold">CRNN-CTC (Dilatih Ulang)</td>
+                        <td className="py-2 px-3">850K</td>
+                        <td className="py-2 px-3 font-bold text-[#16A36A] dark:text-[#38C98A]">
+                          {epochsRan} Epoch (Best Ep {bestEpoch})
+                        </td>
+                        <td className="py-2 px-3 font-sans">
+                          <span className="inline-flex items-center gap-1 text-[#16A36A] dark:text-[#38C98A] font-semibold">
+                            <CheckCircle2 className="w-3.5 h-3.5" aria-hidden="true" /> Trained dari 0 pada {trainSamples} train / {valSamples} val
+                          </span>
+                        </td>
+                      </tr>
+                      {PRETRAINED_LABELS.map((m) => (
+                        <tr key={m.key}>
+                          <td className="py-2 px-3">{m.name}</td>
+                          <td className="py-2 px-3">{m.params}</td>
+                          <td className="py-2 px-3 text-[#94A3B8]">0 Epoch</td>
+                          <td className="py-2 px-3 font-sans text-[#94A3B8]">
+                            {data?.pretrained_models?.[m.key]?.mode || 'Pretrained ONNX Zero-Shot'}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
-              <div className="text-xl sm:text-2xl font-bold font-mono text-[#3B82F6]">4.20%</div>
-              <div className="text-[10px] text-[#3B82F6]/80 font-mono">0.95% bila diverifikasi</div>
-            </div>
 
-            <div className={`p-3.5 rounded-xl border ${
-              isLightMode ? 'bg-[#F8FAFC] border-[#E2E8F0]' : 'bg-[#222D38] border-[#2E3A47]'
-            }`}>
-              <div className="flex items-center justify-between text-xs font-semibold mb-1">
-                <span>Parameter & Ukuran</span>
-                <Cpu className="w-4 h-4 text-[#F47721]" />
-              </div>
-              <div className="text-xl sm:text-2xl font-bold font-mono">6.35M</div>
-              <div className="text-[10px] font-mono opacity-70">0.12 MB (ONNX runtime)</div>
-            </div>
-          </div>
-
-          {/* SVG Multi-Metric Plot */}
-          <div className={`p-4 rounded-xl border relative ${
-            isLightMode ? 'bg-[#F8FAFC] border-[#E2E8F0]' : 'bg-[#111820] border-[#2E3A47]'
-          }`}>
-            <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
-              <span className="text-xs font-mono font-semibold">Dinamika Pelatihan per Epoch</span>
-              <div className="flex items-center gap-4 text-xs font-mono">
-                <span className="flex items-center gap-1.5 text-[#F47721]">
-                  <span className="w-2.5 h-0.5 bg-[#F47721] rounded" /> CTC Loss
+              <div className="flex items-start gap-2.5 p-3 rounded-lg bg-blue-500/10 border border-blue-500/30 text-xs font-sans text-[#94A3B8]">
+                <Info className="w-4 h-4 text-blue-400 shrink-0 mt-0.5" aria-hidden="true" />
+                <span>
+                  Lima model berbasis PaddleOCR &amp; PARSeq menggunakan bobot <em>pretrained</em> resmi (0 epoch pelatihan lokal) untuk menguji ketahanan <em>zero-shot</em> pada layar 7-segmen, sedangkan CRNN-CTC dilatih penuh dari nol menggunakan augmentasi skala industri + <em>crop</em> SachaIZADI bebas kebocoran set uji.
                 </span>
-                <span className="flex items-center gap-1.5 text-[#16A36A]">
-                  <span className="w-2.5 h-0.5 bg-[#16A36A] rounded" /> Val FSR (%)
-                </span>
-                <span className="flex items-center gap-1.5 text-[#3B82F6]">
-                  <span className="w-2.5 h-0.5 bg-[#3B82F6] rounded" /> Val CER (%)
-                </span>
               </div>
-            </div>
-
-            <svg viewBox={`0 0 ${width} ${height}`} className="w-full h-auto select-none">
-              {/* Grid Lines */}
-              {[0, 0.25, 0.5, 0.75, 1.0].map((v) => {
-                const y = pad.top + v * plotH;
-                return (
-                  <line key={`gy-${v}`} x1={pad.left} y1={y} x2={width - pad.right} y2={y} stroke="#64748b" strokeOpacity="0.2" strokeDasharray="3 3" />
-                );
-              })}
-
-              {/* Kurva */}
-              <path d={lossPath} fill="none" stroke="#F47721" strokeWidth="2.5" />
-              <path d={fsrPath} fill="none" stroke="#16A36A" strokeWidth="2.5" />
-              <path d={cerPath} fill="none" stroke="#3B82F6" strokeWidth="2.0" strokeDasharray="4 2" />
-
-              {/* Sumbu X Titik Epochs */}
-              {EPOCHS_DATA.map((p) => {
-                const cx = scaleX(p.epoch);
-                const isHovered = hoveredEpoch?.epoch === p.epoch;
-                return (
-                  <g key={`ep-${p.epoch}`} className="cursor-pointer" onMouseEnter={() => setHoveredEpoch(p)}>
-                    <circle cx={cx} cy={scaleLossY(p.loss)} r={isHovered ? 4.5 : 2.5} fill="#F47721" />
-                    <circle cx={cx} cy={scaleAccY(p.valFsr)} r={isHovered ? 4.5 : 2.5} fill="#16A36A" />
-                  </g>
-                );
-              })}
-
-              {/* Label Sumbu */}
-              <text x={pad.left - 8} y={pad.top + 5} textAnchor="end" className="text-[10px] font-mono fill-[#F47721]">Loss: 2.3</text>
-              <text x={pad.left - 8} y={pad.top + plotH} textAnchor="end" className="text-[10px] font-mono fill-[#F47721]">0.0</text>
-              <text x={width - pad.right + 8} y={pad.top + 5} textAnchor="start" className="text-[10px] font-mono fill-[#16A36A]">FSR: 100%</text>
-              <text x={width - pad.right + 8} y={pad.top + plotH} textAnchor="start" className="text-[10px] font-mono fill-[#16A36A]">0%</text>
-              <text x={scaleX(1)} y={height - 10} textAnchor="middle" className="text-[10px] font-mono fill-current opacity-60">Ep 1</text>
-              <text x={scaleX(13)} y={height - 10} textAnchor="middle" className="text-[10px] font-mono fill-current opacity-60">Ep 13</text>
-              <text x={scaleX(25)} y={height - 10} textAnchor="middle" className="text-[10px] font-mono fill-current opacity-60">Ep 25</text>
-            </svg>
-
-            {/* Hover Tooltip Overlay */}
-            {hoveredEpoch && (
-              <div className={`mt-2 p-2.5 rounded-lg border flex flex-wrap items-center justify-between text-xs font-mono ${
-                isLightMode ? 'bg-white border-[#E2E8F0]' : 'bg-[#171F28] border-[#2E3A47]'
-              }`}>
-                <span className="font-bold text-[#F47721]">Epoch #{hoveredEpoch.epoch}</span>
-                <span>Loss: <strong className="text-[#F47721]">{hoveredEpoch.loss.toFixed(3)}</strong></span>
-                <span>Val FSR: <strong className="text-[#16A36A]">{hoveredEpoch.valFsr.toFixed(1)}%</strong></span>
-                <span>Val CER: <strong className="text-[#3B82F6]">{hoveredEpoch.valCer.toFixed(2)}%</strong></span>
-              </div>
-            )}
-          </div>
-
-          {/* Academic Protocol Note */}
-          <div className={`p-3.5 rounded-xl border flex items-start gap-2.5 text-xs font-sans ${
-            isLightMode ? 'bg-[#F0FDF4] border-[#BBF7D0] text-[#166534]' : 'bg-[#16A36A]/10 border-[#16A36A]/30 text-[#86EFAC]'
-          }`}>
-            <ShieldCheck className="w-4 h-4 shrink-0 mt-0.5 text-[#16A36A]" />
-            <div>
-              <strong>Integritas Protokol Akademik Skripsi:</strong> Pelatihan CRNN-CTC hanya menggunakan 80 folder sintetis/kalibrasi (`scale_syn_0001` - `0080`) dan korpus generator 7-segmen (1.200 sampel). Seluruh <strong>120 folder uji terkunci (Frozen Test Set)</strong> dipertahankan steril tanpa pernah dilihat oleh model saat proses pelatihan.
-            </div>
-          </div>
+            </>
+          )}
         </div>
       </div>
     </div>

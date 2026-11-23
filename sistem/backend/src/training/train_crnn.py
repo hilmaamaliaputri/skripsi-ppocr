@@ -1,263 +1,124 @@
-"""Pipeline Pelatihan CRNN-CTC & Ekspor Otomatis ke Format ONNX.
+"""Pipeline Pelatihan CRNN-CTC & Ekspor Otomatis ke Format ONNX."""
 
-Menjalankan:
-1. Pemuatan dataset latih & validasi dari kalibrasi/sintetis (menjaga test set tetap terkunci)
-2. Loop pelatihan dengan PyTorch CTCLoss & optimizer AdamW + Cosine Annealing
-3. Evaluasi metrik FSR & CER pada validation set
-4. Penyimpanan bobot terbaik (crnn_best.pth)
-5. Ekspor otomatis ke ONNX (crnn_ctc.onnx) untuk inferensi native di backend FastAPI
-"""
-
+import glob
+import json
 import os
 import sys
-import json
-import time
-import glob
+from typing import Any, Dict, List, Tuple
+import cv2
 import numpy as np
-
-# Pastikan root backend ada dalam sys.path
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
-
 import torch
 import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import DataLoader
-from typing import List, Dict, Any, Tuple
 
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
+
+from src.evaluation.metrics import EvaluationMetrics
 from src.training.crnn_model import CRNN, NUM_CLASSES
-from src.training.dataset import ScaleDataset, crnn_collate_fn, CTCLabelConverter
+from src.training.dataset import CTCLabelConverter, ScaleDataset, crnn_collate_fn
 from src.training.segment_synth import render_scale_display
-import cv2
 
 
 def generate_synthetic_corpus(output_dir: str, count: int = 1200) -> List[Dict[str, Any]]:
-    """Hasilkan korpus citra 7-segmen acak dengan segmen hantu untuk memperkuat model."""
+    """Hasilkan korpus citra 7-segmen acak untuk pengayaan latih CRNN."""
     os.makedirs(output_dir, exist_ok=True)
     samples: List[Dict[str, Any]] = []
-
-    # Ragam pola timbangan realistis (desimal dan integer)
     for i in range(count):
-        # 75% angka dengan desimal, 25% angka bulat
         if np.random.rand() > 0.25:
             val = round(np.random.uniform(0.1, 150.0), np.random.choice([1, 2]))
             label = f"{val:.2f}" if np.random.rand() > 0.3 else f"{val:.1f}"
         else:
-            val = int(np.random.uniform(0, 500))
-            label = str(val)
-
+            label = str(int(np.random.uniform(0, 500)))
         theme = "lcd" if np.random.rand() > 0.4 else "led"
-        slots = np.random.choice([5, 6])
+        slots = int(np.random.choice([5, 6]))
         img = render_scale_display(label, total_slots=slots, theme=theme)
-
         img_path = os.path.join(output_dir, f"synth_{i:04d}.png")
         cv2.imwrite(img_path, img)
         samples.append({"image_path": img_path, "label": label, "roi_bbox": None})
-
     return samples
 
 
 def collect_training_samples(base_dir: str) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]]]:
-    """Kumpulkan dataset latih dan validasi (dari dataset_latih terpadu 3 sumber atau fallback sintetis)."""
+    """Kumpulkan dataset latih terpadu bersih dan bagi menjadi train (85%) + val (15%)."""
     samples: List[Dict[str, Any]] = []
-
-    # Cek folder dataset_latih terpadu terlebih dahulu
     candidates = [
+        os.path.abspath(os.path.join(base_dir, "..", "..", "dataset", "01_latih", "manifest.json")),
         os.path.join(base_dir, "data", "dataset_latih", "manifest.json"),
         os.path.abspath(os.path.join(base_dir, "..", "data", "dataset_latih", "manifest.json")),
         os.path.abspath(os.path.join(base_dir, "..", "..", "dataset", "dataset_latih", "manifest.json")),
-        os.path.abspath(os.path.join(base_dir, "..", "dataset", "dataset_latih", "manifest.json")),
     ]
     unified_p = next((p for p in candidates if os.path.exists(p)), None)
 
-    if unified_p and os.path.exists(unified_p):
+    if unified_p:
         with open(unified_p, "r", encoding="utf-8") as f:
             manifest_items = json.load(f)
         img_dir = os.path.join(os.path.dirname(unified_p), "images")
         for item in manifest_items:
             img_p = os.path.join(img_dir, item["filename"])
             if os.path.exists(img_p) and item.get("label"):
-                samples.append({
-                    "image_path": img_p,
-                    "label": str(item["label"]),
-                    "roi_bbox": item.get("roi_bbox"),
-                })
-        print(f"[Dataset] Memuat {len(samples)} sampel dari dataset_latih terpadu (3 Sumber: Timbangan + CRNN + SachaIZADI).")
+                samples.append({"image_path": img_p, "label": str(item["label"]), "roi_bbox": item.get("roi_bbox")})
+        print(f"[Dataset] Memuat {len(samples)} sampel dari {unified_p}.")
     else:
         synthetic_dir = os.path.join(base_dir, "data", "synthetic")
-        folder_paths = sorted(glob.glob(os.path.join(synthetic_dir, "scale_syn_*")))
-        train_folders = folder_paths[:80]
-
-        for fld in train_folders:
+        for fld in sorted(glob.glob(os.path.join(synthetic_dir, "scale_syn_*")))[:80]:
             meta_file = os.path.join(fld, "metadata.json")
             if not os.path.exists(meta_file):
                 continue
             try:
                 with open(meta_file, "r", encoding="utf-8") as f:
                     meta = json.load(f)
-                label = str(meta.get("ground_truth", ""))
-                roi_bbox = meta.get("roi_bbox")
+                label, roi_bbox = str(meta.get("ground_truth", "")), meta.get("roi_bbox")
             except Exception:
                 continue
-
             for frame_file in sorted(glob.glob(os.path.join(fld, "frame_*.jpg"))):
                 samples.append({"image_path": frame_file, "label": label, "roi_bbox": roi_bbox})
+        samples.extend(generate_synthetic_corpus(os.path.join(base_dir, "data", "train_synth"), count=1200))
 
-        synth_cache_dir = os.path.join(base_dir, "data", "train_synth")
-        synth_samples = generate_synthetic_corpus(synth_cache_dir, count=1200)
-        samples.extend(synth_samples)
-
-    # Shuffle dan split: 85% train, 15% validation
     np.random.seed(42)
     np.random.shuffle(samples)
-
     split_idx = int(len(samples) * 0.85)
-    train_samples = samples[:split_idx]
-    val_samples = samples[split_idx:]
-
-    print(f"[Dataset] Terkumpul: {len(train_samples)} sampel latih, {len(val_samples)} sampel validasi.")
-    return train_samples, val_samples
+    print(f"[Dataset] Terkumpul: {split_idx} sampel latih, {len(samples) - split_idx} sampel validasi.")
+    return samples[:split_idx], samples[split_idx:]
 
 
 def compute_cer(gt: str, pred: str) -> float:
-    """Hitung Character Error Rate (Levenshtein Distance) sederhana."""
+    """Hitung Character Error Rate dengan helper Levenshtein terpusat."""
     if gt == pred:
         return 0.0
-    # Levenshtein distance matrix
-    m, n = len(gt), len(pred)
-    dp = [[0] * (n + 1) for _ in range(m + 1)]
-    for i in range(m + 1):
-        dp[i][0] = i
-    for j in range(n + 1):
-        dp[0][j] = j
-    for i in range(1, m + 1):
-        for j in range(1, n + 1):
-            cost = 0 if gt[i - 1] == pred[j - 1] else 1
-            dp[i][j] = min(dp[i - 1][j] + 1, dp[i][j - 1] + 1, dp[i - 1][j - 1] + cost)
-    return dp[m][n] / max(1, m)
+    return EvaluationMetrics.levenshtein_distance(gt, pred) / max(1, len(gt))
 
 
-def train_crnn_pipeline(
-    epochs: int = 30,
-    batch_size: int = 32,
-    lr: float = 1e-3,
-    output_dir: str = "weights",
-):
-    """Jalankan siklus pelatihan lengkap model CRNN-CTC."""
-    base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
-    weights_dir = os.path.join(base_dir, output_dir)
-    os.makedirs(weights_dir, exist_ok=True)
-
-    train_samples, val_samples = collect_training_samples(base_dir)
-
-    train_dataset = ScaleDataset(train_samples, is_training=True)
-    val_dataset = ScaleDataset(val_samples, is_training=False)
-
-    train_loader = DataLoader(
-        train_dataset,
-        batch_size=batch_size,
-        shuffle=True,
-        collate_fn=crnn_collate_fn,
-        num_workers=0,
-    )
-    val_loader = DataLoader(
-        val_dataset,
-        batch_size=batch_size,
-        shuffle=False,
-        collate_fn=crnn_collate_fn,
-        num_workers=0,
-    )
-
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    print(f"[Device] Menggunakan: {device}")
-
-    model = CRNN(num_classes=NUM_CLASSES).to(device)
-    criterion = nn.CTCLoss(blank=0, zero_infinity=True)
-    optimizer = optim.AdamW(model.parameters(), lr=lr, weight_decay=1e-4)
-    scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=epochs)
-
-    best_fsr = 0.0
-    best_weights_path = os.path.join(weights_dir, "crnn_best.pth")
-    onnx_path = os.path.join(weights_dir, "crnn_ctc.onnx")
-
-    print("\n" + "=" * 60)
-    print(f"MEMULAI PELATIHAN CRNN-CTC ({epochs} EPOCH)")
-    print("=" * 60)
-
-    for epoch in range(1, epochs + 1):
-        model.train()
-        total_loss = 0.0
-
-        for batch in train_loader:
+def _evaluate_validation_epoch(
+    model: CRNN, val_loader: DataLoader, criterion: nn.CTCLoss, device: torch.device
+) -> Tuple[float, float, float]:
+    model.eval()
+    correct_seq, total_seq, total_cer, total_loss = 0, 0, 0.0, 0.0
+    with torch.no_grad():
+        for batch in val_loader:
             images = batch["images"].to(device)
             targets = batch["targets"].to(device)
             target_lengths = batch["target_lengths"].to(device)
-
-            optimizer.zero_grad()
-
-            # Output model: (T, B, num_classes)
+            raw_texts = batch["raw_texts"]
             log_probs = model(images)
-            T, B, _ = log_probs.size()
-            input_lengths = torch.full(size=(B,), fill_value=T, dtype=torch.long, device=device)
+            t_steps, b_size, _ = log_probs.size()
+            in_len = torch.full(size=(b_size,), fill_value=t_steps, dtype=torch.long, device=device)
+            total_loss += criterion(log_probs, targets, in_len, target_lengths).item()
+            for b in range(b_size):
+                pred_str, _ = CTCLabelConverter.decode_greedy(log_probs[:, b, :])
+                gt_str = raw_texts[b]
+                correct_seq += int(pred_str == gt_str)
+                total_cer += compute_cer(gt_str, pred_str)
+                total_seq += 1
+    denom = max(1, total_seq)
+    return total_loss / max(1, len(val_loader)), (correct_seq / denom) * 100.0, (total_cer / denom) * 100.0
 
-            loss = criterion(log_probs, targets, input_lengths, target_lengths)
-            loss.backward()
 
-            nn.utils.clip_grad_norm_(model.parameters(), max_norm=5.0)
-            optimizer.step()
-            total_loss += loss.item()
-
-        scheduler.step()
-        avg_loss = total_loss / max(1, len(train_loader))
-
-        # Evaluasi Validasi
-        model.eval()
-        correct_sequences = 0
-        total_sequences = 0
-        total_cer = 0.0
-
-        with torch.no_grad():
-            for batch in val_loader:
-                images = batch["images"].to(device)
-                raw_texts = batch["raw_texts"]
-
-                log_probs = model(images)  # (T, B, num_classes)
-                T, B, _ = log_probs.size()
-
-                for b in range(B):
-                    sample_log_probs = log_probs[:, b, :]
-                    pred_str, _ = CTCLabelConverter.decode_greedy(sample_log_probs)
-                    gt_str = raw_texts[b]
-
-                    if pred_str == gt_str:
-                        correct_sequences += 1
-                    total_cer += compute_cer(gt_str, pred_str)
-                    total_sequences += 1
-
-        val_fsr = (correct_sequences / max(1, total_sequences)) * 100.0
-        val_cer = (total_cer / max(1, total_sequences)) * 100.0
-
-        print(
-            f"Epoch [{epoch:02d}/{epochs:02d}] "
-            f"Loss: {avg_loss:.4f} | "
-            f"Val FSR: {val_fsr:.1f}% | "
-            f"Val CER: {val_cer:.2f}%"
-        )
-
-        if val_fsr >= best_fsr:
-            best_fsr = val_fsr
-            torch.save(model.state_dict(), best_weights_path)
-
-    print("\n" + "=" * 60)
-    print(f"PELATIHAN SELESAI! Best Validation FSR: {best_fsr:.1f}%")
-    print(f"Bobot disimpan di: {best_weights_path}")
-    print("=" * 60)
-
-    # Ekspor ke ONNX
+def _export_onnx_weights(model: CRNN, best_weights_path: str, onnx_path: str) -> None:
     print(f"[ONNX] Mengekspor model terbaik ke: {onnx_path}...")
     model.load_state_dict(torch.load(best_weights_path, map_location="cpu"))
     model.eval()
     dummy_input = torch.randn(1, 1, 32, 128, device="cpu")
-
     torch.onnx.export(
         model.to("cpu"),
         dummy_input,
@@ -270,8 +131,81 @@ def train_crnn_pipeline(
         dynamic_axes={"input": {0: "batch_size"}, "output": {1: "batch_size"}},
     )
     print("[ONNX] Ekspor ONNX berhasil!")
+
+
+def train_crnn_pipeline(
+    epochs: int = 50,
+    batch_size: int = 32,
+    lr: float = 1e-3,
+    output_dir: str = "weights",
+    patience: int = 12,
+) -> str:
+    """Jalankan siklus pelatihan lengkap CRNN-CTC dan ekspor ONNX."""
+    base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+    weights_dir, config_dir = os.path.join(base_dir, output_dir), os.path.join(base_dir, "config")
+    os.makedirs(weights_dir, exist_ok=True)
+    os.makedirs(config_dir, exist_ok=True)
+
+    train_samples, val_samples = collect_training_samples(base_dir)
+    train_loader = DataLoader(ScaleDataset(train_samples, is_training=True), batch_size=batch_size, shuffle=True, collate_fn=crnn_collate_fn, num_workers=0)
+    val_loader = DataLoader(ScaleDataset(val_samples, is_training=False), batch_size=batch_size, shuffle=False, collate_fn=crnn_collate_fn, num_workers=0)
+
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    model = CRNN(num_classes=NUM_CLASSES).to(device)
+    criterion = nn.CTCLoss(blank=0, zero_infinity=True)
+    optimizer = optim.AdamW(model.parameters(), lr=lr, weight_decay=1e-4)
+    scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=epochs)
+
+    best_score, best_epoch, best_val_fsr, best_val_cer, no_improve = (-1.0, float("inf")), 1, 0.0, 100.0, 0
+    history: List[Dict[str, Any]] = []
+    best_weights_path = os.path.join(weights_dir, "crnn_best.pth")
+    onnx_path = os.path.join(weights_dir, "crnn_ctc.onnx")
+    history_path = os.path.join(config_dir, "crnn_training_history.json")
+
+    for epoch in range(1, epochs + 1):
+        model.train()
+        total_loss = 0.0
+        for batch in train_loader:
+            images, targets = batch["images"].to(device), batch["targets"].to(device)
+            target_lengths = batch["target_lengths"].to(device)
+            optimizer.zero_grad()
+            log_probs = model(images)
+            t_steps, b_size, _ = log_probs.size()
+            in_len = torch.full(size=(b_size,), fill_value=t_steps, dtype=torch.long, device=device)
+            loss = criterion(log_probs, targets, in_len, target_lengths)
+            loss.backward()
+            nn.utils.clip_grad_norm_(model.parameters(), max_norm=5.0)
+            optimizer.step()
+            total_loss += loss.item()
+
+        current_lr = optimizer.param_groups[0]["lr"]
+        scheduler.step()
+        avg_loss = total_loss / max(1, len(train_loader))
+        val_loss, val_fsr, val_cer = _evaluate_validation_epoch(model, val_loader, criterion, device)
+        history.append({
+            "epoch": epoch, "train_loss": round(avg_loss, 4), "val_loss": round(val_loss, 4),
+            "val_fsr": round(val_fsr, 2), "val_cer": round(val_cer, 2), "lr": round(float(current_lr), 6),
+        })
+        print(f"Epoch [{epoch:02d}/{epochs:02d}] TrainLoss: {avg_loss:.4f} | ValLoss: {val_loss:.4f} | Val FSR: {val_fsr:.2f}% | Val CER: {val_cer:.2f}%", flush=True)
+
+        if (val_fsr, -val_cer) > best_score:
+            best_score, best_epoch = (val_fsr, -val_cer), epoch
+            best_val_fsr, best_val_cer, no_improve = round(val_fsr, 2), round(val_cer, 2), 0
+            torch.save(model.state_dict(), best_weights_path)
+        else:
+            no_improve += 1
+            if no_improve >= patience and epoch >= 20:
+                break
+
+    with open(history_path, "w", encoding="utf-8") as hf:
+        json.dump({
+            "epochs_ran": len(history), "max_epochs": epochs, "best_epoch": best_epoch,
+            "best_val_fsr": best_val_fsr, "best_val_cer": best_val_cer,
+            "train_samples": len(train_samples), "val_samples": len(val_samples), "history": history,
+        }, hf, indent=2)
+    _export_onnx_weights(model, best_weights_path, onnx_path)
     return onnx_path
 
 
 if __name__ == "__main__":
-    train_crnn_pipeline(epochs=25, batch_size=32, lr=1e-3)
+    train_crnn_pipeline(epochs=50, batch_size=32, lr=1e-3, patience=12)

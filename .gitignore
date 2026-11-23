@@ -17,14 +17,17 @@ dist/
 
 # Large raw dataset frames (do not commit raw frames to git)
 dataset/*/images/
+dataset/*/frames/
+dataset/04_uji_burst_120/
+dataset/99_arsip_draft_tanpa_label/
 sistem/data/dataset_latih/
 sistem/data/dataset_uji/
 sistem/data/calib/frames/
 sistem/data/test/frames/
-sistem/data/synthetic/*/frame_*.jpg
-sistem/data/synthetic/*/clean_base.png
+sistem/data/synthetic/
 models/
 *.onnx
+*.onnx.data
 *.pth
 *.bin
 *.tar.gz
@@ -39,6 +42,7 @@ sistem/backend/data/
 
 # Large PDF files and binary drafts
 jurnal/
+literatur baru/
 pedoman/
 Draft TA/
 skripsi-ppocrv6-main/

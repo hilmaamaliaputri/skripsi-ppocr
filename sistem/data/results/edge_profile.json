@@ -1,0 +1,68 @@
+[
+  {
+    "model": "tiny",
+    "param_count": 1500000,
+    "cold_load_ms": 299.17,
+    "rss_before_mb": 156.8,
+    "rss_after_mb": 178.06,
+    "rss_delta_mb": 21.26,
+    "n_crops": 30,
+    "latency_p50_ms": 4.97,
+    "latency_p95_ms": 7.32
+  },
+  {
+    "model": "small",
+    "param_count": 7700000,
+    "cold_load_ms": 803.36,
+    "rss_before_mb": 179.19,
+    "rss_after_mb": 208.98,
+    "rss_delta_mb": 29.79,
+    "n_crops": 30,
+    "latency_p50_ms": 25.84,
+    "latency_p95_ms": 41.95
+  },
+  {
+    "model": "medium",
+    "param_count": 34500000,
+    "cold_load_ms": 936.36,
+    "rss_before_mb": 212.37,
+    "rss_after_mb": 266.12,
+    "rss_delta_mb": 53.75,
+    "n_crops": 30,
+    "latency_p50_ms": 100.69,
+    "latency_p95_ms": 119.15
+  },
+  {
+    "model": "ppocrv5",
+    "param_count": 4113256,
+    "cold_load_ms": 818.27,
+    "rss_before_mb": 271.95,
+    "rss_after_mb": 207.83,
+    "rss_delta_mb": 0.0,
+    "n_crops": 30,
+    "latency_p50_ms": 24.48,
+    "latency_p95_ms": 28.75
+  },
+  {
+    "model": "crnn",
+    "param_count": 850000,
+    "cold_load_ms": 178.56,
+    "rss_before_mb": 181.9,
+    "rss_after_mb": 215.89,
+    "rss_delta_mb": 33.99,
+    "n_crops": 30,
+    "latency_p50_ms": 11.43,
+    "latency_p95_ms": 12.83
+  },
+  {
+    "model": "dbnet_parseq",
+    "param_count": 26296439,
+    "cold_load_ms": 12533.82,
+    "rss_before_mb": 201.66,
+    "rss_after_mb": 333.08,
+    "rss_delta_mb": 131.42,
+    "n_crops": 30,
+    "latency_p50_ms": 419.13,
+    "latency_p95_ms": 640.86
+  }
+]

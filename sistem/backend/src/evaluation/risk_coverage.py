@@ -74,20 +74,38 @@ class RiskCoverageAnalyzer:
         confidences: List[float],
         correctness: List[int],
         max_silent_error: float = 0.01,
+        min_coverage: float = 0.50,
     ) -> Dict:
-        """Mencari ambang batas terendah yang menjamin risiko kesalahan <= max_silent_error."""
-        aurc, points = self.compute_curve(confidences, correctness, sample_step=1)
+        """Mencari ambang batas terendah dengan risk <= max_silent_error dan coverage >= min_coverage.
 
-        # Cari titik dengan coverage terbesar yang masih memenuhi batas risiko
+        Jika target risiko tidak tercapai pada cakupan minimal, fallback ke titik dengan
+        cakupan >= min_coverage yang memiliki risiko terkecil.
+        """
+        aurc, points = self.compute_curve(confidences, correctness, sample_step=1)
+        if not points:
+            return {
+                "recommended_threshold": 0.85,
+                "achieved_coverage": 0.0,
+                "expected_risk": 0.0,
+                "selective_accuracy": 1.0,
+                "aurc": aurc,
+                "policy_note": "empty_points",
+            }
+
+        eligible = [p for p in points if p["coverage"] >= min_coverage]
+        pool = eligible if eligible else points
+
         best_point: Optional[Dict] = None
-        for pt in points:
+        note = "target_met"
+        for pt in pool:
             if pt["risk"] <= max_silent_error:
                 if best_point is None or pt["coverage"] > best_point["coverage"]:
                     best_point = pt
 
         if best_point is None:
-            # Fallback ke titik pertama (paling selektif)
-            best_point = points[0] if points else {"threshold": 0.90, "coverage": 0.0, "risk": 0.0}
+            # Fallback: pilih risiko terendah pada coverage >= min_coverage (memecah seri dengan coverage terbesar)
+            best_point = min(pool, key=lambda p: (p["risk"], -p["coverage"]))
+            note = "min_risk_at_min_coverage"
 
         return {
             "recommended_threshold": best_point["threshold"],
@@ -95,4 +113,5 @@ class RiskCoverageAnalyzer:
             "expected_risk": best_point["risk"],
             "selective_accuracy": best_point.get("selective_accuracy", 1.0),
             "aurc": aurc,
+            "policy_note": note,
         }

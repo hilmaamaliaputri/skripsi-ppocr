@@ -1,0 +1,24 @@
+,Tabel Hasil Eksperimen Resmi Bab IV (Terkunci pasca Pembersihan Kebocoran & Retrain CRNN-CTC 23 Nov 2026),,,,,,,,
+,Seluruh metrik diukur langsung pada 755 Citra Uji Terkunci dan 120 Burst Multi-Frame dengan Bootstrap 95% CI (1.000 iterasi).,,,,,,,,
+,Dataset latih = 2.268 citra bersih (0 bocor SHA256/crop/dHash ke uji); Kalibrasi (T* dan tau) dikunci dari n = 600 frame dataset/02_kalibrasi.,,,,,,,,
+,TABEL 1 · Hasil Komparasi 6 Model pada 755 Citra Uji Terkunci (Tahap A - RM 1),,,,,,,,
+,Model,Parameter,Ukuran ONNX,FSR Mentah (%) [95% CI],CER Mentah (%) [95% CI],Silent Error Verif. (%),Coverage Verif. (%),Selective Acc. (%),Latensi p50 / p95 (ms)
+,CRNN-CTC (Retrained 50ep - Champion Edge),0.85M / 25MB,24.3 MB,33.91% [30.73-37.48],26.68% [24.80-28.42],8.08%,33.38%,75.79%,12.84 / 16.85
+,PP-OCRv6 Tiny (Champion Zero-Shot Edge),1.50M,~6.0 MB,9.93% [7.68-11.92],48.48% [46.08-50.99],1.32%,9.01%,85.29%,5.59 / 9.73
+,PP-OCRv6 Small (Usulan Evaluasi),7.70M,~18.0 MB,8.21% [6.23-10.07],51.33% [50.68-55.45],0.79%,7.55%,89.47%,26.90 / 39.79
+,PP-OCRv6 Medium,34.5M,~45.0 MB,6.89% [5.16-8.61],54.07% [53.76-58.10],0.66%,6.23%,89.36%,105.08 / 141.11
+,PP-OCRv5 Mobile,4.11M,15.9 MB,1.99% [1.06-3.05],69.94% [69.17-74.14],1.06%,2.91%,63.64%,24.01 / 29.66
+,DBNet + PARSeq (2-Stage),26.30M,101.5 MB,2.12% [1.19-3.18],51.30% [49.14-53.99],0.79%,2.78%,71.43%,508.80 / 1492.89
+,TABEL 2 · Hasil Uji Ablasi Verifikasi 4-Lapis pada CRNN / Tiny / Small (Tahap B - Burst 120 Frame),,,,,,,,
+,Konfigurasi Verifikasi (Fail-Fast),Uji Aktif,Model,Coverage (%),Laju Penolakan (%),Silent Error (%),Selective Accuracy (%),AURC,Status
+,Tanpa Verifikasi,None (Baseline),CRNN / Tiny / Small,100.0% / 100.0% / 100.0%,0.0% / 0.0% / 0.0%,62.50% / 88.33% / 90.83%,37.50% / 11.67% / 9.17%,0.6351 / 0.8237 / 0.8721,Selesai (Terverifikasi)
+,+ Uji Temporal,L3 (Stabilitas 3-5 frame),CRNN / Tiny / Small,47.50% / 35.0% / 43.33%,52.50% / 65.0% / 56.67%,20.83% / 31.67% / 40.83%,56.14% / 9.52% / 5.77%,0.5474 / 0.8678 / 0.9331,Selesai (Terverifikasi)
+,+ Uji Struktur,L3 + L1 (Slot ROI & Desimal),CRNN / Tiny / Small,32.50% / 14.17% / 23.33%,67.50% / 85.83% / 76.67%,5.83% / 10.83% / 20.83%,82.05% / 23.53% / 10.71%,0.3042 / 0.8169 / 0.8852,Selesai (Terverifikasi)
+,+ Uji Fisik,L3 + L1 + L2 (Rentang & Toleransi),CRNN / Tiny / Small,22.50% / 3.33% / 1.67%,77.50% / 96.67% / 98.33%,0.83% / 0.00% / 0.00%,96.30% / 100.0% / 100.0%,0.3137 / 0.7289 / 0.7817,Selesai (Terverifikasi)
+,+ Uji Kalibrasi,L3 + L1 + L2 + L4 (Suhu T* & tau),CRNN / Tiny / Small,21.67% / 3.33% / 1.67%,78.33% / 96.67% / 98.33%,0.83% / 0.00% / 0.00%,96.15% / 100.0% / 100.0%,0.3137 / 0.7289 / 0.7817,Selesai (Terverifikasi)
+,TABEL 3 · Baseline Kinerja dari Literatur Acuan (Konteks Pembanding),,,,,,,,
+,Peneliti / Sumber,Metode / Arsitektur,Jumlah Citra Uji,Akurasi Dilaporkan,Kelemahan / Celah,Status Pembanding,,,
+,Effendi dkk. (2025),YOLO + CRNN-CTC,218 citra,"90,37% (FSR), CER 3,6%",Berhenti pada akurasi data sendiri; tidak mengukur silent error.,Baseline Pembanding,,,
+,Yenneti dkk. (2023),Lightweight single pass,Video 30 fps,"97,8% per bingkai","Diuji pada meteran umum, bukan timbangan industri dengan pantulan.",Literatur Terkait,,,
+,OICWS (2026),YOLOv8 + CRNN,~800 foto,"98,0% exact match",Kode sumber terbuka; tanpa modul verifikasi keputusan industri.,Literatur Terkait,,,
+,Zhang dkk. (2026),PP-OCRv6 (SVTR/LCNet),15 kategori umum,"83,2% rata-rata berbobot",Dilaporkan pembuatnya sendiri; belum pernah diuji pada 7-segmen.,Kandidat Utama,,,

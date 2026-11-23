@@ -1,0 +1,48 @@
+,Matriks Rencana Run Eksperimen Formal (Tahap A Komparasi & Tahap B Verifikasi),,,,,,,,
+,Daftar 36 skenario pengujian formal yang harus dieksekusi secara nyata untuk menghasilkan data Bab IV.,,,,,,,,
+,STATUS RIIL: Semua run berstatus 'Siap Dieksekusi / Pending Run' — data simulasi sebelumnya telah dibersihkan.,,,,,,,,
+,ID Run,Tahap Riset,Arsitektur Model / Konfigurasi,Kondisi Lapangan,Dataset Acuan,Status Eksekusi,Target FSR,Target Silent Error,Latensi Target
+,RUN-01,Tahap A (Komparasi),PP-OCRv6 Tiny (1.5M),1. Bersih Frontal (Clean),755 Citra Uji Terkunci,Siap Dieksekusi,Evaluasi Riil,Evaluasi Riil,< 15 ms
+,RUN-02,Tahap A (Komparasi),PP-OCRv6 Tiny (1.5M),2. Ada Pantulan Cahaya (Glare),755 Citra Uji Terkunci,Siap Dieksekusi,Evaluasi Riil,Evaluasi Riil,< 15 ms
+,RUN-03,Tahap A (Komparasi),PP-OCRv6 Tiny (1.5M),3. Sudut Miring 15-30 Derajat,755 Citra Uji Terkunci,Siap Dieksekusi,Evaluasi Riil,Evaluasi Riil,< 15 ms
+,RUN-04,Tahap A (Komparasi),PP-OCRv6 Tiny (1.5M),4. LCD Pasif Berkontras Rendah,755 Citra Uji Terkunci,Siap Dieksekusi,Evaluasi Riil,Evaluasi Riil,< 15 ms
+,RUN-05,Tahap A (Komparasi),PP-OCRv6 Small (7.7M),1. Bersih Frontal (Clean),755 Citra Uji Terkunci,Siap Dieksekusi,Evaluasi Riil,Evaluasi Riil,< 25 ms
+,RUN-06,Tahap A (Komparasi),PP-OCRv6 Small (7.7M),2. Ada Pantulan Cahaya (Glare),755 Citra Uji Terkunci,Siap Dieksekusi,Evaluasi Riil,Evaluasi Riil,< 25 ms
+,RUN-07,Tahap A (Komparasi),PP-OCRv6 Small (7.7M),3. Sudut Miring 15-30 Derajat,755 Citra Uji Terkunci,Siap Dieksekusi,Evaluasi Riil,Evaluasi Riil,< 25 ms
+,RUN-08,Tahap A (Komparasi),PP-OCRv6 Small (7.7M),4. LCD Pasif Berkontras Rendah,755 Citra Uji Terkunci,Siap Dieksekusi,Evaluasi Riil,Evaluasi Riil,< 25 ms
+,RUN-09,Tahap A (Komparasi),PP-OCRv6 Medium (34.5M),1. Bersih Frontal (Clean),755 Citra Uji Terkunci,Siap Dieksekusi,Evaluasi Riil,Evaluasi Riil,< 45 ms
+,RUN-10,Tahap A (Komparasi),PP-OCRv6 Medium (34.5M),2. Ada Pantulan Cahaya (Glare),755 Citra Uji Terkunci,Siap Dieksekusi,Evaluasi Riil,Evaluasi Riil,< 45 ms
+,RUN-11,Tahap A (Komparasi),PP-OCRv6 Medium (34.5M),3. Sudut Miring 15-30 Derajat,755 Citra Uji Terkunci,Siap Dieksekusi,Evaluasi Riil,Evaluasi Riil,< 45 ms
+,RUN-12,Tahap A (Komparasi),PP-OCRv6 Medium (34.5M),4. LCD Pasif Berkontras Rendah,755 Citra Uji Terkunci,Siap Dieksekusi,Evaluasi Riil,Evaluasi Riil,< 45 ms
+,RUN-13,Tahap A (Komparasi),PP-OCRv5 (5M),1. Bersih Frontal (Clean),755 Citra Uji Terkunci,Siap Dieksekusi,Evaluasi Riil,Evaluasi Riil,< 20 ms
+,RUN-14,Tahap A (Komparasi),PP-OCRv5 (5M),2. Ada Pantulan Cahaya (Glare),755 Citra Uji Terkunci,Siap Dieksekusi,Evaluasi Riil,Evaluasi Riil,< 20 ms
+,RUN-15,Tahap A (Komparasi),PP-OCRv5 (5M),3. Sudut Miring 15-30 Derajat,755 Citra Uji Terkunci,Siap Dieksekusi,Evaluasi Riil,Evaluasi Riil,< 20 ms
+,RUN-16,Tahap A (Komparasi),PP-OCRv5 (5M),4. LCD Pasif Berkontras Rendah,755 Citra Uji Terkunci,Siap Dieksekusi,Evaluasi Riil,Evaluasi Riil,< 20 ms
+,RUN-17,Tahap A (Komparasi),CRNN-CTC (11.6M),1. Bersih Frontal (Clean),755 Citra Uji Terkunci,Siap Dieksekusi,Evaluasi Riil,Evaluasi Riil,< 12 ms
+,RUN-18,Tahap A (Komparasi),CRNN-CTC (11.6M),2. Ada Pantulan Cahaya (Glare),755 Citra Uji Terkunci,Siap Dieksekusi,Evaluasi Riil,Evaluasi Riil,< 12 ms
+,RUN-19,Tahap A (Komparasi),CRNN-CTC (11.6M),3. Sudut Miring 15-30 Derajat,755 Citra Uji Terkunci,Siap Dieksekusi,Evaluasi Riil,Evaluasi Riil,< 12 ms
+,RUN-20,Tahap A (Komparasi),CRNN-CTC (11.6M),4. LCD Pasif Berkontras Rendah,755 Citra Uji Terkunci,Siap Dieksekusi,Evaluasi Riil,Evaluasi Riil,< 12 ms
+,RUN-21,Tahap A (Komparasi),DBNet + PARSeq (2-Stage),1. Bersih Frontal (Clean),755 Citra Uji Terkunci,Siap Dieksekusi,Evaluasi Riil,Evaluasi Riil,< 70 ms
+,RUN-22,Tahap A (Komparasi),DBNet + PARSeq (2-Stage),2. Ada Pantulan Cahaya (Glare),755 Citra Uji Terkunci,Siap Dieksekusi,Evaluasi Riil,Evaluasi Riil,< 70 ms
+,RUN-23,Tahap A (Komparasi),DBNet + PARSeq (2-Stage),3. Sudut Miring 15-30 Derajat,755 Citra Uji Terkunci,Siap Dieksekusi,Evaluasi Riil,Evaluasi Riil,< 70 ms
+,RUN-24,Tahap A (Komparasi),DBNet + PARSeq (2-Stage),4. LCD Pasif Berkontras Rendah,755 Citra Uji Terkunci,Siap Dieksekusi,Evaluasi Riil,Evaluasi Riil,< 70 ms
+,RUN-25,Tahap B (Verifikasi),Model Terbaik + Baseline (Tanpa Verifikasi),1. Bersih Frontal (Clean),755 Citra Uji Terkunci,Menunggu Tahap A,Evaluasi Riil,0.0% (Target L4),< 50 ms total
+,RUN-26,Tahap B (Verifikasi),Model Terbaik + Baseline (Tanpa Verifikasi),2. Ada Pantulan Cahaya (Glare),755 Citra Uji Terkunci,Menunggu Tahap A,Evaluasi Riil,0.0% (Target L4),< 50 ms total
+,RUN-27,Tahap B (Verifikasi),Model Terbaik + Baseline (Tanpa Verifikasi),3. Sudut Miring 15-30 Derajat,755 Citra Uji Terkunci,Menunggu Tahap A,Evaluasi Riil,0.0% (Target L4),< 50 ms total
+,RUN-28,Tahap B (Verifikasi),Model Terbaik + Baseline (Tanpa Verifikasi),4. LCD Pasif Berkontras Rendah,755 Citra Uji Terkunci,Menunggu Tahap A,Evaluasi Riil,0.0% (Target L4),< 50 ms total
+,RUN-29,Tahap B (Verifikasi),Model Terbaik + + L1 (Temporal 3-5 frame),1. Bersih Frontal (Clean),755 Citra Uji Terkunci,Menunggu Tahap A,Evaluasi Riil,0.0% (Target L4),< 50 ms total
+,RUN-30,Tahap B (Verifikasi),Model Terbaik + + L1 (Temporal 3-5 frame),2. Ada Pantulan Cahaya (Glare),755 Citra Uji Terkunci,Menunggu Tahap A,Evaluasi Riil,0.0% (Target L4),< 50 ms total
+,RUN-31,Tahap B (Verifikasi),Model Terbaik + + L1 (Temporal 3-5 frame),3. Sudut Miring 15-30 Derajat,755 Citra Uji Terkunci,Menunggu Tahap A,Evaluasi Riil,0.0% (Target L4),< 50 ms total
+,RUN-32,Tahap B (Verifikasi),Model Terbaik + + L1 (Temporal 3-5 frame),4. LCD Pasif Berkontras Rendah,755 Citra Uji Terkunci,Menunggu Tahap A,Evaluasi Riil,0.0% (Target L4),< 50 ms total
+,RUN-33,Tahap B (Verifikasi),Model Terbaik + + L1 + L2 (Struktur ROI slot),1. Bersih Frontal (Clean),755 Citra Uji Terkunci,Menunggu Tahap A,Evaluasi Riil,0.0% (Target L4),< 50 ms total
+,RUN-34,Tahap B (Verifikasi),Model Terbaik + + L1 + L2 (Struktur ROI slot),2. Ada Pantulan Cahaya (Glare),755 Citra Uji Terkunci,Menunggu Tahap A,Evaluasi Riil,0.0% (Target L4),< 50 ms total
+,RUN-35,Tahap B (Verifikasi),Model Terbaik + + L1 + L2 (Struktur ROI slot),3. Sudut Miring 15-30 Derajat,755 Citra Uji Terkunci,Menunggu Tahap A,Evaluasi Riil,0.0% (Target L4),< 50 ms total
+,RUN-36,Tahap B (Verifikasi),Model Terbaik + + L1 + L2 (Struktur ROI slot),4. LCD Pasif Berkontras Rendah,755 Citra Uji Terkunci,Menunggu Tahap A,Evaluasi Riil,0.0% (Target L4),< 50 ms total
+,RUN-37,Tahap B (Verifikasi),Model Terbaik + + L1 + L2 + L3 (Fisik Produk & Toleransi),1. Bersih Frontal (Clean),755 Citra Uji Terkunci,Menunggu Tahap A,Evaluasi Riil,0.0% (Target L4),< 50 ms total
+,RUN-38,Tahap B (Verifikasi),Model Terbaik + + L1 + L2 + L3 (Fisik Produk & Toleransi),2. Ada Pantulan Cahaya (Glare),755 Citra Uji Terkunci,Menunggu Tahap A,Evaluasi Riil,0.0% (Target L4),< 50 ms total
+,RUN-39,Tahap B (Verifikasi),Model Terbaik + + L1 + L2 + L3 (Fisik Produk & Toleransi),3. Sudut Miring 15-30 Derajat,755 Citra Uji Terkunci,Menunggu Tahap A,Evaluasi Riil,0.0% (Target L4),< 50 ms total
+,RUN-40,Tahap B (Verifikasi),Model Terbaik + + L1 + L2 + L3 (Fisik Produk & Toleransi),4. LCD Pasif Berkontras Rendah,755 Citra Uji Terkunci,Menunggu Tahap A,Evaluasi Riil,0.0% (Target L4),< 50 ms total
+,RUN-41,Tahap B (Verifikasi),Model Terbaik + + L1 + L2 + L3 + L4 (Kalibrasi Suhu T* & Ambang),1. Bersih Frontal (Clean),755 Citra Uji Terkunci,Menunggu Tahap A,Evaluasi Riil,0.0% (Target L4),< 50 ms total
+,RUN-42,Tahap B (Verifikasi),Model Terbaik + + L1 + L2 + L3 + L4 (Kalibrasi Suhu T* & Ambang),2. Ada Pantulan Cahaya (Glare),755 Citra Uji Terkunci,Menunggu Tahap A,Evaluasi Riil,0.0% (Target L4),< 50 ms total
+,RUN-43,Tahap B (Verifikasi),Model Terbaik + + L1 + L2 + L3 + L4 (Kalibrasi Suhu T* & Ambang),3. Sudut Miring 15-30 Derajat,755 Citra Uji Terkunci,Menunggu Tahap A,Evaluasi Riil,0.0% (Target L4),< 50 ms total
+,RUN-44,Tahap B (Verifikasi),Model Terbaik + + L1 + L2 + L3 + L4 (Kalibrasi Suhu T* & Ambang),4. LCD Pasif Berkontras Rendah,755 Citra Uji Terkunci,Menunggu Tahap A,Evaluasi Riil,0.0% (Target L4),< 50 ms total

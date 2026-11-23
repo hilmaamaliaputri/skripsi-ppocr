@@ -1,0 +1,31 @@
+Model,Scope,Stage,Active_Layers,n,Coverage_pct,Rejection_pct,SilentErr_pct,SelectiveAcc_pct,AURC
+PP-OCRv6 Tiny,burst_120,Tanpa Verifikasi,None (Baseline),120,100.0,0.0,88.33,11.67,0.8237
+PP-OCRv6 Tiny,unified_755,Tanpa Verifikasi,None (Baseline),755,100.0,0.0,90.07,9.93,0.8422
+PP-OCRv6 Tiny,burst_120,+ Uji Temporal,L3 (Stabilitas 3-5 frame),120,35.0,65.0,31.67,9.52,0.8678
+PP-OCRv6 Tiny,unified_755,+ Uji Temporal,L3 (Stabilitas 3-5 frame),755,100.0,0.0,90.07,9.93,0.8422
+PP-OCRv6 Tiny,burst_120,+ Uji Struktur,L3 + L1 (Slot ROI & Desimal),120,14.17,85.83,10.83,23.53,0.8169
+PP-OCRv6 Tiny,unified_755,+ Uji Struktur,L3 + L1 (Slot ROI & Desimal),755,32.05,67.95,22.12,30.99,0.7468
+PP-OCRv6 Tiny,burst_120,+ Uji Fisik,L3 + L1 + L2 (Rentang & Toleransi),120,3.33,96.67,0.0,100.0,0.7289
+PP-OCRv6 Tiny,unified_755,+ Uji Fisik,L3 + L1 + L2 (Rentang & Toleransi),755,9.54,90.46,1.59,83.33,0.7087
+PP-OCRv6 Tiny,burst_120,+ Uji Kalibrasi,L3 + L1 + L2 + L4 (Suhu T* & tau),120,3.33,96.67,0.0,100.0,0.7289
+PP-OCRv6 Tiny,unified_755,+ Uji Kalibrasi,L3 + L1 + L2 + L4 (Suhu T* & tau),755,9.01,90.99,1.32,85.29,0.7087
+PP-OCRv6 Small,burst_120,Tanpa Verifikasi,None (Baseline),120,100.0,0.0,90.83,9.17,0.8721
+PP-OCRv6 Small,unified_755,Tanpa Verifikasi,None (Baseline),755,100.0,0.0,91.79,8.21,0.9084
+PP-OCRv6 Small,burst_120,+ Uji Temporal,L3 (Stabilitas 3-5 frame),120,43.33,56.67,40.83,5.77,0.9331
+PP-OCRv6 Small,unified_755,+ Uji Temporal,L3 (Stabilitas 3-5 frame),755,100.0,0.0,91.79,8.21,0.9084
+PP-OCRv6 Small,burst_120,+ Uji Struktur,L3 + L1 (Slot ROI & Desimal),120,23.33,76.67,20.83,10.71,0.8852
+PP-OCRv6 Small,unified_755,+ Uji Struktur,L3 + L1 (Slot ROI & Desimal),755,43.97,56.03,35.76,18.67,0.8328
+PP-OCRv6 Small,burst_120,+ Uji Fisik,L3 + L1 + L2 (Rentang & Toleransi),120,1.67,98.33,0.0,100.0,0.7817
+PP-OCRv6 Small,unified_755,+ Uji Fisik,L3 + L1 + L2 (Rentang & Toleransi),755,9.01,90.99,1.99,77.94,0.7366
+PP-OCRv6 Small,burst_120,+ Uji Kalibrasi,L3 + L1 + L2 + L4 (Suhu T* & tau),120,1.67,98.33,0.0,100.0,0.7817
+PP-OCRv6 Small,unified_755,+ Uji Kalibrasi,L3 + L1 + L2 + L4 (Suhu T* & tau),755,7.55,92.45,0.79,89.47,0.7366
+CRNN-CTC (Baseline),burst_120,Tanpa Verifikasi,None (Baseline),120,100.0,0.0,62.5,37.5,0.6351
+CRNN-CTC (Baseline),unified_755,Tanpa Verifikasi,None (Baseline),755,100.0,0.0,66.09,33.91,0.6171
+CRNN-CTC (Baseline),burst_120,+ Uji Temporal,L3 (Stabilitas 3-5 frame),120,47.5,52.5,20.83,56.14,0.5474
+CRNN-CTC (Baseline),unified_755,+ Uji Temporal,L3 (Stabilitas 3-5 frame),755,100.0,0.0,66.09,33.91,0.6171
+CRNN-CTC (Baseline),burst_120,+ Uji Struktur,L3 + L1 (Slot ROI & Desimal),120,32.5,67.5,5.83,82.05,0.3042
+CRNN-CTC (Baseline),unified_755,+ Uji Struktur,L3 + L1 (Slot ROI & Desimal),755,76.42,23.58,42.52,44.37,0.3876
+CRNN-CTC (Baseline),burst_120,+ Uji Fisik,L3 + L1 + L2 (Rentang & Toleransi),120,22.5,77.5,0.83,96.3,0.3137
+CRNN-CTC (Baseline),unified_755,+ Uji Fisik,L3 + L1 + L2 (Rentang & Toleransi),755,49.93,50.07,21.85,56.23,0.3835
+CRNN-CTC (Baseline),burst_120,+ Uji Kalibrasi,L3 + L1 + L2 + L4 (Suhu T* & tau),120,21.67,78.33,0.83,96.15,0.3137
+CRNN-CTC (Baseline),unified_755,+ Uji Kalibrasi,L3 + L1 + L2 + L4 (Suhu T* & tau),755,33.38,66.62,8.08,75.79,0.3836

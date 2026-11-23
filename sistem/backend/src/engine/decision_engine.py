@@ -5,7 +5,7 @@ keputusan akhir: TERIMA, TOLAK, KONFIRMASI, atau BATAL.
 Mengacu pada spesifikasi arsitektur Bab V dan Bab VI.
 """
 
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Set
 from ..pipeline.normalizer import StringNormalizer
 from ..pipeline.schema import (
     DecisionContract,
@@ -45,8 +45,16 @@ class DecisionEngine:
         expected_slots: int = 6,
         require_decimal: bool = True,
         recent_history: Optional[List[float]] = None,
+        active_layers: Optional[Set[str]] = None,
     ) -> DecisionContract:
-        """Mengevaluasi satu burst transaksi penimbangan multi-frame."""
+        """Mengevaluasi satu burst transaksi penimbangan multi-frame.
+
+        Args:
+            active_layers: Himpunan lapis aktif untuk uji ablasi (e.g. {'L1', 'L2', 'L3', 'L4'}).
+                           Jika None, seluruh lapis L1-L4 diaktifkan.
+        """
+        enabled = {"L1", "L2", "L3", "L4"} if active_layers is None else set(active_layers)
+
         if not frame_readings:
             return DecisionContract(
                 reading="",
@@ -68,8 +76,12 @@ class DecisionEngine:
         ]
 
         # 2. Uji Temporal (L3: Stabilitas antar-bingkai)
-        t_pass, t_res, agreed_reading = self.v_temporal.verify(normalized_texts)
-        layer_results.append(t_res)
+        if "L3" in enabled:
+            t_pass, t_res, agreed_reading = self.v_temporal.verify(normalized_texts)
+            layer_results.append(t_res)
+        else:
+            t_pass = True
+            agreed_reading = normalized_texts[0]
 
         frame_evaluations: List[FrameEvaluation] = [
             FrameEvaluation(
@@ -98,54 +110,53 @@ class DecisionEngine:
             )
 
         # 3. Uji Struktur (L1: Format slot & titik desimal)
-        s_pass, s_res = self.v_structural.verify(
-            reading=agreed_reading,
-            slot_profile=slot_profile,
-            expected_slots=expected_slots,
-            require_decimal=require_decimal,
-        )
-        layer_results.append(s_res)
-
-        if not s_pass:
-            # Gagal L1 -> TOLAK (format cacat/anomali slot)
-            return DecisionContract(
+        if "L1" in enabled:
+            s_pass, s_res = self.v_structural.verify(
                 reading=agreed_reading,
-                decision=DecisionState.TOLAK,
-                trigger_layer="L1",
-                reason=s_res.reason,
-                calibrated_score=0.0,
-                threshold_applied=self.v_calibration.threshold,
-                product_id=product_id,
-                device_id=device_id,
-                layer_results=layer_results,
-                frames=frame_evaluations,
+                slot_profile=slot_profile,
+                expected_slots=expected_slots,
+                require_decimal=require_decimal,
             )
+            layer_results.append(s_res)
+
+            if not s_pass:
+                return DecisionContract(
+                    reading=agreed_reading,
+                    decision=DecisionState.TOLAK,
+                    trigger_layer="L1",
+                    reason=s_res.reason,
+                    calibrated_score=0.0,
+                    threshold_applied=self.v_calibration.threshold,
+                    product_id=product_id,
+                    device_id=device_id,
+                    layer_results=layer_results,
+                    frames=frame_evaluations,
+                )
 
         # 4. Uji Fisik (L2: Batas produk & toleransi riwayat)
-        p_pass, p_res = self.v_physical.verify(
-            reading=agreed_reading,
-            product_id=product_id,
-            recent_history=recent_history,
-        )
-        layer_results.append(p_res)
-
-        if not p_pass:
-            # Gagal L2 -> TOLAK (di luar batas berat produk)
-            return DecisionContract(
+        if "L2" in enabled:
+            p_pass, p_res = self.v_physical.verify(
                 reading=agreed_reading,
-                decision=DecisionState.TOLAK,
-                trigger_layer="L2",
-                reason=p_res.reason,
-                calibrated_score=0.0,
-                threshold_applied=self.v_calibration.threshold,
                 product_id=product_id,
-                device_id=device_id,
-                layer_results=layer_results,
-                frames=frame_evaluations,
+                recent_history=recent_history,
             )
+            layer_results.append(p_res)
+
+            if not p_pass:
+                return DecisionContract(
+                    reading=agreed_reading,
+                    decision=DecisionState.TOLAK,
+                    trigger_layer="L2",
+                    reason=p_res.reason,
+                    calibrated_score=0.0,
+                    threshold_applied=self.v_calibration.threshold,
+                    product_id=product_id,
+                    device_id=device_id,
+                    layer_results=layer_results,
+                    frames=frame_evaluations,
+                )
 
         # 5. Uji Kalibrasi Keyakinan (L4: Temperature Scaling & Threshold)
-        # Ambil rata-rata skor mentah bingkai yang cocok dengan agreed_reading
         matching_scores = [
             r.raw_score
             for r, norm in zip(frame_readings, normalized_texts)
@@ -153,30 +164,32 @@ class DecisionEngine:
         ]
         avg_raw_score = float(sum(matching_scores) / max(len(matching_scores), 1))
 
-        c_pass, c_res, cal_score = self.v_calibration.verify(avg_raw_score)
-        layer_results.append(c_res)
+        if "L4" in enabled:
+            c_pass, c_res, cal_score = self.v_calibration.verify(avg_raw_score)
+            layer_results.append(c_res)
 
-        if not c_pass:
-            # Gagal L4 -> Minta Konfirmasi (keyakinan rendah)
-            return DecisionContract(
-                reading=agreed_reading,
-                decision=DecisionState.KONFIRMASI,
-                trigger_layer="L4",
-                reason=c_res.reason,
-                calibrated_score=cal_score,
-                threshold_applied=self.v_calibration.threshold,
-                product_id=product_id,
-                device_id=device_id,
-                layer_results=layer_results,
-                frames=frame_evaluations,
-            )
+            if not c_pass:
+                return DecisionContract(
+                    reading=agreed_reading,
+                    decision=DecisionState.KONFIRMASI,
+                    trigger_layer="L4",
+                    reason=c_res.reason,
+                    calibrated_score=cal_score,
+                    threshold_applied=self.v_calibration.threshold,
+                    product_id=product_id,
+                    device_id=device_id,
+                    layer_results=layer_results,
+                    frames=frame_evaluations,
+                )
+        else:
+            cal_score = round(avg_raw_score, 4)
 
-        # Seluruh Lapis L1-L4 Lolos -> TERIMA
+        # Seluruh Lapis Aktif Lolos -> TERIMA
         return DecisionContract(
             reading=agreed_reading,
             decision=DecisionState.TERIMA,
             trigger_layer=None,
-            reason="Lolos seluruh verifikasi berlapis (Temporal, Struktur, Fisik, Kalibrasi)",
+            reason="Lolos verifikasi aktif (" + ", ".join(sorted(enabled)) + ")" if enabled else "Mode Baseline (tanpa verifikasi)",
             calibrated_score=cal_score,
             threshold_applied=self.v_calibration.threshold,
             product_id=product_id,

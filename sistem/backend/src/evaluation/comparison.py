@@ -1,169 +1,136 @@
-"""Matriks Komparasi Multi-Model (PP-OCRv6 Tiers & CRNN-CTC Baseline).
+"""Matriks Komparasi Multi-Model Berbasis Hasil Eksperimen Riil (755 Citra Uji Terkunci).
 
-Menyediakan data komparasi komprehensif untuk evaluasi akademik skripsi:
-- PP-OCRv6-tiny (2.1 MB)
-- PP-OCRv6-small (7.8 MB - Sistem Usulan)
-- PP-OCRv6-medium (18.4 MB)
-- CRNN-CTC (25.4 MB checkpoint / 0.12 MB ONNX - Baseline Klasik)
-Tiap model dibandingkan pada 2 moda: Baseline Mentah vs + 4-Lapis Verifikasi.
+Membaca luaran resmi batch evaluasi Tahap A (`data/results/tahap_a_summary.csv`),
+profil komputasi edge (`data/results/edge_profile.json`), dan data kalibrasi.
 """
 
+import csv
+import json
+import os
 from typing import Any, Dict, List
 
+MODEL_META: Dict[str, Dict[str, str]] = {
+    "tiny": {
+        "name": "PP-OCRv6 Tiny",
+        "size": "6.0 MB (ONNX)",
+        "params": "1.50M",
+        "arch": "PP-LCNet + SVTR",
+    },
+    "small": {
+        "name": "PP-OCRv6 Small",
+        "size": "18.0 MB (ONNX)",
+        "params": "7.70M",
+        "arch": "PP-LCNetV2 + Multi-Head SVTR",
+    },
+    "medium": {
+        "name": "PP-OCRv6 Medium",
+        "size": "45.0 MB (ONNX)",
+        "params": "34.5M",
+        "arch": "PP-HGNet + Global Context SVTR",
+    },
+    "ppocrv5": {
+        "name": "PP-OCRv5 Mobile",
+        "size": "15.9 MB (ONNX)",
+        "params": "4.11M",
+        "arch": "PPLCNetV3 + SVTR-HGNet",
+    },
+    "crnn": {
+        "name": "CRNN-CTC (Baseline 2016)",
+        "size": "24.3 MB (ONNX)",
+        "params": "0.85M / 6.35M",
+        "arch": "CNN 5-Block + BiLSTM 2-Layer + CTC",
+    },
+    "dbnet_parseq": {
+        "name": "DBNet + PARSeq (2-Stage)",
+        "size": "101.5 MB (ONNX)",
+        "params": "26.30M",
+        "arch": "DBNet++ ResNet/LC + Permutation LM",
+    },
+}
 
-def get_all_model_comparisons() -> List[Dict[str, Any]]:
-    """Mengembalikan tabel data komparasi seluruh varian model dan verifikasi."""
-    return [
-        {
-            "variantKey": "crnn",
-            "variantName": "CRNN-CTC (Baseline Klasik SOTA 2016)",
-            "tierLabel": "CRNN-CTC Mentah",
-            "size": "0.12 MB (ONNX) / 25.4 MB",
-            "paramCount": "6.35M",
-            "latency": "6.4 ms",
-            "verifMode": "Nonaktif",
-            "unlitFilter": "Nonaktif",
-            "fsr": "81.7%",
-            "cer": "4.20%",
-            "false8": "12 sampel (10.0%)",
-            "silentError": "8.33% (Tinggi)",
-            "coverage": "100.0%",
-            "selectiveAcc": "81.7%",
-            "recommendation": "Baseline pembanding klasik; rawan digit hantu tanpa verifikasi",
-            "isThesisChoice": False,
-            "architecture": "CNN 5-Block + BiLSTM 2-Layer + CTC",
-        },
-        {
-            "variantKey": "crnn",
-            "variantName": "CRNN-CTC + 4-Lapis Verifikasi",
-            "tierLabel": "CRNN-CTC Terverifikasi",
-            "size": "0.12 MB (ONNX) / 25.4 MB",
-            "paramCount": "6.35M",
-            "latency": "8.8 ms",
-            "verifMode": "Aktif (Fail-Fast)",
-            "unlitFilter": "Aktif",
-            "fsr": "94.2%",
-            "cer": "0.95%",
-            "false8": "0 sampel (0.0% Lolos)",
-            "silentError": "0.00% (Aman)",
-            "coverage": "89.2%",
-            "selectiveAcc": "98.1%",
-            "recommendation": "Verifikasi berhasil mencegah silent error pada baseline klasik",
-            "isThesisChoice": False,
-            "architecture": "CNN 5-Block + BiLSTM 2-Layer + CTC + 4-Layer Guard",
-        },
-        {
-            "variantKey": "tiny",
-            "variantName": "PP-OCRv6-tiny (Baseline Mentah)",
-            "tierLabel": "PP-OCRv6 Tiny Mentah",
-            "size": "2.1 MB",
-            "paramCount": "1.95M",
-            "latency": "4.2 ms",
-            "verifMode": "Nonaktif",
-            "unlitFilter": "Nonaktif",
-            "fsr": "78.3%",
-            "cer": "5.12%",
-            "false8": "15 sampel (12.5%)",
-            "silentError": "11.67% (Kritis)",
-            "coverage": "100.0%",
-            "selectiveAcc": "78.3%",
-            "recommendation": "Cepat namun rentan terhadap noise pencahayaan",
-            "isThesisChoice": False,
-            "architecture": "LCNet + SVTR-LCNet Decoder",
-        },
-        {
-            "variantKey": "tiny",
-            "variantName": "PP-OCRv6-tiny + 4-Lapis Verifikasi",
-            "tierLabel": "PP-OCRv6 Tiny Terverifikasi",
-            "size": "2.1 MB",
-            "paramCount": "1.95M",
-            "latency": "5.8 ms",
-            "verifMode": "Aktif (Fail-Fast)",
-            "unlitFilter": "Aktif",
-            "fsr": "92.4%",
-            "cer": "1.20%",
-            "false8": "0 sampel (0.0% Lolos)",
-            "silentError": "0.00% (Aman)",
-            "coverage": "88.3%",
-            "selectiveAcc": "97.2%",
-            "recommendation": "Sangat ideal untuk Raspberry Pi 4 / Embedded Edge",
-            "isThesisChoice": False,
-            "architecture": "LCNet + SVTR + 4-Layer Guard",
-        },
-        {
-            "variantKey": "small",
-            "variantName": "PP-OCRv6-small (Baseline Mentah)",
-            "tierLabel": "PP-OCRv6 Small Mentah",
-            "size": "7.8 MB",
-            "paramCount": "7.70M",
-            "latency": "11.8 ms",
-            "verifMode": "Nonaktif",
-            "unlitFilter": "Nonaktif",
-            "fsr": "85.8%",
-            "cer": "2.15%",
-            "false8": "8 sampel (6.7%)",
-            "silentError": "5.83% (Bahaya)",
-            "coverage": "100.0%",
-            "selectiveAcc": "85.8%",
-            "recommendation": "Akurasi mentah baik, angka 8 semu masih lolos tanpa verifikasi",
-            "isThesisChoice": False,
-            "architecture": "PP-LCNetV2 + Multi-Head SVTR",
-        },
-        {
-            "variantKey": "small",
-            "variantName": "PP-OCRv6-small + 4-Lapis Verifikasi (Sistem Usulan Skripsi)",
-            "tierLabel": "PP-OCRv6 Small Usulan",
-            "size": "7.8 MB",
-            "paramCount": "7.70M",
-            "latency": "13.9 ms",
-            "verifMode": "Aktif (Fail-Fast)",
-            "unlitFilter": "Aktif",
-            "fsr": "98.3%",
-            "cer": "0.42%",
-            "false8": "0 sampel (0.0% Lolos)",
-            "silentError": "0.00% (Aman)",
-            "coverage": "96.7%",
-            "selectiveAcc": "99.1%",
-            "recommendation": "Pilihan Terunggul: Titik temu optimal akurasi 98.3% & latensi 13.9ms",
-            "isThesisChoice": True,
-            "architecture": "PP-LCNetV2 + Multi-Head SVTR + 4-Layer Guard",
-        },
-        {
-            "variantKey": "medium",
-            "variantName": "PP-OCRv6-medium (Baseline Mentah)",
-            "tierLabel": "PP-OCRv6 Medium Mentah",
-            "size": "18.4 MB",
-            "paramCount": "19.2M",
-            "latency": "26.4 ms",
-            "verifMode": "Nonaktif",
-            "unlitFilter": "Nonaktif",
-            "fsr": "92.5%",
-            "cer": "1.10%",
-            "false8": "4 sampel (3.3%)",
-            "silentError": "2.50% (Sedang)",
-            "coverage": "100.0%",
-            "selectiveAcc": "92.5%",
-            "recommendation": "Akurasi mentah tinggi namun latensi meningkat 2x lipat",
-            "isThesisChoice": False,
-            "architecture": "PP-HGNet + Global Context SVTR",
-        },
-        {
-            "variantKey": "medium",
-            "variantName": "PP-OCRv6-medium + 4-Lapis Verifikasi",
-            "tierLabel": "PP-OCRv6 Medium Terverifikasi",
-            "size": "18.4 MB",
-            "paramCount": "19.2M",
-            "latency": "28.6 ms",
-            "verifMode": "Aktif (Fail-Fast)",
-            "unlitFilter": "Aktif",
-            "fsr": "99.2%",
-            "cer": "0.18%",
-            "false8": "0 sampel (0.0% Lolos)",
-            "silentError": "0.00% (Aman)",
-            "coverage": "98.3%",
-            "selectiveAcc": "99.6%",
-            "recommendation": "Akurasi maksimal untuk server industrial terpusat",
-            "isThesisChoice": False,
-            "architecture": "PP-HGNet + Global Context SVTR + 4-Layer Guard",
-        },
-    ]
+
+def _count_ghost8_passes(results_dir: str, model_key: str, mode: str) -> str:
+    """Menghitung kasus digit hantu '8' berlebih atau kegagalan L1 pada 755 citra."""
+    fp = os.path.join(results_dir, f"tahap_a_{model_key}_{mode}.json")
+    if not os.path.exists(fp):
+        return "-"
+    with open(fp, "r", encoding="utf-8") as f:
+        samples = json.load(f).get("sample_results", [])
+    ghost_count = sum(
+        1
+        for s in samples
+        if s.get("decision") == "TERIMA"
+        and not s.get("is_correct")
+        and len(str(s.get("prediction", ""))) > len(str(s.get("ground_truth", "")))
+        and "8" in str(s.get("prediction", ""))
+    )
+    return f"{ghost_count} sampel lolos"
+
+
+def get_all_model_comparisons(results_dir: str = "") -> List[Dict[str, Any]]:
+    """Mengembalikan tabel komparasi riil 6 model (Mentah vs 4-Lapis Verifikasi)."""
+    if not results_dir:
+        base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
+        results_dir = os.path.join(base_dir, "data", "results")
+
+    summary_csv = os.path.join(results_dir, "tahap_a_summary.csv")
+    if not os.path.exists(summary_csv):
+        return []
+
+    with open(summary_csv, "r", newline="", encoding="utf-8") as f:
+        rows = list(csv.DictReader(f))
+
+    edge_map: Dict[str, Dict[str, Any]] = {}
+    edge_json = os.path.join(results_dir, "edge_profile.json")
+    if os.path.exists(edge_json):
+        with open(edge_json, "r", encoding="utf-8") as f:
+            edge_map = {r["model"]: r for r in json.load(f)}
+
+    raw_rows = [r for r in rows if r["mode"] == "raw"]
+    best_edge = min(
+        (r for r in raw_rows if float(r["latency_p95_ms"]) <= 50.0),
+        key=lambda r: (-float(r["fsr_pct"]), float(r["latency_p95_ms"])),
+        default=None,
+    )
+    champ_key = best_edge["model"] if best_edge else "tiny"
+
+    matrix: List[Dict[str, Any]] = []
+    for r in rows:
+        m_key = r["model"]
+        meta = MODEL_META.get(m_key, {"name": m_key, "size": "-", "params": "-", "arch": "-"})
+        is_verif = r["mode"] == "verified_4layer"
+        verif_tag = "+ 4-Lapis Verifikasi" if is_verif else "(Baseline Mentah)"
+        em = edge_map.get(m_key, {})
+
+        is_champ = is_verif and m_key == champ_key
+        rec_note = (
+            f"Champion Edge (n={r['n']}; p95 {r['latency_p95_ms']} ms, AURC {r['aurc']})"
+            if is_champ
+            else (
+                f"Silent error turun -> {r['silent_error_pct']}% pada n={r['n']}"
+                if is_verif
+                else f"Baseline mentah tanpa guard (Silent Error {r['silent_error_pct']}%)"
+            )
+        )
+
+        matrix.append({
+            "variantKey": m_key,
+            "variantName": f"{meta['name']} {verif_tag}",
+            "tierLabel": f"{meta['name']} {'Terverifikasi' if is_verif else 'Mentah'}",
+            "size": meta["size"],
+            "paramCount": str(em.get("param_count") or meta["params"]),
+            "latency": f"{r['latency_p50_ms']} ms (p95: {r['latency_p95_ms']} ms)",
+            "verifMode": "Aktif (Fail-Fast L3->L1->L2->L4)" if is_verif else "Nonaktif",
+            "unlitFilter": "Aktif" if is_verif else "Nonaktif",
+            "fsr": f"{r['fsr_pct']}% [{r['fsr_ci95_low']}–{r['fsr_ci95_high']}%]",
+            "cer": f"{r['cer_pct']}%",
+            "false8": _count_ghost8_passes(results_dir, m_key, r["mode"]),
+            "silentError": f"{r['silent_error_pct']}%",
+            "coverage": f"{r['coverage_pct']}%",
+            "selectiveAcc": f"{r['selective_acc_pct']}%",
+            "aurc": str(r["aurc"]),
+            "recommendation": rec_note,
+            "isThesisChoice": is_champ,
+            "architecture": meta["arch"],
+        })
+    return matrix

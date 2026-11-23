@@ -1,0 +1,402 @@
+[
+  {
+    "sample_id": "scale_syn_0001_frame_01",
+    "condition": "clean_frontal",
+    "ground_truth": "25.00",
+    "raw_prediction": "882500",
+    "raw_decision": "TERIMA",
+    "verified_decision": "TOLAK",
+    "trigger_layer": "L1",
+    "ghost8_pattern": true
+  },
+  {
+    "sample_id": "scale_syn_0001_frame_02",
+    "condition": "clean_frontal",
+    "ground_truth": "25.00",
+    "raw_prediction": "882500.",
+    "raw_decision": "TERIMA",
+    "verified_decision": "TOLAK",
+    "trigger_layer": "L1",
+    "ghost8_pattern": true
+  },
+  {
+    "sample_id": "scale_syn_0001_frame_03",
+    "condition": "clean_frontal",
+    "ground_truth": "25.00",
+    "raw_prediction": "882500.",
+    "raw_decision": "TERIMA",
+    "verified_decision": "TOLAK",
+    "trigger_layer": "L1",
+    "ghost8_pattern": true
+  },
+  {
+    "sample_id": "scale_syn_0001_frame_04",
+    "condition": "clean_frontal",
+    "ground_truth": "25.00",
+    "raw_prediction": "882500.",
+    "raw_decision": "TERIMA",
+    "verified_decision": "TOLAK",
+    "trigger_layer": "L1",
+    "ghost8_pattern": true
+  },
+  {
+    "sample_id": "scale_syn_0001_frame_05",
+    "condition": "clean_frontal",
+    "ground_truth": "25.00",
+    "raw_prediction": "8825.00",
+    "raw_decision": "TERIMA",
+    "verified_decision": "TOLAK",
+    "trigger_layer": "L2",
+    "ghost8_pattern": true
+  },
+  {
+    "sample_id": "scale_syn_0002_frame_01",
+    "condition": "glare",
+    "ground_truth": "25.05",
+    "raw_prediction": "2505.",
+    "raw_decision": "TERIMA",
+    "verified_decision": "TOLAK",
+    "trigger_layer": "L1",
+    "ghost8_pattern": false
+  },
+  {
+    "sample_id": "scale_syn_0002_frame_02",
+    "condition": "glare",
+    "ground_truth": "25.05",
+    "raw_prediction": "82505",
+    "raw_decision": "TERIMA",
+    "verified_decision": "TOLAK",
+    "trigger_layer": "L1",
+    "ghost8_pattern": false
+  },
+  {
+    "sample_id": "scale_syn_0002_frame_03",
+    "condition": "glare",
+    "ground_truth": "25.05",
+    "raw_prediction": "2505.",
+    "raw_decision": "TERIMA",
+    "verified_decision": "TOLAK",
+    "trigger_layer": "L1",
+    "ghost8_pattern": false
+  },
+  {
+    "sample_id": "scale_syn_0002_frame_04",
+    "condition": "glare",
+    "ground_truth": "25.05",
+    "raw_prediction": "82505.",
+    "raw_decision": "TERIMA",
+    "verified_decision": "TOLAK",
+    "trigger_layer": "L1",
+    "ghost8_pattern": true
+  },
+  {
+    "sample_id": "scale_syn_0003_frame_04",
+    "condition": "tilt_15_30",
+    "ground_truth": "24.95",
+    "raw_prediction": "882495",
+    "raw_decision": "TERIMA",
+    "verified_decision": "TOLAK",
+    "trigger_layer": "L1",
+    "ghost8_pattern": true
+  },
+  {
+    "sample_id": "scale_syn_0004_frame_01",
+    "condition": "low_contrast_passive",
+    "ground_truth": "25.10",
+    "raw_prediction": "9025.10",
+    "raw_decision": "TERIMA",
+    "verified_decision": "TOLAK",
+    "trigger_layer": "L2",
+    "ghost8_pattern": false
+  },
+  {
+    "sample_id": "scale_syn_0004_frame_02",
+    "condition": "low_contrast_passive",
+    "ground_truth": "25.10",
+    "raw_prediction": "8025.10",
+    "raw_decision": "TERIMA",
+    "verified_decision": "TOLAK",
+    "trigger_layer": "L2",
+    "ghost8_pattern": true
+  },
+  {
+    "sample_id": "scale_syn_0004_frame_03",
+    "condition": "low_contrast_passive",
+    "ground_truth": "25.10",
+    "raw_prediction": "925.10",
+    "raw_decision": "TERIMA",
+    "verified_decision": "TOLAK",
+    "trigger_layer": "L2",
+    "ghost8_pattern": false
+  },
+  {
+    "sample_id": "scale_syn_0006_frame_01",
+    "condition": "dusty_scratched",
+    "ground_truth": "25.20",
+    "raw_prediction": "802520",
+    "raw_decision": "TERIMA",
+    "verified_decision": "TOLAK",
+    "trigger_layer": "L1",
+    "ghost8_pattern": true
+  },
+  {
+    "sample_id": "scale_syn_0006_frame_04",
+    "condition": "dusty_scratched",
+    "ground_truth": "25.20",
+    "raw_prediction": "812520",
+    "raw_decision": "TERIMA",
+    "verified_decision": "TOLAK",
+    "trigger_layer": "L1",
+    "ghost8_pattern": true
+  },
+  {
+    "sample_id": "scale_syn_0006_frame_05",
+    "condition": "dusty_scratched",
+    "ground_truth": "25.20",
+    "raw_prediction": "982520",
+    "raw_decision": "TERIMA",
+    "verified_decision": "TOLAK",
+    "trigger_layer": "L1",
+    "ghost8_pattern": true
+  },
+  {
+    "sample_id": "scale_syn_0007_frame_01",
+    "condition": "clean_frontal",
+    "ground_truth": "25.0",
+    "raw_prediction": "8825.0",
+    "raw_decision": "TERIMA",
+    "verified_decision": "TOLAK",
+    "trigger_layer": "L2",
+    "ghost8_pattern": true
+  },
+  {
+    "sample_id": "scale_syn_0007_frame_02",
+    "condition": "clean_frontal",
+    "ground_truth": "25.0",
+    "raw_prediction": "8825.0",
+    "raw_decision": "TERIMA",
+    "verified_decision": "TOLAK",
+    "trigger_layer": "L2",
+    "ghost8_pattern": true
+  },
+  {
+    "sample_id": "scale_syn_0007_frame_03",
+    "condition": "clean_frontal",
+    "ground_truth": "25.0",
+    "raw_prediction": "8825.0",
+    "raw_decision": "TERIMA",
+    "verified_decision": "TOLAK",
+    "trigger_layer": "L2",
+    "ghost8_pattern": true
+  },
+  {
+    "sample_id": "scale_syn_0007_frame_04",
+    "condition": "clean_frontal",
+    "ground_truth": "25.0",
+    "raw_prediction": "8825.0",
+    "raw_decision": "TERIMA",
+    "verified_decision": "TOLAK",
+    "trigger_layer": "L2",
+    "ghost8_pattern": true
+  },
+  {
+    "sample_id": "scale_syn_0007_frame_05",
+    "condition": "clean_frontal",
+    "ground_truth": "25.0",
+    "raw_prediction": "8825.0",
+    "raw_decision": "TERIMA",
+    "verified_decision": "TOLAK",
+    "trigger_layer": "L2",
+    "ghost8_pattern": true
+  },
+  {
+    "sample_id": "scale_syn_0008_frame_01",
+    "condition": "glare",
+    "ground_truth": "25.5",
+    "raw_prediction": "255.",
+    "raw_decision": "TERIMA",
+    "verified_decision": "TOLAK",
+    "trigger_layer": "L1",
+    "ghost8_pattern": false
+  },
+  {
+    "sample_id": "scale_syn_0008_frame_02",
+    "condition": "glare",
+    "ground_truth": "25.5",
+    "raw_prediction": "0925.5",
+    "raw_decision": "TERIMA",
+    "verified_decision": "TOLAK",
+    "trigger_layer": "L2",
+    "ghost8_pattern": false
+  },
+  {
+    "sample_id": "scale_syn_0008_frame_03",
+    "condition": "glare",
+    "ground_truth": "25.5",
+    "raw_prediction": "8825.5",
+    "raw_decision": "TERIMA",
+    "verified_decision": "TOLAK",
+    "trigger_layer": "L2",
+    "ghost8_pattern": true
+  },
+  {
+    "sample_id": "scale_syn_0008_frame_04",
+    "condition": "glare",
+    "ground_truth": "25.5",
+    "raw_prediction": "0925.5",
+    "raw_decision": "TERIMA",
+    "verified_decision": "TOLAK",
+    "trigger_layer": "L2",
+    "ghost8_pattern": false
+  },
+  {
+    "sample_id": "scale_syn_0010_frame_01",
+    "condition": "low_contrast_passive",
+    "ground_truth": "49.95",
+    "raw_prediction": ".4995",
+    "raw_decision": "TERIMA",
+    "verified_decision": "TOLAK",
+    "trigger_layer": "L1",
+    "ghost8_pattern": false
+  },
+  {
+    "sample_id": "scale_syn_0010_frame_02",
+    "condition": "low_contrast_passive",
+    "ground_truth": "49.95",
+    "raw_prediction": "16.4995",
+    "raw_decision": "TERIMA",
+    "verified_decision": "TOLAK",
+    "trigger_layer": "L1",
+    "ghost8_pattern": false
+  },
+  {
+    "sample_id": "scale_syn_0010_frame_03",
+    "condition": "low_contrast_passive",
+    "ground_truth": "49.95",
+    "raw_prediction": "949.95",
+    "raw_decision": "TERIMA",
+    "verified_decision": "TOLAK",
+    "trigger_layer": "L2",
+    "ghost8_pattern": false
+  },
+  {
+    "sample_id": "scale_syn_0010_frame_04",
+    "condition": "low_contrast_passive",
+    "ground_truth": "49.95",
+    "raw_prediction": "1.4995",
+    "raw_decision": "TERIMA",
+    "verified_decision": "TOLAK",
+    "trigger_layer": "L1",
+    "ghost8_pattern": false
+  },
+  {
+    "sample_id": "scale_syn_0010_frame_05",
+    "condition": "low_contrast_passive",
+    "ground_truth": "49.95",
+    "raw_prediction": "149.95",
+    "raw_decision": "TERIMA",
+    "verified_decision": "TOLAK",
+    "trigger_layer": "L2",
+    "ghost8_pattern": false
+  },
+  {
+    "sample_id": "scale_syn_0012_frame_01",
+    "condition": "dusty_scratched",
+    "ground_truth": "50.0",
+    "raw_prediction": "88500",
+    "raw_decision": "TERIMA",
+    "verified_decision": "TOLAK",
+    "trigger_layer": "L1",
+    "ghost8_pattern": true
+  },
+  {
+    "sample_id": "scale_syn_0012_frame_02",
+    "condition": "dusty_scratched",
+    "ground_truth": "50.0",
+    "raw_prediction": "88500",
+    "raw_decision": "TERIMA",
+    "verified_decision": "TOLAK",
+    "trigger_layer": "L1",
+    "ghost8_pattern": true
+  },
+  {
+    "sample_id": "scale_syn_0013_frame_01",
+    "condition": "clean_frontal",
+    "ground_truth": "10.00",
+    "raw_prediction": "8810.00",
+    "raw_decision": "TERIMA",
+    "verified_decision": "TOLAK",
+    "trigger_layer": "L2",
+    "ghost8_pattern": true
+  },
+  {
+    "sample_id": "scale_syn_0013_frame_02",
+    "condition": "clean_frontal",
+    "ground_truth": "10.00",
+    "raw_prediction": "8810.00",
+    "raw_decision": "TERIMA",
+    "verified_decision": "TOLAK",
+    "trigger_layer": "L2",
+    "ghost8_pattern": true
+  },
+  {
+    "sample_id": "scale_syn_0013_frame_03",
+    "condition": "clean_frontal",
+    "ground_truth": "10.00",
+    "raw_prediction": "881000.",
+    "raw_decision": "TERIMA",
+    "verified_decision": "TOLAK",
+    "trigger_layer": "L1",
+    "ghost8_pattern": true
+  },
+  {
+    "sample_id": "scale_syn_0013_frame_04",
+    "condition": "clean_frontal",
+    "ground_truth": "10.00",
+    "raw_prediction": "8810.00",
+    "raw_decision": "TERIMA",
+    "verified_decision": "TOLAK",
+    "trigger_layer": "L2",
+    "ghost8_pattern": true
+  },
+  {
+    "sample_id": "scale_syn_0013_frame_05",
+    "condition": "clean_frontal",
+    "ground_truth": "10.00",
+    "raw_prediction": "8810.00",
+    "raw_decision": "TERIMA",
+    "verified_decision": "TOLAK",
+    "trigger_layer": "L2",
+    "ghost8_pattern": true
+  },
+  {
+    "sample_id": "scale_syn_0014_frame_01",
+    "condition": "glare",
+    "ground_truth": "9.95",
+    "raw_prediction": "995.",
+    "raw_decision": "TERIMA",
+    "verified_decision": "TOLAK",
+    "trigger_layer": "L1",
+    "ghost8_pattern": false
+  },
+  {
+    "sample_id": "scale_syn_0014_frame_02",
+    "condition": "glare",
+    "ground_truth": "9.95",
+    "raw_prediction": "995.",
+    "raw_decision": "TERIMA",
+    "verified_decision": "TOLAK",
+    "trigger_layer": "L1",
+    "ghost8_pattern": false
+  },
+  {
+    "sample_id": "scale_syn_0014_frame_03",
+    "condition": "glare",
+    "ground_truth": "9.95",
+    "raw_prediction": "99.95",
+    "raw_decision": "TERIMA",
+    "verified_decision": "TOLAK",
+    "trigger_layer": "L2",
+    "ghost8_pattern": false
+  }
+]

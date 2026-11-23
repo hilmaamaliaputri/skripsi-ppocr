@@ -74,16 +74,16 @@ class ScaleDataset(Dataset):
         self.samples = samples
         self.width, self.height = target_size
         self.is_training = is_training
+        self._cache: Dict[int, np.ndarray] = {}
 
     def __len__(self) -> int:
         return len(self.samples)
 
-    def __getitem__(self, idx: int) -> Tuple[torch.Tensor, torch.Tensor, int, str]:
+    def _load_base_gray(self, idx: int) -> np.ndarray:
+        if idx in self._cache:
+            return self._cache[idx].copy()
         item = self.samples[idx]
         img_path = item["image_path"]
-        text_label = str(item["label"])
-
-        # Baca citra grayscale
         if os.path.exists(img_path):
             img = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)
             roi_bbox = item.get("roi_bbox")
@@ -92,19 +92,32 @@ class ScaleDataset(Dataset):
                 if int(y2) > int(y1) and int(x2) > int(x1):
                     img = img[int(y1):int(y2), int(x1):int(x2)]
         else:
-            img = np.full((self.height, self.width), 128, dtype=np.uint8)
-
+            img = None
         if img is None or img.size == 0:
             img = np.full((self.height, self.width), 128, dtype=np.uint8)
+        elif img.shape[1] > 256 or img.shape[0] > 64:
+            img = cv2.resize(img, (256, 64), interpolation=cv2.INTER_AREA)
+        self._cache[idx] = img
+        return img.copy()
 
-        # Augmentasi ringan saat pelatihan (jitter kecerahan, blur, dan inversi polaritas)
+    def __getitem__(self, idx: int) -> Tuple[torch.Tensor, torch.Tensor, int, str]:
+        item = self.samples[idx]
+        text_label = str(item["label"])
+        img = self._load_base_gray(idx)
+
+        # Augmentasi realistis saat pelatihan (rotasi kecil, jitter kecerahan/kontras, blur)
         if self.is_training:
+            if np.random.rand() > 0.55:
+                ang = float(np.random.uniform(-5.0, 5.0))
+                ih, iw = img.shape[:2]
+                mat = cv2.getRotationMatrix2D((iw / 2.0, ih / 2.0), ang, 1.0)
+                img = cv2.warpAffine(img, mat, (iw, ih), borderMode=cv2.BORDER_REPLICATE)
             if np.random.rand() > 0.5:
-                alpha = np.random.uniform(0.8, 1.2)
-                beta = np.random.uniform(-15, 15)
+                alpha = np.random.uniform(0.75, 1.25)
+                beta = np.random.uniform(-20, 20)
                 img = np.clip(alpha * img + beta, 0, 255).astype(np.uint8)
             if np.random.rand() > 0.8:
-                img = cv2.GaussianBlur(img, (3, 3), 0.5)
+                img = cv2.GaussianBlur(img, (3, 3), 0.7)
 
         # Resize ke dimensi baku CRNN (32 x 128)
         img_resized = cv2.resize(img, (self.width, self.height), interpolation=cv2.INTER_LINEAR)
