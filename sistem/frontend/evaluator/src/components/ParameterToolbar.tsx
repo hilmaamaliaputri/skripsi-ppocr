@@ -91,7 +91,7 @@ export const ParameterToolbar: React.FC<ParameterToolbarProps> = ({
             className={`px-2.5 py-1 rounded text-xs font-sans transition-colors focus:outline-none focus:ring-2 focus:ring-[#F47721] ${
               isRawMode
                 ? 'bg-rose-700 text-white font-semibold'
-                : 'text-industrial-300 hover:text-white'
+                : 'text-industrial-300 hover:text-industrial-100'
             }`}
           >
             Sebelum Verifikasi
@@ -108,7 +108,7 @@ export const ParameterToolbar: React.FC<ParameterToolbarProps> = ({
             className={`px-2.5 py-1 rounded text-xs font-sans transition-colors focus:outline-none focus:ring-2 focus:ring-[#16A36A] ${
               !isRawMode
                 ? 'bg-[#16A36A] text-white font-semibold'
-                : 'text-industrial-300 hover:text-white'
+                : 'text-industrial-300 hover:text-industrial-100'
             }`}
           >
             Sesudah Verifikasi (4-Lapis)
@@ -119,16 +119,16 @@ export const ParameterToolbar: React.FC<ParameterToolbarProps> = ({
           <button
             type="button"
             onClick={onApplyOptimalPreset}
-            className="px-2.5 py-1.5 rounded-md text-xs font-sans bg-industrial-800 hover:bg-industrial-700 text-industrial-100 border border-industrial-700 focus:outline-none focus:ring-2 focus:ring-[#F47721]"
+            className="px-2.5 py-1.5 rounded-md text-xs font-sans bg-industrial-950 hover:bg-industrial-800 text-industrial-100 border border-industrial-700 focus:outline-none focus:ring-2 focus:ring-[#F47721]"
           >
-            Champion CRNN
+            Preset Champion
           </button>
           <button
             type="button"
             onClick={onApplyBaselinePreset}
-            className="px-2.5 py-1.5 rounded-md text-xs font-sans bg-industrial-800 hover:bg-industrial-700 text-industrial-200 border border-industrial-700 focus:outline-none focus:ring-2 focus:ring-[#F47721]"
+            className="px-2.5 py-1.5 rounded-md text-xs font-sans bg-industrial-950 hover:bg-industrial-800 text-industrial-200 border border-industrial-700 focus:outline-none focus:ring-2 focus:ring-[#F47721]"
           >
-            PP-OCRv6 Small
+            Reset Mentah
           </button>
         </div>
       </div>

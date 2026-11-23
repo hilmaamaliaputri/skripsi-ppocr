@@ -23,39 +23,41 @@ export const ReliabilityDiagram: React.FC<ReliabilityDiagramProps> = ({ calibrat
 
   return (
     <div className="p-5 rounded-xl bg-industrial-900 border border-industrial-800 flex flex-col justify-between theme-card shadow-sm">
-      <div className="flex items-center justify-between pb-3 border-b border-industrial-800">
-        <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-[#16A36A]/10 flex items-center justify-center text-[#16A36A] dark:text-[#38C98A]">
+      <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-industrial-800">
+        <div className="flex items-center gap-2.5 min-w-0">
+          <div className="w-8 h-8 rounded-lg bg-[#16A36A]/10 flex items-center justify-center text-[#16A36A] dark:text-[#38C98A] shrink-0">
             <BarChart3 className="w-4 h-4" />
           </div>
-          <div>
+          <div className="min-w-0">
             <h2 className="text-xs font-sans font-bold tracking-wider text-white uppercase theme-text-primary">
-              Reliability Diagram (Kalibrasi Platt)
+              Reliability Diagram
             </h2>
-            <p className="text-[11px] font-sans text-industrial-400">Kesesuaian antara tingkat keyakinan model dan akurasi empiris.</p>
+            <p className="text-[11px] font-sans text-industrial-400">Kesesuaian keyakinan model vs akurasi empiris.</p>
           </div>
         </div>
 
-        <div className="flex items-center gap-1.5 bg-industrial-950 p-1 rounded-lg border border-industrial-800">
+        <div className="flex items-center gap-1 bg-industrial-950 p-1 rounded-lg border border-industrial-800 shrink-0">
           <button
+            type="button"
             onClick={() => setViewMode('after')}
-            className={`px-2.5 py-1 rounded-md text-[11px] font-sans transition-all ${
+            className={`px-2.5 py-1 rounded-md text-[11px] font-sans whitespace-nowrap transition-all ${
               viewMode === 'after'
-                ? 'bg-[#16A36A] dark:bg-[#38C98A] text-white font-semibold shadow-xs'
+                ? 'bg-[#16A36A] text-white font-semibold shadow-xs'
                 : 'text-industrial-400 hover:text-industrial-200'
             }`}
           >
-            Terkalibrasi (T* = {calibration.optimal_temperature.toFixed(2)})
+            T* = {calibration.optimal_temperature.toFixed(1)}
           </button>
           <button
+            type="button"
             onClick={() => setViewMode('before')}
-            className={`px-2.5 py-1 rounded-md text-[11px] font-sans transition-all ${
+            className={`px-2.5 py-1 rounded-md text-[11px] font-sans whitespace-nowrap transition-all ${
               viewMode === 'before'
                 ? 'bg-[#EF4444] text-white font-semibold shadow-xs'
                 : 'text-industrial-400 hover:text-industrial-200'
             }`}
           >
-            Mentah (T = 1.0)
+            Mentah (T=1)
           </button>
         </div>
       </div>
@@ -116,7 +118,7 @@ export const ReliabilityDiagram: React.FC<ReliabilityDiagramProps> = ({ calibrat
                   y={height - padding.bottom + 16}
                   textAnchor="middle"
                   fontSize="10"
-                  fill="#94a3b8"
+                  className="svg-axis-label"
                   fontFamily="monospace"
                 >
                   {(bin.bin_upper * 100).toFixed(0)}%
@@ -143,7 +145,7 @@ export const ReliabilityDiagram: React.FC<ReliabilityDiagramProps> = ({ calibrat
                   y={y + 3}
                   textAnchor="end"
                   fontSize="10"
-                  fill="#94a3b8"
+                  className="svg-axis-label"
                   fontFamily="monospace"
                 >
                   {(v * 100).toFixed(0)}%
@@ -168,7 +170,7 @@ export const ReliabilityDiagram: React.FC<ReliabilityDiagramProps> = ({ calibrat
             y={height - 8}
             textAnchor="middle"
             fontSize="11"
-            fill="#94a3b8"
+            className="svg-axis-label"
             fontFamily="sans-serif"
             fontWeight="500"
           >
@@ -179,7 +181,7 @@ export const ReliabilityDiagram: React.FC<ReliabilityDiagramProps> = ({ calibrat
             y={padding.top + plotH / 2}
             textAnchor="middle"
             fontSize="11"
-            fill="#94a3b8"
+            className="svg-axis-label"
             fontFamily="sans-serif"
             fontWeight="500"
             transform={`rotate(-90 15 ${padding.top + plotH / 2})`}
@@ -201,7 +203,7 @@ export const ReliabilityDiagram: React.FC<ReliabilityDiagramProps> = ({ calibrat
             <span className="text-industrial-300">Akurasi Empiris</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <span className="w-3 h-3 rounded border border-dashed border-sky-400 bg-sky-400/20" />
+            <span className="w-3 h-3 rounded border border-dashed border-[#EF4444] bg-[#EF4444]/20" />
             <span className="text-industrial-300">Rata-rata Keyakinan</span>
           </div>
         </div>

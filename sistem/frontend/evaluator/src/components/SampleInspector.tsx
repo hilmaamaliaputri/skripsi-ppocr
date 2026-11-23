@@ -28,25 +28,25 @@ export const SampleInspector: React.FC<SampleInspectorProps> = ({
     switch (decision) {
       case 'TERIMA':
         return (
-          <span className="px-2.5 py-0.5 rounded-full text-[10px] font-sans font-semibold bg-[#16A36A]/10 text-[#16A36A] dark:text-[#38C98A] border border-[#16A36A]/30 whitespace-nowrap">
+          <span className="px-2.5 py-0.5 rounded-full text-[10px] font-sans font-semibold bg-emerald-100 dark:bg-[#16A36A]/15 text-emerald-800 dark:text-[#38C98A] border border-emerald-300 dark:border-[#38C98A]/35 whitespace-nowrap">
             TERIMA
           </span>
         );
       case 'TOLAK':
         return (
-          <span className="px-2.5 py-0.5 rounded-full text-[10px] font-sans font-semibold bg-[#EF4444]/10 text-[#EF4444] border border-[#EF4444]/30 whitespace-nowrap">
+          <span className="px-2.5 py-0.5 rounded-full text-[10px] font-sans font-semibold bg-rose-100 dark:bg-rose-500/15 text-rose-800 dark:text-rose-400 border border-rose-300 dark:border-rose-500/35 whitespace-nowrap">
             TOLAK
           </span>
         );
       case 'KONFIRMASI':
         return (
-          <span className="px-2.5 py-0.5 rounded-full text-[10px] font-sans font-semibold bg-[#F59E0B]/10 text-[#F59E0B] border border-[#F59E0B]/30 whitespace-nowrap">
+          <span className="px-2.5 py-0.5 rounded-full text-[10px] font-sans font-semibold bg-amber-100 dark:bg-amber-500/15 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-500/35 whitespace-nowrap">
             KONFIRMASI
           </span>
         );
       default:
         return (
-          <span className="px-2.5 py-0.5 rounded-full text-[10px] font-sans font-semibold bg-slate-900 text-slate-400 border border-slate-700 whitespace-nowrap">
+          <span className="px-2.5 py-0.5 rounded-full text-[10px] font-sans font-semibold bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-300 border border-slate-300 dark:border-slate-700 whitespace-nowrap">
             BATAL
           </span>
         );
@@ -67,9 +67,9 @@ export const SampleInspector: React.FC<SampleInspectorProps> = ({
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 items-stretch">
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
       {/* 1. Left Table List */}
-      <div className="lg:col-span-2">
+      <div className="lg:col-span-7">
         <SampleTable
           samples={samples}
           filtered={filtered}
@@ -83,7 +83,7 @@ export const SampleInspector: React.FC<SampleInspectorProps> = ({
       </div>
 
       {/* 2. Detail Inspector Panel */}
-      <div className="lg:col-span-1">
+      <div className="lg:col-span-5">
         <SampleDetailPanel
           selectedSample={selectedSample}
           onSelectFrame={setLightboxFrame}

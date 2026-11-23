@@ -35,8 +35,8 @@ export const MetricsOverview: React.FC<MetricsOverviewProps> = ({ metrics }) => 
           <div className="text-2xl font-bold font-mono text-white theme-text-primary tracking-tight">
             {fsr}%
           </div>
-          <div className="text-[10px] font-mono text-industrial-400 mt-1 bg-industrial-950 px-2 py-0.5 rounded border border-industrial-800/80 inline-block">
-            CI: [{fsrLower}% - {fsrUpper}%]
+          <div className="text-[10px] font-mono text-industrial-400 mt-1.5 bg-industrial-950 px-2 py-0.5 rounded border border-industrial-800/80 inline-block whitespace-nowrap">
+            CI: {fsrLower}%–{fsrUpper}%
           </div>
         </div>
       </div>
@@ -53,8 +53,8 @@ export const MetricsOverview: React.FC<MetricsOverviewProps> = ({ metrics }) => 
           <div className="text-2xl font-bold font-mono text-white theme-text-primary tracking-tight">
             {cer}%
           </div>
-          <div className="text-[10px] font-mono text-industrial-400 mt-1 bg-industrial-950 px-2 py-0.5 rounded border border-industrial-800/80 inline-block">
-            CI: [{cerLower}% - {cerUpper}%]
+          <div className="text-[10px] font-mono text-industrial-400 mt-1.5 bg-industrial-950 px-2 py-0.5 rounded border border-industrial-800/80 inline-block whitespace-nowrap">
+            CI: {cerLower}%–{cerUpper}%
           </div>
         </div>
       </div>

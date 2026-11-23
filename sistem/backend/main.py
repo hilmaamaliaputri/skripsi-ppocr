@@ -4,7 +4,7 @@ import os
 import sys
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -36,6 +36,20 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+REPO_ROOT = os.path.abspath(os.path.join(BASE_DIR, ".."))
+DATASET_ROOT = os.path.join(REPO_ROOT, "dataset")
+
+# Mount spesifik terlebih dahulu agar NTFS junction di sistem/data/ tidak terblokir Starlette realpath check
+for route_sub, folder_name in (
+    ("synthetic", "04_uji_burst_120"),
+    ("calib", "02_kalibrasi"),
+    ("dataset_uji", "03_uji_755"),
+    ("dataset_latih", "01_latih"),
+):
+    target_dir = os.path.join(DATASET_ROOT, folder_name)
+    if os.path.exists(target_dir):
+        app.mount(f"/data/{route_sub}", StaticFiles(directory=target_dir), name=f"data_{route_sub}")
+
 data_dir = os.path.join(BASE_DIR, "data")
 if os.path.exists(data_dir):
     app.mount("/data", StaticFiles(directory=data_dir), name="data")
@@ -54,14 +68,18 @@ if os.path.exists(os.path.join(evaluator_dist, "assets")):
 
 
 @app.get("/operator")
+def redirect_operator_slash():
+    return RedirectResponse(url="/operator/", headers={"Cache-Control": "no-store"})
+
+
 @app.get("/operator/")
 def serve_operator():
-    return FileResponse(os.path.join(operator_dist, "index.html"))
+    return FileResponse(os.path.join(operator_dist, "index.html"), headers={"Cache-Control": "no-store"})
 
 
 @app.get("/")
 def serve_evaluator():
-    return FileResponse(os.path.join(evaluator_dist, "index.html"))
+    return FileResponse(os.path.join(evaluator_dist, "index.html"), headers={"Cache-Control": "no-store"})
 
 
 @app.get("/favicon.svg")

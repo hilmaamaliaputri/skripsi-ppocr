@@ -89,7 +89,7 @@ export const ComparisonTable: React.FC<ComparisonTableProps> = ({
         </div>
 
         <div className="flex flex-wrap items-center gap-2">
-          <div className="inline-flex rounded-md border border-industrial-700 p-0.5 bg-industrial-950/50" role="group" aria-label="Filter mode verifikasi">
+          <div className="inline-flex rounded-md border border-industrial-700 p-0.5 bg-industrial-950" role="group" aria-label="Filter mode verifikasi">
             {(
               [
                 { id: 'all', label: 'Semua (12)' },
@@ -101,10 +101,10 @@ export const ComparisonTable: React.FC<ComparisonTableProps> = ({
                 key={opt.id}
                 type="button"
                 onClick={() => setModeFilter(opt.id)}
-                className={`px-2.5 py-1 rounded text-[11px] font-sans font-semibold transition-colors ${
+                className={`px-2.5 py-1 rounded text-[11px] font-sans font-semibold transition-colors whitespace-nowrap ${
                   modeFilter === opt.id
                     ? 'bg-[#F47721] text-white'
-                    : 'text-industrial-300 hover:text-white'
+                    : 'text-industrial-300 hover:text-industrial-100'
                 }`}
               >
                 {opt.label}
@@ -116,7 +116,7 @@ export const ComparisonTable: React.FC<ComparisonTableProps> = ({
             <button
               type="button"
               onClick={onOpenTrainingCurve}
-              className="px-2.5 py-1.5 rounded-md text-[11px] font-sans font-semibold bg-emerald-500/15 text-emerald-400 hover:bg-emerald-500/25 border border-emerald-500/30 transition-colors"
+              className="px-2.5 py-1.5 rounded-md text-[11px] font-sans font-semibold bg-emerald-100 dark:bg-emerald-500/15 text-emerald-800 dark:text-[#38C98A] hover:bg-emerald-200 dark:hover:bg-emerald-500/25 border border-emerald-300 dark:border-emerald-500/30 transition-colors whitespace-nowrap"
             >
               Kurva CRNN (50 Ep)
             </button>
@@ -159,10 +159,10 @@ export const ComparisonTable: React.FC<ComparisonTableProps> = ({
                     key={`${row.variantKey}-${idx}`}
                     className={`transition-colors ${
                       row.isThesisChoice
-                        ? 'bg-emerald-500/10 hover:bg-emerald-500/15'
+                        ? 'bg-emerald-50 dark:bg-emerald-500/10 hover:bg-emerald-100/70 dark:hover:bg-emerald-500/15'
                         : isCurrent
-                        ? 'bg-[#F47721]/10 hover:bg-[#F47721]/15'
-                        : 'hover:bg-white/[0.03]'
+                        ? 'bg-orange-50 dark:bg-[#F47721]/10 hover:bg-orange-100/70 dark:hover:bg-[#F47721]/15'
+                        : 'hover:bg-slate-50 dark:hover:bg-white/[0.03]'
                     }`}
                   >
                     <td className="py-2.5 px-3 font-sans">
@@ -188,11 +188,11 @@ export const ComparisonTable: React.FC<ComparisonTableProps> = ({
 
                     <td className="py-2.5 px-3">
                       {isVerifRow ? (
-                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-sans font-semibold bg-[#16A36A]/15 text-[#16A36A] dark:text-[#38C98A] border border-[#16A36A]/30">
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-sans font-semibold bg-emerald-100 dark:bg-[#16A36A]/15 text-emerald-800 dark:text-[#38C98A] border border-emerald-300 dark:border-[#16A36A]/35 whitespace-nowrap">
                           <CheckCircle2 className="w-3 h-3" aria-hidden="true" /> 4-Lapis Aktif
                         </span>
                       ) : (
-                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-sans font-semibold bg-rose-500/15 text-rose-400 border border-rose-500/30">
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-sans font-semibold bg-rose-100 dark:bg-rose-500/15 text-rose-800 dark:text-rose-400 border border-rose-300 dark:border-rose-500/35 whitespace-nowrap">
                           <AlertTriangle className="w-3 h-3" aria-hidden="true" /> Mentah
                         </span>
                       )}
@@ -210,16 +210,16 @@ export const ComparisonTable: React.FC<ComparisonTableProps> = ({
                     <td className="py-2.5 px-3 text-right tabular-nums text-industrial-200 theme-text-primary">
                       {row.coverage || '-'}
                     </td>
-                    <td className="py-2.5 px-3 text-right tabular-nums font-semibold text-emerald-400">
+                    <td className="py-2.5 px-3 text-right tabular-nums font-semibold text-[#16A36A] dark:text-[#38C98A]">
                       {row.selectiveAcc || '-'}
                     </td>
                     <td
                       className={`py-2.5 px-3 text-right tabular-nums font-bold ${
                         parseFloat(row.silentError) <= 1.5
-                          ? 'text-emerald-400'
+                          ? 'text-[#16A36A] dark:text-[#38C98A]'
                           : parseFloat(row.silentError) >= 20
-                          ? 'text-rose-400'
-                          : 'text-amber-400'
+                          ? 'text-[#EF4444]'
+                          : 'text-[#F59E0B]'
                       }`}
                     >
                       {row.silentError}
@@ -227,7 +227,7 @@ export const ComparisonTable: React.FC<ComparisonTableProps> = ({
                     <td className="py-2.5 px-3 text-right tabular-nums text-industrial-300">
                       {row.aurc || '-'}
                     </td>
-                    <td className="py-2.5 px-3 font-sans text-[11px] text-industrial-300 max-w-[240px]">
+                    <td className="py-2.5 px-3 font-sans text-[11px] text-industrial-300 min-w-[200px]">
                       {row.recommendation}
                     </td>
                   </tr>

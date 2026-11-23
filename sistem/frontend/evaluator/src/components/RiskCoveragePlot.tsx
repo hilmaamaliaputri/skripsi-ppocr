@@ -56,23 +56,21 @@ export const RiskCoveragePlot: React.FC<RiskCoveragePlotProps> = ({
 
   return (
     <div className="p-5 rounded-xl bg-industrial-900 border border-industrial-800 flex flex-col justify-between theme-card shadow-sm">
-      <div className="flex items-center justify-between pb-3 border-b border-industrial-800">
-        <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-[#F47721]/15 flex items-center justify-center text-[#F47721]">
+      <div className="flex flex-wrap items-start justify-between gap-2 pb-3 border-b border-industrial-800">
+        <div className="flex items-center gap-2.5 min-w-0">
+          <div className="w-8 h-8 rounded-lg bg-[#F47721]/15 flex items-center justify-center text-[#F47721] shrink-0">
             <Activity className="w-4 h-4" />
           </div>
-          <div>
+          <div className="min-w-0">
             <h2 className="text-xs font-sans font-bold tracking-wider text-white uppercase theme-text-primary">
-              Kurva Risk-Coverage (Selective Classification)
+              Kurva Risk-Coverage
             </h2>
-            <p className="text-[11px] font-sans text-industrial-400">Trade-off antara rasio cakupan otomatis vs risiko silent error.</p>
+            <p className="text-[11px] font-sans text-industrial-400">Trade-off cakupan otomatis vs risiko silent error.</p>
           </div>
         </div>
-        <div className="flex items-center gap-2">
-          <span className="text-[11px] font-mono px-2.5 py-1 rounded-full bg-[#F47721]/15 border border-[#F47721]/30 text-[#F47721] font-semibold shadow-xs">
-            AURC: {aurc.toFixed(4)}
-          </span>
-        </div>
+        <span className="text-[11px] font-mono px-2.5 py-1 rounded-full bg-[#F47721]/15 border border-[#F47721]/35 text-[#F47721] font-semibold whitespace-nowrap shrink-0">
+          AURC: {aurc.toFixed(4)}
+        </span>
       </div>
 
       <div className="relative my-3 flex justify-center">
@@ -118,7 +116,7 @@ export const RiskCoveragePlot: React.FC<RiskCoveragePlotProps> = ({
                   y={y + 3}
                   textAnchor="end"
                   fontSize="10"
-                  fill="#94a3b8"
+                  className="svg-axis-label"
                   fontFamily="monospace"
                 >
                   {(r * 100).toFixed(1)}%
@@ -188,7 +186,7 @@ export const RiskCoveragePlot: React.FC<RiskCoveragePlotProps> = ({
               y={height - padding.bottom + 16}
               textAnchor="middle"
               fontSize="10"
-              fill="#94a3b8"
+              className="svg-axis-label"
               fontFamily="monospace"
             >
               {(v * 100).toFixed(0)}%
@@ -201,7 +199,7 @@ export const RiskCoveragePlot: React.FC<RiskCoveragePlotProps> = ({
             y={height - 8}
             textAnchor="middle"
             fontSize="11"
-            fill="#94a3b8"
+            className="svg-axis-label"
             fontFamily="sans-serif"
             fontWeight="500"
           >
@@ -212,7 +210,7 @@ export const RiskCoveragePlot: React.FC<RiskCoveragePlotProps> = ({
             y={padding.top + plotH / 2}
             textAnchor="middle"
             fontSize="11"
-            fill="#94a3b8"
+            className="svg-axis-label"
             fontFamily="sans-serif"
             fontWeight="500"
             transform={`rotate(-90 15 ${padding.top + plotH / 2})`}
@@ -246,7 +244,7 @@ export const RiskCoveragePlot: React.FC<RiskCoveragePlotProps> = ({
         <div className="grid grid-cols-2 gap-2 text-xs font-mono pt-1">
           <div className="bg-industrial-900 p-2 rounded-lg border border-industrial-800/60 flex justify-between">
             <span className="text-industrial-400 font-sans">Cakupan (Cov):</span>
-            <span className="text-white font-bold">{((activePoint?.coverage || 0) * 100).toFixed(1)}%</span>
+            <span className="text-industrial-100 theme-text-primary font-bold">{((activePoint?.coverage || 0) * 100).toFixed(1)}%</span>
           </div>
           <div className="bg-industrial-900 p-2 rounded-lg border border-industrial-800/60 flex justify-between">
             <span className="text-industrial-400 font-sans">Risiko (Risk):</span>

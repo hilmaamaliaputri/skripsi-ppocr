@@ -39,18 +39,18 @@ export const Sidebar: React.FC<SidebarProps> = ({
   const navItems = [
     { id: 'overview' as const, label: 'Metrik & Kurva', icon: BarChart3, badge: null },
     { id: 'comparison' as const, label: 'Komparasi Model', icon: Layers, badge: '6 Model' },
-    { id: 'inspector' as const, label: 'Inspektur Sampel', icon: Search, badge: `${sampleCount} Folder` },
+    { id: 'inspector' as const, label: 'Inspektur Sampel', icon: Search, badge: `${sampleCount}` },
     { id: 'tracker' as const, label: 'Pelacakan Eksperimen', icon: ClipboardCheck, badge: '24/24' },
   ];
 
-  const mutedText = isLightMode ? 'text-[#64748B]' : 'text-[#94A3B8]';
-  const strongText = isLightMode ? 'text-[#202832]' : 'text-[#F1F5F9]';
-  const borderCol = isLightMode ? 'border-[#E2E8F0]' : 'border-[#2E3A47]';
+  const mutedText = isLightMode ? 'text-[#475569]' : 'text-[#94A3B8]';
+  const strongText = isLightMode ? 'text-[#0F172A]' : 'text-[#F8FAFC]';
+  const borderCol = isLightMode ? 'border-[#CBD5E1]' : 'border-[#2B3948]';
 
   return (
     <aside
-      className={`w-full md:w-60 lg:w-64 shrink-0 border-b md:border-b-0 md:border-r transition-colors duration-200 flex flex-col justify-between md:h-screen md:sticky md:top-0 z-30 ${
-        isLightMode ? `bg-white ${borderCol} ${strongText}` : `bg-[#171F28] ${borderCol} ${strongText}`
+      className={`w-full md:w-64 lg:w-[276px] shrink-0 border-b md:border-b-0 md:border-r transition-colors duration-200 flex flex-col justify-between md:h-screen md:sticky md:top-0 md:overflow-y-auto z-30 ${
+        isLightMode ? `bg-white ${borderCol} ${strongText}` : `bg-[#151E28] ${borderCol} ${strongText}`
       }`}
     >
       <div className="p-4 sm:p-5 flex flex-col gap-5">
@@ -180,9 +180,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
             <ShieldCheck className={`w-3.5 h-3.5 shrink-0 ${isLightMode ? 'text-[#16A36A]' : 'text-[#38C98A]'}`} aria-hidden="true" />
             <span className={isLightMode ? 'text-[#16A36A]' : 'text-[#38C98A]'}>TEST SET TERKUNCI</span>
           </div>
-          <div className={`flex items-center gap-1.5 text-[11px] ${mutedText}`}>
-            <Database className="w-3 h-3 text-[#F47721] shrink-0" aria-hidden="true" />
-            <span className="truncate">
+          <div className={`flex items-start gap-1.5 text-[11px] ${mutedText}`}>
+            <Database className="w-3 h-3 text-[#F47721] shrink-0 mt-0.5" aria-hidden="true" />
+            <span className="leading-snug break-words">
               Dataset: <strong className={strongText}>{manifestName}</strong>
             </span>
           </div>

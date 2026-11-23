@@ -87,12 +87,12 @@ export const SampleTable: React.FC<SampleTableProps> = ({
             }`}
           >
             <tr>
-              <th className="py-2.5 px-3.5 font-semibold whitespace-nowrap">ID Sampel</th>
-              <th className="py-2.5 px-3 font-semibold whitespace-nowrap">Ground Truth</th>
-              <th className="py-2.5 px-3 font-semibold whitespace-nowrap">Prediksi OCR</th>
-              <th className="py-2.5 px-3 font-semibold whitespace-nowrap">Raw Conf</th>
-              <th className="py-2.5 px-3 font-semibold whitespace-nowrap">Calib Conf</th>
-              <th className="py-2.5 px-3.5 font-semibold whitespace-nowrap">Keputusan</th>
+              <th className="py-2.5 px-2.5 font-semibold whitespace-nowrap">ID Sampel</th>
+              <th className="py-2.5 px-2 font-semibold whitespace-nowrap">GT</th>
+              <th className="py-2.5 px-2 font-semibold whitespace-nowrap">Prediksi</th>
+              <th className="py-2.5 px-2 font-semibold whitespace-nowrap">Raw</th>
+              <th className="py-2.5 px-2 font-semibold whitespace-nowrap">Calib</th>
+              <th className="py-2.5 px-2.5 font-semibold whitespace-nowrap text-right">Keputusan</th>
             </tr>
           </thead>
           <tbody
@@ -116,36 +116,36 @@ export const SampleTable: React.FC<SampleTableProps> = ({
                       : 'hover:bg-white/5 text-[#CBD5E1]'
                   }`}
                 >
-                  <td className="py-2.5 px-3.5 font-semibold whitespace-nowrap">
+                  <td className="py-2.5 px-2.5 font-semibold whitespace-nowrap">
                     <span className={isLightMode ? 'text-[#0F172A]' : 'text-[#F1F5F9]'}>
                       {s.id}
                     </span>
                   </td>
-                  <td className="py-2.5 px-3 font-semibold whitespace-nowrap text-[#16A36A]">
+                  <td className="py-2.5 px-2 font-semibold whitespace-nowrap text-[#15803D] dark:text-[#38C98A]">
                     {s.gt_value}
                   </td>
                   <td
-                    className={`py-2.5 px-3 font-semibold whitespace-nowrap ${
+                    className={`py-2.5 px-2 font-semibold whitespace-nowrap ${
                       s.is_correct
                         ? isLightMode
                           ? 'text-[#0F172A]'
                           : 'text-white'
-                        : 'text-[#DC2626]'
+                        : 'text-[#B91C1C] dark:text-[#F87171]'
                     }`}
                   >
                     {s.pred_normalized}
                   </td>
                   <td
-                    className={`py-2.5 px-3 whitespace-nowrap ${
-                      isLightMode ? 'text-[#64748B]' : 'text-[#94A3B8]'
+                    className={`py-2.5 px-2 whitespace-nowrap ${
+                      isLightMode ? 'text-[#475569]' : 'text-[#94A3B8]'
                     }`}
                   >
                     {(s.raw_confidence * 100).toFixed(1)}%
                   </td>
-                  <td className="py-2.5 px-3 font-bold text-[#F47721] whitespace-nowrap">
+                  <td className="py-2.5 px-2 font-bold text-[#C2410C] dark:text-[#F47721] whitespace-nowrap">
                     {(s.calibrated_confidence * 100).toFixed(1)}%
                   </td>
-                  <td className="py-2.5 px-3.5 whitespace-nowrap">{getStatusBadge(s.decision)}</td>
+                  <td className="py-2.5 px-2.5 whitespace-nowrap text-right">{getStatusBadge(s.decision)}</td>
                 </tr>
               );
             })}

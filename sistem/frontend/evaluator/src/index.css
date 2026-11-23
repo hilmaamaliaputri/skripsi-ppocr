@@ -4,33 +4,26 @@
 
 @layer base {
   :root {
-    --bg-page: #111820;
-    --bg-card: #222D38;
-    --bg-card-subtle: #1C252F;
-    --bg-sidebar: #171F28;
-    --border-color: #2E3A47;
-    --text-primary: #F1F5F9;
-    --text-secondary: #94A3B8;
-    --text-muted: #64748B;
-    --accent-orange: #F47721;
-    --accent-orange-hover: #FF974D;
-    --color-success: #38C98A;
-    --color-cloud: #3B82F6;
+    --bg-page: #0F161E;
+    --bg-card: #1B2531;
+    --bg-card-subtle: #131B24;
+    --bg-sidebar: #151E28;
+    --border-color: #2B3948;
+    --text-primary: #F8FAFC;
+    --text-secondary: #CBD5E1;
+    --text-muted: #94A3B8;
   }
 
-  .light-mode {
-    --bg-page: #F8FAFC;
+  html.light-mode {
+    color-scheme: light;
+    --bg-page: #F3F6FA;
     --bg-card: #FFFFFF;
-    --bg-card-subtle: #F1F5F9;
+    --bg-card-subtle: #F8FAFC;
     --bg-sidebar: #FFFFFF;
-    --border-color: #E2E8F0;
+    --border-color: #CBD5E1;
     --text-primary: #0F172A;
-    --text-secondary: #475569;
-    --text-muted: #64748B;
-    --accent-orange: #F47721;
-    --accent-orange-hover: #FF974D;
-    --color-success: #16A36A;
-    --color-cloud: #3B82F6;
+    --text-secondary: #334155;
+    --text-muted: #475569;
   }
 
   body {
@@ -44,367 +37,177 @@
 }
 
 /* ==========================================================================
-   DARK MODE (INDUSTRIAL GRAPHITE + SIGNAL ORANGE)
+   NIGHT MODE (INDUSTRIAL GRAPHITE PRECISION)
    ========================================================================== */
-body:not(.light-mode) {
-  background-color: #111820 !important;
-  color: #F1F5F9 !important;
+html:not(.light-mode) body,
+html:not(.light-mode) #root {
+  background-color: #0F161E !important;
+  color: #F8FAFC !important;
 }
 
-body:not(.light-mode) .theme-card,
-body:not(.light-mode) .bg-industrial-900 {
-  background-color: #222D38 !important;
-  border-color: #2E3A47 !important;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
+html:not(.light-mode) .theme-card,
+html:not(.light-mode) .bg-industrial-900 {
+  background-color: #1B2531 !important;
+  border-color: #2B3948 !important;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.35);
 }
 
-body:not(.light-mode) .bg-industrial-850 {
-  background-color: #1C252F !important;
-  border-color: #2E3A47 !important;
+html:not(.light-mode) .bg-industrial-850,
+html:not(.light-mode) .bg-industrial-950,
+html:not(.light-mode) [class*="bg-industrial-950/"] {
+  background-color: #131B24 !important;
+  border-color: #2B3948 !important;
 }
 
-body:not(.light-mode) .bg-industrial-950 {
-  background-color: #171F28 !important;
-  border-color: #2E3A47 !important;
+html:not(.light-mode) .bg-industrial-800 {
+  background-color: #233040 !important;
+  border-color: #354659 !important;
 }
 
-body:not(.light-mode) .border-industrial-800 {
-  border-color: #2E3A47 !important;
-}
-
-body:not(.light-mode) .border-industrial-700 {
-  border-color: #3D4D5E !important;
-}
-
-body:not(.light-mode) .theme-sidebar {
-  background-color: #171F28 !important;
-  border-color: #2E3A47 !important;
-}
-
-body:not(.light-mode) .theme-header {
-  background-color: rgba(17, 24, 32, 0.95) !important;
-  border-color: #2E3A47 !important;
+html:not(.light-mode) .border-industrial-800,
+html:not(.light-mode) .border-industrial-700,
+html:not(.light-mode) [class*="border-industrial-800"],
+html:not(.light-mode) [class*="border-industrial-700"] {
+  border-color: #2B3948 !important;
 }
 
 /* ==========================================================================
-   LIGHT MODE (LIGHT GRAPHITE CANVAS + WHITE SURFACES + DARK SIDEBAR)
+   LIGHT MODE (HIGH-CONTRAST METROLOGY PAPER BENCH)
    ========================================================================== */
-.light-mode {
-  color-scheme: light;
-}
-
-.light-mode body {
-  background-color: #F8FAFC !important;
+html.light-mode body,
+html.light-mode #root,
+html.light-mode .min-h-screen {
+  background-color: #F3F6FA !important;
   color: #0F172A !important;
 }
 
-/* Root & Page Canvas */
-.light-mode #root,
-.light-mode .min-h-screen {
-  background-color: #F8FAFC !important;
-  color: #0F172A !important;
-}
-
-/* Sidebar in Light Mode is Crisp White #FFFFFF */
-.light-mode .theme-sidebar,
-.light-mode aside {
-  background-color: #FFFFFF !important;
-  border-color: #E2E8F0 !important;
-  color: #202832 !important;
-}
-
-.light-mode aside .theme-text-primary,
-.light-mode aside h1,
-.light-mode aside h2 {
-  color: #202832 !important;
-}
-
-.light-mode aside .text-zinc-400,
-.light-mode aside .text-industrial-400 {
-  color: #64748B !important;
-}
-
-/* Primary Surface Cards (White) */
-.light-mode .theme-card,
-.light-mode .bg-industrial-900,
-.light-mode .bg-industrial-850 {
-  background-color: #FFFFFF !important;
-  border-color: #E2E8F0 !important;
-  color: #202832 !important;
-  box-shadow: 0 1px 3px 0 rgba(32, 40, 50, 0.05), 0 1px 2px -1px rgba(32, 40, 50, 0.02) !important;
-}
-
-/* Inset / Secondary Panels (Handles opacities like /70, /80) */
-.light-mode .bg-industrial-950,
-.light-mode [class*="bg-industrial-950"] {
-  background-color: #F8FAFC !important;
-  border-color: #E2E8F0 !important;
-  color: #334155 !important;
-}
-
-.light-mode [class*="bg-industrial-850"] {
-  background-color: #F1F5F9 !important;
-  border-color: #E2E8F0 !important;
-  color: #334155 !important;
-}
-
-/* Borders */
-.light-mode .border-industrial-800,
-.light-mode .border-industrial-700,
-.light-mode [class*="border-industrial-800"],
-.light-mode [class*="border-industrial-700"] {
-  border-color: #E2E8F0 !important;
-}
-
-/* Text Hierarchy (High Contrast Ink #0F172A) */
-.light-mode .theme-text-primary,
-.light-mode .text-white,
-.light-mode .text-zinc-100,
-.light-mode .text-industrial-100,
-.light-mode .text-industrial-200 {
-  color: #0F172A !important;
-}
-
-/* Accessible High Contrast Color Accents in Light Mode */
-.light-mode .text-sky-300,
-.light-mode .text-sky-400 {
-  color: #0284C7 !important;
-}
-
-.light-mode .text-emerald-400 {
-  color: #16A36A !important;
-}
-
-.light-mode .text-purple-400 {
-  color: #7C3AED !important;
-}
-
-.light-mode .text-amber-400 {
-  color: #D97706 !important;
-}
-
-.light-mode .text-red-400,
-.light-mode .text-rose-400 {
-  color: #DC2626 !important;
-}
-
-/* Status Badges in Light Mode */
-.light-mode .bg-emerald-950 {
-  background-color: #ECFDF5 !important;
-  color: #16A36A !important;
-  border-color: #A7F3D0 !important;
-}
-
-.light-mode .bg-red-950 {
-  background-color: #FEF2F2 !important;
-  color: #DC2626 !important;
-  border-color: #FECACA !important;
-}
-
-.light-mode .text-industrial-300,
-.light-mode .text-zinc-300 {
-  color: #334155 !important;
-}
-
-.light-mode .text-industrial-400,
-.light-mode .text-zinc-400 {
-  color: #64748B !important;
-}
-
-.light-mode .text-industrial-500,
-.light-mode .text-zinc-500 {
-  color: #94A3B8 !important;
-}
-
-/* Header in Light Mode */
-.light-mode header {
-  background-color: rgba(255, 255, 255, 0.95) !important;
-  border-color: #E2E8F0 !important;
-  box-shadow: 0 1px 2px 0 rgba(32, 40, 50, 0.03) !important;
-}
-
-/* Table Elements in Light Mode */
-.light-mode table thead,
-.light-mode thead,
-.light-mode th {
-  background-color: #F8FAFC !important;
-  color: #475569 !important;
-  font-weight: 600 !important;
-  border-color: #E2E8F0 !important;
-}
-
-.light-mode tbody tr {
-  border-color: #F1F5F9 !important;
-  color: #334155 !important;
-}
-
-.light-mode tr:hover {
-  background-color: #F8FAFC !important;
-}
-
-.light-mode tr.bg-sky-950\/40,
-.light-mode tr.bg-sky-950\/30,
-.light-mode tr.bg-sky-950\/25 {
-  background-color: #FFF7ED !important;
-  color: #C2410C !important;
-  border-left-color: #F47721 !important;
-}
-
-/* Form Controls (Selects, Inputs) */
-.light-mode select,
-.light-mode input {
+html.light-mode aside,
+html.light-mode header {
   background-color: #FFFFFF !important;
   border-color: #CBD5E1 !important;
-  color: #202832 !important;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03) !important;
+  color: #0F172A !important;
 }
 
-.light-mode select:hover,
-.light-mode input:hover {
-  border-color: #F47721 !important;
-}
-
-.light-mode select:focus,
-.light-mode input:focus {
-  border-color: #F47721 !important;
-  outline: none !important;
-  box-shadow: 0 0 0 3px rgba(244, 119, 33, 0.15) !important;
-}
-
-.light-mode select option {
+html.light-mode .theme-card,
+html.light-mode .bg-industrial-900,
+html.light-mode .bg-industrial-850 {
   background-color: #FFFFFF !important;
-  color: #202832 !important;
+  border-color: #CBD5E1 !important;
+  color: #0F172A !important;
+  box-shadow: 0 1px 2px 0 rgba(15, 23, 42, 0.05) !important;
 }
 
-/* ==========================================================================
-   SIGNAL ORANGE PRIMARY ACCENTS (BUTTONS & ACTIVE NAVIGATION)
-   ========================================================================== */
-/* Primary Action Button (Benchmark / CTA) */
-.btn-signal-orange,
-.bg-sky-600 {
-  background-color: #F47721 !important;
+html.light-mode .bg-industrial-950,
+html.light-mode [class*="bg-industrial-950"],
+html.light-mode [class*="bg-industrial-850"] {
+  background-color: #F1F5F9 !important;
+  border-color: #CBD5E1 !important;
+  color: #1E293B !important;
+}
+
+html.light-mode .bg-industrial-800 {
+  background-color: #E2E8F0 !important;
+  border-color: #CBD5E1 !important;
+  color: #0F172A !important;
+}
+
+html.light-mode .border-industrial-800,
+html.light-mode .border-industrial-700,
+html.light-mode [class*="border-industrial-800"],
+html.light-mode [class*="border-industrial-700"] {
+  border-color: #CBD5E1 !important;
+}
+
+html.light-mode .theme-text-primary,
+html.light-mode .text-white:not(.bg-\[\#F47721\]):not(.bg-\[\#16A36A\]):not(.bg-rose-600):not(.bg-rose-700):not(.bg-emerald-600):not(.bg-\[\#EF4444\]),
+html.light-mode .text-industrial-100,
+html.light-mode .text-industrial-200 {
+  color: #0F172A !important;
+}
+
+/* White text inside colored buttons/badges must remain white even in Light Mode */
+html.light-mode .bg-\[\#F47721\],
+html.light-mode .bg-\[\#16A36A\],
+html.light-mode .bg-emerald-600,
+html.light-mode .bg-rose-600,
+html.light-mode .bg-rose-700,
+html.light-mode .bg-\[\#EF4444\] {
   color: #FFFFFF !important;
-  border-color: #EA580C !important;
 }
 
-.btn-signal-orange:hover,
-.bg-sky-600:hover {
-  background-color: #FF974D !important;
-  color: #FFFFFF !important;
+html.light-mode .text-industrial-300,
+html.light-mode .text-industrial-400,
+html.light-mode .text-industrial-500 {
+  color: #475569 !important;
 }
 
-/* Active Navigation Item in Sidebar */
-nav button.bg-sky-600,
-aside nav button.bg-sky-600 {
-  background-color: #F47721 !important;
-  color: #FFFFFF !important;
-  box-shadow: 0 1px 3px 0 rgba(244, 119, 33, 0.35) !important;
+html.light-mode .text-emerald-400,
+html.light-mode .text-\[\#16A36A\],
+html.light-mode .text-\[\#38C98A\] {
+  color: #15803D !important;
 }
 
-nav button.bg-sky-600:hover,
-aside nav button.bg-sky-600:hover {
-  background-color: #FF974D !important;
+html.light-mode .text-rose-400,
+html.light-mode .text-red-400,
+html.light-mode .text-\[\#EF4444\] {
+  color: #B91C1C !important;
 }
 
-/* Active Highlight Left Borders */
-.border-l-sky-500 {
-  border-left-color: #F47721 !important;
-}
-
-/* Signal Orange Text & Icons */
-.text-sky-400,
-.text-cyan-400,
-.text-sky-500 {
-  color: #F47721 !important;
-}
-
-/* Signal Orange Subtle Badges */
-.bg-sky-500\/10,
-.bg-cyan-500\/10,
-.bg-sky-50 {
-  background-color: rgba(244, 119, 33, 0.12) !important;
-  border-color: rgba(244, 119, 33, 0.3) !important;
-  color: #F47721 !important;
-}
-
-/* ==========================================================================
-   STATUS COLORS (GREEN SUCCESS, YELLOW WARNING, RED ERROR, BLUE CLOUD)
-   ========================================================================== */
-/* Green (Success) */
-.light-mode .text-emerald-400,
-.light-mode .text-emerald-500,
-.light-mode .text-emerald-600 {
-  color: #16A36A !important;
-}
-
-body:not(.light-mode) .text-emerald-400,
-body:not(.light-mode) .text-emerald-500 {
-  color: #38C98A !important;
-}
-
-.light-mode .bg-emerald-950,
-.light-mode .bg-emerald-50 {
-  background-color: #ECFDF5 !important;
-  color: #16A36A !important;
-  border-color: #A7F3D0 !important;
-}
-
-body:not(.light-mode) .bg-emerald-950 {
-  background-color: rgba(56, 201, 138, 0.12) !important;
-  color: #38C98A !important;
-  border-color: rgba(56, 201, 138, 0.3) !important;
-}
-
-/* Red (Danger / Silent Error) */
-.light-mode .text-rose-400,
-.light-mode .text-red-400 {
-  color: #EF4444 !important;
-}
-
-.light-mode .bg-red-950,
-.light-mode .bg-rose-950 {
-  background-color: #FEF2F2 !important;
-  color: #DC2626 !important;
-  border-color: #FECACA !important;
-}
-
-body:not(.light-mode) .bg-red-950,
-body:not(.light-mode) .bg-rose-950 {
-  background-color: rgba(239, 68, 68, 0.12) !important;
-  color: #EF4444 !important;
-  border-color: rgba(239, 68, 68, 0.3) !important;
-}
-
-/* Yellow / Amber (Warning / Konfirmasi) */
-.light-mode .text-amber-400 {
-  color: #D97706 !important;
-}
-
-.light-mode .bg-amber-950 {
-  background-color: #FFFBEB !important;
+html.light-mode .text-amber-400,
+html.light-mode .text-\[\#F59E0B\] {
   color: #B45309 !important;
-  border-color: #FDE68A !important;
 }
 
-body:not(.light-mode) .bg-amber-950 {
-  background-color: rgba(245, 158, 11, 0.12) !important;
-  color: #F59E0B !important;
-  border-color: rgba(245, 158, 11, 0.3) !important;
+html.light-mode .text-blue-400,
+html.light-mode .text-sky-300,
+html.light-mode .text-sky-400,
+html.light-mode .text-\[\#3B82F6\] {
+  color: #1D4ED8 !important;
 }
 
-/* Blue (Hybrid Cloud Process Indicator) */
-.cloud-indicator,
-.text-cloud-blue {
-  color: #3B82F6 !important;
+html.light-mode .text-purple-400 {
+  color: #6D28D9 !important;
 }
 
-.bg-cloud-subtle {
-  background-color: rgba(59, 130, 246, 0.12) !important;
-  border-color: rgba(59, 130, 246, 0.3) !important;
-  color: #3B82F6 !important;
+/* Deepen orange ink in Light Mode for WCAG AA readability (5.18:1 on white) */
+html.light-mode .text-\[\#F47721\]:not(.bg-\[\#F47721\]) {
+  color: #C2410C !important;
 }
 
-/* Custom Scrollbars */
+html.light-mode table thead,
+html.light-mode thead,
+html.light-mode th {
+  background-color: #F1F5F9 !important;
+  color: #334155 !important;
+  border-color: #CBD5E1 !important;
+}
+
+html.light-mode tbody tr {
+  border-color: #E2E8F0 !important;
+  color: #1E293B !important;
+}
+
+html.light-mode tbody tr:hover {
+  background-color: #F8FAFC !important;
+}
+
+html.light-mode select,
+html.light-mode input[type="text"] {
+  background-color: #FFFFFF !important;
+  border-color: #CBD5E1 !important;
+  color: #0F172A !important;
+}
+
+/* SVG chart axis text follows theme polarity cleanly */
+html.light-mode svg text.svg-axis-label {
+  fill: #475569 !important;
+}
+
+html:not(.light-mode) svg text.svg-axis-label {
+  fill: #94A3B8 !important;
+}
+
+/* Scrollbars */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -415,18 +218,14 @@ body:not(.light-mode) .bg-amber-950 {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #3D4D5E;
+  background: #354659;
   border-radius: 3px;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #F47721;
-}
-
-.light-mode ::-webkit-scrollbar-thumb {
+html.light-mode ::-webkit-scrollbar-thumb {
   background: #CBD5E1;
 }
 
-.light-mode ::-webkit-scrollbar-thumb:hover {
-  background: #F47721;
+::-webkit-scrollbar-thumb:hover {
+  background: #EA580C;
 }

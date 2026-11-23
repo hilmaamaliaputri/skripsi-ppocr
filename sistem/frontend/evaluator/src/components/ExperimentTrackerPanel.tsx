@@ -69,12 +69,14 @@ export const ExperimentTrackerPanel: React.FC<ExperimentTrackerPanelProps> = ({ 
           { code: 'dataset/03_uji_755', count: '755 citra', note: '600 frame sintetis 7 tema/6 kondisi + 155 foto riil SachaIZADI test' },
           { code: 'dataset/04_uji_burst_120', count: '120 burst', note: 'Masing-masing 5 frame berurutan untuk uji L3 Temporal multi-frame' },
         ].map((ds) => (
-          <div key={ds.code} className={`p-3.5 rounded-lg border ${surfaceCls}`}>
-            <div className="flex items-center justify-between gap-2 mb-1">
+          <div key={ds.code} className={`p-3.5 rounded-lg border ${surfaceCls} flex flex-col justify-between gap-2`}>
+            <div className="flex flex-wrap items-center justify-between gap-1.5">
               <span className="text-xs font-mono font-bold text-[#F47721] flex items-center gap-1.5">
-                <Database className="w-3.5 h-3.5" aria-hidden="true" /> {ds.code}
+                <Database className="w-3.5 h-3.5 shrink-0" aria-hidden="true" /> {ds.code}
               </span>
-              <span className="text-xs font-mono font-semibold">{ds.count}</span>
+              <span className="text-[11px] font-mono font-bold px-2 py-0.5 rounded bg-industrial-950 border border-industrial-800 whitespace-nowrap">
+                {ds.count}
+              </span>
             </div>
             <p className={`text-[11px] leading-snug ${mutedCls}`}>{ds.note}</p>
           </div>

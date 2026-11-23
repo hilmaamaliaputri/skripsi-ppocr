@@ -119,7 +119,7 @@ export const SampleDetailPanel: React.FC<SampleDetailPanelProps> = ({
                     Klik frame untuk perbesar
                   </span>
                 </div>
-                <div className="grid grid-cols-5 gap-1.5">
+                <div className="grid grid-cols-3 sm:grid-cols-5 gap-2">
                   {selectedSample.frames.map((f) => {
                     const imgUrl = resolveImageUrl(f, selectedSample.id);
                     return (
@@ -128,7 +128,7 @@ export const SampleDetailPanel: React.FC<SampleDetailPanelProps> = ({
                         onClick={() => onSelectFrame({ ...f, image_url: imgUrl })}
                         className={`rounded-lg p-1.5 border cursor-pointer text-center flex flex-col justify-between transition-all hover:scale-[1.03] group relative shadow-xs ${
                           isLightMode
-                            ? 'bg-[#F8FAFC] border-[#E2E8F0] hover:border-[#F47721]'
+                            ? 'bg-[#F8FAFC] border-[#CBD5E1] hover:border-[#C2410C]'
                             : 'bg-[#111820] border-[#2E3A47] hover:border-[#F47721]'
                         }`}
                         title="Klik untuk melihat foto resolusi penuh"
@@ -136,7 +136,7 @@ export const SampleDetailPanel: React.FC<SampleDetailPanelProps> = ({
                         <div
                           className={`w-full aspect-[4/3] rounded-md overflow-hidden flex items-center justify-center border mb-1 relative ${
                             isLightMode
-                              ? 'bg-[#F1F5F9] border-[#E2E8F0]'
+                              ? 'bg-[#F1F5F9] border-[#CBD5E1]'
                               : 'bg-zinc-900 border-[#2E3A47]'
                           }`}
                         >
@@ -164,8 +164,8 @@ export const SampleDetailPanel: React.FC<SampleDetailPanelProps> = ({
                           </div>
                         </div>
                         <span
-                          className={`text-[9px] font-sans font-semibold ${
-                            isLightMode ? 'text-[#64748B]' : 'text-[#94A3B8]'
+                          className={`text-[10px] font-sans font-semibold whitespace-nowrap ${
+                            isLightMode ? 'text-[#475569]' : 'text-[#94A3B8]'
                           }`}
                         >
                           Frame #{f.frame_idx}

@@ -32,18 +32,17 @@ export function App() {
 
   useEffect(() => {
     const savedTheme = localStorage.getItem('eval-theme');
-    if (savedTheme === 'light') {
-      document.documentElement.classList.add('light');
-      setIsLightMode(true);
-    } else {
-      document.documentElement.classList.remove('light');
-    }
+    const isLight = savedTheme === 'light';
+    document.documentElement.classList.toggle('light-mode', isLight);
+    document.documentElement.classList.toggle('dark', !isLight);
+    setIsLightMode(isLight);
   }, []);
 
   const toggleLightMode = () => {
     const nextLight = !isLightMode;
     setIsLightMode(nextLight);
-    document.documentElement.classList.toggle('light', nextLight);
+    document.documentElement.classList.toggle('light-mode', nextLight);
+    document.documentElement.classList.toggle('dark', !nextLight);
     localStorage.setItem('eval-theme', nextLight ? 'light' : 'dark');
   };
 
@@ -122,7 +121,7 @@ export function App() {
         />
 
         <main className="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 space-y-6">
-          {activeTab !== 'tracker' && (
+          {activeTab !== 'tracker' && activeTab !== 'comparison' && (
             <ExecutionStatusBanner
               isLightMode={isLightMode}
               isLoading={isLoading}
